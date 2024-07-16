@@ -1,0 +1,1004 @@
+# meta
+metaVersion: 1
+name: "Blacked"
+version: "0.0.1"
+author: "Chloeana"
+baseGameVersion:
+  atLeast: "0.20"
+requiredMods:
+  - name: "MultipleCharacters"
+    version:
+      atLeast: "1.8.01"
+# /meta
+
+
+:: blacked options [mod_options]
+{
+	(_setting_button:
+		"$blackfreq",
+		(a:"Black Encounters: Normal",
+    "Black Encounters: Less",
+    "Black Encounters: More",
+    "Black Encounters: Always",
+    "Black Encounters: Never"),
+		"Determines how often you will encounter black men hitting on you as a female."
+	)
+}
+
+:: npc race check
+{
+(set:$racecheck to (cond:
+  $blackfreq is "Black Encounters: Normal" and (twist:1,2) is 1, "black",
+  $blackfreq is "Black Encounters: Less" and (twist:1,3) is 1, "black",
+  $blackfreq is "Black Encounters: More" and (twist:1,3) is not 1, "black",
+  $blackfreq is "Black Encounters: Always", "black",
+  ,"white"
+))
+}
+
+:: generate random guy [around]
+{
+(display:"npc race check")
+(if:$racecheck is "black")[(display:"generate black guy")](else:)[(display:_around)]
+}
+
+:: generate black guy
+{
+(if:$min_npc_age is 0)[(set:$min_npc_age to "Min Age: 18")]
+(if:$max_npc_age is 0)[(set:$max_npc_age to "Max Age: 55")]
+
+(set:_min_age to (num: 1st of (str-find: (p-many: digit), $min_npc_age)))
+(set:_max_age to (num: 1st of (str-find: (p-many: digit), $max_npc_age)))
+(set:_max_age to (cond: (twist:1,2) is 1, 30, _max_age))
+(set:_age to (twist:_min_age, _max_age))
+(set:_agecat to (cond:
+  _age < 20, "late teens",
+  _age < 25, "early twenties",
+  _age < 30, "twenties",
+  _age < 40, "thirties",
+  _age < 50, "forties",
+  "fifties"
+))
+(set:_generation to (cond: _age < 24, "genz", _age < 38, "millenial", "genx"))
+
+(set:_type to (cond:$npc_type is "coworker","coworker",(twirl:"chad","bad","lad")))
+
+(set:$types to (a:"96","97","98","99"))
+
+(if:$npc_type is "coworker")[
+  (if:$coworkers is 0)[(set:$coworkers to (a:))]
+  (for: each _coworker, ...$coworkers)[(set:$types to it - (a:(text:(words:_coworker)'s 3rd)))]
+]
+
+(set:str-type _variant to (text:(twirl:...$types)))
+
+(set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + _variant + ".jpg")
+
+($use_global: "$black_cock_database", "window.GE.black_cock_database", [{
+  (set:$npc to (dm:
+    "tags", (a:),
+    "events", (a:),
+    "race", "black",
+    "stamina", (twist:8,15),
+    "oral skill", (twist:1,10),
+    "kissing style", "normal",
+    "alternate names", (a:),
+    "alternate possessive names", (a:),
+    "favorite color", (twirl:"red","white","black","yellow","purple","pink","orange"),
+    "favorite style", (twirl:"elegant","slutty","cute","casual","sexy"),
+    "age", _age,
+    "agecat", _agecat,
+    "generation", _generation,
+    "type", _type,
+    "img", _img,
+    "last name", "Smith",
+    "preference", (twirl:"ass","tits")
+  ) + (twirl: ...$black_cock_database))
+}])
+
+(set:$npc's "race" to "black")
+
+(if:(twist:1,2) is 1)[
+  (set:$npc's "stamina" to (min:$npc's "stamina", (cock:"rating","npc") + 5))
+]
+
+(set:$npc's "variant" to _variant)
+
+(if:_agecat is "late teens")[
+  (set:"alternate names" of $npc to it + (a:"he","the teen"))
+  (set:"alternate possessive names" of $npc to it + (a:"his","the teen's"))
+](else-if:_agecat is "fifties")[
+  (set:"alternate names" of $npc to it + (a:"he","the old guy"))
+  (set:"alternate possessive names" of $npc to it + (a:"his","the old guy's"))
+]
+
+(set: _wealth_range to (cond: 
+  _generation is "genx", (a: 5, 10),
+  _generation is "millenial", (a: 1, 10),
+  _generation is "genz" and (twist:1,4) is 1, (a: 1, 10),
+  (a: 1, 4)
+))
+
+(set: wealth of $npc to (twist: _wealth_range's 1st, _wealth_range's 2nd))
+
+(set: _guys to (cond:
+    _generation is "millenial", (a: "guy", "dude", "guy", "dude", "guy", "fellow"),
+    _generation is "genz" and age of $npc < 20, (a: "dude", "guy", "fellow", "teen", "teenager", "teen", "boy"),
+    _generation is "genz", (a: "dude", "guy", "fellow", "twenty-something"),
+    (a: "man", "guy")
+))
+(set: _guy to (twirl: ..._guys))
+
+($use_global: '$guy_database', 'window.GE.guy_database', [{
+  (set:_generation_guys to _generation of $guy_database)
+  (set:_npc to _variant of _type of _generation_guys)
+
+  (set:"unfamiliar name" of _npc to (replaced:"_guy", _guy, (twirl:..."unfamiliar names" of _npc)))
+  (set:"description" of _npc to (replaced:"_guy", _guy, (twirl:..."descriptions" of _npc)))
+  (set:"first name" of _npc to (twirl:...("first names" of _generation_guys)))
+  (set:"hands" of _npc to (twirl:...("hands" of _generation_guys)))
+
+  (set:$npc to it + _npc)
+}])
+(set:$npc's "unfamiliar name" to (upperfirst:it))
+
+
+(set: intellect of $npc to (cond: 
+    ($npc's tags contains "fuckboy") or ($npc's tags contains "jock"), (twist: 1, 5),
+    ($npc's tags contains "nerd"), (twist: 5, 10),
+    (twist: 1, 10)
+))
+
+(set: fitness of $npc to (cond: 
+    ($npc's tags contains "nerd") or ($npc's tags contains "chubby"), (twist: 1, 5),
+    ($npc's tags contains "jock") or ($npc's tags contains "chad"), (twist: 5, 10),
+    (twist: 1, 10)
+))
+
+(if: fitness of $npc > 8)[
+    (set: $npc's tags to it + (a: "jock"))
+]
+
+(display:"generate black guy name")
+
+(set:"name" of $npc to (cond:_age > 35, "Mr. " + "last name" of $npc, "first name" of $npc))
+(set:$npc's "sex name" to (upperfirst:$npc's "name"))
+
+(if:length of $npc's "tags" is 0)[
+  (set:$npc's tags to it + (a:(twirl:"selfish","nice","unremarkable","cool")))
+]
+(if:$npc's "tags" contains "fuckboy")[
+  (set:$npc's tags to it + (a:"selfish"))
+]
+(if:$npc's "tags" contains "bully" or $npc's "tags" contains "smug")[
+  (set:$npc's tags to it + (a:"selfish"))
+]
+
+(set: _personalityRange to (cond:
+  $npc's "tags" contains "gentleman", (a: 7, 10),
+  $npc's "tags" contains "nice", (a: 5, 10),
+  $npc's "tags" contains any of (a: "cool", "charming", "jock"), (a: 5, 8),
+  $npc's "tags" contains "unremarkable", (a: 4, 6),
+  $npc's "tags" contains any of (a: "annoying", "creepy"), (a: 1, 5),
+  $npc's "tags" contains any of (a: "selfish", "fuckboy", "bully"), (a: 1, 6),
+  (a: 1, 10)
+))
+(set: $npc's "personality" to (twist: _personalityRange's 1st, _personalityRange's 2nd))
+
+(if: $npc's "tags" contains "charming")[ 
+    (set: $npc's "alternate names" to it + (a: "he", "the charming guy"))
+    (set: $npc's "alternate possessive names" to it + (a: "his", "the charming guy's"))
+](else-if: $npc's "tags" contains "gentleman")[ 
+    (set: $npc's "alternate names" to it + (a: "he", "the gentleman"))
+    (set: $npc's "alternate possessive names" to it + (a: "his", "the gentleman's"))
+]
+
+(display:"npc outfit modifiers")
+
+(set: $npc's "hygiene" to (cond: 
+    $npc's "tags" contains "gentleman", (twist: 5, 10),
+    $npc's "tags" contains "smells good", (twist: 7, 10),
+    $npc's "tags" contains "charming", (twist: 5, 8),
+    $npc's "tags" contains "smelly", (twist: 1, 3),
+    $npc's "tags" contains "chubby", (twist: 1, 6),
+    $npc's "tags" contains "chad", (twist: 3, 7),
+    $npc's "tags" contains "nerd", (twist: 1, 7),
+    (twist: 1, 10)
+))
+
+(set: $npc's "hands" to (cond: 
+    $npc's "tags" contains any of (a: "chubby"), (twirl: "pudgy", "chubby"),
+    $npc's "tags" contains any of (a: "chad"), (twirl: "strong", "firm", "manly"),
+    $npc's "tags" contains any of (a: "nerd", "smelly"), (twirl: "clammy", "sweaty", "soft"),
+    $npc's "tags" contains "gentleman", (twirl: "firm", "smooth", "graceful", "gentlemanly"),
+    "firm"
+))
+
+(set: $npc's "kissing style" to (cond: 
+    $npc's "tags" contains any of (a:"fuckboy","jock"),"aggressive",
+    $npc's "tags" contains any of (a: "charming", "chad", "dominant"), "dominant",
+    $npc's "tags" contains "nerd", (twirl: "weak", "slobber", "normal"),
+    $npc's "tags" contains "smelly", "gross",
+    "normal"
+))
+
+(if:$npc's "tags" contains "chad")[
+  (set:$npc's "alternate possessive names" to it + (a:"his","the chad's"))
+]
+(if:$npc's "tags" contains "nerd")[
+  (set:$npc's "alternate possessive names" to it + (a:"his","the nerd's"))
+]
+
+(display:"guy breath update")
+
+(if:$npc's "tags" contains "breeder")[
+  (set:$npc's tags to it - (a:"gentleman"))
+  (set:$npc's personality to (min:it,5))
+  ($use_global: "$black_cock_database", "window.GE.black_cock_database", [(set:$npc to it + (twirl:...(find:_cock where _cock's ballsize is 10, ...$black_cock_database)))])
+]
+(set:$npc's age to (max:18,it))
+
+(set: $npc's dominance to (cond:
+    $npc's tags contains any of (a: "chad", "bully", "jock", "breeder"), (twist: 8, 10),
+    $npc's age < 22 or $npc's tags contains "nerd", (twist: 2, 6),
+    $npc's age > 34, (twist: 4, 8),
+    (twist: 1, 10)
+))
+
+(if:$npc_type is "coworker")[
+  (set:$npc's tags to $npc's tags + (a:"coworker"))
+  (set:$npc's "sales level" to (cond:$npc's age >= 55,(twist:6,10),$npc's age >= 50,(twist:7,8),$npc's age >= 40,(twist:5,8),$npc's age >= 30,(twist:4,6),$npc's age >= 20,(twist:1,5),$npc's age >= 18,(twist:1,4)))
+  (if:$npc's tags contains "ambitious")[(set:$npc's "sales level" to it + (twist:1,3))]
+  (if:$npc's tags contains "lazy")[(set:$npc's "sales level" to it - (twist:1,3))]
+  (unless:$npc's "tags" contains "coworker")[(set:$npc's "tags" to it + (a:"coworker"))]    
+  (set:$npc's "sales level" to (max:1,(min:$npc's "sales level",10)))
+  (set:$npc's "wealth" to $npc's "sales level")
+  (display:"npc generate id coworker")
+  (set:$npc's "events" to it + (a:"your name"))
+  (set:$relationships's (text: "npc " + (text:$npc's "id")) to (dm:
+    "id",(text: "npc " + (text:$npc's "id")),
+    "name",$npc's name,
+    "gender","male",
+    "respect",0,
+    "dom",0,
+    "friendship",0,
+    "attraction",0,
+    "tags",(a:"coworker")
+  ))
+](else:)[    
+  (display:"npc generate id")
+]
+(set:$npc's appeal to $npc's looks)
+(display:"alcohol modify appeal")
+}
+
+
+:: generate black guy name
+{
+(set:"first name" of $npc to (twirl:"Rod","Jax","Flash","Damion","Rob","Booker","Emmett","Dontrell","Tyrone","Keenan","Lamonte","Tyrus","Darius","Isiah","Jamal","Marcel","Warren","Lex","DeAngelo","Jayce","Omar","Andre","Shane","Oscar","Autry"))
+(set:"last name" of $npc to (twirl:"Yahshua","Slayher","Jackson","Johnson","Diggler","Piper","Maxwell","Harden","Brown","Black","Jackson","Davis","Wilson","Thompson","Steele","Michaels","Strong","Mac","Pumper","Hard","Long","Hammer","Diesel"))
+}
+
+:: npc position inventory {"position":"725,13475","size":"100,100"}
+{
+  (unless:(datanames:$npc) contains "dominance")[(set:$npc's "dominance" to 8)]
+  ($use_global: "$position_database", "window.GE.position_database", [{
+  (set:_filtered_positions to (a:), _positions to (a:), _index to 1)
+    (set:_fold to (macro:str-type _type, [
+      (set:_char_subtypes to _type of ($character's id of $position_database))
+      (out-data:(folded:_dm making _all via _all + (dm-values:_dm's value), (a:), ...(dm-entries:_char_subtypes)))
+    ]))
+
+    (set:$position_list to (_fold:"passive"))
+
+    (if:($npc's "race" is "black"))[
+      (set: $race_filtered_positions to (find:_position 
+          where _position's "tags" contains "black", ...$position_list)
+        )
+    ](else:)[
+      (set: $race_filtered_positions to (find:_position 
+          where _position's "tags" does not contain "black", ...$position_list)
+        )
+    ]
+
+    (set:$athletics_filtered_positions to (find:_position 
+          where _position's "athletics" < ($npc's fitness + 2), ...$race_filtered_positions))
+
+    (set:$roughness_filtered_positions to (find:_position 
+          where _position's "roughness" < ($npc's dominance + 2) and _position's "roughness" > ($npc's dominance - 2), ...$race_filtered_positions))
+
+(if:(checkdm:$npc,"ground rules","contains","no bj"))[
+(set:$excluded_positions to
+	(find:_position where (a:"blowjob","gag reflex","titfuck","handjob")
+	contains _position's "skill"
+		, ...($race_filtered_positions)
+	)
+)
+(set: $excluded_position_ids to (altered: _position via _position's "id", ...$excluded_positions))
+](else:)[
+	(set:$excluded_positions to (a:))
+	(set:$excluded_position_ids to (a:))
+]
+    
+    (set:$all_positions to (twisted:...(($athletics_filtered_positions + $roughness_filtered_positions) - $excluded_positions)))
+    (set:$sorted_positions to (a:))
+    (for: each _filtered_position, ...$all_positions)[
+
+      (unless:$sorted_positions contains _filtered_position)[
+      (if:(count:$all_positions,_filtered_position) > 1)[(set:$sorted_positions to (a:_filtered_position) + $sorted_positions)](else:)[(set:$sorted_positions to $sorted_positions + (a:_filtered_position))]]
+    ]
+
+    (if:(datanames:$npc) contains "position limit")[(set:$limit to $npc's "position limit")](else:)[(set:$limit to 4)(set:$npc's "position limit" to 4)]
+
+(set:$npc's "position inventory" to (subarray:$sorted_positions, 1, (min:$sorted_positions's length, $limit)))
+(display:"race positions")
+  }])
+}
+
+:: race positions {"position":"475,13475","size":"100,100"}
+{
+  (if:($npc's "race" is "black"))[
+    (if:(datanames:$position_inventory) contains $character's id)[
+    ($use_global: "$position_database", "window.GE.position_database", [{
+    (set:_filtered_positions to (a:), _positions to (a:), _index to 1)
+    (set:_fold to (macro:str-type _type, [
+      (set:_char_subtypes to _type of ($character's id of $position_database))
+      (out-data:(folded:_dm making _all via _all + (dm-values:_dm's value), (a:), ...(dm-entries:_char_subtypes)))
+    ]))
+    (set:_positions to (_fold:"active"))
+    (set:_filtered_positions to (find:_position 
+          where _position's "tags" contains "black" and _position's "skill level" < 4, ..._positions))
+    (set:$position_inventory's (text:$character's id) to _filtered_positions)}])
+  ]
+  ](else:)[(display:"starting positions")]
+}
+
+:: check for new positions {"position":"600,13475","size":"100,100"}
+{
+  (set:$found to "false")
+  (display:"starting positions")
+  ($use_global: "$position_database", "window.GE.position_database", [{
+  (set:_filtered_positions to (a:), _positions to (a:), _index to 1)
+    (set:_fold to (macro:str-type _type, [
+      (set:_char_subtypes to _type of ($character's id of $position_database))
+      (out-data:(folded:_dm making _all via _all + (dm-values:_dm's value), (a:), ...(dm-entries:_char_subtypes)))
+    ]))
+    (set:$positions to (twisted:...(_fold:"active")))
+
+    (if:($npc's "race" is "black"))[
+      (set:$race_filtered_positions to (find:_position 
+          where _position's "tags" contains "black", ...$positions))
+    ](else:)[
+      (set:$race_filtered_positions to (find:_position 
+          where _position's "tags" does not contain "black", ...$positions))
+    ]
+    
+    (set:_blowjob_positions to (find:_position 
+          where _position's "skill level" <= $blowjob_talent's level and _position's "skill" is "blowjob", ...$race_filtered_positions))
+    (set:_handjob_positions to (find:_position 
+          where _position's "skill level" <= $handjob_talent's level and _position's "skill" is "handjob", ...$race_filtered_positions))
+    (set:_titfuck_positions to (find:_position 
+          where _position's "skill level" <= $titfuck_talent's level and _position's "skill" is "titfuck", ...$race_filtered_positions))
+    (set:_active_positions to (find:_position 
+          where _position's "skill level" <= $dom_sex_talent's level and _position's "skill" is "active sex", ...$race_filtered_positions))
+    (set:$owned_positions to (a:))
+    (for: each _currently_owned_position, ...$position_inventory's (text:$character's id))[
+      (set:$owned_positions to it + (a:_currently_owned_position's id))
+    ]
+    (for: each _available_position, ...(_blowjob_positions + _handjob_positions + _titfuck_positions + _active_positions))[
+
+      (unless:$owned_positions contains _available_position's id)[
+      (set:$found to "true")
+      (set:$unlocked_position to _available_position)
+      (set:$select to $unlocked_position's id)(display:"get position")]
+    ]
+
+  }])
+}
+
+:: sex doggy transactional [around]
+{
+  (if:($npc's "race" is "black"))[
+    (display:"sex doggy transactional " + $character's "id")
+    (set:$doggy_pic to "<img class='greyborder' src='img/scenes/characters/" + $character's "id" + "/sex/doggy/bbc/transactional insert " + (text:(random:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$doggy_moan_pic to "<img class='greyborder' src='img/scenes/characters/" + $character's "id" + "/sex/doggy/bbc/moan " + (text:(random:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$backdrop_img to "scenes/characters/" + $character's "id" + "/sex/doggy/bbc/transactional " + $img + ".mp4")
+    (set:$doggy_img to "scenes/characters/" + $character's "id" + "/sex/doggy/bbc/transactional " + $img + ".mp4")
+    (set:$img to "<video src='img/scenes/characters/" + $character's "id" + "/sex/doggy/bbc/transactional " + $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+  ](else:)[(display:_around)]
+}
+
+:: sex doggy transactional alina [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to (text:(twist:1,7)))
+    (set:$doggy_rhythm to $img of 
+    (dm:
+      "alina/sex/doggy/bbc/transactional 1",500,
+      "alina/sex/doggy/bbc/transactional 2",500,
+      "alina/sex/doggy/bbc/transactional 3",500,
+      "alina/sex/doggy/bbc/transactional 4",500))
+    (set:$text to $img of 
+    (dm:
+      "alina/sex/doggy/bbc/transactional 1",(a:"couch","look back","eyes roll","grab waist"),
+      "alina/sex/doggy/bbc/transactional 2",(a:"desk","grab shoulders","grab face","grab boobs"),
+      "alina/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","grab waist"),
+      "alina/sex/doggy/bbc/transactional 4",(a:"couch","grab waist","grab butt")))
+  ](else:)[(display:_around)]
+}
+
+:: sex doggy [around]
+{<!-- Does this get used anymore?-->
+  (if:($npc's "race" is "black"))[
+    (if:($character's "race" is "black"))[(set:$img to "generic/sex/doggy/c " + (text:(twist:1,3)))]
+    (else-if:(twist:1,3) is 1)[(set:$img to "generic/sex/doggy/insert " + (text:(twist:1,2)))]
+    (else:)[(set:$img to "generic/sex/doggy/w " + (text:(twist:1,3)))]
+  ]
+}
+
+:: blowjob transactional facefuck [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$character's "id" is "alina")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "cassidy")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "ella")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "jade")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "jia")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "lana")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "liya")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "mia")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "rae")[(set:$img to (text:(twist:1,4)))]
+    (else-if:$character's "id" is "scarlit")[(set:$img to (text:(twist:1,7)))]
+
+    (set:$img to "<video disableRemotePlayback src='img/scenes/characters/" $character's "id" + "/bj/bbc/rough " + $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+
+    (set:$text to $img of 
+  (dm:
+	"alina/bj/bbc/rough 1","floor",
+	"alina/bj/bbc/rough 2","floor",
+	"cassidy/bj/bbc/rough 1","floor",
+	"cassidy/bj/bbc/rough 2","couch",
+	"cassidy/bj/bbc/rough 3","floor",
+	"cassidy/bj/bbc/rough 4","couch",
+	"ella/bj/bbc/rough 1","wall",
+	"ella/bj/bbc/rough 2","floor",
+	"ella/bj/bbc/rough 3","floor",
+	"jade/bj/bbc/rough 1","floor",
+	"jade/bj/bbc/rough 2","floor",
+	"jia/bj/bbc/rough 1","couch",
+	"jia/bj/bbc/rough 2","floor",
+	"lana/bj/bbc/rough 1","floor",
+	"lana/bj/bbc/rough 2","floor",
+	"lana/bj/bbc/rough 3","floor",
+	"liya/bj/bbc/rough 1","floor",
+	"liya/bj/bbc/rough 2","floor",
+	"liya/bj/bbc/rough 3","floor",
+	"liya/bj/bbc/rough 4","floor",
+	"liya/bj/bbc/rough 5","floor",
+	"liya/bj/bbc/rough 6","floor",
+	"mia/bj/bbc/rough 1","floor",
+	"mia/bj/bbc/rough 2","floor",
+	"mia/bj/bbc/rough 3","couch",
+	"mia/bj/bbc/rough 4","floor",
+	"mia/bj/bbc/rough 5","couch",
+	"mia/bj/bbc/rough 6","couch",
+	"rae/bj/bbc/rough 1","floor",
+	"rae/bj/bbc/rough 2","floor",
+	"rae/bj/bbc/rough 3","counter",
+	"rae/bj/bbc/rough 4","bed",
+	"scarlit/bj/bbc/rough 1","floor",
+	"scarlit/bj/bbc/rough 2","upside down"))
+
+  ]
+}
+
+:: blowjob transactional initialize [around]
+{<!-- This is when you give a BJ during hookup sex, not bedroom sex-->
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$character's "id" is "alina")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "cassidy")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "ella")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "jade")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "jia")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "lana")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "liya")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "mia")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "rae")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "scarlit")[(set:$img to (text:(twist:1,6)))]
+    (set:$img to "scenes/characters/" + $character's "id" + "/bj/bbc/transactional " + (text:($img)) + ".mp4")
+
+    (replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]
+    
+    (if:(twist:1,4) is 1)[
+      (if:($character's "race" is "black"))[(set:$img to "scenes/generic/sex/bj/bbc/dark" + (text:(twist:1,4)) + ".mp4")]
+      (else-if:(twist:1,3) is 1)[(set:$img to "scenes/generic/sex/bj/bbc/clothed " + (text:(twist:1,3)) + ".mp4")]
+      (else:)[(set:$img to "scenes/generic/sex/bj/bbc/light ") + (text:(twist:1,6) + ".mp4")]
+      ]
+
+    (set:$quicktime_params to (dm:
+    "difficulty","medium",
+    "type","bj",
+    "victory","He loves how eager you are.",
+    "defeat","*It's just so big...*",
+    "skill check","bj",
+    "skill check difficulty",50,
+    "points to win",45,
+    "points",15,
+    "sequence",(a:"up","down","up","down","up","up","none","down","up","down","left","right"),
+    "quicktime timer",1,
+    "result passage","blowjob transactional result",
+    "backdrop",$img
+    ))
+    (display:"quicktime bj sequence randomize")
+    (set:$img to "<video disableRemotePlayback src='img/"+ $img + "' autoplay='' loop='' muted='' playsinline/>")
+    (display:"blowjob sounds")
+    (set:$next to "quicktime initialize")(display:"change screen")
+  ]
+}
+
+:: blowjob transactional cum {"position":"350,5100","size":"100,100"}
+{
+  (if:($npc's "race" is "black"))[
+    (replace:?right_options)[](if:(twist:1,2) is 1)[(print:"<video disableRemotePlayback src='img/scenes/generic/sex/pre/bbc/jerking.mp4' autoplay='' loop='' muted='' playsinline/>")](else:)[(print:$img)]
+  ](else:)[
+    (replace:?right_options)[](if:(twist:1,2) is 1)[(print:"<video disableRemotePlayback src='img/scenes/generic/sex/pre/bwc/jerking.mp4' autoplay='' loop='' muted='' playsinline/>")](else:)[(print:$img)]
+  ]
+(if:(win:))[
+  <mark>His satisfaction +1!</mark>(set:$satisfaction to $satisfaction + 1)
+]
+(if:(Random:1,2) is 1)[
+  (print:(upperfirst:$npc's "sex name")) (twirl:"groans, he's gonna cum!","gives a loud moan.","Moans loudly. He's about to blow his load!","groans heavily, and his cock twitches. He's about to cum.")
+  ](else:)[
+    (print:(upperfirst:$npc's "sex name"))'s (twirl:"cock twitches in your mouth","cock twitches","cock starts to throb in your mouth"). (twirl:"He's gonna cum.","He's gonna blow!")
+    ]
+<div class='options'>(link:"On my face!")[
+  (set:$choice to "face")(set:$next to "blowjob transactional cum choice")(display:"change screen")
+  ](link:"In my mouth!")[
+    (set:$choice to "mouth")(set:$next to "blowjob transactional cum choice")(display:"change screen")
+    ]
+</div>
+}
+
+:: sex transactional blowjob [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$character's "id" is "alina")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "cassidy")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "ella")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "jade")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "jia")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "lana")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "liya")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "mia")[(set:$img to (text:(twist:1,7)))]
+    (else-if:$character's "id" is "rae")[(set:$img to (text:(twist:1,6)))]
+    (else-if:$character's "id" is "scarlit")[(set:$img to (text:(twist:1,7)))]
+
+    (set:$img to "scenes/characters/" + $character's "id" + "/bj/bbc/transactional " + $img + ".mp4")
+    (replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]
+
+    (set:$quicktime_params to (dm:
+    "difficulty","medium",
+    "type","bj",
+    "real time his pleasure","enabled",
+    "victory","He loves how eager you are.",
+    "defeat","*It's just so big...*",
+    "skill check","bj",
+    "skill check difficulty",50,
+    "points to win",45,
+    "points",15,
+    "sequence",(a:"up","down","up","down","up","up","none","down","up","down","left","right"),
+    "quicktime timer",1,
+    "result passage","sex transactional blowjob result",
+    "backdrop",$img
+    ))
+    (display:"quicktime bj sequence randomize")
+    (set:$img to "<video disableRemotePlayback src='img/"+ $img + "' autoplay='' loop='' muted='' playsinline/>")
+    (display:"blowjob sounds")
+    (set:$next to "quicktime initialize")(display:"change screen")(set:$character's "status" to "bj/bbc")(set:$outfit_button to "dont show")(display:"outfit button")(display:"refresh portrait")
+  ]
+}
+
+:: sex transactional kiss [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/kiss.mp4' autoplay='' loop='' muted='' playsinline/>")]
+  ]
+}
+
+:: sex transactional grope [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (set:$grope to $character's "id" of (dm:
+    "alina",(twirl:"ass","tits"),
+    "cassidy","tits",
+    "ella","tits",
+    "jade","tits",
+    "jia","ass",
+    "lana",(twirl:"ass","tits"),
+    "liya","tits",
+    "mia",(twirl:"ass","tits"),
+    "rae",(twirl:"ass","tits"),
+    "scarlit","ass")
+    )
+  ]
+}
+
+:: sex transactional grope react [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/grope " + $grope +".mp4' autoplay='' loop='' muted='' playsinline/>")]
+  ]
+}
+
+
+:: sex transactional option links [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$npc's "cock" is "in you")[(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/bbc/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")]]
+  ]
+}
+
+
+:: sex transactional insert check [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (replace:?image)[(print:"<img class='greyborder' src='img/characters/sex/insert/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+  ]
+}
+
+:: sex transactional pre result [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$minigame_played is "true")[
+      (display:"sex transactional result")
+      ](else:)[
+        (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")
+        ]
+      ]
+  ]
+}
+
+:: sex creampie image [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$character's "id" is "alina")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "cassidy")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "ella")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "jade")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "jia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "lana")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "liya")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "mia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "rae")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else-if:$character's "id" is "scarlit")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+    (else:)[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/creampie/cp " + (text:(twist:1,4)))]
+
+    (set:_generic_variant to (twist:1,4))
+    (if:_generic_variant is 1)[
+      (if:$character's "race" is "black")[(set:$img to "/generic/sex/cum/creampie/c/bbc/missionary " + (text:(twist:1,2)))]
+      (else:)[
+        (if:$position is "doggy")[(set:$img to "/generic/sex/cum/creampie/w/bbc/doggy " + (text:(twist:1,10)))]
+        (else-if:$position is "missionary")[(set:$img to "/generic/sex/cum/creampie/w/bbc/missionary " + (text:(twist:1,10)))]
+        (else:)[(set:$img to "/generic/sex/cum/creampie/w/bbc/riding " + (text:(twist:1,7)))]
+        ]
+    ]
+    (set:$img to "<video disableRemotePlayback src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+  ]
+}
+
+:: sex cum on face [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (set:_generic_variant to (twist:1,4))
+    (set:$pov to (cond:
+      _generic_variant is 1, "1st",
+      ,"3rd")
+      )
+    (if:$pov is "1st")[(set:$img to "/generic/sex/cum/bbc facial " + (text:(twist:1,5)))](else:)[
+      (if:$character's "id" is "alina")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "cassidy")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "ella")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "jade")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "jia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "lana")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "liya")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "mia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else-if:$character's "id" is "rae")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,3)))]
+      (else-if:$character's "id" is "scarlit")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+      (else:)[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/facial " + (text:(twist:1,5)))]
+    ]
+    (set:$img to "<video disableRemotePlayback src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+  ]
+}
+
+:: sex cum in mouth [around]
+{
+  (if:($npc's "race" is "black"))[
+    (if:$character's "id" is "alina")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "cassidy")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "ella")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "jade")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "jia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "lana")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "liya")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "mia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else-if:$character's "id" is "rae")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,2)))]
+    (else-if:$character's "id" is "scarlit")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+    (else:)[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/mouth " + (text:(twist:1,5)))]
+
+    (set:_generic_variant to (twist:1,4))
+    (if:_generic_variant is 1)[
+      (if:$character's "race" is "black")[(set:$img to "/generic/sex/cum/mouth/bbc/c/" + (text:(twist:1,2)))]
+      (else:)[(set:$img to "/generic/sex/cum/mouth/bbc/w/" + (text:(twist:1,12)))]
+    ]
+
+    <!-- Minigame tags-->
+    (set:$text to $text + $img of (dm:
+    "/generic/sex/cum/mouth/bbc/w/1",(a:"tongue","lips"),
+    "/generic/sex/cum/mouth/bbc/w/2",(a:"tongue","chin"),
+    "/generic/sex/cum/mouth/bbc/w/3",(a:"face","tongue"),
+    "/generic/sex/cum/mouth/bbc/w/4",(a:"face","huge"),
+    "/generic/sex/cum/mouth/bbc/w/5",(a:"mouth","tongue"),
+    "/generic/sex/cum/mouth/bbc/w/6",(a:"mouth","chin"),
+    "/generic/sex/cum/mouth/bbc/w/7",(a:"tongue","chin"),
+    "/generic/sex/cum/mouth/bbc/w/8",(a:"tongue","chin"),
+    "/generic/sex/cum/mouth/bbc/w/9",(a:"mouth","chin"),
+    "/generic/sex/cum/mouth/bbc/w/10",(a:"lips","tongue"),
+    "/generic/sex/cum/mouth/bbc/w/11",(a:"lips","face","tongue","huge"),
+    "/generic/sex/cum/mouth/bbc/w/12",(a:"tongue","lips","nose","chin"),
+    "/generic/sex/cum/mouth/bbc/c/1",(a:"tongue","mouth"),
+    "/generic/sex/cum/mouth/bbc/c/2",(a:"lips","face"),
+    ))
+
+    (set:$backdrop to "scenes/" + $img + ".mp4")
+    (set:$sex_loop to "big load " + (text:(twist:1,6)))(set:$se to "big load " + (text:(twist:1,6)))
+
+    (set:$img to "<video disableRemotePlayback src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
+  ](else:)[(display:_around)]
+}
+
+:: big load minigame interrupt [around]
+{
+  (if:($npc's "race" is "black"))[
+    (if:(datanames:$quicktime_params) contains "type")[(if:$quicktime_params's "type" is "big load")[(set:$se to "gag " + (text:(twist:1,7)))(display:"play sound")]]
+    (if:(twist:1,2) is 1)[
+      (if:$character's "masculinity" > 79)[(twirl:
+        "Your cheeks burn red with shame as another man fills your mouth.",
+        "Your brain can't decide if this is hot, or just super gross...",
+        "Fuck, you never cum THIS much...",
+        "Holy hell this is a lot of cum...",
+        "You're temporarily revolted by the thought of a man pumping cum into your mouth.")
+        ](else:)[(Either:
+          "Your tastebuds are drenched with jizz.",
+          "Hot, steamy sperm fills your mouth.",
+          "When will it end??",
+          "He's probably gonna ruin your clothes too...")
+          ]
+      ](else:)[
+        (if:$text contains "huge")[(twirl:
+        "FUCK that's a lot of cum.",
+        "Jet after fat jet of nut-butter... how much more can you take?",
+        "It's so pungent and slimy.",
+        "When is he gonna stop??",
+        "You try to keep still as you're positively hosed down.",
+        "These jets of sperm are so hot and thick.",
+        "Big slimy loads drape across your face.")
+        ](else-if:$text contains "mouth")[(twirl:
+        "You moan as a warm jet hits the back of your throat.",
+        "Hot, slimy nut-butter swirls around your tongue and teeth.",
+        "The massive, creamy load pools in your mouth.",
+        "His cock is like a firehose, spewing jizz straight into your mouth.",
+        "You must look like such a slut, holding your mouth open for him like this.",
+        "Jets of sperm hit the back of your mouth.",
+        "He's groaning loudly as he douses your pretty mouth.")
+        ](else-if:$text contains "chin")[(twirl:
+        "Fat ropes of cum dribble down your chin.",
+        "Cum drips down your chin.",
+        "Some of the jets dribble and ooze down your chin."
+        "The first few strands make it into your mouth, but the rest dribble and ooze down your chin."
+        "Fat wads of cum ooze from your lips, down your chin.")
+        ](else:)[(twirl:
+        "Some runs off your tongue, down your chin and onto the floor.",
+        "The taste and smell of semen is overpowering.",
+        "You try your best to keep your tongue extended while he thoroughly inseminates it."
+        "Some of the jets escape your mouth, oozing down the sides of your face.")
+        ]
+      ]
+  ](else:)[(display:_around)]
+}
+
+:: big load minigame result [around]
+{
+  (if:($npc's "race" is "black"))[
+    (print:$img)
+    (if:(win:))[{
+      (if:$text contains "huge")[Your palate is absolutely doused with gooey jets of this man's baby batter. Strands hit your lips, run down your chin and cheeks... but somehow,]
+      (else-if:$text contains "mouth")[Even with (print:$npc's "sex name") spurting countless salty, pungent jets of steaming cum directly into your mouth,]
+      (else-if:$text contains "chin")[Hot, heavy helpings of salty, sticky semen drape across your face. It's thick. It's pungent. It's sliding down your chin. But somehow,]
+      (else:)[(print:$npc's "sex name") squirts his monstrous load all over your tongue and face. He liberally paints your face with a beard even Santa would be proud of. Despite the heavy, gooey dousing,]
+      (twirl:"you maintain your composure and take it like a good girl.",
+      "you just take it like a good girl.",
+      "you manage to just take it, submissively.",
+      "you're able to keep yourself from gagging or complaining.",
+      "you manage to endure it - frozen, looking up at your oral inseminator.",
+      "you take it like a champ.")
+    }](else:)[(if:(twist:1,2) is 1)[(twirl:
+      "It's just too much.",
+      "God, it's just so much!",
+      "Fuck this.",
+      "It's just too. Much. Cum.")]
+      (if:$text contains "huge")[Your face is absoultely ruined. You're such a slut, holding still while (print:$npc's "sex name") paints your with his seed...]
+      (else-if:$text contains "mouth")[With all these countless salty, pungent jets of steaming baby batter being pumped directly into your mouth, you're overwhelmed...]
+      (else-if:$text contains "chin")[Jet after jet of nasty, sticky, salty cum spurting all over your face. It's running down your chin. This is too much...]
+      (else:)[(print:$npc's "sex name") squirts his monstrous load all over your tongue and face. You're overwhelmed by the sensation of being drowned in cum...]
+      (twirl:"You cough and sputter",
+      "You gag and cough",
+      "You gag and cough it up")
+      (twirl:".",
+      "... it's not pretty.",
+      " - not your finest moment.")
+      ]
+    (if:(twist:1,2) is 1)[(print:$npc's "name")(twirl:"chuckles at your pathetic display.","laughs at you, zipping his pants back up.","just laughs.","shakes his head and chuckles at your sticky situation.")]
+    (set:$sex_loop_continue to "false")
+    <div class='options'>
+    (if:(win:))[
+      (link:"Spit")[
+        (set:$choice to "spit")
+        (if:$scene_type is "blowjob")[
+          (set:$next to "big load finish")
+          ](else:)[
+            (set:$next to "sex transactional big load finish")
+            ](display:"change screen")
+        ](link:"Swallow")[
+          (set:$choice to "swallow")
+          (if:$scene_type is "blowjob")[
+            (set:$next to "big load finish")
+          ](else:)[
+              (set:$next to "sex transactional big load finish")
+            ](display:"change screen")
+          ]
+      ](else:)[
+        (link:(twirl:"Ugh...","FML...","God...","Yuck..."))[
+          (set:$choice to "fail")
+          (if:$scene_type is "blowjob")[
+            (set:$next to "big load finish")
+            ](else:)[
+              (set:$next to "sex transactional big load finish")
+              ]
+          (display:"change screen")
+          ]
+        ]
+      </div>
+  ](else:)[(display:_around)]
+}
+
+:: sex oral [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:_oral_img_variant to (cond:
+      $character's "id" is "alina", (twist:1,2),
+      $character's "id" is "cassidy", (twist:1,4),
+      $character's "id" is "ella", (twist:1,5),
+      $character's "id" is "jade", (twist:1,4),
+      $character's "id" is "jia", (twist:1,4),
+      $character's "id" is "lana", (twist:1,3),
+      $character's "id" is "liya", (twist:1,5),
+      $character's "id" is "mia", (twist:1,3),
+      $character's "id" is "rae", (twist:1,3),
+      $character's "id" is "scarlit", (twist:1,4),
+      ,1))
+    (set:$oral_img to "scenes/characters/" + $character's "id" + "/oral/bbc/oral " + _oral_img_variant + ".mp4")
+
+    (set:_sex_loop_variant to (cond:
+      $character's "id" is "alina", (twist:1,2),
+      $character's "id" is "cassidy", (twist:1,4),
+      $character's "id" is "ella", (twist:1,5),
+      $character's "id" is "jade", (twist:1,4),
+      $character's "id" is "jia", (twist:1,4),
+      $character's "id" is "lana", (twist:1,3),
+      $character's "id" is "liya", (twist:1,5),
+      $character's "id" is "mia", (twist:1,3),
+      $character's "id" is "rae", (twist:1,4),
+      $character's "id" is "scarlit", (twist:1,4),
+      ,1))
+    (set:$sex_loop to "licking loop " + $character's "id" + _sex_loop_variant)
+
+    (set:$oral_rhythm to $oral_img of (dm:
+    "scenes/characters/" + $character's "id" + "/oral/oral 1.mp4",500,
+    "scenes/characters/" + $character's "id" + "/oral/oral 2.mp4",500))
+
+    (set:$oral_position to $oral_img of (dm:
+    "scenes/characters/alina/oral/oral 1.mp4","missionary",
+    "scenes/characters/alina/oral/oral 2.mp4","missionary",
+    "scenes/characters/cassidy/oral/oral 1.mp4","missionary",
+    "scenes/characters/cassidy/oral/oral 2.mp4","missionary",
+    "scenes/characters/rae/oral/oral 1.mp4","missionary",
+    "scenes/characters/rae/oral/oral 2.mp4","missionary"))
+  ](else:)(display:_around)
+}
+
+:: sex pull out [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$his_choice is "tits" and $character's "id" is "alina")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/tits " + (text:1))]
+    (else-if:$his_choice is "tits" and $character's "id" is "cassidy")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/tits " + (text:(twist:1,2)))]
+    (else-if:$his_choice is "tits" and $character's "id" is "ella")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/tits " + (text:(twist:1,5)))]
+    (else-if:$his_choice is "tits" and $character's "id" is "jade")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/tits " + (text:(twist:1,4)))]
+    (else-if:$his_choice is "tits" and $character's "id" is "liya")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/tits " + (text:1))]
+    (else-if:$his_choice is "tits" and $character's "id" is "mia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/tits " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "alina")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "cassidy")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "ella")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "jade")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "jia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "lana")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "liya")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "mia")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "rae")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+    (else-if:$his_choice is "pull out" and $character's "id" is "scarlit")[(set:$img to "/characters/" + $character's "id" + "/cum/bbc/body " + (text:1))]
+
+    (set:_generic_variant to (twist:1,4))
+    (if:_generic_variant is 1)[ <!-- This is messy, but fuck it-->
+      (if:$character's "race" is "black" and $his_choice is "tits")[(set:$img to "/generic/sex/cum/tits/bbc/black " + (text:1))]
+      (else-if:$character's "race" is not "black")[
+        (if:$his_choice is "tits")[(set:$img to "/generic/sex/cum/tits/bbc/white " + (text:(twist:1,3)))]]
+        (else-if:$his_choice is "pull out")[
+           (if:(twist:1,2 is 1))[(set:$img to "/generic/sex/cum/pull out/bbc/ " + (text:(twist:1,2)))]]
+           (else:)[(set:$img to "/generic/sex/cum/pull out/bbc/ " + (twirl:("wiggle","no wiggle") + "/doggy 1"))]    
+    ]
+
+
+<!-- update the text here
+(set:$text to $img of (dm:	
+	"/characters/alina/cum/tits 1",(a:"tits","lying"),
+	"/characters/cassidy/cum/tits 1",(a:"tits","lying"),		
+	"/characters/cassidy/cum/tits 2",(a:"tits","lying"),
+	"/characters/ella/cum/tits 1",(a:"tits","kneeling","jiggle"),
+	"/characters/ella/cum/tits 2",(a:"tits","lying","jiggle"),
+	"/characters/ella/cum/tits 3",(a:"tits","kneeling","jiggle"),
+	"/characters/ella/cum/tits 4",(a:"tits","lying","jiggle","mouth"),
+	"/characters/ella/cum/tits 5",(a:"tits","kneeling","jiggle"),
+	"/characters/jade/cum/tits 1",(a:"tits","kneeling"),
+	"/characters/jade/cum/tits 2",(a:"tits","lying","jiggle"),
+	"/characters/jade/cum/tits 3",(a:"tits","lying","between"),
+	"/characters/jade/cum/tits 4",(a:"tits","lying","spray down"),
+	"/characters/liya/cum/tits 1",(a:"tits","kneeling"),
+	"/characters/mia/cum/tits 1",(a:"tits","lying")
+	))
+
+  (set:$text to $img of (dm:	
+	"/characters/alina/cum/butt 1",(a:"butt","couch"),
+	"/characters/alina/cum/body 1",(a:"body","belly","couch"),
+	"/characters/jade/cum/body 1",(a:"butt","couch"),
+	"/characters/jade/cum/butt 1",(a:"butt","couch"),
+	"/characters/jia/cum/butt 1",(a:"butt","couch"),
+	"/characters/liya/cum/butt 1",(a:"butt","couch")))
+-->
+
+    (set:$img to "<video src='img/scenes" + $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")(set:$cum_text to $text)
+  ]
+}
+
+:: quicktime right image [around]
+{
+  (display:_around)
+  (if:($npc's "race" is "black"))[
+    (if:$type is "transactional sex")[
+    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+  ](else:)[
+    (replace:?right_options)[]
+  ]]
+}
