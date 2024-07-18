@@ -1,0 +1,10 @@
+metaVersion: 1
+name: "Blacked"
+version: "0.0.1"
+author: "Chloeana"
+baseGameVersion:
+  atLeast: "0.20"
+requiredMods:
+  - name: "MultipleCharacters"
+    version:
+      atLeast: "1.8.01"

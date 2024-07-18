@@ -263,7 +263,7 @@ positions("rae", "active", "cowgirl",
     },
     {
         "name": "pole rider",
-        "flavor": "Holding you in place, he impales you.",
+        "flavor": "He holds you in place while he impales you.",
         "type": "active",
         "subtype": "cowgirl",
         "position": "cowgirl",
@@ -277,6 +277,24 @@ positions("rae", "active", "cowgirl",
         "tags": ["black", "boobs jiggle", "manhandled", "balls smacking"],
         "skill": "active sex",
         "skill level": 7,
+        "locations": ["bed", "couch"]
+    },
+    {
+        "name": "cowgirl spanking",
+        "flavor": "He slaps your ass while you ride him.",
+        "type": "active",
+        "subtype": "cowgirl",
+        "position": "cowgirl",
+        "athletics": 5,
+        "roughness": 7,
+        "your pleasure": 7,
+        "pleasure factor": "both",
+        "his pleasure": 8,
+        "his satisfaction": 8,
+        "rhythm": 500,
+        "tags": ["black", "boobs jiggle", "spank", "look back"],
+        "skill": "active sex",
+        "skill level": 5,
         "locations": ["bed", "couch"]
     }
 )
@@ -315,24 +333,6 @@ positions("rae", "passive", "cowgirl",
         "tags": ["black", "boobs jiggle", "grab waist", "balance with feet"],
         "skill": "passive sex",
         "skill level": 7,
-        "locations": ["bed", "couch"]
-    },
-    {
-        "name": "cowgirl spanking",
-        "flavor": "He slaps your ass while you ride him.",
-        "type": "passive",
-        "subtype": "cowgirl",
-        "position": "cowgirl",
-        "athletics": 5,
-        "roughness": 7,
-        "your pleasure": 7,
-        "pleasure factor": "both",
-        "his pleasure": 8,
-        "his satisfaction": 8,
-        "rhythm": 500,
-        "tags": ["black", "boobs jiggle", "spank", "look back"],
-        "skill": "passive sex",
-        "skill level": 5,
         "locations": ["bed", "couch"]
     }
 )

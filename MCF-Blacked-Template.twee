@@ -1,0 +1,59 @@
+<!-- 
+This template is intended to be used as an addition to an existing playable character.
+It assumes you have already released mod for your character and already have established the passages in this file. 
+We will be using [around] to advise said passages, which will keep your non-black encounters the same.
+
+If you do not want to use it as a separate module (meaning a separate download on Lover's Lab)
+and would instead like to include it in your original code, you will need to make those adjustments to your existing 
+passages yourself.
+But don't worry, it should be easy-ish.
+
+The majority of the edits for these passages simply perform a check on the $npc's race, to see if they're black.
+Then if so, then it would point to the new media, set new text, rhythms, etc. 
+You don't need to set the "generic" media, there are already checks in the main passages for each type 
+that will determine which clip to play.
+
+This type of syntax gets used A LOT:
+(if:($npc's "race" is "black"))[
+    #### do stuff ####
+](else:)[(display:_around)]
+
+In all the places where you see "character_id", that is where you would put your character's id.
+For example, if your mod's playable character is named Bonnie, then you would put "bonnie" in all the places where
+it says "character_id". I highly encourage you to "find and replace" in your IDE.
+
+Always be sure to set the number of clips in the individual passages.
+(set:$img to (text:(twist:1,4))) <-- this would mean you have 4 clips. If you only have 2, change it to 2.
+If you only have 1 clip, you cannot twist only 1 parameter, so you have to change it: (set:$img to "1")
+
+You don't have to stick to the media locations I have listed out in these examples. 
+If you choose to organize your files differently, just be sure to update the paths. 
+
+I hope you enjoy adding BBC to your mod as much as I enjoyed creating Blacked! <3
+-Chloe 
+-->
+
+:: blacked compatibility [around]
+{ <!-- This passage is from Blacked, it is not from MCF. It must be advised using [around]. Do not overwrite it. -->
+    (display:_around)
+    (set:$blacked_compatible_list to it + (dm:"character_id",1))
+}
+
+:: sex doggy transactional character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to (text:(twist:1,4)))
+    (set:$doggy_rhythm to $img of 
+    (dm:
+      "character_id/sex/doggy/bbc/transactional 1",500,
+      "character_id/sex/doggy/bbc/transactional 2",500,
+      "character_id/sex/doggy/bbc/transactional 3",500,
+      "character_id/sex/doggy/bbc/transactional 4",500))
+    (set:$text to $img of 
+    (dm:
+      "character_id/sex/doggy/bbc/transactional 1",(a:"","","",""),
+      "character_id/sex/doggy/bbc/transactional 2",(a:"","","",""),
+      "character_id/sex/doggy/bbc/transactional 3",(a:"","",""),
+      "character_id/sex/doggy/bbc/transactional 4",(a:"","","")))
+  ](else:)[(display:_around)]
+}

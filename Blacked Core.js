@@ -513,4 +513,3 @@ function create_black_guy(e) {
     buildBlackCock(970, "baby factory", "massive", "wide", 10, 10, 10, 10)
     ])
     ;
-  
