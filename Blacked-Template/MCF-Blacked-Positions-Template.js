@@ -1,6 +1,27 @@
-init_character_for_position("rae")
+/*
+Your positions that correlate with bbc scenes MUST ALWAYS contain the tag "black". 
+If it does not, it will not get picked up as an option with black encounters. 
+You can include whatever other tags you like, just ensure "black" is in there.
+No "black" tag = no black guys get generated.
 
-positions("rae", "passive", "service", 
+You must set at least 3 ACTIVE positions to a skill level of 3 or below. 
+This is what controls the character's starting unlocked positions. 
+If they do not have 3, then the positions fails to load at the start of a scene.
+
+Leaving some examples in here, but essentially it's the same as a normal MCF playable character's positions
+
+Black positions are part of the same position inventory/database as the non-black ones, so your name have to be unique!
+You cannot have "reverse cowgirl" for both a black and non-black position.
+You could just add "BBC" to it, but that's a little boring imo.
+You may have to get a little creative with your names, but you can do it. I believe in you.
+
+<3
+-Chloe
+*/
+
+init_character_for_position("character_id")
+
+positions("character_id", "passive", "service", 
     {
         "name": "facefuck",
         "flavor": "Your throat is his fleshlight.",
@@ -14,69 +35,14 @@ positions("rae", "passive", "service",
         "his pleasure": 7,
         "his satisfaction": 10,
         "rhythm": 500,
-        "tags": ["black", "sloppy", "close to crotch", "deepthroat", "facefuck", "submissive", "helpless", "mandhandled", "drain"],
+        "tags": ["black", "sloppy", "close to crotch", "deepthroat", "facefuck", "submissive", "helpless", "mandhandled"],
         "skill": "gag reflex",
         "skill level": 7,
         "locations": ["bed", "couch"]
-    },
-    {
-        "name": "standing oral",
-        "flavor": "He lifted you up like you were a feather.",
-        "type": "passive",
-        "subtype": "service",
-        "position": "cunnilingus",
-        "athletics": 9,
-        "roughness": 4,
-        "your pleasure": 8,
-        "pleasure factor": "oral",
-        "his pleasure": 0,
-        "his satisfaction": 0,
-        "rhythm": 500,
-        "tags": ["black", "submissive", "helpless", "pussy licking", "ass up"],
-        "skill": "orgasm control",
-        "skill level": 5,
-        "locations": ["standing"]
-    },
-    {
-        "name": "spiderman",
-        "flavor": "You don't get it. He told you it was from an old movie and it'd be hot.",
-        "type": "passive",
-        "subtype": "service",
-        "position": "fingering",
-        "athletics": 4,
-        "roughness": 0,
-        "your pleasure": 5,
-        "pleasure factor": "oral",
-        "his pleasure": 0,
-        "his satisfaction": 0,
-        "rhythm": 500,
-        "tags": ["black", "fingering", "kiss"],
-        "skill": "orgasm control",
-        "skill level": 3,
-        "locations": ["bed"]
-      }
+    }
 )
-positions("rae", "active", "service",
-      {
-        "name": "girl you nasty",
-        "flavor": "Aww, that's nasty.",
-        "type": "active",
-        "subtype": "service",
-        "position": "blowjob",
-        "athletics": 4,
-        "roughness": 3,
-        "your pleasure": 0,
-        "pleasure factor": "none",
-        "his pleasure": 7,
-        "his satisfaction": 7,
-        "rhythm": 500,
-        "tags": ["black", "close to crotch", "balls in face", "licking"],
-        "skill": "handjob",
-        "skill level": 6,
-        "locations": ["bed"]
-      }
-)
-positions("rae", "active", "missionary",
+
+positions("character_id", "active", "missionary",
     {
         "name": "slow and sensual",
         "flavor": "Almost feels like prom night.",
@@ -93,24 +59,6 @@ positions("rae", "active", "missionary",
         "tags": ["black", "kiss", "balls deep", "romantic"],
         "skill": "active sex",
         "skill level": 2,
-        "locations": ["bed", "couch"]
-    },
-    {
-        "name": "passionate",
-        "flavor": "He pulls you close, he's so deep.",
-        "type": "active",
-        "subtype": "missionary",
-        "position": "missionary",
-        "athletics": 6,
-        "roughness": 6,
-        "your pleasure": 8,
-        "pleasure factor": "both",
-        "his pleasure": 7,
-        "his satisfaction": 8,
-        "rhythm": 500,
-        "tags": ["black", "kiss", "balls deep", "romantic", "eye contact"],
-        "skill": "active sex",
-        "skill level": 3,
         "locations": ["bed", "couch"]
     },
     {
@@ -132,7 +80,8 @@ positions("rae", "active", "missionary",
         "locations": ["bed", "couch"]
     }
 )
-positions("rae", "passive", "missionary",
+
+positions("character_id", "passive", "missionary",
     {
         "name": "legs up squat",
         "flavor": "He holds you down while he impales you.",
@@ -170,24 +119,6 @@ positions("rae", "passive", "missionary",
         "locations": ["standing"]
     },
     {
-        "name": "choke legs up",
-        "flavor": "His hand around your neck, he pounds you mercilessly.",
-        "type": "passive",
-        "subtype": "missionary",
-        "position": "missionary",
-        "athletics": 7,
-        "roughness": 9,
-        "your pleasure": 7,
-        "pleasure factor": "both",
-        "his pleasure": 9,
-        "his satisfaction": 9,
-        "rhythm": 500,
-        "tags": ["black", "legs in the air", "balls deep", "manhandled", "boobs jiggle", "standing fuck"],
-        "skill": "passive sex",
-        "skill level": 7,
-        "locations": ["standing"]
-    },
-    {
         "name": "pinned and pounded",
         "flavor": "He has you pinned while he dicks you down.",
         "type": "passive",
@@ -204,24 +135,6 @@ positions("rae", "passive", "missionary",
         "skill": "passive sex",
         "skill level": 3,
         "locations": ["standing"]
-    },
-    {
-        "name": "deeper",
-        "flavor": "So deep... he's so deep.",
-        "type": "passive",
-        "subtype": "missionary",
-        "position": "missionary",
-        "athletics": 6,
-        "roughness": 8,
-        "your pleasure": 9,
-        "pleasure factor": "both",
-        "his pleasure": 9,
-        "his satisfaction": 9,
-        "rhythm": 500,
-        "tags": ["black", "legs in the air", "balls deep", "kiss", "boobs jiggle", "mating press"],
-        "skill": "passive sex",
-        "skill level": 5,
-        "locations": ["bed", "couch"]
     },
     {
         "name": "chair fuck",
@@ -242,7 +155,8 @@ positions("rae", "passive", "missionary",
         "locations": ["chair"]
     }
 )
-positions("rae", "active", "cowgirl",
+
+positions("character_id", "active", "cowgirl",
     {
         "name": "romantic riding",
         "flavor": "His hands on your hips, he guides you down onto his cock.",
@@ -278,27 +192,10 @@ positions("rae", "active", "cowgirl",
         "skill": "active sex",
         "skill level": 7,
         "locations": ["bed", "couch"]
-    },
-    {
-        "name": "cowgirl spanking",
-        "flavor": "You slap your own ass while you ride him.",
-        "type": "active",
-        "subtype": "cowgirl",
-        "position": "cowgirl",
-        "athletics": 5,
-        "roughness": 7,
-        "your pleasure": 7,
-        "pleasure factor": "both",
-        "his pleasure": 8,
-        "his satisfaction": 8,
-        "rhythm": 500,
-        "tags": ["black", "boobs jiggle", "spank", "look back"],
-        "skill": "active sex",
-        "skill level": 5,
-        "locations": ["bed", "couch"]
     }
 )
-positions("rae", "passive", "cowgirl",
+
+positions("character_id", "passive", "cowgirl",
     {
         "name": "hair hold",
         "flavor": "He grabs your hair, holding you in place while he pounds you.",
@@ -336,7 +233,9 @@ positions("rae", "passive", "cowgirl",
         "locations": ["bed", "couch"]
     }
 )
-positions("rae", "active", "doggy",
+
+/* Most doggy positions are passive, actives are for ones where the girl is doing a lot of work */
+positions("character_id", "active", "doggy",
     {
         "name": "flamingo fuck",
         "flavor": "Balancing on one leg, he bends you over the couch.",
@@ -356,7 +255,8 @@ positions("rae", "active", "doggy",
         "locations": ["couch"]
     }
 )
-positions("rae", "passive", "doggy",
+
+positions("character_id", "passive", "doggy",
     {
         "name": "fucktoy",
         "flavor": "Your name is now Fucktoy. You belong to him.",
@@ -374,42 +274,6 @@ positions("rae", "passive", "doggy",
         "skill": "passive sex",
         "skill level": 10,
         "locations": ["bed", "couch"]
-    },
-    {
-        "name": "kitchen sink",
-        "flavor": "He's throwing everything at you except the kitchen sink.",
-        "type": "passive",
-        "subtype": "doggy",
-        "position": "doggystyle",
-        "athletics": 6,
-        "roughness": 8,
-        "your pleasure": 7,
-        "pleasure factor": "both",
-        "his pleasure": 8,
-        "his satisfaction": 8,
-        "rhythm": 500,
-        "tags": ["black", "eye contact", "boobs jiggle"],
-        "skill": "passive sex",
-        "skill level": 5,
-        "locations": ["standing"]
-    },
-    {
-        "name": "podracing doggy",
-        "flavor": "Now this is podracing?",
-        "type": "passive",
-        "subtype": "doggy",
-        "position": "doggystyle",
-        "athletics": 6,
-        "roughness": 7,
-        "your pleasure": 7,
-        "pleasure factor": "both",
-        "his pleasure": 7,
-        "his satisfaction": 8,
-        "rhythm": 500,
-        "tags": ["black", "grab waist", "balls deep"],
-        "skill": "passive sex",
-        "skill level": 6,
-        "locations": ["couch"]
     },
     {
         "name": "sidefuck",

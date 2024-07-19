@@ -1,0 +1,170 @@
+<!-- 
+This template is intended to be used as an addition to an existing playable character.
+It assumes you have already released mod for your character and already have established the passages in this file. 
+We will be using [around] to advise said passages, which will keep your non-black encounters the same.
+
+If you do not want to use it as a separate module (meaning a separate download on Lover's Lab)
+and would instead like to include it in your original code, you will need to make those adjustments to your existing 
+passages yourself.
+But don't worry, it should be easy-ish.
+
+The majority of the edits for these passages simply perform a check on the $npc's race, to see if they're black.
+Then if so, then it would point to the new media, set new text, rhythms, etc. 
+You don't need to set the "generic" media, there are already checks in the main passages for each type 
+that will determine which clip to play.
+
+This type of syntax gets used A LOT:
+(if:($npc's "race" is "black"))[
+    #### do stuff ####
+](else:)[(display:_around)]
+
+In all the places where you see "character_id", that is where you would put your character's id.
+For example, if your mod's playable character is named Bonnie, then you would put "bonnie" in all the places where
+it says "character_id". I highly encourage you to "find and replace" in your IDE.
+
+Always be sure to set the number of clips in the individual passages.
+(set:$img to (text:(twist:1,4))) <-- this would mean you have 4 clips. If you only have 2, change it to 2 instead of 4.
+If you only have 1 clip, you cannot twist only 1 parameter, so you have to change it: (set:$img to "1")
+
+You don't have to use the media locations or naming schemes that I have chosen in these examples. 
+If you choose to organize your files differently, just be sure to update the paths. 
+
+I hope you enjoy adding BBC to your mod as much as I enjoyed creating Blacked! <3
+-Chloe 
+-->
+
+:: blacked compatibility [around]
+{ <!-- This passage is from Blacked, it is not from MCF. It is what enables black npc generation for your character. -->
+    (display:_around)
+    (set:$blacked_compatible_list to it + (dm:"character_id",1))
+}
+
+:: sex doggy transactional character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "character_id/sex/doggy/bbc/transactional " + (text:(twist:1,8)))
+    (set:$doggy_pic to "<img class='greyborder' 
+    src='img/scenes/characters/character_id/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$doggy_moan_pic to "<img class='greyborder' 
+    src='img/scenes/characters/character_id/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+
+    (set:$doggy_rhythm to $img of 
+    (dm:
+      "character_id/sex/doggy/bbc/transactional 1",500,
+      "character_id/sex/doggy/bbc/transactional 2",500,
+      "character_id/sex/doggy/bbc/transactional 3",500,
+      "character_id/sex/doggy/bbc/transactional 4",500,
+      "character_id/sex/doggy/bbc/transactional 5",500,
+      "character_id/sex/doggy/bbc/transactional 6",500,
+      "character_id/sex/doggy/bbc/transactional 7",500,
+      "character_id/sex/doggy/bbc/transactional 8",500))
+
+    (set:$text to $img of 
+    (dm:
+      "character_id/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
+      "character_id/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
+      "character_id/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","spank"),
+      "character_id/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
+      "character_id/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
+      "character_id/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
+      "character_id/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
+      "character_id/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional initialize character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "scenes/characters/character_id/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional facefuck character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "character_id/bj/bbc/rough " + (text:(twist:1,4)))
+    (set:$text to $img of (dm:
+    "character_id/bj/bbc/rough 1","floor",
+    "character_id/bj/bbc/rough 2","floor",
+    "character_id/bj/bbc/rough 3","counter",
+    "character_id/bj/bbc/rough 4","bed"))
+  ](else:)[(display:_around)]
+}
+
+:: facefuck transactional character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "character_id/bj/bbc/rough " + (text:(twist:1,4)))
+    (set:$text to $img of (dm:
+    "character_id/bj/bbc/rough 1","floor",
+    "character_id/bj/bbc/rough 2","floor",
+    "character_id/bj/bbc/rough 3","counter",
+    "character_id/bj/bbc/rough 4","bed"))
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional blowjob character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "scenes/characters/character_id/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional grope character_id [around]
+{ 
+  (if:($npc's "race" is "black"))[
+    (set:$grope to (twirl:"tits","ass"))  <!-- If you're able to find a groping scene for both tits and ass -->
+    (set:$grope to "tits")                <!-- Otherwise use this one -->
+  ](else:)[(display:_around)]
+}
+
+:: sex creampie image character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "/characters/character_id/cum/bbc/creampie/" + (text:(twist:1,4)))
+  ](else:)[(display:_around)]
+}
+
+:: sex cum on face character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twist:1,3)))
+    <!-- For your "bigger" facials, put them in this one -->
+    (if:$load is "big")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twirl:2,3)))]
+    <!-- For ones that look like she might not be that into it, put them here. If you don't really have any, you can just
+    set it to be whichever ones you want. -->
+    (if:$load is "unwilling")[(set:$img to "/characters/character_id/bbc/cum/facial " + (text:(twist:1,3)))]
+
+    (set:$cum_face to (dm:
+    "/characters/character_id/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
+    "/characters/character_id/cum/bbc/facial 2",(a:"spurt","open mouth","tongue","face","hair"),
+    "/characters/character_id/cum/bbc/facial 3",(a:"ooze","hair","tongue","face")))
+  ](else:)[(display:_around)]
+}
+
+:: sex oral character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$oral_img to "scenes/characters/character_id/oral/bbc/oral " + (text:(twist:1,3)) + ".mp4")
+    (set:$oral_rhythm to $oral_img of (dm:
+    "scenes/characters/character_id/oral/bbc/oral 1.mp4",652,
+    "scenes/characters/character_id/oral/bbc/oral 2.mp4",822,
+    "scenes/characters/character_id/oral/bbc/oral 3.mp4",500))
+    (set:$oral_position to $oral_img of (dm:
+    "scenes/characters/character_id/oral/bbc/oral 1.mp4","missionary",
+    "scenes/characters/character_id/oral/bbc/oral 2.mp4","missionary",
+    "scenes/characters/character_id/oral/bbc/oral 3.mp4","missionary"))
+    (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
+  ](else:)(display:_around)
+}
+
+:: sex pull out character_id [around]
+{
+  (if:($npc's "race" is "black"))[
+    (set:$img to "/characters/character_id/cum/bbc/body 1")]
+
+    (set:$text to $img of (dm:	
+      "/characters/character_id/cum/bbc/body 1",(a:"body","belly","floor")
+    ))
+  (else:)[(display:_around)]
+}

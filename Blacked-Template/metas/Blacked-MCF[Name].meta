@@ -1,0 +1,13 @@
+metaVersion: 1
+name: ""
+version: ""
+author: ""
+baseGameVersion:
+  atLeast: "0.20"
+requiredMods:
+  - name: "MultipleCharacters"
+    version:
+      atLeast: "1.8.01"
+  - name: "Blacked"
+    version:
+      atLeast: "0.0.1"
