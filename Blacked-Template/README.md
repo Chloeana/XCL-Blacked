@@ -30,7 +30,7 @@ The process is *hopefully* straightforward.
     - `img/characters/sex/insert/bbc/[character id].jpg`
 - Single vertical image, same as doggy/moan except it's missionary. 960x540. *It's kind of hard to get the angle to show both her moaning and a black guy on her, so if you can't find one just pick a good shot of her face.*
     - `img/characters/sex/missionary/moan/bbc/[character id].jpg`
-- Four vertical images (1 through 4). Inserting from behind. 960x540.
+- Four horizontal images (1 through 4). Inserting from behind. 540x960.
     - `img/scenes/characters/[character id]/sex/doggy/bbc/transactional insert 1.jpg`
 - Four vertical images (1 through 4). Moaning from behind. 960x540. *Angle might not allow for showing the black guy with her, best effort like with the other moan picture.*
     - `img/scenes/characters/[character id]/sex/doggy/bbc/moan 1.jpg`

@@ -764,7 +764,7 @@
 :: blowjob transactional initialize rae [around]
 {
   (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
+    (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,8)) + ".mp4")
   ](else:)[(display:_around)]
 }
 :: blowjob transactional initialize scarlit [around]
@@ -1107,7 +1107,7 @@
 :: sex transactional blowjob rae [around]
 {
   (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
+    (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,8)) + ".mp4")
   ](else:)[(display:_around)]
 }
 
@@ -1122,7 +1122,12 @@
 {
   (display:_around)
   (if:($npc's "race" is "black"))[
-    (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/kiss.mp4' autoplay='' loop='' muted='' playsinline/>")]
+    (if:($character's "id" is "lana"))[
+      (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/kiss " + (text:(twist:(1,3))) + ".mp4' autoplay='' loop='' muted='' playsinline/>")]
+    ]
+    (else:)[
+      (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/kiss.mp4' autoplay='' loop='' muted='' playsinline/>")]
+    ]
   ]
 }
 
@@ -1529,14 +1534,15 @@
 :: sex cum on face rae [around]
 {
   (if:($npc's "race" is "black"))[
-    (set:$img to "/characters/rae/cum/bbc/facial " + (text:(twist:1,3)))
+    (set:$img to "/characters/rae/cum/bbc/facial " + (text:(twist:1,4)))
     (if:$load is "big")[(set:$img to "/characters/rae/cum/bbc/facial " + (text:(twirl:2,3)))]
-    (if:$load is "unwilling")[(set:$img to "/characters/rae/bbc/cum/facial " + (text:(twist:1,3)))]
+    (if:$load is "unwilling")[(set:$img to "/characters/rae/bbc/cum/facial " + (text:(twist:1,4)))]
 
     (set:$cum_face to (dm:
     "/characters/rae/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
     "/characters/rae/cum/bbc/facial 2",(a:"spurt","open mouth","tongue","face","hair"),
-    "/characters/rae/cum/bbc/facial 3",(a:"ooze","hair","tongue","face")))
+    "/characters/rae/cum/bbc/facial 3",(a:"ooze","hair","tongue","face"),
+    "/characters/rae/cum/bbc/facial 4",(a:"ooze","chin","face")))
   ](else:)[(display:_around)]
 }
 
