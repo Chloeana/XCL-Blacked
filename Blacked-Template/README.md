@@ -6,7 +6,7 @@ Hi friends!
 If you're here, you're likely either making or have made a playable character using Multiple Character Framework (MCF)  
 and you want to utilize my Blacked mod to bring BBC to your beautiful character.
 
-These template are intended to be used as an addition to an existing playable character.  
+These templates are intended to be used as an addition to an existing playable character.  
 It assumes you have already released mod for your character.  
 
 If you do not want to use this as a separate module (meaning a separate download on Lover's Lab)  
