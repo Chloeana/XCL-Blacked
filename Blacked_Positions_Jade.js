@@ -1,26 +1,26 @@
 init_character_for_position("jade")
 
-postions("jade", "active", "cowgirl",
+positions("jade", "active", "cowgirl",
     
 )
-postions("jade", "active", "doggy",
+positions("jade", "active", "doggy",
     
 )
-postions("jade", "active", "missionary",
+positions("jade", "active", "missionary",
     
 )
-postions("jade", "active", "service",
+positions("jade", "active", "service",
     
 )
-postions("jade", "passive", "cowgirl",
+positions("jade", "passive", "cowgirl",
     
 )
-postions("jade", "passive", "doggy",
+positions("jade", "passive", "doggy",
     
 )
-postions("jade", "passive", "missionary",
+positions("jade", "passive", "missionary",
     
 )
-postions("jade", "passive", "service",
+positions("jade", "passive", "service",
     
 )

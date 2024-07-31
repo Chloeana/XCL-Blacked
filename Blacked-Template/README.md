@@ -96,8 +96,14 @@ There aren't a lot of passages to edit and I've left details instructions inside
 
 ## Meta files
 
-Lastly, to ensure the proper load order, you must add "Blacked" as a required mod.
+Lastly, to ensure the proper load order, you must add "BLACKED" as a required mod.
 I've included a sample .meta file for reference on how to do that. Be sure to fill in the details for you and your mod.
+
+***special note:* If you are not creating a module, but instead incorporating this code directly into your passages, 
+then you technically do not have to mark "BLACKED" as required. 
+Since the first passage advises `blacked compatibility` to add your character's id to the list, if the user does not have
+BLACKED, then this passage doesn't exist and the mod loader can't advise it (so it skips it).
+**
 
 ## Conclusion
 If you need help, join us on the X-Change Life discord and ask for help in the modding section!

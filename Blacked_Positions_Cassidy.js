@@ -1,26 +1,26 @@
 init_character_for_position("cassidy")
 
-postions("cassidy", "active", "cowgirl",
+positions("cassidy", "active", "cowgirl",
     
 )
-postions("cassidy", "active", "doggy",
+positions("cassidy", "active", "doggy",
     
 )
-postions("cassidy", "active", "missionary",
+positions("cassidy", "active", "missionary",
     
 )
-postions("cassidy", "active", "service",
+positions("cassidy", "active", "service",
     
 )
-postions("cassidy", "passive", "cowgirl",
+positions("cassidy", "passive", "cowgirl",
     
 )
-postions("cassidy", "passive", "doggy",
+positions("cassidy", "passive", "doggy",
     
 )
-postions("cassidy", "passive", "missionary",
+positions("cassidy", "passive", "missionary",
     
 )
-postions("cassidy", "passive", "service",
+positions("cassidy", "passive", "service",
     
 )

@@ -1,4 +1,5 @@
 init_character_for_position("lana")
+
 positions("lana", "active", "cowgirl",
     {
         "name": "bouncing bubble butt",
@@ -293,7 +294,7 @@ positions("lana", "active", "service",
         "locations": ["bed", "couch"]
       }
 )
-postions("lana", "passive", "cowgirl",
+positions("lana", "passive", "cowgirl",
     {
         "name": "BBC butt lift",
         "flavor": "Lift and hold... those cheeks open for BBC.",
@@ -439,7 +440,7 @@ postions("lana", "passive", "cowgirl",
         "locations": ["bed", "couch"]
     }
 )
-postions("lana", "passive", "doggy",
+positions("lana", "passive", "doggy",
     {
         "name": "bite the bullet",
         "flavor": "Bite down on something and just take it",
@@ -549,7 +550,7 @@ postions("lana", "passive", "doggy",
         "locations": ["standing"]
     },
 )
-postions("lana", "passive", "missionary",
+positions("lana", "passive", "missionary",
     {
         "name": "actual fingerfucking",
         "flavor": "He slides a few fingers into your pussy... as he's fucking it!",
@@ -627,7 +628,7 @@ postions("lana", "passive", "missionary",
         "flavor": "You hold your leg up while he fucks you sideways.",
         "type": "passive",
         "subtype": "missionary",
-        "position": "missionary",
+        "position": "side fuck",
         "athletics": 6,
         "roughness": 4,
         "your pleasure": 7,
@@ -635,7 +636,7 @@ postions("lana", "passive", "missionary",
         "his pleasure": 7,
         "his satisfaction": 7,
         "rhythm": 500,
-        "tags": ["black", "boobs jiggle", "legs in the air", "eye contact", "grab tits"],
+        "tags": ["black", "boobs jiggle", "legs in the air", "eye contact", "grab tits", "side fuck"],
         "skill": "passive sex",
         "skill level": 5,
         "locations": ["bed", "couch"]
@@ -813,7 +814,7 @@ positions("lana", "passive", "service",
         "athletics": 8,
         "roughness": 8,
         "your pleasure": 0,
-        "pleasure factor": "oral",
+        "pleasure factor": "none",
         "his pleasure": 8,
         "his satisfaction": 8,
         "rhythm": 500,

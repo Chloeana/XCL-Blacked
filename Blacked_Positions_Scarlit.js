@@ -1,26 +1,26 @@
 init_character_for_position("scarlit")
 
-postions("scarlit", "active", "cowgirl",
+positions("scarlit", "active", "cowgirl",
     
 )
-postions("scarlit", "active", "doggy",
+positions("scarlit", "active", "doggy",
     
 )
-postions("scarlit", "active", "missionary",
+positions("scarlit", "active", "missionary",
     
 )
-postions("scarlit", "active", "service",
+positions("scarlit", "active", "service",
     
 )
-postions("scarlit", "passive", "cowgirl",
+positions("scarlit", "passive", "cowgirl",
     
 )
-postions("scarlit", "passive", "doggy",
+positions("scarlit", "passive", "doggy",
     
 )
-postions("scarlit", "passive", "missionary",
+positions("scarlit", "passive", "missionary",
     
 )
-postions("scarlit", "passive", "service",
+positions("scarlit", "passive", "service",
     
 )

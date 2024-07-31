@@ -8,6 +8,6 @@ requiredMods:
   - name: "MultipleCharacters"
     version:
       atLeast: "1.8.01"
-  - name: "Blacked"
+  - name: "BLACKED"
     version:
       atLeast: "0.0.1"

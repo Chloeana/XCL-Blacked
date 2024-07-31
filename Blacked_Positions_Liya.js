@@ -1,26 +1,26 @@
 init_character_for_position("liya")
 
-postions("liya", "active", "cowgirl",
+positions("liya", "active", "cowgirl",
     
 )
-postions("liya", "active", "doggy",
+positions("liya", "active", "doggy",
     
 )
-postions("liya", "active", "missionary",
+positions("liya", "active", "missionary",
     
 )
-postions("liya", "active", "service",
+positions("liya", "active", "service",
     
 )
-postions("liya", "passive", "cowgirl",
+positions("liya", "passive", "cowgirl",
     
 )
-postions("liya", "passive", "doggy",
+positions("liya", "passive", "doggy",
     
 )
-postions("liya", "passive", "missionary",
+positions("liya", "passive", "missionary",
     
 )
-postions("liya", "passive", "service",
+positions("liya", "passive", "service",
     
 )

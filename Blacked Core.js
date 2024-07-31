@@ -482,7 +482,7 @@ function create_black_guy(e) {
   };
     (window.GE.black_cock_database = [
     buildBlackCock(999, "full-looking", "curved", "mushroom-shaped", 8, 7, 9, 7),
-    buildBlackCock(998, "twitching", "long", "shiny", 9, 8, 10, 8),
+    buildBlackCock(998, "twitching", "long", "shiny", 9, 8, 10, 7),
     buildBlackCock(997, "hefty", "huge", "mushroom-shaped", 9, 9, 10, 8),
     buildBlackCock(996, "smooth", "veiny", "round", 9, 10, 10, 8),
     buildBlackCock(995, "thick", "gigantic", "chunky", 10, 10, 10, 9),
@@ -496,12 +496,12 @@ function create_black_guy(e) {
     buildBlackCock(987, "full-looking", "massive", "round", 8, 8, 10, 8),
     buildBlackCock(986, "dangling", "smooth", "mushroom-shaped", 6, 8, 6, 6),
     buildBlackCock(985, "hefty", "veiny", "thick", 8, 8, 9, 7),
-    buildBlackCock(984, "smooth", "fat", "bloated", 7, 9, 6, 6),
+    buildBlackCock(984, "smooth", "fat", "bloated", 7, 9, 6, 5),
     buildBlackCock(983, "full-looking", "veiny", "flared", 8, 6, 10, 9),
     buildBlackCock(982, "shaved", "long", "wide", 8, 9, 8, 8),
     buildBlackCock(981, "huge", "veiny", "un-cut", 9, 8, 10, 10),
     buildBlackCock(980, "baby factory", "like a horse", "throbbing", 10, 9, 10, 10),
-    buildBlackCock(979, "tight", "long", "helmet-shaped", 8, 7, 9, 8),
+    buildBlackCock(979, "tight", "long", "helmet-shaped", 8, 7, 9, 7),
     buildBlackCock(978, "swollen", "fat", "mushroom-shaped", 8, 10, 7, 8),
     buildBlackCock(977, "dangling", "smooth", "round", 8, 7, 10, 10),
     buildBlackCock(976, "bloated", "uncut", "uncircumcised", 7, 7, 7, 6),

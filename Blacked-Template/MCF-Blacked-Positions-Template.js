@@ -60,24 +60,6 @@ positions("character_id", "active", "missionary",
         "skill": "active sex",
         "skill level": 2,
         "locations": ["bed", "couch"]
-    },
-    {
-        "name": "choke fuck",
-        "flavor": "Having trouble breathing are we?",
-        "type": "active",
-        "subtype": "missionary",
-        "position": "missionary",
-        "athletics": 8,
-        "roughness": 8,
-        "your pleasure": 6,
-        "pleasure factor": "both",
-        "his pleasure": 8,
-        "his satisfaction": 8,
-        "rhythm": 500,
-        "tags": ["black", "choke", "manhandled", "boobs jiggle", "eye contact"],
-        "skill": "active sex",
-        "skill level": 6,
-        "locations": ["bed", "couch"]
     }
 )
 
@@ -117,42 +99,6 @@ positions("character_id", "passive", "missionary",
         "skill": "passive sex",
         "skill level": 8,
         "locations": ["standing"]
-    },
-    {
-        "name": "pinned and pounded",
-        "flavor": "He has you pinned while he dicks you down.",
-        "type": "passive",
-        "subtype": "missionary",
-        "position": "missionary",
-        "athletics": 4,
-        "roughness": 6,
-        "your pleasure": 6,
-        "pleasure factor": "both",
-        "his pleasure": 8,
-        "his satisfaction": 9,
-        "rhythm": 500,
-        "tags": ["black", "legs in the air", "balls deep", "manhandled", "boobs jiggle", "mating press"],
-        "skill": "passive sex",
-        "skill level": 3,
-        "locations": ["standing"]
-    },
-    {
-        "name": "chair fuck",
-        "flavor": "Any surface will do.",
-        "type": "passive",
-        "subtype": "missionary",
-        "position": "missionary",
-        "athletics": 8,
-        "roughness": 8,
-        "your pleasure": 7,
-        "pleasure factor": "both",
-        "his pleasure": 8,
-        "his satisfaction": 9,
-        "rhythm": 500,
-        "tags": ["black", "legs in the air", "balls deep", "grab boobs", "grab head"],
-        "skill": "passive sex",
-        "skill level": 4,
-        "locations": ["chair"]
     }
 )
 
@@ -234,7 +180,6 @@ positions("character_id", "passive", "cowgirl",
     }
 )
 
-/* Most doggy positions are passive, actives are for ones where the girl is doing a lot of work */
 positions("character_id", "active", "doggy",
     {
         "name": "flamingo fuck",
