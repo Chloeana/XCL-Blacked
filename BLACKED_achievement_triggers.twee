@@ -1,0 +1,10 @@
+:: Moby BBC trigger [npc_cock_rating] 
+{<div style='display:none;'>
+(if:(cock:"girth","npc") is 10 and (cock:"length","npc") is 10 and (cock:"balls","npc") is 10)[
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$achievement_condition_select to "moby-dick-bbc")
+      (display:"add achievement to lists")
+    ]]
+  ]</div>
+}

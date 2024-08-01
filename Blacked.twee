@@ -21,6 +21,7 @@
 
 :: load game postprocessing [around]
 {
+  (display:_around)
   (display:"blacked compatibility")
   (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
 }
@@ -51,7 +52,12 @@
 :: generate random guy [around]
 {
 (display:"npc race check")
-(if:$racecheck is "black" and $blacked_compatible is 1 and $location is not "at the office")[(display:"generate black guy")]
+(if:$racecheck is "black" and $blacked_compatible is 1)[
+  (if:(dm-names:$location_params) contains "sex location passage")[
+    (if:$location_params's "sex location passage" is "office sex room")[(display:_around)]
+    (else:)[(display:"generate black guy")]
+  ]
+]
 (else:)[(display:_around)]
 }
 
@@ -417,24 +423,7 @@
   ](else:)[(display:_around)]
   }
 
-:: sex doggy [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (display:"change pov")
-      (if:$pov is "1st")[
-        (if:($character's "race" is "black"))[(set:$img to "generic/sex/doggy/c " + (text:(twist:1,3)))]
-        (else-if:(twist:1,3) is 1)[(set:$img to "generic/sex/doggy/insert " + (text:(twist:1,2)))]
-        (else:)[(set:$img to "generic/sex/doggy/w " + (text:(twist:1,3)))]
 
-        (set:$img to "<video src='img/scenes/"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
-        (set:$sex_move to "doggy")
-        (display:"sex pleasure gain")
-        (display:"doggy sounds")
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
 :: sex doggy transactional [around]
 {
@@ -1459,9 +1448,9 @@
       (if:_generic_variant is 1)[
         (if:$character's "race" is "black")[(set:$img to "/generic/sex/cum/creampie/c/bbc/missionary " + (text:(twist:1,2)))]
         (else:)[
-          (if:$position is "doggy")[(set:$img to "/generic/sex/cum/creampie/w/bbc/doggy " + (text:(twist:1,10)))]
-          (else-if:$position is "missionary")[(set:$img to "/generic/sex/cum/creampie/w/bbc/missionary " + (text:(twist:1,10)))]
-          (else:)[(set:$img to "/generic/sex/cum/creampie/w/bbc/riding " + (text:(twist:1,7)))]
+          (if:$position is "doggy")[(set:$img to "/generic/sex/cum/creampie/w/bbc/doggy " + (text:(twist:1,9)))]
+          (else-if:$position is "missionary")[(set:$img to "/generic/sex/cum/creampie/w/bbc/missionary " + (text:(twist:1,9)))]
+          (else:)[(set:$img to "/generic/sex/cum/creampie/w/bbc/riding " + (text:(twist:1,6)))]
         ]
       ](else:)[(display:"sex creampie image " + $character's "id")]
       (set:$img to "<video src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
@@ -1565,15 +1554,17 @@
   (if:($npc's "race" is "black"))[
     (display:"change pov")
     (if:$pov is "1st")[
-      (set:$img to "/generic/sex/cum/bbc/facial " + (text:(twist:1,5)))
-      (set:$text to $img of ($cum_face + (dm:
-      "/generic/sex/cum/bbc/facial 1",(a:"ooze","face","eyes","clothes"),
-      "/generic/sex/cum/bbc/facial 2",(a:"drip","face",(twirl:"mouth","tongue")),
-      "/generic/sex/cum/bbc/facial 3",(a:"spray","face","eyes","tits"),
-      "/generic/sex/cum/bbc/facial 4",(a:"spurt","face",(twirl:"eyes","nose"),"cumdump"),
-      "/generic/sex/cum/bbc/facial 5",(a:"ooze","face","chin","tits"))))
+      (set:$cum_face to (dm:))
+      (set:$img to "/generic/sex/cum/bbc facial " + (text:(twist:1,5)))
     ]
     (else:)[(display:"sex cum on face " + $character's "id")]
+
+    (set:$text to $img of ($cum_face + (dm:
+      "/generic/sex/cum/bbc facial 1",(a:"ooze","face","eyes","clothes"),
+      "/generic/sex/cum/bbc facial 2",(a:"drip","face",(twirl:"mouth","tongue")),
+      "/generic/sex/cum/bbc facial 3",(a:"spray","face","eyes","tits"),
+      "/generic/sex/cum/bbc facial 4",(a:"spurt","face",(twirl:"eyes","nose"),"cumdump"),
+      "/generic/sex/cum/bbc facial 5",(a:"ooze","face","chin","tits"))))
 
     (set:$img to "<video disableRemotePlayback src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
     (set:$cum_text to $text)
@@ -1687,7 +1678,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/jia/cum/bbc/facial " + (text:(twist:1,3)))
       (if:$load is "big")[(set:$img to "/characters/jia/cum/bbc/facial " + (text:(twirl:1,2,3)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/jia/bbc/cum/facial " + (text:(twirl:1,2,3)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/jia/cum/bbc/facial " + (text:(twirl:1,2,3)))]
 
       (set:$cum_face to (dm:
       "/characters/jia/cum/bbc/facial 1",(a:"ooze","chin","upper lip","tongue"),
@@ -2494,127 +2485,6 @@
   ](else:)[(display:_around)]
 }
 
-
-
-:: big load minigame result [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (print:$img)
-      (if:(win:))[{
-        (if:$text contains "huge")[Your palate is absolutely doused with gooey jets of this man's baby batter. Strands hit your lips, run down your chin and cheeks... but somehow,]
-        (else-if:$text contains "mouth")[Even with (print:$npc's "sex name") spurting countless salty, pungent jets of steaming cum directly into your mouth,]
-        (else-if:$text contains "chin")[Hot, heavy helpings of salty, sticky semen drape across your face. It's thick. It's pungent. It's sliding down your chin. But somehow,]
-        (else:)[(print:$npc's "sex name") squirts his monstrous load all over your tongue and face. He liberally paints your face with a beard even Santa would be proud of. Despite the heavy, gooey dousing,]
-        (twirl:"you maintain your composure and take it like a good girl.",
-        "you just take it like a good girl.",
-        "you manage to just take it, submissively.",
-        "you're able to keep yourself from gagging or complaining.",
-        "you manage to endure it - frozen, looking up at your oral inseminator.",
-        "you take it like a champ.")
-      }](else:)[(if:(twist:1,2) is 1)[(twirl:
-        "It's just too much.",
-        "God, it's just so much!",
-        "Fuck this.",
-        "It's just too. Much. Cum.")]
-        (if:$text contains "huge")[Your face is absoultely ruined. You're such a slut, holding still while (print:$npc's "sex name") paints your with his seed...]
-        (else-if:$text contains "mouth")[With all these countless salty, pungent jets of steaming baby batter being pumped directly into your mouth, you're overwhelmed...]
-        (else-if:$text contains "chin")[Jet after jet of nasty, sticky, salty cum spurting all over your face. It's running down your chin. This is too much...]
-        (else:)[(print:$npc's "sex name") squirts his monstrous load all over your tongue and face. You're overwhelmed by the sensation of being drowned in cum...]
-        (twirl:"You cough and sputter",
-        "You gag and cough",
-        "You gag and cough it up")
-        (twirl:".",
-        "... it's not pretty.",
-        " - not your finest moment.")
-        ]
-      (if:(twist:1,2) is 1)[(print:$npc's "name")(twirl:"chuckles at your pathetic display.","laughs at you, zipping his pants back up.","just laughs.","shakes his head and chuckles at your sticky situation.")]
-      (set:$sex_loop_continue to "false")
-      <div class='options'>
-      (if:(win:))[
-        (link:"Spit")[
-          (set:$choice to "spit")
-          (if:$scene_type is "blowjob")[
-            (set:$next to "big load finish")
-            ](else:)[
-              (set:$next to "sex transactional big load finish")
-              ](display:"change screen")
-          ](link:"Swallow")[
-            (set:$choice to "swallow")
-            (if:$scene_type is "blowjob")[
-              (set:$next to "big load finish")
-            ](else:)[
-                (set:$next to "sex transactional big load finish")
-              ](display:"change screen")
-            ]
-        ](else:)[
-          (link:(twirl:"Ugh...","FML...","God...","Yuck..."))[
-            (set:$choice to "fail")
-            (if:$scene_type is "blowjob")[
-              (set:$next to "big load finish")
-              ](else:)[
-                (set:$next to "sex transactional big load finish")
-                ]
-            (display:"change screen")
-            ]
-          ]
-        </div>
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-
-:: big load minigame interrupt [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(datanames:$quicktime_params) contains "type")[(if:$quicktime_params's "type" is "big load")[(set:$se to "gag " + (text:(twist:1,7)))(display:"play sound")]]
-      (if:(twist:1,2) is 1)[
-        (if:$character's "masculinity" > 79)[(twirl:
-          "Your cheeks burn red with shame as another man fills your mouth.",
-          "Your brain can't decide if this is hot, or just super gross...",
-          "Fuck, you never cum THIS much...",
-          "Holy hell this is a lot of cum...",
-          "You're temporarily revolted by the thought of a man pumping cum into your mouth.")
-          ](else:)[(Either:
-            "Your tastebuds are drenched with jizz.",
-            "Hot, steamy sperm fills your mouth.",
-            "When will it end??",
-            "He's probably gonna ruin your clothes too...")
-            ]
-        ](else:)[
-          (if:$text contains "huge")[(twirl:
-          "FUCK that's a lot of cum.",
-          "Jet after fat jet of nut-butter... how much more can you take?",
-          "It's so pungent and slimy.",
-          "When is he gonna stop??",
-          "You try to keep still as you're positively hosed down.",
-          "These jets of sperm are so hot and thick.",
-          "Big slimy loads drape across your face.")
-          ](else-if:$text contains "mouth")[(twirl:
-          "You moan as a warm jet hits the back of your throat.",
-          "Hot, slimy nut-butter swirls around your tongue and teeth.",
-          "The massive, creamy load pools in your mouth.",
-          "His cock is like a firehose, spewing jizz straight into your mouth.",
-          "You must look like such a slut, holding your mouth open for him like this.",
-          "Jets of sperm hit the back of your mouth.",
-          "He's groaning loudly as he douses your pretty mouth.")
-          ](else-if:$text contains "chin")[(twirl:
-          "Fat ropes of cum dribble down your chin.",
-          "Cum drips down your chin.",
-          "Some of the jets dribble and ooze down your chin."
-          "The first few strands make it into your mouth, but the rest dribble and ooze down your chin."
-          "Fat wads of cum ooze from your lips, down your chin.")
-          ](else:)[(twirl:
-          "Some runs off your tongue, down your chin and onto the floor.",
-          "The taste and smell of semen is overpowering.",
-          "You try your best to keep your tongue extended while he thoroughly inseminates it."
-          "Some of the jets escape your mouth, oozing down the sides of your face.")
-          ]
-        ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-
 :: quicktime right image [around]
 {
   (if:(dm-names:$npc) contains "race")[
@@ -2624,6 +2494,34 @@
       ](else:)[
       (replace:?right_options)[]
       ]
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: girl rough dirty talk [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (nl:2)
+      [
+        "(twirl:"Fuck yes","Yesss","Mmmm","Oh fuck yes","Oh god, yes","Oh yeah, fuck","Yeah")
+        (twirl:"...","!")
+        (if:$position is "bj")[
+          (twirl:"That's a good little slut","Good bitch","You're such a well-trained little whore","You're good at this, slut","You're obviously an experienced little whore","Just like that, slut")
+        ](else-if:$position is "riding")[
+          (twirl:"Just like that","Ride me just like that","Keep going, just like that","Your pussy is so tight","Your pussy feels so good","Your pussy feels so fucking tight","Ride me, yeah, keep going","Keep going","Just like that","That feels amazing")
+          , (twirl:"bitch","you slut","slut","whore")
+        ](else:)[(if:(twist:1,2) is 1)[
+          (twirl:"Take this big black cock","Take my black dick","This feels amazing","Your pussy is so tight","You feel so good clenching daddy's black cock")
+          , (twirl:"bitch","you slut","slut","whore")
+        ](else-if:$character's "race" is "white")[
+          (twirl:"You're such a good little snowbunny","You're daddy's personal white bitch now","You're such a pretty white trash princess","You're just another Phat Ass White Girl to me, slut")
+        ](else:)[
+          (twirl:"You're such a good little fuck-slut","You're daddy's little black cock whore now","You're addicted to BBC","You're just a set of holes to me, slut")
+          ]
+        ]
+          (twirl:"...",",")" you say.
+          (unless:$npc's "traits" contains "religious")[(set:$her_arousal to $her_arousal + 2)(display:"npc screen update sex girl")]]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }

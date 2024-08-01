@@ -200,7 +200,7 @@ positions("jia", "active", "service",
         "rhythm": 500,
         "tags": ["black", "close to crotch", "eye contact", "sloppy"],
         "skill": "blowjob",
-        "skill level": 4,
+        "skill level": 3,
         "locations": ["floor"]
       },
       {

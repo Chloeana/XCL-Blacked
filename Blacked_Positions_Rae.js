@@ -39,12 +39,12 @@ positions("rae", "active", "cowgirl",
     },
     {
         "name": "cowgirl spanking",
-        "flavor": "You slap your own ass while you ride him.",
+        "flavor": "You timidly slap your own ass while you ride him.",
         "type": "active",
         "subtype": "cowgirl",
         "position": "cowgirl",
         "athletics": 5,
-        "roughness": 7,
+        "roughness": 5,
         "your pleasure": 7,
         "pleasure factor": "both",
         "his pleasure": 8,
@@ -52,7 +52,7 @@ positions("rae", "active", "cowgirl",
         "rhythm": 500,
         "tags": ["black", "boobs jiggle", "spank", "look back"],
         "skill": "active sex",
-        "skill level": 5,
+        "skill level": 3,
         "locations": ["bed", "couch"]
     }
 )
