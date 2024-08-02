@@ -1593,7 +1593,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/alina/cum/bbc/facial " + (text:(twist:1,12)))
       (if:$load is "big")[(set:$img to "/characters/alina/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/alina/bbc/cum/facial " + (text:(twirl:1,9)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/alina/cum/bbc/facial " + (text:(twirl:1,9)))]
 
       (set:$cum_face to (dm:
       "/characters/alina/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
@@ -1618,7 +1618,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/cassidy/cum/bbc/facial " + (text:(twist:1,12)))
       (if:$load is "big")[(set:$img to "/characters/cassidy/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/cassidy/bbc/cum/facial " + (text:(twirl:1,9)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/cassidy/cum/bbc/facial " + (text:(twirl:1,9)))]
 
       (set:$cum_face to (dm:
       "/characters/cassidy/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
@@ -1643,7 +1643,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/ella/cum/bbc/facial " + (text:(twist:1,12)))
       (if:$load is "big")[(set:$img to "/characters/ella/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/ella/bbc/cum/facial " + (text:(twirl:1,9)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/ella/cum/bbc/facial " + (text:(twirl:1,9)))]
 
       (set:$cum_face to (dm:
       "/characters/ella/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
@@ -1668,7 +1668,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/jade/cum/bbc/facial " + (text:(twist:1,12)))
       (if:$load is "big")[(set:$img to "/characters/jade/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/jade/bbc/cum/facial " + (text:(twirl:1,9)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/jade/cum/bbc/facial " + (text:(twirl:1,9)))]
 
       (set:$cum_face to (dm:
       "/characters/jade/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
@@ -1709,7 +1709,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/lana/cum/bbc/facial " + (text:(twist:1,10)))
       (if:$load is "big")[(set:$img to "/characters/lana/cum/bbc/facial " + (text:(twirl:2,3,7,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/lana/bbc/cum/facial " + (text:(twirl:1,4,6)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/lana/cum/bbc/facial " + (text:(twirl:1,4,6)))]
 
       (set:$cum_face to (dm:
       "/characters/lana/cum/bbc/facial 1",(a:"spurt","chin","runny","cheek"),
@@ -1772,7 +1772,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/rae/cum/bbc/facial " + (text:(twist:1,4)))
       (if:$load is "big")[(set:$img to "/characters/rae/cum/bbc/facial " + (text:(twirl:2,3)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/rae/bbc/cum/facial " + (text:(twist:1,4)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/rae/cum/bbc/facial " + (text:(twist:1,4)))]
 
       (set:$cum_face to (dm:
       "/characters/rae/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
@@ -1789,7 +1789,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twist:1,12)))
       (if:$load is "big")[(set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/scarlit/bbc/cum/facial " + (text:(twirl:1,9)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twirl:1,9)))]
 
       (set:$cum_face to (dm:
       "/characters/scarlit/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
@@ -1881,7 +1881,7 @@
       (else:)[
         (set:$img to "/characters/alina/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/alina/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
         "/characters/alina/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
         "/characters/alina/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
@@ -1900,7 +1900,7 @@
       (else:)[
         (set:$img to "/characters/cassidy/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/cassidy/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
         "/characters/cassidy/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
         "/characters/cassidy/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
@@ -1919,7 +1919,7 @@
       (else:)[
         (set:$img to "/characters/ella/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/ella/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
         "/characters/ella/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
         "/characters/ella/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
@@ -1938,7 +1938,7 @@
       (else:)[
         (set:$img to "/characters/jade/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/jade/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
         "/characters/jade/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
         "/characters/jade/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
@@ -1973,7 +1973,7 @@
       (else:)[
         (set:$img to "/characters/lana/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/lana/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
         "/characters/lana/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
         "/characters/lana/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
@@ -1992,7 +1992,7 @@
       (else:)[
         (set:$img to "/characters/liya/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/liya/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
         "/characters/liya/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
         "/characters/liya/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
@@ -2011,7 +2011,7 @@
       (else:)[
         (set:$img to "/characters/mia/cum/bbc/mouth 1")
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/mia/cum/bbc/mouth 1",(a:"jerk","kneeling","external","chin","messy")))
       ]
     ](else:)[(display:_around)]
@@ -2026,11 +2026,12 @@
       (else:)[
         (set:$img to "/characters/rae/cum/bbc/mouth " + (text:(twist:1,2)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/rae/cum/bbc/mouth 1",(a:"direct","kneeling","external","spit"),
         "/characters/rae/cum/bbc/mouth 2",(a:"kneeling","external","direct","spit","clothes")))
       ]
-  ]](else:)[(display:_around)]
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
 }
 
 :: sex cum in mouth load scarlit [around]
@@ -2041,7 +2042,7 @@
       (else:)[
         (set:$img to "/characters/scarlit/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
+        (set:$cum_mouth to (dm:	
         "/characters/scarlit/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
         "/characters/scarlit/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
         "/characters/scarlit/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
@@ -2224,7 +2225,8 @@
       "scenes/characters/rae/oral/bbc/oral 3.mp4","missionary"))
 
       (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-  ]](else:)(display:_around)
+    ](else:)(display:_around)
+  ](else:)(display:_around)
 }
 
 :: sex oral scarlit [around]
