@@ -47,6 +47,24 @@
     $blackfreq is "Black Encounters: Always", "black",
     ,"white"
   ))
+
+  (set:$blacked_girl_petname_nice to (cond:
+    $character's "race" is "white", (twirl:"snowbunny","ivory queen","porcelain princess"),
+    $character's "race" is "asian", (twirl:"ricebunny","lotus blossom","sakura sweetheart"),
+    $character's "race" is "latin", (twirl:"spicybunny","mojito mistress","tropical señorita"),
+    $character's "race" is "black", (twirl:"brownbunny","ebony empress","chocolate goddess"),
+    $character's "race" is "mixed", (twirl:"blendedbunny","bronze diva","mystic muse"),
+    ,(twirl:"sexbunny","princess","baby doll")
+  ))
+
+  (set:$blacked_girl_petname_dirty to (cond:
+    $character's "race" is "white", (twirl:"white trash bitch","queen of the trailer park","creamy cocksleeve"),
+    $character's "race" is "asian", (twirl:"geisha bitch","sushi slut","dragon doll"),
+    $character's "race" is "latin", (twirl:"hot tamale","mamacita","taco temptress"),
+    $character's "race" is "black", (twirl:"hoodrat bitch","shaniqua","chocolate whore"),
+    $character's "race" is "mixed", (twirl:"mixed mutt","hybrid harlot","fusion freak"),
+    ,(twirl:"jungle fever junkie","black cock whore","BBC slut")
+  ))
 }
 
 :: generate random guy [around]
@@ -56,9 +74,8 @@
   (if:(dm-names:$location_params) contains "sex location passage")[
     (if:$location_params's "sex location passage" is "office sex room")[(display:_around)]
     (else:)[(display:"generate black guy")]
-  ]
-]
-(else:)[(display:_around)]
+  ](else:)[(display:_around)]
+](else:)[(display:_around)]
 }
 
 :: generate black guy
@@ -113,7 +130,7 @@
     "last name", "Smith",
     "preference", (twirl:"ass","tits")
   ) + (twirl: ...$black_cock_database))
-}])
+  }])
 
 (set:$npc's "race" to "black")
 
@@ -730,23 +747,21 @@
       (if:(datanames:$npc) contains "tags")[(set:$tags to $npc's tags)](else:)[(set:$tags to (a:))]
 
       (set:$minigame to (dm:
-        "difficulty",7,
+        "difficulty",(twist:5,10),
         "babe type","clothed",
-        "cock type","stripper bbc",
+        "cock type","bbc",
         "masculinity level",65,
-        "reason 1",(twirl:"You looked cute giving blowjobs.","Did you like sucking his cock?","Didn't you like sucking that big, black cock?"),
+        "reason 1",(twirl:"You looked cute giving blowjobs to black men.","Did that BBC even fit in your mouth?","Didn't you like sucking that big, black cock?"),
         "reason 2","How did you like sucking that black dick?",
         "reason 3","You looked so cute and desperate, sucking that black guy off.",
         "afterwards","blowjob transactional finish"))
         
       (if:(datanames:$npc) contains "tags")[
-
-      (set:$minigame's "reason 1" to (twirl:"You had your lips wrapped around " + $npc's "name" + "'s cock like you were gonna suck out his soul, haha.","You have the makings of a fine little cock-sucking slut, I'm sure " + $npc's "name" + " would agree.","If only you could've seen yourself, lips wrapped around that " + $npc's "unfamiliar name" + "'s " + $npc's "cockdesc" + " cock."))
-      (set:$minigame's "reason 2" to (twirl:"Did you actually *enjoy* sucking " + $npc's "name" + "'s cock?","Did you like the feeling of pleasing " + $npc's "name" + ", using just your mouth?","Did you feel degraded, inferior, with your lips wrapped around that " + $npc's "unfamiliar name" + "'s " + $npc's "cockdesc" + " cock?"))
-      (if:$npc's age > 39)[(set:$minigame's "reason 3" to (twirl:"That guy you sucked off... he was old enough to be your father.","Have a thing for blowing old guys, eh?","That guy you just blew was old enough to be your dad. How does that make you feel?"))]
-      (if:$npc's tags contains "fuckboy")[(set:$minigame's "reason 3" to (twirl:"That guy just saw you as a warm pair of lips. He didn't care about you.","That guy knows he's better than you.","You really sucked that fuckboy off.","I can't believe you blew a total fuckboy like that. You're really hopeless!"))]
-      (if:$npc's tags contains "chad")[(set:$minigame's "reason 2" to (twirl:"That guy is superior to you in every way. Of course you sucked his cock.","Of course you sucked off that total chad - you're his inferior, by far."))]
-
+      (set:$minigame's "reason 1" to (twirl:"You had your lips wrapped around " + $npc's "name" + "'s black cock like you were gonna suck out his soul, haha.","You have the makings of a fine little black cock whore, I'm sure " + $npc's "name" + " would agree.","If only you could've seen yourself, lips wrapped around that " + $npc's "unfamiliar name" + "'s " + $npc's "cockdesc" + " cock."))
+      (set:$minigame's "reason 2" to (twirl:"Did you actually *enjoy* sucking " + $npc's "name" + "'s big black cock?","Did you like the feeling of pleasing " + $npc's "name" + ", using just your mouth?","Did you feel degraded, inferior, with your lips wrapped around that " + $npc's "unfamiliar name" + "'s " + $npc's "cockdesc" + " cock?"))
+      (if:$npc's age > 39)[(set:$minigame's "reason 3" to (twirl:"That guy you sucked off... he was old enough to be your father.","Have a thing for blowing old black guys, eh?","That guy you just blew was old enough to be your dad. How does that make you feel?"))]
+      (if:$npc's tags contains "fuckboy")[(set:$minigame's "reason 3" to (twirl:"That black guy just saw you as a warm pair of lips. He didn't care about you.","That guy knows he's better than you.","You really sucked that black guy off.","I can't believe you blew a total fuckboy like that. You're really hopeless!"))]
+      (if:$npc's tags contains "chad")[(set:$minigame's "reason 2" to (twirl:"That black man is superior to you in every way. Of course you sucked his cock.","Of course you sucked off that black alpha - you're his inferior, by far."))]
       ]
 
       (set:$quicktime_params to (dm:
@@ -1742,7 +1757,7 @@
     (if:($npc's "race" is "black"))[
       (set:$img to "/characters/mia/cum/bbc/facial " + (text:(twist:1,2)))
       (if:$load is "big")[(set:$img to "/characters/mia/cum/bbc/facial 1")]
-      (if:$load is "unwilling")[(set:$img to "/characters/mia/bbc/cum/facial 2")]
+      (if:$load is "unwilling")[(set:$img to "/characters/mia/cum/bbc/facial 2")]
 
       (set:$cum_face to (dm:
       "/characters/mia/cum/bbc/facial 1",(a:"ooze","chin","cheek"),
@@ -2176,16 +2191,16 @@
       (set:$oral_rhythm to $oral_img of (dm:
       "scenes/characters/mia/oral/bbc/oral 1.mp4",500,
       "scenes/characters/mia/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/mia/oral/oral 3.mp4",500,
-      "scenes/characters/mia/oral/oral 4.mp4",500,
-      "scenes/characters/mia/oral/oral 5.mp4",500))
+      "scenes/characters/mia/oral/bbc/oral 3.mp4",500,
+      "scenes/characters/mia/oral/bbc/oral 4.mp4",500,
+      "scenes/characters/mia/oral/bbc/oral 5.mp4",500))
 
       (set:$oral_position to $oral_img of (dm:
       "scenes/characters/mia/oral/bbc/oral 1.mp4","doggy",
       "scenes/characters/mia/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/mia/oral/oral 3.mp4","missionary",
-      "scenes/characters/mia/oral/oral 4.mp4","doggy",
-      "scenes/characters/mia/oral/oral 5.mp4","missionary"))
+      "scenes/characters/mia/oral/bbc/oral 3.mp4","missionary",
+      "scenes/characters/mia/oral/bbc/oral 4.mp4","doggy",
+      "scenes/characters/mia/oral/bbc/oral 5.mp4","missionary"))
 
       (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
     ](else:)(display:_around)
@@ -2498,8 +2513,70 @@
   ](else:)[(display:_around)]
 }
 
-:: girl rough dirty talk [around]
+:: masculinity initialize [around]
 {
+  (if:$minigame's "cock type" is "stripper bbc")[(display:_around)]
+  (else-if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$correct to 0)(set:$se to 0)
+      (set:$type to "normal")
+      (set:$exclude_cocks to (a:))
+
+      (set:$minigame's "cock type" to "bbc")
+      (set:_cocks to (range:1,32) + (range:970,999))
+      (set:_cockabilities to (twisted:..._cocks)) 
+      (set:$cock_array to (subarray:_cockabilities,1,$minigame's "difficulty"))
+
+      (set:$minigame's "babe type" to "clothed")
+      (set:_possibilities to (twisted:...(range:1,309)))
+      (set:$babe_array to (subarray:_possibilities,1,$minigame's "difficulty"))
+      
+      (set:"tries" of $minigame to 1)
+      (display:"masculinity calculate penalty")
+
+      (set:$index to 1)
+      (display:"masculinity test only bbc")
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: masculinity test only bbc
+(if:$babecock is "Masculinity Minigame: Disabled")[
+  <div class='options'>(css:"font-size:4vmin")[**Masculinity Minigame Disabled**]
+  You lose (print:"masculinity penalty" of $minigame) masculinity points and (print:(ceil:("masculinity penalty" of $minigame)/2)) identity. (if:$difference < 0)[
+  ((print:-1 * $difference) less masculinity lost due to your reluctance of (print:$character's "reluctance"))](nl:2)(twirl:$minigame's "reason 1",$minigame's "reason 2",$minigame's "reason 3")(set:$character's "identity" to $character's "identity" - (ceil:("masculinity penalty" of $minigame)/2))(set:$character's "masculinity" to $character's "masculinity" - $minigame's "masculinity penalty")(display:"refresh stats")
+  (link:"Next")[(set:$next to $minigame's "afterwards")(display:"change screen")]</div>]
+(else:)[
+  <div class='options'>(css:"font-size:4vmin")[**Black Cock Memory Test**]
+  You're going to see (text:$minigame's "difficulty") pairs of images. Try to remember which girl goes with which BBC.
+  (link:"BEGIN LEARNING PHASE")[(set:$next to "masculinity learning")(display:"next")]
+  (link:"SKIP (Maximum Identity Loss)")[
+    (set:$character's "identity" to $character's "identity" - $minigame's "identity penalty")
+    (set:$character's "masculinity" to $character's "masculinity" - $minigame's "masculinity penalty")
+    (display:"refresh stats")(set:$next to $minigame's "afterwards")(display:"change screen")
+  ]
+]
+
+:: masculinity win [fullscreen]
+(set:$index to $index - 1)[(display:"character status")]<status|<div class='center_screen' data-simplebar>[<div class='options'>
+(if:$type is "normal")[(css:"font-size:4vmin")[You got $correct/$index right.(set:$minigame's "tries" to (max:(min:$index-$correct,(length of $minigame's "identity penalty")),1))
+]
+You lost (print:$minigame's "masculinity penalty") points of masculinity, and (print:$minigame's "tries" of $minigame's "identity penalty") identity points. (if:$difference < 0)[
+((print:-1 * $difference) less masculinity lost due to your reluctance of (print:$character's "reluctance"))]
+(set:$character's "identity" to $character's "identity" - (("tries" of $minigame) of $minigame's "identity penalty"))
+(set:$character's "masculinity" to $character's "masculinity" - $minigame's "masculinity penalty")
+(display:"refresh stats")
+
+(link:"Next")[(masteraudio:"stopall")(set:$next to $minigame's "afterwards")(display:"change screen")]</div>]
+
+(else-if:$type is "bbc" and $correct >= $index)[(uppercase:(twirl:"You win","Good job","That's right","Congratulations")), (twirl:"ho","slut","bitch")! You got em all. You have earned the right to proceed. Now you better SHAKE that ass.
+<div class='option'>(link:"Next")[(set:$next to $minigame's "afterwards")(display:"go back")]</div>]
+
+(else-if:$type is "bbc")[(set:$next to "masculinity lose")(display:"next")]]<screen|</div><div class='top_right' data-simplebar>[]<right_screen|(if:(datatype:$npc) is datamap)[(display:"npc screen update")](else:)[(display:"location and time")]</div>
+
+:: girl rough dirty talk [around]
+{ 
+  <!-- For Male MC talking to Female NPC -->
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
       (nl:2)
@@ -2525,3 +2602,15 @@
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
+
+
+<!-- For future me. Thanks past me!
+for descriptions, it's these passages: 
+transactional sex describe sensation
+transactional sex describe sound
+transactional sex describe he talks
+transactional sex describe body
+transactional sex describe action
+transactional sex describe thought
+transactional sex describe you talk
+-->
