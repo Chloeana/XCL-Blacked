@@ -2639,7 +2639,7 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
       (display:"display relationship status")
       (display:"bar chat girl options")
       ](else:)[(display:_around)]
-  ]
+  ](else:)[(display:_around)]
 }
 
 <!-- For future me. Thanks past me!
