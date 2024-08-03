@@ -363,7 +363,52 @@
 
     (set:$npc's "position inventory" to (subarray:$sorted_positions, 1, (min:$sorted_positions's length, $limit)))
       }])
-    ](else:)[(display:_around)]
+    ](else:)[
+      (unless:(datanames:$npc) contains "dominance")[(set:$npc's "dominance" to 8)]
+      ($use_global: "$position_database", "window.GE.position_database", [{
+      (set:_filtered_positions to (a:), _positions to (a:), _index to 1)
+        (set:_fold to (macro:str-type _type, [
+          (set:_char_subtypes to _type of ($character's id of $position_database))
+          (out-data:(folded:_dm making _all via _all + (dm-values:_dm's value), (a:), ...(dm-entries:_char_subtypes)))
+        ]))
+
+        (set:$position_list to (_fold:"passive"))
+
+        (set: $race_filtered_positions to (find:_position 
+              where _position's "tags" does not contain "black", ...$position_list))
+
+        (set:$athletics_filtered_positions to (find:_position 
+              where _position's "athletics" < ($npc's fitness + 2), ...$race_filtered_positions))
+
+        (set:$roughness_filtered_positions to (find:_position 
+              where _position's "roughness" < ($npc's dominance + 2) and _position's "roughness" > ($npc's dominance - 2), ...$race_filtered_positions))
+
+    (if:(checkdm:$npc,"ground rules","contains","no bj"))[
+    (set:$excluded_positions to
+      (find:_position where (a:"blowjob","gag reflex","titfuck","handjob")
+      contains _position's "skill"
+        , ...($race_filtered_positions)
+      )
+    )
+    (set: $excluded_position_ids to (altered: _position via _position's "id", ...$excluded_positions))
+    ](else:)[
+      (set:$excluded_positions to (a:))
+      (set:$excluded_position_ids to (a:))
+    ]
+        
+        (set:$all_positions to (twisted:...(($athletics_filtered_positions + $roughness_filtered_positions) - $excluded_positions)))
+        (set:$sorted_positions to (a:))
+        (for: each _filtered_position, ...$all_positions)[
+
+          (unless:$sorted_positions contains _filtered_position)[
+          (if:(count:$all_positions,_filtered_position) > 1)[(set:$sorted_positions to (a:_filtered_position) + $sorted_positions)](else:)[(set:$sorted_positions to $sorted_positions + (a:_filtered_position))]]
+        ]
+
+        (if:(datanames:$npc) contains "position limit")[(set:$limit to $npc's "position limit")](else:)[(set:$limit to 4)(set:$npc's "position limit" to 4)]
+
+    (set:$npc's "position inventory" to (subarray:$sorted_positions, 1, (min:$sorted_positions's length, $limit)))
+      }])
+      ]
   ](else:)[(display:_around)]
   
 }
@@ -436,7 +481,31 @@
       (set: $stamina_cost_text_3 to (str-repeated: $stamina_cost_3, "⚡") + " ")
 
       (print:" ")($show_tooltip:[(link:(upperfirst:$select_his_position's name))[(display:"sex transactional bed position select his")]],[*(print:1st of $select_his_position's flavors)*(nl:2)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_his_position's "skill"))(nl:1)Difficulty: (print:$select_his_position's "skill level")](nl:1)Position: (print:(upperfirst:$select_his_position's position))(nl:1)💦 Your pleasure: (print:$select_his_position's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_his_position's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_his_position's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_his_position's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_1's name + $stamina_cost_text_1))[(set:$position to 1)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_1's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_1's "skill"))(nl:1)Difficulty: (print:$select_your_position_1's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_1's position))(nl:1)💦 Your pleasure: (print:$select_your_position_1's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_1's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_1's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_1's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_2's name + $stamina_cost_text_2))[(set:$position to 2)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_2's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_2's "skill"))(nl:1)Difficulty: (print:$select_your_position_2's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_2's position))(nl:1)💦 Your pleasure: (print:$select_your_position_2's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_2's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_2's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_2's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_3's name + $stamina_cost_text_3))[(set:$position to 3)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_3's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_3's "skill"))(nl:1)Difficulty: (print:$select_your_position_3's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_3's position))(nl:1)💦 Your pleasure: (print:$select_your_position_3's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_3's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_3's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_3's "his satisfaction")])}]</div>}](stop:)]
-    ](else:)[(display:_around)]
+    ](else:)[
+      []<position_options|
+      (live:0.1s)[(display:"starting positions")(set:$sex_loop_continue to "true")(if:$option is "breeder check")[(set:$next to "sex transactional breeder check")(display:"change screen")](else:)[{(replace:?options)[{<div class='options'>
+      (set:$select_his_position to 0)
+      (if:(datanames:$npc) contains "position inventory")[(if:($npc's "position inventory")'s length > 1)[(set:$select_his_position to (twirl:...$npc's "position inventory"))]]
+
+      (set: $race_filtered_positions to (find:_position 
+              where _position's "tags" does not contain "black", ...$position_inventory's (text: $character's id)))
+
+      (set: $your_positions to (twisted: ...($race_filtered_positions - $excluded_positions)))
+
+      (set: $select_your_position_1 to $your_positions's 1st)
+      (set: $select_your_position_2 to $your_positions's 2nd)
+      (set: $select_your_position_3 to $your_positions's 3rd)
+
+      (set: $stamina_cost_1 to (round:(min:(max:(ceil:(($select_your_position_1's athletics)/2) - (((get_fitness:))/3)),1),5)))
+      (set: $stamina_cost_2 to (round:(min:(max:(ceil:(($select_your_position_2's athletics)/2) - (((get_fitness:))/3)),1),5)))
+      (set: $stamina_cost_3 to (round:(min:(max:(ceil:(($select_your_position_3's athletics)/2) - (((get_fitness:))/3)),1),5)))
+
+      (set: $stamina_cost_text_1 to (str-repeated: $stamina_cost_1, "⚡") + " ")
+      (set: $stamina_cost_text_2 to (str-repeated: $stamina_cost_2, "⚡") + " ")
+      (set: $stamina_cost_text_3 to (str-repeated: $stamina_cost_3, "⚡") + " ")
+
+      (print:" ")($show_tooltip:[(link:(upperfirst:$select_his_position's name))[(display:"sex transactional bed position select his")]],[*(print:1st of $select_his_position's flavors)*(nl:2)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_his_position's "skill"))(nl:1)Difficulty: (print:$select_his_position's "skill level")](nl:1)Position: (print:(upperfirst:$select_his_position's position))(nl:1)💦 Your pleasure: (print:$select_his_position's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_his_position's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_his_position's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_his_position's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_1's name + $stamina_cost_text_1))[(set:$position to 1)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_1's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_1's "skill"))(nl:1)Difficulty: (print:$select_your_position_1's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_1's position))(nl:1)💦 Your pleasure: (print:$select_your_position_1's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_1's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_1's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_1's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_2's name + $stamina_cost_text_2))[(set:$position to 2)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_2's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_2's "skill"))(nl:1)Difficulty: (print:$select_your_position_2's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_2's position))(nl:1)💦 Your pleasure: (print:$select_your_position_2's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_2's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_2's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_2's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_3's name + $stamina_cost_text_3))[(set:$position to 3)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_3's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_3's "skill"))(nl:1)Difficulty: (print:$select_your_position_3's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_3's position))(nl:1)💦 Your pleasure: (print:$select_your_position_3's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_3's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_3's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_3's "his satisfaction")])}]</div>}](stop:)]
+      ]
   ](else:)[(display:_around)]
   }
 

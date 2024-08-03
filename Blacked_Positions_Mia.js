@@ -645,7 +645,7 @@ positions("mia", "passive", "missionary",
     },
     {
         "name": "pouncing on prey",
-        "flavor": "Like tiger, pouncing on its prey.",
+        "flavor": "Like a lion, pouncing on its prey.",
         "type": "passive",
         "subtype": "missionary",
         "position": "missionary",
