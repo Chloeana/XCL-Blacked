@@ -2,7 +2,7 @@
 Your positions that correlate with bbc scenes MUST ALWAYS contain the tag "black". 
 If it does not, it will not get picked up as an option with black encounters. 
 You can include whatever other tags you like, just ensure "black" is in there.
-No "black" tag = no black guys get generated.
+No "black" tag = no black position or it shows up with non-black guys.
 
 You must set at least 3 ACTIVE positions to a skill level of 3 or below. 
 This is what controls the character's starting unlocked positions. 
