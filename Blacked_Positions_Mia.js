@@ -604,7 +604,7 @@ positions("mia", "passive", "doggy",
         "skill": "passive sex",
         "skill level": 4,
         "locations": ["bed", "couch"]
-    },
+    }
 )
 positions("mia", "passive", "missionary",
     {

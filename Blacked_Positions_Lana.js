@@ -548,7 +548,7 @@ positions("lana", "passive", "doggy",
         "skill": "passive sex",
         "skill level": 8,
         "locations": ["standing"]
-    },
+    }
 )
 positions("lana", "passive", "missionary",
     {
