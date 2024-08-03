@@ -450,7 +450,41 @@
           (set:$select to $unlocked_position's id)(display:"get position")]
         ]
       }])
-    ](else:)[(display:_around)]
+    ](else:)[
+      (set:$found to "false")
+      (display:"starting positions")
+      ($use_global: "$position_database", "window.GE.position_database", [{
+      (set:_filtered_positions to (a:), _positions to (a:), _index to 1)
+        (set:_fold to (macro:str-type _type, [
+          (set:_char_subtypes to _type of ($character's id of $position_database))
+          (out-data:(folded:_dm making _all via _all + (dm-values:_dm's value), (a:), ...(dm-entries:_char_subtypes)))
+        ]))
+        (set:$positions to (twisted:...(_fold:"active")))
+
+        (set:$race_filtered_positions to (find:_position 
+              where _position's "tags" does not contain "black", ...$positions))
+        
+        (set:_blowjob_positions to (find:_position 
+              where _position's "skill level" <= $blowjob_talent's level and _position's "skill" is "blowjob", ...$race_filtered_positions))
+        (set:_handjob_positions to (find:_position 
+              where _position's "skill level" <= $handjob_talent's level and _position's "skill" is "handjob", ...$race_filtered_positions))
+        (set:_titfuck_positions to (find:_position 
+              where _position's "skill level" <= $titfuck_talent's level and _position's "skill" is "titfuck", ...$race_filtered_positions))
+        (set:_active_positions to (find:_position 
+              where _position's "skill level" <= $dom_sex_talent's level and _position's "skill" is "active sex", ...$race_filtered_positions))
+        (set:$owned_positions to (a:))
+        (for: each _currently_owned_position, ...$position_inventory's (text:$character's id))[
+          (set:$owned_positions to it + (a:_currently_owned_position's id))
+        ]
+        (for: each _available_position, ...(_blowjob_positions + _handjob_positions + _titfuck_positions + _active_positions))[
+
+          (unless:$owned_positions contains _available_position's id)[
+          (set:$found to "true")
+          (set:$unlocked_position to _available_position)
+          (set:$select to $unlocked_position's id)(display:"get position")]
+        ]
+      }])
+    ]
   ](else:)[(display:_around)]
 }
 
