@@ -1304,7 +1304,7 @@
       $character's "id" is "ella", "kiss",
       $character's "id" is "jade", "kiss",
       $character's "id" is "jia", (twirl:"kiss 1", "kiss 2"),
-      $character's "id" is "lana", (twirl:"kiss 1", "kiss 2", "kiss dredd"),
+      $character's "id" is "lana", (twirl:"kiss 1", "kiss 2"),
       $character's "id" is "liya", "kiss",
       $character's "id" is "mia", (twirl:"kiss 1", "kiss 2"),
       $character's "id" is "rae", "kiss",
@@ -1812,18 +1812,14 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (if:(datanames:$npc) contains "ballsize")[(if:$npc's "ballsize" > (twist:8,10))[
-        (set:$load to "big")
-        (set:$sex_loop to "big load " + (text:(twist:1,6)))
-        (set:$se to "big load " + (text:(twist:1,6)))
-      ]]
+      (if:(datanames:$npc) contains "ballsize")[(if:$npc's "ballsize" > (twist:8,10))[(set:$load to "big")]]
       (else:)[(set:$load to "normal")]
 
       (if:$load is "big")[
         (set:$text to (a:"big load"))
         (if:$character's "race" is "black")[(set:$img to "/generic/sex/cum/mouth/bbc/c/2")
-        (set:$text to $text + $img of (dm:"/generic/sex/cum/mouth/bbc/c/2",(a:"lips","face"),))
-        (set:$rhythm to $img of (dm:"/generic/sex/cum/mouth/bbc/c/2",500,))
+          (set:$text to $text + $img of (dm:"/generic/sex/cum/mouth/bbc/c/2",(a:"lips","face"),))
+          (set:$rhythm to $img of (dm:"/generic/sex/cum/mouth/bbc/c/2",500,))
         ](else:)[
           (set:$img to "/generic/sex/cum/mouth/bbc/w/" + (text:(twirl:4,5,7,8,11,12)))
           (set:$text to $text + $img of (dm:
@@ -1844,6 +1840,9 @@
           "/generic/sex/cum/mouth/bbc/w/12",500,
           ))
         ]
+        (set:$backdrop to "scenes/" + $img + ".mp4")
+        (set:$sex_loop to "big load " + (text:(twist:1,6)))
+        (set:$se to "big load " + (text:(twist:1,6)))
       ](else:)[
         (set:$cum_mouth_generic to 0)
         (display:"sex cum in mouth load " + $character's "id")
@@ -1866,7 +1865,6 @@
           ]
         ]
       ]
-      (set:$backdrop to "scenes/" + $img + ".mp4")
       (set:$cum_text to $text)
       (set:$img to "<video disableRemotePlayback src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
     ](else:)[(display:_around)]
@@ -2249,6 +2247,7 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
+      (set:$pullout_variant to 0)
       (display:"sex pull out " + $character's "id")
       <!--
       tits/bbc/black 1 = C/D cup (black girl)
@@ -2594,7 +2593,7 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
           (twirl:"Take this big black cock","Take my black dick","This feels amazing","Your pussy is so tight","You feel so good clenching daddy's black cock")
           , (twirl:"bitch","you slut","slut","whore")
         ](else-if:$character's "race" is "white")[
-          (twirl:"You're such a good little snowbunny","You're daddy's personal white bitch now","You're such a pretty white trash princess","You're just another Phat Ass White Girl to me, slut")
+          (twirl:"You're such a good little snowbunny","You're daddy's personal white slut now","You're such a pretty white trash princess","You're just another Phat Ass White Girl to me, slut")
         ](else:)[
           (twirl:"You're such a good little fuck-slut","You're daddy's little black cock whore now","You're addicted to BBC","You're just a set of holes to me, slut")
           ]
@@ -2605,6 +2604,43 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
   ](else:)[(display:_around)]
 }
 
+:: bar girl pickup line failure [around]
+{
+  (display:_around)
+  (if:$npc's "traits" contains "only bbc" and $character's "race" is not "black")[
+    (set:$boredom to $boredom + 10)(set:$bar_spike_chance to it + 5)(set:$gain_attraction to -5)(set:$min_attraction to -5)(display:"change relationship")
+  ]
+}
+
+:: girl introduce yourself [around]
+{
+  (unless:(is_fem:))[
+    (display:"load relationship")
+    (if:$npc's "traits" contains "only bbc")[
+      (if:$character's "race" is "black")[
+        (set:$relationship's "attraction" to 10)
+        (twirl:"Well hello handsome... I'm","Mmmm, yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
+        (print:$character's "male name")(twirl:", care to make my night less boring?", ", I got a bed at my place with your name on it.", ". Hmm, I'll have to remember that. In case I need to scream it later.")
+        ]
+      (else-if:$character's "race" is "white")[
+        (set:$relationship's "attraction" to -20)
+        (twirl:"What do you want whiteboy?","Yuck... why are you talking to me?","Yeah, no. You're white. Not interested.")
+      ]
+      (else:)[
+        (set:$relationship's "attraction" to -20)
+        (twirl:"Yeah? What do you want loser?","Umm... are you lost?","I didn't say you could look at me.")
+        ]
+
+      (set:$events to $events + (a:"introduce"))
+      (set:$npc's "events" to $npc's "events" + (a:"introduce"))
+      (display:"update relationship name girl")
+      (set:$npc_select of $relationships to $relationship)
+      <div class='options'><mark>First impression:</mark></div>(set:$boredom to $boredom - $relationship's "attraction")
+      (display:"display relationship status")
+      (display:"bar chat girl options")
+      ](else:)[(display:_around)]
+  ]
+}
 
 <!-- For future me. Thanks past me!
 for descriptions, it's these passages: 
