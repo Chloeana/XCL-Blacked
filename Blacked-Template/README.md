@@ -9,9 +9,11 @@ and you want to utilize my Blacked mod to bring BBC to your beautiful character.
 These templates are intended to be used as an addition to an existing playable character.  
 It assumes you have already released mod for your character.  
 
-If you do not want to use this as a separate module (meaning a separate download on Lover's Lab)  
-and would instead like to include it in your original code, you will need to make those adjustments to your existing 
-passages yourself.
+In a previous version of this template, I mentioned that this could be worked directly into your MCF passages, but I am going back on that now.
+I would highly recommend having it as a separate module. 
+The biggest reason for that is the positions. You'll see below, but the positions share the normal position directories.
+So that means if somebody doesn't have BLACKED installed, then they'll simply recieve ALL the positions all of the time.
+Which is probably not the desired result there.
 
 The process is *hopefully* straightforward.
 
@@ -99,13 +101,9 @@ There aren't a lot of passages to edit and I've left details instructions inside
 Lastly, to ensure the proper load order, you must add "BLACKED" as a required mod.
 I've included a sample .meta file for reference on how to do that. Be sure to fill in the details for you and your mod.
 
-***special note:* If you are not creating a module, but instead incorporating this code directly into your core passages, 
-then you technically do not have to mark "BLACKED" as required. 
-Since the first passage advises `blacked compatibility` to add your character's id to the list, if the user does not have
-BLACKED, then this passage doesn't exist and the mod loader can't advise it (so it skips it).
-**
 
 ## Conclusion
+
 If you need help, join us on the X-Change Life discord and ask for help in the modding section!
 https://discord.com/invite/ethWsZSbHW
 

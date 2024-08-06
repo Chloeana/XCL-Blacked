@@ -3,19 +3,16 @@ This template is intended to be used as an addition to an existing playable char
 It assumes you have already released mod for your character and already have established the passages in this file. 
 We will be using [around] to advise said passages, which will keep your non-black encounters the same.
 
-If you do not want to use it as a separate module (meaning a separate download on Lover's Lab)
-and would instead like to include it in your original code, you will need to make those adjustments to your existing 
-passages yourself.
-But don't worry, it should be easy-ish.
-
 The majority of the edits for these passages simply perform a check on the $npc's race, to see if they're black.
 Then if so, then it would point to the new media, set new text, rhythms, etc. 
 You don't need to set the "generic" media, there are already checks in the main passages for each type 
 that will determine which clip to play.
 
 This type of syntax gets used A LOT:
-(if:($npc's "race" is "black"))[
-    #### do stuff ####
+(if:(dm-names:$npc) contains "race")[
+  (if:($npc's "race" is "black"))[
+      #### do stuff ####
+  ](else:)[(display:_around)]
 ](else:)[(display:_around)]
 
 In all the places where you see "character_id", that is where you would put your character's id.

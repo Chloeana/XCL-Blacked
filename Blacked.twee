@@ -1547,16 +1547,12 @@
   (display:_around)
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (if:$minigame_played is "true")[
-        (display:"sex transactional result")
-        ](else:)[
-          (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")
-          ]
-        ]
+      (unless:$minigame_played is "true")[
+          (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+      ]
     ]
   ]
 }
-
 
 :: sex creampie image [around]
 {
@@ -2678,6 +2674,37 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
 
 (else-if:$type is "bbc")[(set:$next to "masculinity lose")(display:"next")]]<screen|</div><div class='top_right' data-simplebar>[]<right_screen|(if:(datatype:$npc) is datamap)[(display:"npc screen update")](else:)[(display:"location and time")]</div>
 
+:: story the fisherman sex 15 pose options [around]
+{ <!-- This specifically applies to Quoqac -->
+  (display:_around)
+  (set:$minigame's "cock type" to "bbc")
+}
+
+:: sales demo sex begin [around]
+{
+  (display:_around)
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$minigame's "cock type" to "bbc")
+    ]
+  ]
+}
+
+:: sales demo strip [around]
+{
+  (display:_around)
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$minigame's "cock type" to "bbc")
+    ]
+  ]
+}
+
+:: sales demo goodgirl basic [around]
+{
+  (display:_around)
+  (set:$npc's "race" to "black")
+}
 :: girl rough dirty talk [around]
 { 
   <!-- For Male MC talking to Female NPC -->
@@ -2695,7 +2722,7 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
         ](else:)[(if:(twist:1,2) is 1)[
           (twirl:"Take this big black cock","Take my black dick","This feels amazing","Your pussy is so tight","You feel so good clenching daddy's black cock")
           , (twirl:"bitch","you slut","slut","whore")
-        ](else-if:$character's "race" is "white")[
+        ](else-if:$npc's "race" is "white")[
           (twirl:"You're such a good little snowbunny","You're daddy's personal white slut now","You're such a pretty white trash princess","You're just another Phat Ass White Girl to me, slut")
         ](else:)[
           (twirl:"You're such a good little fuck-slut","You're daddy's little black cock whore now","You're addicted to BBC","You're just a set of holes to me, slut")
@@ -2707,13 +2734,7 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
   ](else:)[(display:_around)]
 }
 
-:: bar girl pickup line failure [around]
-{
-  (display:_around)
-  (if:$npc's "traits" contains "only bbc" and $character's "race" is not "black")[
-    (set:$boredom to $boredom + 10)(set:$bar_spike_chance to it + 5)(set:$gain_attraction to -5)(set:$min_attraction to -5)(display:"change relationship")
-  ]
-}
+
 
 :: girl introduce yourself [around]
 {
@@ -2722,20 +2743,51 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
     (if:$npc's "traits" contains "only bbc")[
       (if:$character's "race" is "black")[
         (set:$relationship's "attraction" to 10)
-        (twirl:"Well hello handsome... I'm","Mmmm, yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
+        (twirl:"Why hello handsome... I'm","Mmm, dark chocolate...yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
         (print:$character's "male name")(twirl:", care to make my night less boring?", ", I got a bed at my place with your name on it.", ". Hmm, I'll have to remember that. In case I need to scream it later.")
         ]
-      (else-if:$character's "race" is "white")[
-        (set:$relationship's "attraction" to -20)
-        (twirl:"What do you want whiteboy?","Yuck... why are you talking to me?","Yeah, no. You're white. Not interested.")
-      ]
       (else:)[
-        (set:$relationship's "attraction" to -20)
-        (twirl:"Yeah? What do you want loser?","Umm... are you lost?","I didn't say you could look at me.")
-        ]
+        (set:$relationship's "attraction" to (cond:
+        $blackfreq is "Black Encounters: Normal", (twist:-16,-12),
+        $blackfreq is "Black Encounters: Less", (twist:-12,-8),
+        $blackfreq is "Black Encounters: More", (twist:-20,-16),
+        $blackfreq is "Black Encounters: Always", -25,
+        ,0
+        ))
+        "(twirl:
+            "Sorry, I'm flattered and all that, but",
+            "Sorry, but",
+            "I'm gonna stop you there."
+        )
+        (cond:
+        $blackfreq is "Black Encounters: Normal", (twirl:"I like my men the same way I like my coffee. Black and full of cream.","I only date black guys. They're just so strong...","I'm only looking to date black guys."),
+        $blackfreq is "Black Encounters: Less", (twirl:"I really only date black guys.","I'm really only into black men.","I'm only dating black now."),
+        $blackfreq is "Black Encounters: More", (twirl:"I only date black men. Can you blame me?","Black men are the only ones that can truly satisfy my needs...","I exclusively fuck black men. It's true what they say... Once you go black, you never go back."),
+        $blackfreq is "Black Encounters: Always", (twirl:"I'm blacked, honey. A true Queen of Spades.","I only data black alpha studs... not inferior beta cucks like you.","I only fuck big black cocks... they're the only thing that can satisfy a white girl like me."),
+        ,""
+        )"
 
+        (nl:1)
+        (cond:
+        $blackfreq is "Black Encounters: Normal", (twirl:"Maybe you still can win her over, if you play your cards right...","Well that went well. Should you give up?"),
+        $blackfreq is "Black Encounters: Less", (twirl:"She's probably all talk. Go ahead, shoot your shot.","Maybe she just hasn't met the right guy... Go on, talk to her."),
+        $blackfreq is "Black Encounters: More", (twirl:"She seemed pretty serious... and kinda bitchy. But maybe you could still try?","She seemed sure of herself... should you respect her wishes?"),
+        $blackfreq is "Black Encounters: Always", (twirl:"Wow. She's serious, isn't she? That's some racist ass shit...","Wow...she blew you off just like that. For not being black."),
+        ,""
+        )
+
+        (set:$bar_spike_chance to it + (cond:
+        $blackfreq is "Black Encounters: Normal", 2,
+        $blackfreq is "Black Encounters: Less", 1,
+        $blackfreq is "Black Encounters: More", 3,
+        $blackfreq is "Black Encounters: Always", 5,
+        ,0
+        ))
+        ]
+      (if:$blackfreq is "Black Encounters: Always")[(set:$uninterested to "true")]
       (set:$events to $events + (a:"introduce"))
       (set:$npc's "events" to $npc's "events" + (a:"introduce"))
+      (set:$npc's "familiarity male" to 1)
       (display:"update relationship name girl")
       (set:$npc_select of $relationships to $relationship)
       <div class='options'><mark>First impression:</mark></div>(set:$boredom to $boredom - $relationship's "attraction")
@@ -2743,6 +2795,70 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
       (display:"bar chat girl options")
       ](else:)[(display:_around)]
   ](else:)[(display:_around)]
+}
+
+:: bar chat girl greeting [around]
+{
+  (if:(is_fem:))[
+        (display:"bar chat girl options female")
+    ](else:)[
+    (if:$npc's "traits" contains "only bbc" and $character's "race" is not "black" and $npc's "events" contains "introduce" and $uninterested is "true")[
+      (text:"She isn't into " + ($character's "race") + " " + (twirl:"guys","boys") +".")
+      (nl:2)
+      (if:$npcs_present contains "dredd")[
+        (twirl:
+              "She's not even acknowleding you. She can't stop staring at Dredd.",
+              "Her eyes are on dark chocolate tonight.",
+              "Why would she talk to you, when Dredd is right over there.",
+              "She flips you off, then walks over and sits on Dredd's lap.",
+              "She's too busy eye-fuckin Dredd to notice you.",
+              "She dismisses you, her eyes are glued on Dredd...well his pants."
+          )
+      ](else:)[
+          (twirl:
+              "She already told you no. You're the wrong race for her.",
+              "She just laughs at you.",
+              "You're wasting your time, she doesn't want to talk to you.",
+              "She rolls her eyes at you.",
+              "Unless there's a pill that can turn you into a Black stud, she isn't going to talk to you."
+          )
+      ]]
+    (else-if:$npc's "traits" contains "only bbc" and $character's "race" is not "black" and $npc's "events" does not contain "introduce")[
+      (twirl:
+              "She catches you staring at her...",
+              "Why are the hot ones always so intimidating.",
+              "There's an awkward silence..."
+      )
+    ]
+    (else:)[(display:_around)]
+    ]
+}
+
+:: bar chat girl options [around]
+{
+  <div class="options">
+  (if:(is_fem:))[
+        (nl:1)
+        (display:"bar chat girl options female")
+    ](else:)[
+    (if:$npc's "traits" contains "only bbc" and $character's "race" is not "black" and $npc's "events" contains "introduce" and $uninterested is "true")[
+      (nl:1)
+      (link:"Leave her alone")[
+        (display:"save npc")
+        (set:$next to "bar chat patrons")
+        (display:"change screen")]
+      ]
+    (else-if:$npc's "traits" contains "only bbc" and $npc's "events" does not contain "introduce")[
+      (nl:1)
+      (link:"Introduce yourself")[
+        (set:$next to "girl introduce yourself")
+        (display:"change screen")
+        (set:$line to $npc's "name")
+        (display:"bar npc voice line")
+        ]
+    ]
+    (else:)[(display:_around)]
+    ]</div>
 }
 
 <!-- For future me. Thanks past me!

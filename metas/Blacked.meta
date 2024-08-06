@@ -1,6 +1,6 @@
 metaVersion: 1
 name: "BLACKED"
-version: "0.1.1"
+version: "0.1.4"
 author: "Chloeana"
 baseGameVersion:
   atLeast: "0.20"
@@ -8,3 +8,8 @@ requiredMods:
   - name: "MultipleCharacters"
     version:
       atLeast: "1.8.01"
+compatibleMods:
+  - name: "DatDude's Office Girls"
+    version:
+      atLeast: "0.2.2"
+    loadMyMod: "AFTER"
