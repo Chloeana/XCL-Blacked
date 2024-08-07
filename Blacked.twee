@@ -4,7 +4,7 @@
   "alina",0,
   "cassidy",0,
   "ella",0,
-  "jade",0,
+  "jade",1,
   "jia",1,
   "lana",1,
   "liya",0,
@@ -60,7 +60,7 @@
   ))
 
   (set:$blacked_girl_petname_dirty to (cond:
-    $character's "race" is "white", (twirl:"white trash bitch","queen of the trailer park","creamy cocksleeve"),
+    $character's "race" is "white", (twirl:"white trash bitch","trailer park queen","creamy cocksleeve"),
     $character's "race" is "asian", (twirl:"geisha bitch","sushi slut","dragon doll"),
     $character's "race" is "latin", (twirl:"hot tamale","mamacita","taco temptress"),
     $character's "race" is "black", (twirl:"hoodrat bitch","shaniqua","chocolate whore"),
@@ -787,33 +787,53 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (set:$img to "rae/sex/doggy/bbc/transactional " + (text:(twist:1,8)))
       (set:$doggy_pic to "<img class='greyborder' 
       src='img/scenes/characters/rae/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
       (set:$doggy_moan_pic to "<img class='greyborder' 
       src='img/scenes/characters/rae/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "rae/sex/doggy/bbc/transactional 1",500,
-        "rae/sex/doggy/bbc/transactional 2",500,
-        "rae/sex/doggy/bbc/transactional 3",500,
-        "rae/sex/doggy/bbc/transactional 4",500,
-        "rae/sex/doggy/bbc/transactional 5",500,
-        "rae/sex/doggy/bbc/transactional 6",500,
-        "rae/sex/doggy/bbc/transactional 7",500,
-        "rae/sex/doggy/bbc/transactional 8",500))
+      (if:$location_params's "sex location passage" is "beach sex area")[
+        (set:$img to "rae/sex/beach/bbc/beach " + (text:(twist:1,4)))
 
-      (set:$text to $img of 
-      (dm:
-        "rae/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
-        "rae/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
-        "rae/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","spank"),
-        "rae/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
-        "rae/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
-        "rae/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
-        "rae/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
-        "rae/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
+        (set:$doggy_rhythm to $img of 
+        (dm:
+          "rae/sex/beach/bbc/beach 1",500,
+          "rae/sex/beach/bbc/beach 2",500,
+          "rae/sex/beach/bbc/beach 3",500,
+          "rae/sex/beach/bbc/beach 4",500))
+
+        (set:$text to $img of 
+        (dm:
+          "rae/sex/beach/bbc/beach 1",(a:"table","look back","grab butt"),
+          "rae/sex/beach/bbc/beach 2",(a:"table","standing","look back"),
+          "rae/sex/beach/bbc/beach 3",(a:"table","grab face","big thrusts"),
+          "rae/sex/beach/bbc/beach 4",(a:"table","grab face","big thrusts")))
+
+      ](else:)[
+        (set:$img to "rae/sex/doggy/bbc/transactional " + (text:(twist:1,8)))
+
+        (set:$doggy_rhythm to $img of 
+        (dm:
+          "rae/sex/doggy/bbc/transactional 1",500,
+          "rae/sex/doggy/bbc/transactional 2",500,
+          "rae/sex/doggy/bbc/transactional 3",500,
+          "rae/sex/doggy/bbc/transactional 4",500,
+          "rae/sex/doggy/bbc/transactional 5",500,
+          "rae/sex/doggy/bbc/transactional 6",500,
+          "rae/sex/doggy/bbc/transactional 7",500,
+          "rae/sex/doggy/bbc/transactional 8",500))
+
+        (set:$text to $img of 
+        (dm:
+          "rae/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
+          "rae/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
+          "rae/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","spank"),
+          "rae/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
+          "rae/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
+          "rae/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
+          "rae/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
+          "rae/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
+      ]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -969,7 +989,12 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,8)) + ".mp4")
+      (if:$location_params's "sex location passage" is "beach sex area")[
+        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:8,10)) + ".mp4")
+      ]
+      (else:)[
+        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,7)) + ".mp4")
+      ]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -1238,7 +1263,12 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,8)) + ".mp4")
+      (if:$location_params's "sex location passage" is "beach sex area")[
+        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:8,10)) + ".mp4")
+      ]
+      (else:)[
+        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,7)) + ".mp4")
+      ]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -2131,11 +2161,12 @@
     (if:($npc's "race" is "black"))[
       (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
       (else:)[
-        (set:$img to "/characters/rae/cum/bbc/mouth " + (text:(twist:1,2)))
+        (set:$img to "/characters/rae/cum/bbc/mouth " + (text:(twist:1,3)))
 
         (set:$cum_mouth to (dm:	
         "/characters/rae/cum/bbc/mouth 1",(a:"direct","kneeling","external","spit"),
-        "/characters/rae/cum/bbc/mouth 2",(a:"kneeling","external","direct","spit","clothes")))
+        "/characters/rae/cum/bbc/mouth 2",(a:"kneeling","external","direct","spit","clothes"),
+        "/characters/rae/cum/bbc/mouth 3",(a:"kneeling","external","direct","spit")))
       ]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
@@ -2580,6 +2611,13 @@
             (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/2")
           ]
         ]
+      ]
+      (else-if:$location_params's "sex location passage" is "beach sex area")[
+        (set:$img to "/characters/rae/cum/bbc/body 2")]
+
+        (set:$text to $img of (dm:	
+          "/characters/rae/cum/bbc/body 2",(a:"body","belly","lying")
+        ))
       ]
       (else:)[
         (set:$img to "/characters/rae/cum/bbc/body 1")]
