@@ -11,6 +11,8 @@
   "mia",1,
   "rae",1,
   "scarlit",0))
+
+  (set:$blacked_secretary to "false")
 }
 
 :: mcf blacked compatibility [initialize]
@@ -543,7 +545,15 @@
   ](else:)[(display:_around)]
   }
 
-
+:: sex transactional initialize [around]
+{
+  (display:_around)
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$minigame's "cock type" to "bbc")
+    ]
+  ]
+}
 
 :: sex doggy transactional [around]
 {
@@ -2615,32 +2625,29 @@
 
 :: masculinity initialize [around]
 {
-  (if:$minigame's "cock type" is "stripper bbc")[(display:_around)]
-  (else-if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$correct to 0)(set:$se to 0)
-      (set:$type to "normal")
-      (set:$exclude_cocks to (a:))
-
-      (set:$minigame's "cock type" to "bbc")
-      (set:_cocks to (range:1,32) + (range:970,999))
-      (set:_cockabilities to (twisted:..._cocks)) 
-      (set:$cock_array to (subarray:_cockabilities,1,$minigame's "difficulty"))
-
-      (set:$minigame's "babe type" to "clothed")
-      (set:_possibilities to (twisted:...(range:1,309)))
-      (set:$babe_array to (subarray:_possibilities,1,$minigame's "difficulty"))
-      
-      (set:"tries" of $minigame to 1)
-      (display:"masculinity calculate penalty")
-
-      (set:$index to 1)
-      (display:"masculinity test only bbc")
-    ](else:)[(display:_around)]
+  (if:$minigame's "cock type" is "bbc")[
+    (display:"masculinity test only bbc")
   ](else:)[(display:_around)]
 }
 
 :: masculinity test only bbc
+{(set:$correct to 0)(set:$se to 0)
+(set:$type to "normal")
+(set:$exclude_cocks to (a:))
+
+(set:$minigame's "cock type" to "bbc")
+(set:_cocks to (range:1,32) + (range:970,999))
+(set:_cockabilities to (twisted:..._cocks)) 
+(set:$cock_array to (subarray:_cockabilities,1,$minigame's "difficulty"))
+
+(set:$minigame's "babe type" to "clothed")
+(set:_possibilities to (twisted:...(range:1,309)))
+(set:$babe_array to (subarray:_possibilities,1,$minigame's "difficulty"))
+
+(set:"tries" of $minigame to 1)
+(display:"masculinity calculate penalty")
+(set:$index to 1)
+}
 (if:$babecock is "Masculinity Minigame: Disabled")[
   <div class='options'>(css:"font-size:4vmin")[**Masculinity Minigame Disabled**]
   You lose (print:"masculinity penalty" of $minigame) masculinity points and (print:(ceil:("masculinity penalty" of $minigame)/2)) identity. (if:$difference < 0)[
@@ -2658,6 +2665,7 @@
 ]
 
 :: masculinity win [fullscreen]
+<!-- This wasn't a blacked thing, this is actually broke in game lol-->
 (set:$index to $index - 1)[(display:"character status")]<status|<div class='center_screen' data-simplebar>[<div class='options'>
 (if:$type is "normal")[(css:"font-size:4vmin")[You got $correct/$index right.(set:$minigame's "tries" to (max:(min:$index-$correct,(length of $minigame's "identity penalty")),1))
 ]
@@ -2674,6 +2682,33 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
 
 (else-if:$type is "bbc")[(set:$next to "masculinity lose")(display:"next")]]<screen|</div><div class='top_right' data-simplebar>[]<right_screen|(if:(datatype:$npc) is datamap)[(display:"npc screen update")](else:)[(display:"location and time")]</div>
 
+:: invite guy sex room [around]
+{
+  (display:_around)
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$minigame's "cock type" to "bbc")
+    ]
+  ]
+}
+
+:: bar dance start [around]
+{
+  (display:_around)
+  (set:$minigame's "cock type" to "bbc")
+}
+:: bar dance end [around]
+{
+  (set:$minigame's "cock type" to "bbc")
+  (display:_around)
+}
+
+:: dredd job sex they orgasm 4 [around]
+{
+  (display:_around)
+  (set:$minigame's "cock type" to "bbc")
+}
+
 :: story the fisherman sex 15 pose options [around]
 { <!-- This specifically applies to Quoqac -->
   (display:_around)
@@ -2682,29 +2717,35 @@ You lost (print:$minigame's "masculinity penalty") points of masculinity, and (p
 
 :: sales demo sex begin [around]
 {
+  <!-- 
+  goodgirl basic
+  goodgirl max
+  goodgirl petite
+  dumb bitch
+  insta strip
+  hot and ready
+  secretary
+  ready maid
+  -->
   (display:_around)
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$minigame's "cock type" to "bbc")
-    ]
-  ]
+  (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
+  (else-if:$product's "id" is "secretary" and $blacked_secretary is "true")[(set:$minigame's "cock type" to "bbc")]
 }
 
 :: sales demo strip [around]
 {
   (display:_around)
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$minigame's "cock type" to "bbc")
-    ]
-  ]
+  (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
+  (else-if:$product's "id" is "secretary" and $blacked_secretary is "true")[(set:$minigame's "cock type" to "bbc")]
 }
 
-:: sales demo goodgirl basic [around]
+:: sales demo bj [around]
 {
   (display:_around)
-  (set:$npc's "race" to "black")
+  (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
+  (else-if:$product's "id" is "secretary" and $blacked_secretary is "true")[(set:$minigame's "cock type" to "bbc")]
 }
+
 :: girl rough dirty talk [around]
 { 
   <!-- For Male MC talking to Female NPC -->
