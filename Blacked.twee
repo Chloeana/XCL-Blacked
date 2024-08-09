@@ -1411,23 +1411,60 @@
   (display:_around)
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (set:_kiss_variant to (cond:
-      $character's "id" is "alina", "kiss",
-      $character's "id" is "cassidy", "kiss",
-      $character's "id" is "ella", "kiss",
-      $character's "id" is "jade", "kiss",
-      $character's "id" is "jia", (twirl:"kiss 1", "kiss 2"),
-      $character's "id" is "lana", (twirl:"kiss 1", "kiss 2"),
-      $character's "id" is "liya", "kiss",
-      $character's "id" is "mia", (twirl:"kiss 1", "kiss 2"),
-      $character's "id" is "rae", "kiss",
-      $character's "id" is "scarlit", "kiss",
-      ,"kiss"
-    ))
-
-    (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/" + _kiss_variant + ".mp4' autoplay='' loop='' muted='' playsinline/>")]
+      (display:"sex transactional kiss " + $character's "id")
+      (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/" + $kiss_variant + ".mp4' autoplay='' loop='' muted='' playsinline/>")]
     ]
   ]
+}
+
+:: sex transactional kiss alina
+{
+  (set:$kiss_variant to "kiss")
+}
+
+:: sex transactional kiss cassidy
+{
+  (set:$kiss_variant to "kiss")
+}
+
+:: sex transactional kiss ella
+{
+  (set:$kiss_variant to "kiss")
+}
+
+:: sex transactional kiss jade
+{
+  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
+}
+
+:: sex transactional kiss jia
+{
+  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
+}
+
+:: sex transactional kiss lana
+{
+  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
+}
+
+:: sex transactional kiss liya
+{
+  (set:$kiss_variant to "kiss")
+}
+
+:: sex transactional kiss mia
+{
+  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
+}
+
+:: sex transactional kiss rae
+{
+  (set:$kiss_variant to "kiss")
+}
+
+:: sex transactional kiss scarlit
+{
+  (set:$kiss_variant to "kiss")
 }
 
 :: sex transactional grope alina [around]
