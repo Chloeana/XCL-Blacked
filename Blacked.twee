@@ -642,13 +642,19 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (set:$img to (text:(twist:1,7)))
+      (set:$img to "jade/sex/doggy/bbc/transactional " + (text:(twist:1,9)))
+      (set:$doggy_pic to "<img class='greyborder' 
+      src='img/scenes/characters/jade/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+      (set:$doggy_moan_pic to "<img class='greyborder' 
+      src='img/scenes/characters/jade/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+
       (set:$doggy_rhythm to $img of 
       (dm:
         "jade/sex/doggy/bbc/transactional 1",500,
         "jade/sex/doggy/bbc/transactional 2",500,
         "jade/sex/doggy/bbc/transactional 3",500,
         "jade/sex/doggy/bbc/transactional 4",500))
+
       (set:$text to $img of 
       (dm:
         "jade/sex/doggy/bbc/transactional 1",(a:"","","",""),
