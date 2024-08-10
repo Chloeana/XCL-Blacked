@@ -1,6 +1,6 @@
 metaVersion: 1
 name: "BLACKED"
-version: "0.1.7"
+version: "0.1.8"
 author: "Chloeana"
 baseGameVersion:
   atLeast: "0.20"
