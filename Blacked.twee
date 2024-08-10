@@ -642,7 +642,7 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (set:$img to "jade/sex/doggy/bbc/transactional " + (text:(twist:1,9)))
+      (set:$img to "jade/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
       (set:$doggy_pic to "<img class='greyborder' 
       src='img/scenes/characters/jade/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
       (set:$doggy_moan_pic to "<img class='greyborder' 
@@ -658,7 +658,8 @@
         "jade/sex/doggy/bbc/transactional 6",500,
         "jade/sex/doggy/bbc/transactional 7",500,
         "jade/sex/doggy/bbc/transactional 8",500,
-        "jade/sex/doggy/bbc/transactional 9",500))
+        "jade/sex/doggy/bbc/transactional 9",500,
+        "jade/sex/doggy/bbc/transactional 10",500))
 
       (set:$text to $img of 
       (dm:
@@ -670,7 +671,8 @@
         "jade/sex/doggy/bbc/transactional 6",(a:"couch","grab waist","look back"),
         "jade/sex/doggy/bbc/transactional 7",(a:"couch","pull hair","spank","grab waist"),
         "jade/sex/doggy/bbc/transactional 8",(a:"bed","look back","grab waist", "spank"),
-        "jade/sex/doggy/bbc/transactional 9",(a:"bed","grab arms","look back")))
+        "jade/sex/doggy/bbc/transactional 9",(a:"bed","grab arms","look back"),
+        "jade/sex/doggy/bbc/transactional 10",(a:"bed","grab waist","big thrusts")))
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
