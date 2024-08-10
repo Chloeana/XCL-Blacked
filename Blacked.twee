@@ -19,6 +19,7 @@
 {
   (display:"blacked compatibility")
   (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
 }
 
 :: load game postprocessing [around]
@@ -26,6 +27,23 @@
   (display:_around)
   (display:"blacked compatibility")
   (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
+}
+
+:: New-U new ID [around]
+{
+  (display:_around)
+  (display:"blacked compatibility")
+  (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
+}
+
+:: New-U change back [around]
+{
+  (display:_around)
+  (display:"blacked compatibility")
+  (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
 }
 
 :: blacked options [mod_options]
@@ -793,27 +811,27 @@
       (set:$doggy_moan_pic to "<img class='greyborder' 
       src='img/scenes/characters/rae/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "rae/sex/doggy/bbc/transactional 1",500,
-        "rae/sex/doggy/bbc/transactional 2",500,
-        "rae/sex/doggy/bbc/transactional 3",500,
-        "rae/sex/doggy/bbc/transactional 4",500,
-        "rae/sex/doggy/bbc/transactional 5",500,
-        "rae/sex/doggy/bbc/transactional 6",500,
-        "rae/sex/doggy/bbc/transactional 7",500,
-        "rae/sex/doggy/bbc/transactional 8",500))
+        (set:$doggy_rhythm to $img of 
+        (dm:
+          "rae/sex/doggy/bbc/transactional 1",500,
+          "rae/sex/doggy/bbc/transactional 2",500,
+          "rae/sex/doggy/bbc/transactional 3",500,
+          "rae/sex/doggy/bbc/transactional 4",500,
+          "rae/sex/doggy/bbc/transactional 5",500,
+          "rae/sex/doggy/bbc/transactional 6",500,
+          "rae/sex/doggy/bbc/transactional 7",500,
+          "rae/sex/doggy/bbc/transactional 8",500))
 
-      (set:$text to $img of 
-      (dm:
-        "rae/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
-        "rae/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
-        "rae/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","spank"),
-        "rae/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
-        "rae/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
-        "rae/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
-        "rae/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
-        "rae/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
+        (set:$text to $img of 
+        (dm:
+          "rae/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
+          "rae/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
+          "rae/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","spank"),
+          "rae/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
+          "rae/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
+          "rae/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
+          "rae/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
+          "rae/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -2700,24 +2718,6 @@
     (display:"refresh stats")(set:$next to $minigame's "afterwards")(display:"change screen")
   ]
 ]
-
-:: masculinity win [fullscreen]
-<!-- This wasn't a blacked thing, this is actually broke in game lol-->
-(set:$index to $index - 1)[(display:"character status")]<status|<div class='center_screen' data-simplebar>[<div class='options'>
-(if:$type is "normal")[(css:"font-size:4vmin")[You got $correct/$index right.(set:$minigame's "tries" to (max:(min:$index-$correct,(length of $minigame's "identity penalty")),1))
-]
-You lost (print:$minigame's "masculinity penalty") points of masculinity, and (print:$minigame's "tries" of $minigame's "identity penalty") identity points. (if:$difference < 0)[
-((print:-1 * $difference) less masculinity lost due to your reluctance of (print:$character's "reluctance"))]
-(set:$character's "identity" to $character's "identity" - (("tries" of $minigame) of $minigame's "identity penalty"))
-(set:$character's "masculinity" to $character's "masculinity" - $minigame's "masculinity penalty")
-(display:"refresh stats")
-
-(link:"Next")[(masteraudio:"stopall")(set:$next to $minigame's "afterwards")(display:"change screen")]</div>]
-
-(else-if:$type is "bbc" and $correct >= $index)[(uppercase:(twirl:"You win","Good job","That's right","Congratulations")), (twirl:"ho","slut","bitch")! You got em all. You have earned the right to proceed. Now you better SHAKE that ass.
-<div class='option'>(link:"Next")[(set:$next to $minigame's "afterwards")(display:"go back")]</div>]
-
-(else-if:$type is "bbc")[(set:$next to "masculinity lose")(display:"next")]]<screen|</div><div class='top_right' data-simplebar>[]<right_screen|(if:(datatype:$npc) is datamap)[(display:"npc screen update")](else:)[(display:"location and time")]</div>
 
 :: invite guy sex room [around]
 {
