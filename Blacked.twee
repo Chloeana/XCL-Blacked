@@ -1,4 +1,4 @@
-:: blacked compatibility
+:: blacked compatibility initial
 {
   (set:$blacked_compatible_list to (dm:
   "alina",0,
@@ -17,15 +17,35 @@
 
 :: mcf blacked compatibility [initialize]
 {
-  (display:"blacked compatibility")
+  (display:"blacked compatibility initial")
   (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
 }
 
 :: load game postprocessing [around]
 {
   (display:_around)
-  (display:"blacked compatibility")
+  (display:"blacked compatibility initial")
   (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
+}
+
+:: blacked compatibility check
+{
+  (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
+}
+
+:: New-U new ID [around]
+{
+  (display:_around)
+  (display:"blacked compatibility check")
+}
+
+:: New-U change back [around]
+{
+  (display:_around)
+  (display:"blacked compatibility check")
 }
 
 :: blacked options [mod_options]
