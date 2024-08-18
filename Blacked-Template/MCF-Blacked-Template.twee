@@ -172,6 +172,12 @@ I hope you enjoy adding BBC to your mod as much as I enjoyed creating BLACKED! <
   ](else:)[(display:_around)]
 }
 
+:: sex transactional kiss character_id
+{
+  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
+  <!-- If you only have one: (set:$kiss_variant to "kiss") -->
+}
+
 :: sex creampie image character_id [around]
 {
   (if:(dm-names:$npc) contains "race")[
