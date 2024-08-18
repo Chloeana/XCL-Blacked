@@ -970,7 +970,7 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,7)) + ".mp4")
+    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -1222,7 +1222,7 @@
 {
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,7)) + ".mp4")
+    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -2920,6 +2920,181 @@
   ](else:)[(display:_around)]
 }
 
+
+:: position inventory
+{
+  (display:"starting positions")
+  (set:$unlocked_ids to (a:))
+  (for: each _owned_position, ...($position_inventory's (text:$character's id)))[(set:$unlocked_ids to it + (a:_owned_position's id))]
+  
+  (set:_clean_filters to (dm:
+  "type", (dm:"active",false,"passive",false),
+  "subtype", (dm:"cowgirl",false,"doggy",false,"missionary",false,"service",false),
+  "skill level", (dm:"min",0,"max",10),
+  "roughness", (dm:"min",0,"max",10),
+  "athletics", (dm:"min",0,"max",10),
+  "your pleasure", (dm:"min",0,"max",10),
+  "his pleasure", (dm:"min",0,"max",10),
+  "his satisfaction", (dm:"min",0,"max",10),
+  "partner", (dm:"blacked",false,"normal",false)
+  ))
+
+  (set:_filters to _clean_filters)
+
+  (set:_filtered_positions to (a:), _positions to (a:), _index to 1, _filters to _clean_filters)
+  (set:_show_position to [{
+    (if:_filtered_positions is not an empty)[
+      (set:$select to id of _index of _filtered_positions)
+      (display:"get position")
+    ]
+    (rerun:?position_view)
+  }])
+  (set:_hoverImage to (macro: str-type _img, str-type _imgHover, codehook-type _hook, [
+    (out:)[{
+      (link-rerun:"<img src='" + _img + "' width=50px height=auto onmouseover=this.src='" + _imgHover + "' onmouseout=this.src='" + _img + "' />")[{
+        (display:"click")
+        _hook
+      }]
+    }]
+  ]))
+  ($use_global: "$position_database", "window.GE.position_database", [{
+    (set:_fold to (macro:str-type _type, [
+      (set:_char_subtypes to _type of ($character's id of $position_database))
+      (out-data:(folded:_dm making _all via _all + (dm-values:_dm's value), (a:), ...(dm-entries:_char_subtypes)))
+    ]))
+    (set:_positions to (_fold:"active") + (_fold:"passive"))
+
+    (set:_positions to (altered: _position via (cond:
+      _position's "tags" contains "black",_position + (dm:"partner","blacked"),
+      _position + (dm:"partner","normal")
+    ), ..._positions))
+
+    (set:_filtered_positions to _positions)
+    _show_position
+  }])
+  |position_view>[(if:_filtered_positions is not an empty)[(print:$select_position's "video full")]]
+  <div style='display:flex;width:100%;gap:1vw'>
+    <div style='flex:1'><div class='options'>
+      |position_view>[
+        (if:_filtered_positions is not an empty)[
+          (display:"position stats")
+        ](else:)[
+          No positions match the current filters.
+        ]
+      ]
+    </div></div>
+    <div style='flex:1'>
+      <div class='options'>
+        |position_view>[<span class='shadow'>Skill used: (color:"bisque")[(print:(upperfirst:$select_position's skill))](print:"
+      ")
+      Skill level: (color:"bisque")[(print:$select_position's "skill level")](print:"
+      ")</span>
+          (if:length of _filtered_positions > 1)[
+            <div class='borderless'>
+              |left>[{
+                (_hoverImage: "img/ui/buttons/64button1left.png", "img/ui/buttons/64button2left.png", [{
+                  (if:_filtered_positions's length > 1)[
+                    (set:_index to (cond:it <= 1, _filtered_positions's length, it - 1))
+                    _show_position
+                  ]
+                }])
+              }]
+              |right>[{
+                (_hoverImage: "img/ui/buttons/64button1right.png", "img/ui/buttons/64button2right.png", [{
+                  (if:_filtered_positions's length > 1)[
+                    (set:_index to (cond:it >= _filtered_positions's length, 1, it + 1))
+                    _show_position
+                  ]
+                }])
+              }]
+            </div>
+          ]
+        ]
+        (link-rerun:"Filter")[(css:'max-height:95vh;max-width:95vw')(dialog: bind _response, [{
+            (set:$new_filter to (dm-altered:via its value,_filters))
+            (set:_slider to (macro:str-type _attribute, [
+              (set:_filter to _attribute of $new_filter)
+              (set:_id_attribute to (str-replaced:(p-many: whitespace), '-', _attribute))
+              (out:)[{
+                (print:"<p style='display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))'><span>" + (upperfirst:_attribute) + ": <span id='" + _id_attribute + "-amount'>" + (str:min of _filter) + " - " + (str:max of _filter) + "</span></span><span id='" + _id_attribute + "-slider' style='margin-right:1rem'></span></p><script>
+                  let new_filter = $new_filter
+                  $('#" + _id_attribute + "-slider').slider({
+                    range: true,
+                    min: 0,
+                    max: 10,
+                    values: [new_filter.get('" + _attribute + "').get('min'),new_filter.get('" + _attribute + "').get('max')],
+                    slide: function(event, ui) {
+                      let new_filter = $new_filter
+                      new_filter.get('" + _attribute + "').set('min', ui.values[0])
+                      new_filter.get('" + _attribute + "').set('max', ui.values[1])
+                      $new_filter = new_filter
+                      $('#" + _id_attribute + "-amount').text(ui.values[0] + ' - ' + ui.values[1])
+                    }
+                  })
+                </script>")
+              }]
+            ]))
+            (set:_checkboxes to (macro:str-type _attribute, [
+              (out:)[{
+                <p style='display:flex;gap:1rem'>
+                  <span style='flex:1'>(upperfirst:_attribute):</span>
+                  <span style='display:grid;gap:1rem;grid-template-columns:repeat(auto-fill,minmax(6.2em,1fr));flex:4'>
+                    (css:'display:contents')+(for:each _value, ...(dm-names:_attribute of $new_filter))[
+                      <span>(checkbox:2bind _value of _attribute of $new_filter, (upperfirst:_value))</span>
+                    ]
+                  </span>
+                </p>
+              }]
+            ]))
+            <div style='max-height:calc(95vh - 5em);width:50rem;max-width:calc(95vw - 4em)' data-simplebar>
+              (_checkboxes:"partner")
+              (_checkboxes:"type")
+              (_checkboxes:"subtype")
+              (_slider:"skill level")
+              (_slider:"athletics")
+              (_slider:"your pleasure")
+              (_slider:"his pleasure")
+              (_slider:"his satisfaction")
+              (_slider:"roughness")
+            </div>
+          }], "Apply", "Cancel", "Clear")(if:_response is "Apply")[(set:_filters to $new_filter)(rerun:?filter)](else-if:_response is "Clear")[(set:_filters to _clean_filters)(rerun:?filter)]]
+        (link:"Back")[(display:"go back")]
+      </div>
+      |filter>[
+        (set:_number_filters to (find:_entry where _entry's value contains "min", ...(dm-entries:_filters)))
+        (set:_partner_entries to (dm-entries:partner of _filters))
+        (set:_type_entries to (dm-entries:type of _filters))
+        (set:_subtype_entries to (dm-entries:subtype of _filters))
+
+        (set:_filtered_positions to (find:_position 
+          where (all-pass: _entry where _entry's name of _position >= min of _entry's value and <= max of _entry's value, ..._number_filters)
+            and ((none-pass: where its value, ..._type_entries) or (some-pass: _entry where _entry's value and _position's type is _entry's name, ..._type_entries))
+            and ((none-pass: where its value, ..._subtype_entries) or (some-pass: _entry where _entry's value and _position's subtype is _entry's name, ..._subtype_entries))
+            and ((none-pass: where its value, ..._partner_entries) or (some-pass: _entry where _entry's value and _position's partner is _entry's name, ..._partner_entries))
+          , ..._positions))
+
+        (if:(some-pass:where its id is $select, ..._filtered_positions))[
+          (set:_filtered_positions to (rotated-to: where its id is $select, ..._filtered_positions))
+        ]
+        (set:_index to 1)
+        _show_position
+        (set:_checkboxes_display to (macro:str-type _desc, array-type _entries, [
+          (out:)[{
+            (if:(some-pass: where its value, ..._entries))[
+              <div>_desc: (joined:", ", ...(altered: via (upperfirst:its name), ...(find:where its value, ..._entries)))</div>
+            ]
+          }]
+        ]))
+        (_checkboxes_display:"Partner", _partner_entries)
+        (_checkboxes_display:"Type", _type_entries)
+        (_checkboxes_display:"Subtype", _subtype_entries)
+        (for:each _entry, ...(sorted:via (str-replaced:"y","b",its name), ...(find:_a where min of value of _a > 1 or max of value of _a < 10,..._number_filters)))[
+          <div>(upperfirst:_entry's name): (print:min of _entry's value) - (print:max of _entry's value)</div>
+        ]
+      ]
+    </div>
+  </div>
+}
 
 <!-- For future me. Thanks past me!
 for descriptions, it's these passages: 
