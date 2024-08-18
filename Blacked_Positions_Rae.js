@@ -186,7 +186,7 @@ positions("rae", "active", "missionary",
         "locations": ["bed", "couch"]
     },
     {
-        "name": "passionate missionary",
+        "name": "passionate",
         "flavor": "He pulls you close, he's so deep.",
         "type": "active",
         "subtype": "missionary",

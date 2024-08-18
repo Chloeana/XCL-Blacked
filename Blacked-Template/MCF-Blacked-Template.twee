@@ -190,7 +190,7 @@ I hope you enjoy adding BBC to your mod as much as I enjoyed creating BLACKED! <
       (if:$load is "big")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twirl:2,3)))]
       <!-- For ones that look like she might not be that into it, put them here. If you don't really have any, you can just
       set it to be whichever ones you want. -->
-      (if:$load is "unwilling")[(set:$img to "/characters/character_id/bbc/cum/facial " + (text:(twist:1,3)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twist:1,3)))]
 
       (set:$cum_face to (dm:
       "/characters/character_id/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
