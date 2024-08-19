@@ -242,7 +242,7 @@ positions("rae", "active", "service",
       "locations": ["bed"]
     },
     {
-        "name": "69",
+        "name": "sixty-nine",
         "flavor": "Pleasure him while he pleasures you.",
         "type": "active",
         "subtype": "service",
