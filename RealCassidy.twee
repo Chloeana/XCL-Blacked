@@ -1,0 +1,17 @@
+:: New-U select body cassidy
+{
+    (set: $new_stats to (dm:
+	"id","cassidy",
+	"race","latin",
+	"breasts","F",
+	"butt","big",
+	"hair","brown",
+	"body type","voluptuous",
+	"height",67,
+	"weight kg",55,
+	"weight lb",121,
+	"height cm",170,
+	"height text","5ft, 7in",
+	"bra","38F",
+	"eyes","green"))
+}

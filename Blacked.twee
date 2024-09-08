@@ -2,15 +2,16 @@
 {
   (set:$blacked_compatible_list to (dm:
   "alina",1,
+  "autumn",0,
   "cassidy",0,
-  "ella",0,
+  "ella",1,
   "jade",1,
   "jia",1,
   "lana",1,
-  "liya",0,
+  "liya",1,
   "mia",1,
   "rae",1,
-  "scarlit",0))
+  "scarlit",1))
 
   (set:$blacked_secretary to "false")
 }
@@ -330,7 +331,6 @@
 (display:"alcohol modify appeal")
 }
 
-
 :: generate black guy name
 {
 (set:"first name" of $npc to (twirl:"Rod","Jax","Flash","Damion","Rob","Booker","Emmett","Dontrell","Tyrone","Keenan","Lamonte","Tyrus","Darius","Isiah","Jamal","Marcel","Warren","Lex","DeAngelo","Jayce","Omar","Andre","Shane","Oscar","Autry"))
@@ -595,299 +595,20 @@
   ](else:)[(display:_around)]
 }
 
-:: sex doggy transactional alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "alina/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "alina/sex/doggy/bbc/transactional 1",500,
-        "alina/sex/doggy/bbc/transactional 2",500,
-        "alina/sex/doggy/bbc/transactional 3",500,
-        "alina/sex/doggy/bbc/transactional 4",500,
-        "alina/sex/doggy/bbc/transactional 5",500,
-        "alina/sex/doggy/bbc/transactional 6",500,
-        "alina/sex/doggy/bbc/transactional 7",500,
-        "alina/sex/doggy/bbc/transactional 8",500,
-        "alina/sex/doggy/bbc/transactional 9",500,
-        "alina/sex/doggy/bbc/transactional 10",500))
-      (set:$text to $img of 
-      (dm:
-        "alina/sex/doggy/bbc/transactional 1",(a:"couch","push down","eyes roll","mount"),
-        "alina/sex/doggy/bbc/transactional 2",(a:"couch","big thrusts","grab shoulders"),
-        "alina/sex/doggy/bbc/transactional 3",(a:"bed","big thrusts","grab butt", "spank"),
-        "alina/sex/doggy/bbc/transactional 4",(a:"bed","look back","big thrusts"),
-        "alina/sex/doggy/bbc/transactional 5",(a:"couch","mount","grab waist"),
-        "alina/sex/doggy/bbc/transactional 6",(a:"couch","look back","mount"),
-        "alina/sex/doggy/bbc/transactional 7",(a:"standing","look back","balls smacking"),
-        "alina/sex/doggy/bbc/transactional 8",(a:"standing","look back","spank"),
-        "alina/sex/doggy/bbc/transactional 9",(a:"couch","grab waist","look back","big thrusts"),
-        "alina/sex/doggy/bbc/transactional 10",(a:"bed","eues roll","mount")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex doggy transactional ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "ella/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "ella/sex/doggy/bbc/transactional 1",500,
-        "ella/sex/doggy/bbc/transactional 2",500,
-        "ella/sex/doggy/bbc/transactional 3",500,
-        "ella/sex/doggy/bbc/transactional 4",500))
-      (set:$text to $img of 
-      (dm:
-        "ella/sex/doggy/bbc/transactional 1",(a:"","","",""),
-        "ella/sex/doggy/bbc/transactional 2",(a:"","","",""),
-        "ella/sex/doggy/bbc/transactional 3",(a:"","",""),
-        "ella/sex/doggy/bbc/transactional 4",(a:"","","")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex doggy transactional jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "jade/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
-      (set:$doggy_pic to "<img class='greyborder' 
-      src='img/scenes/characters/jade/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-      (set:$doggy_moan_pic to "<img class='greyborder' 
-      src='img/scenes/characters/jade/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "jade/sex/doggy/bbc/transactional 1",500,
-        "jade/sex/doggy/bbc/transactional 2",500,
-        "jade/sex/doggy/bbc/transactional 3",500,
-        "jade/sex/doggy/bbc/transactional 4",500,
-        "jade/sex/doggy/bbc/transactional 5",500,
-        "jade/sex/doggy/bbc/transactional 6",500,
-        "jade/sex/doggy/bbc/transactional 7",500,
-        "jade/sex/doggy/bbc/transactional 8",500,
-        "jade/sex/doggy/bbc/transactional 9",500,
-        "jade/sex/doggy/bbc/transactional 10",500))
 
-      (set:$text to $img of 
-      (dm:
-        "jade/sex/doggy/bbc/transactional 1",(a:"bed","look back","push down","grab waist"),
-        "jade/sex/doggy/bbc/transactional 2",(a:"bed","mount","big thrusts","balls smacking"),
-        "jade/sex/doggy/bbc/transactional 3",(a:"couch","boobs jiggle","spank","eyes roll"),
-        "jade/sex/doggy/bbc/transactional 4",(a:"bed","look back","spank"),
-        "jade/sex/doggy/bbc/transactional 5",(a:"bed","look back","spank"),
-        "jade/sex/doggy/bbc/transactional 6",(a:"couch","grab waist","look back"),
-        "jade/sex/doggy/bbc/transactional 7",(a:"couch","pull hair","spank","grab waist"),
-        "jade/sex/doggy/bbc/transactional 8",(a:"bed","look back","grab waist", "spank"),
-        "jade/sex/doggy/bbc/transactional 9",(a:"bed","grab arms","look back"),
-        "jade/sex/doggy/bbc/transactional 10",(a:"bed","grab waist","big thrusts")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex doggy transactional jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "jia/sex/doggy/bbc/transactional " + (text:(twist:1,5)))
-      (set:$doggy_pic to "<img class='greyborder' 
-      src='img/scenes/characters/jia/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-      (set:$doggy_moan_pic to "<img class='greyborder' 
-      src='img/scenes/characters/jia/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "jia/sex/doggy/bbc/transactional 1",500,
-        "jia/sex/doggy/bbc/transactional 2",500,
-        "jia/sex/doggy/bbc/transactional 3",500,
-        "jia/sex/doggy/bbc/transactional 4",500,
-        "jia/sex/doggy/bbc/transactional 5",500))
 
-      (set:$text to $img of 
-      (dm:
-        "jia/sex/doggy/bbc/transactional 1",(a:"bed","grab butt","look back"),
-        "jia/sex/doggy/bbc/transactional 2",(a:"bed","grab waist","look back","spank"),
-        "jia/sex/doggy/bbc/transactional 3",(a:"bed","push down"),
-        "jia/sex/doggy/bbc/transactional 4",(a:"bed","pull hair","spank", "push down"),
-        "jia/sex/doggy/bbc/transactional 5",(a:"bed","grab waist","look back")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex doggy transactional lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "lana/sex/doggy/bbc/transactional " + (text:(twist:1,6)))
-      (set:$doggy_pic to "<img class='greyborder' 
-      src='img/scenes/characters/lana/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-      (set:$doggy_moan_pic to "<img class='greyborder' 
-      src='img/scenes/characters/lana/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "lana/sex/doggy/bbc/transactional 1",500,
-        "lana/sex/doggy/bbc/transactional 2",500,
-        "lana/sex/doggy/bbc/transactional 3",500,
-        "lana/sex/doggy/bbc/transactional 4",500,
-        "lana/sex/doggy/bbc/transactional 5",500,
-        "lana/sex/doggy/bbc/transactional 6",500))
 
-      (set:$text to $img of 
-      (dm:
-        "lana/sex/doggy/bbc/transactional 1",(a:"bed","grab waist","push down"),
-        "lana/sex/doggy/bbc/transactional 2",(a:"couch","grab butt","look back"),
-        "lana/sex/doggy/bbc/transactional 3",(a:"bed","big thrusts","look back", "balls smacking"),
-        "lana/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","push down"),
-        "lana/sex/doggy/bbc/transactional 5",(a:"bed","grab waist","balls smacking"),
-        "lana/sex/doggy/bbc/transactional 6",(a:"bed","grab waist","look back")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex doggy transactional liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "liya/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "liya/sex/doggy/bbc/transactional 1",500,
-        "liya/sex/doggy/bbc/transactional 2",500,
-        "liya/sex/doggy/bbc/transactional 3",500,
-        "liya/sex/doggy/bbc/transactional 4",500))
-      (set:$text to $img of 
-      (dm:
-        "liya/sex/doggy/bbc/transactional 1",(a:"","","",""),
-        "liya/sex/doggy/bbc/transactional 2",(a:"","","",""),
-        "liya/sex/doggy/bbc/transactional 3",(a:"","",""),
-        "liya/sex/doggy/bbc/transactional 4",(a:"","","")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex doggy transactional mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "mia/sex/doggy/bbc/transactional " + (text:(twist:1,12)))
-      (set:$doggy_pic to "<img class='greyborder' 
-      src='img/scenes/characters/mia/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-      (set:$doggy_moan_pic to "<img class='greyborder' 
-      src='img/scenes/characters/mia/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "mia/sex/doggy/bbc/transactional 1",500,
-        "mia/sex/doggy/bbc/transactional 2",500,
-        "mia/sex/doggy/bbc/transactional 3",500,
-        "mia/sex/doggy/bbc/transactional 4",500,
-        "mia/sex/doggy/bbc/transactional 5",500,
-        "mia/sex/doggy/bbc/transactional 6",500,
-        "mia/sex/doggy/bbc/transactional 7",500,
-        "mia/sex/doggy/bbc/transactional 8",500,
-        "mia/sex/doggy/bbc/transactional 9",500,
-        "mia/sex/doggy/bbc/transactional 10",500,
-        "mia/sex/doggy/bbc/transactional 11",500,
-        "mia/sex/doggy/bbc/transactional 12",500))
 
-      (set:$text to $img of 
-      (dm:
-        "mia/sex/doggy/bbc/transactional 1",(a:"bed","big thrusts", "look back"),
-        "mia/sex/doggy/bbc/transactional 2",(a:"bed","look back","big thrusts","grab shoulders"),
-        "mia/sex/doggy/bbc/transactional 3",(a:"bed","grab butt","spank"),
-        "mia/sex/doggy/bbc/transactional 4",(a:"bed","grab arms","big thrusts", "look back"),
-        "mia/sex/doggy/bbc/transactional 5",(a:"bed","lean against you","look back"),
-        "mia/sex/doggy/bbc/transactional 6",(a:"wall","leg up","big thrusts"),
-        "mia/sex/doggy/bbc/transactional 7",(a:"wall","leg up","big thrusts"),
-        "mia/sex/doggy/bbc/transactional 8",(a:"bed","push down","lean against you"),
-        "mia/sex/doggy/bbc/transactional 9",(a:"standing","grab waist","look back"),
-        "mia/sex/doggy/bbc/transactional 10",(a:"bed","grab neck","look back"),
-        "mia/sex/doggy/bbc/transactional 11",(a:"bed","mount","push down"),
-        "mia/sex/doggy/bbc/transactional 12",(a:"bed","spank","grab waist")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-
-:: sex doggy transactional rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$doggy_pic to "<img class='greyborder' 
-      src='img/scenes/characters/rae/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-      (set:$doggy_moan_pic to "<img class='greyborder' 
-      src='img/scenes/characters/rae/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-
-      (if:$location_params's "sex location passage" is "beach sex area")[
-        (set:$img to "rae/sex/beach/bbc/beach " + (text:(twist:1,4)))
-
-        (set:$doggy_rhythm to $img of 
-        (dm:
-          "rae/sex/beach/bbc/beach 1",500,
-          "rae/sex/beach/bbc/beach 2",500,
-          "rae/sex/beach/bbc/beach 3",500,
-          "rae/sex/beach/bbc/beach 4",500))
-
-        (set:$text to $img of 
-        (dm:
-          "rae/sex/beach/bbc/beach 1",(a:"table","look back","grab butt"),
-          "rae/sex/beach/bbc/beach 2",(a:"table","standing","look back"),
-          "rae/sex/beach/bbc/beach 3",(a:"table","grab face","big thrusts"),
-          "rae/sex/beach/bbc/beach 4",(a:"table","grab face","big thrusts")))
-
-      ](else:)[
-        (set:$img to "rae/sex/doggy/bbc/transactional " + (text:(twist:1,8)))
-
-        (set:$doggy_rhythm to $img of 
-        (dm:
-          "rae/sex/doggy/bbc/transactional 1",500,
-          "rae/sex/doggy/bbc/transactional 2",500,
-          "rae/sex/doggy/bbc/transactional 3",500,
-          "rae/sex/doggy/bbc/transactional 4",500,
-          "rae/sex/doggy/bbc/transactional 5",500,
-          "rae/sex/doggy/bbc/transactional 6",500,
-          "rae/sex/doggy/bbc/transactional 7",500,
-          "rae/sex/doggy/bbc/transactional 8",500))
-
-        (set:$text to $img of 
-        (dm:
-          "rae/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
-          "rae/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
-          "rae/sex/doggy/bbc/transactional 3",(a:"chair","grab butt","spank"),
-          "rae/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
-          "rae/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
-          "rae/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
-          "rae/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
-          "rae/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
-      ]
-
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-
-:: sex doggy transactional scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "scarlit/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "scarlit/sex/doggy/bbc/transactional 1",500,
-        "scarlit/sex/doggy/bbc/transactional 2",500,
-        "scarlit/sex/doggy/bbc/transactional 3",500,
-        "scarlit/sex/doggy/bbc/transactional 4",500))
-      (set:$text to $img of 
-      (dm:
-        "scarlit/sex/doggy/bbc/transactional 1",(a:"","","",""),
-        "scarlit/sex/doggy/bbc/transactional 2",(a:"","","",""),
-        "scarlit/sex/doggy/bbc/transactional 3",(a:"","",""),
-        "scarlit/sex/doggy/bbc/transactional 4",(a:"","","")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
 
 :: blowjob transactional initialize [around]
@@ -950,206 +671,34 @@
   ](else:)[(display:_around)]
 }
 
-:: blowjob transactional initialize alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/alina/bj/bbc/transactional " + (text:(twist:1,9)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: blowjob transactional initialize ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/ella/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/jia/bj/bbc/transactional " + (text:(twist:1,4)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/lana/bj/bbc/transactional " + (text:(twist:1,12)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/liya/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/mia/bj/bbc/transactional " + (text:(twist:1,10)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:$location_params's "sex location passage" is "beach sex area")[
-        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:8,10)) + ".mp4")
-      ]
-      (else:)[
-        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,7)) + ".mp4")
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: blowjob transactional initialize scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/scarlit/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: blowjob transactional facefuck alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "alina/bj/bbc/rough " + (text:(twist:1,6)))
-      (set:$text to $img of (dm:
-      "alina/bj/bbc/rough 1","couch",
-      "alina/bj/bbc/rough 2","couch",
-      "alina/bj/bbc/rough 3","couch",
-      "alina/bj/bbc/rough 4","couch",
-      "alina/bj/bbc/rough 5","couch",
-      "alina/bj/bbc/rough 6","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "ella/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "ella/bj/bbc/rough 1","floor",
-      "ella/bj/bbc/rough 2","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "jade/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "jade/bj/bbc/rough 1","bed",
-      "jade/bj/bbc/rough 2","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "jia/bj/bbc/rough " + (text:(twist:1,4)))
-      (set:$text to $img of (dm:
-      "jia/bj/bbc/rough 1","bed",
-      "jia/bj/bbc/rough 2","floor",
-      "jia/bj/bbc/rough 3","floor",
-      "jia/bj/bbc/rough 4","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "lana/bj/bbc/rough " + (text:(twist:1,8)))
-      (set:$text to $img of (dm:
-      "lana/bj/bbc/rough 1","bed",
-      "lana/bj/bbc/rough 2","floor",
-      "lana/bj/bbc/rough 3","bed",
-      "lana/bj/bbc/rough 4","couch",
-      "lana/bj/bbc/rough 5","couch",
-      "lana/bj/bbc/rough 6","bed",
-      "lana/bj/bbc/rough 7","floor",
-      "lana/bj/bbc/rough 8","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "liya/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "liya/bj/bbc/rough 1","floor",
-      "liya/bj/bbc/rough 2","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "mia/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "mia/bj/bbc/rough 1","bed",
-      "mia/bj/bbc/rough 2","couch"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: blowjob transactional facefuck rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "rae/bj/bbc/rough " + (text:(twist:1,4)))
-      (set:$text to $img of (dm:
-      "rae/bj/bbc/rough 1","floor",
-      "rae/bj/bbc/rough 2","floor",
-      "rae/bj/bbc/rough 3","counter",
-      "rae/bj/bbc/rough 4","bed"))
-   ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: blowjob transactional facefuck scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "scarlit/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "scarlit/bj/bbc/rough 1","floor",
-      "scarlit/bj/bbc/rough 2","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :: sex transactional blowjob [around]
 {
@@ -1201,212 +750,40 @@
   ](else:)[(display:_around)]
 }
 
-:: sex transactional blowjob alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/alina/bj/bbc/transactional " + (text:(twist:1,9)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/ella/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/jia/bj/bbc/transactional " + (text:(twist:1,4)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/lana/bj/bbc/transactional " + (text:(twist:1,12)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/liya/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/mia/bj/bbc/transactional " + (text:(twist:1,10)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:$location_params's "sex location passage" is "beach sex area")[
-        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:8,10)) + ".mp4")
-      ]
-      (else:)[
-        (set:$img to "scenes/characters/rae/bj/bbc/transactional " + (text:(twist:1,7)) + ".mp4")
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional blowjob scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-    (set:$img to "scenes/characters/scarlit/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: facefuck transactional alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "alina/bj/bbc/rough " + (text:(twist:1,6)))
-      (set:$text to $img of (dm:
-      "alina/bj/bbc/rough 1","couch",
-      "alina/bj/bbc/rough 2","couch",
-      "alina/bj/bbc/rough 3","couch",
-      "alina/bj/bbc/rough 4","couch",
-      "alina/bj/bbc/rough 5","couch",
-      "alina/bj/bbc/rough 6","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "ella/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "ella/bj/bbc/rough 1","floor",
-      "ella/bj/bbc/rough 2","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "jade/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "jade/bj/bbc/rough 1","bed",
-      "jade/bj/bbc/rough 2","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "jia/bj/bbc/rough " + (text:(twist:1,4)))
-      (set:$text to $img of (dm:
-      "jia/bj/bbc/rough 1","bed",
-      "jia/bj/bbc/rough 2","floor",
-      "jia/bj/bbc/rough 3","floor",
-      "jia/bj/bbc/rough 4","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "lana/bj/bbc/rough " + (text:(twist:1,8)))
-      (set:$text to $img of (dm:
-      "lana/bj/bbc/rough 1","bed",
-      "lana/bj/bbc/rough 2","floor",
-      "lana/bj/bbc/rough 3","bed",
-      "lana/bj/bbc/rough 4","couch",
-      "lana/bj/bbc/rough 5","couch",
-      "lana/bj/bbc/rough 6","bed",
-      "lana/bj/bbc/rough 7","floor",
-      "lana/bj/bbc/rough 8","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "liya/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "liya/bj/bbc/rough 1","floor",
-      "liya/bj/bbc/rough 2","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "mia/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "mia/bj/bbc/rough 1","bed",
-      "mia/bj/bbc/rough 2","couch"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
 
-:: facefuck transactional rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "rae/bj/bbc/rough " + (text:(twist:1,4)))
-      (set:$text to $img of (dm:
-      "rae/bj/bbc/rough 1","floor",
-      "rae/bj/bbc/rough 2","floor",
-      "rae/bj/bbc/rough 3","counter",
-      "rae/bj/bbc/rough 4","bed"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: facefuck transactional scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "scarlit/bj/bbc/rough " + (text:(twist:1,2)))
-      (set:$text to $img of (dm:
-      "scarlit/bj/bbc/rough 1","floor",
-      "scarlit/bj/bbc/rough 2","floor"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 :: blowjob transactional cum [around]
@@ -1444,137 +821,51 @@
   ]
 }
 
-:: sex transactional kiss alina
-{
-  (set:$kiss_variant to "kiss " + (text:(twist:1,5)))
-}
 
-:: sex transactional kiss ella
-{
-  (set:$kiss_variant to "kiss")
-}
 
-:: sex transactional kiss jade
-{
-  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
-}
 
-:: sex transactional kiss jia
-{
-  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
-}
 
-:: sex transactional kiss lana
-{
-  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
-}
 
-:: sex transactional kiss liya
-{
-  (set:$kiss_variant to "kiss")
-}
 
-:: sex transactional kiss mia
-{
-  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
-}
 
-:: sex transactional kiss rae
-{
-  (set:$kiss_variant to "kiss")
-}
 
-:: sex transactional kiss scarlit
-{
-  (set:$kiss_variant to "kiss")
-}
 
-:: sex transactional grope alina [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to (twirl:"tits","ass"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope ella [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to "tits")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope jade [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to (twirl:"tits","ass"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope jia [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to "tits")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope lana [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to (twirl:"tits","ass"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to "tits")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope mia [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to "tits")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex transactional grope rae [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to (twirl:"tits","ass"))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
-:: sex transactional grope scarlit [around]
-{ 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to "tits")
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :: sex transactional grope react [around]
 {
   (display:_around)
   (if:(dm-names:$npc) contains "race")[
     (if:($npc's "race" is "black"))[
-      (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/grope " + $grope +".mp4' autoplay='' loop='' muted='' playsinline/>")]
+      (if:$grope_img is 0)[
+        (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/grope " + $grope +".mp4' autoplay='' loop='' muted='' playsinline/>")]
+      ](else:)[
+        (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/grope " + $grope_img +".mp4' autoplay='' loop='' muted='' playsinline/>")]
+      ]
     ]
   ]
 }
@@ -1632,88 +923,23 @@
   ](else:)[(display:_around)]
 }
 
-:: sex creampie image alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/alina/cum/bbc/creampie/" + (text:(twist:1,2)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/ella/cum/bbc/creampie/" + (text:(twist:1,4)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:$position is "doggy")[(set:$img to "/generic/sex/cum/creampie/w/bbc/doggy " + (text:(twist:1,9)))]
-      (else-if:$position is "missionary")[(set:$img to "/generic/sex/cum/creampie/w/bbc/missionary " + (text:(twist:1,9)))]
-      (else:)[(set:$img to "/generic/sex/cum/creampie/w/bbc/riding " + (text:(twist:1,6)))]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/jia/cum/bbc/creampie/" + (text:(twist:1,2)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/lana/cum/bbc/creampie/" + (text:(twist:1,2)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/liya/cum/bbc/creampie/" + (text:(twist:1,4)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/mia/cum/bbc/creampie/" + (text:(twist:1,5)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/rae/cum/bbc/creampie/" + (text:(twist:1,4)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex creampie image scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/scarlit/cum/bbc/creampie/" + (text:(twist:1,4)))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
+
+
+
+
+
+
+
+
+
 
 :: sex cum on face [around]
 {
@@ -1739,182 +965,23 @@
   ](else:)[(display:_around)]
 }
 
-:: sex cum on face alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/alina/cum/bbc/facial " + (text:(twist:1,3)))
-      (if:$load is "big")[(set:$img to "/characters/alina/cum/bbc/facial 2")]
-      (if:$load is "unwilling")[(set:$img to "/characters/alina/cum/bbc/facial 3")]
 
-      (set:$cum_face to (dm:
-      "/characters/alina/cum/bbc/facial 1",(a:"spurt","mouth","runny","chin"),
-      "/characters/alina/cum/bbc/facial 2",(a:"spurt","open mouth","tongue","kneeling","hair"),
-      "/characters/alina/cum/bbc/facial 3",(a:"ooze","held","chin","open mouth","most misses")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/ella/cum/bbc/facial " + (text:(twist:1,12)))
-      (if:$load is "big")[(set:$img to "/characters/ella/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/ella/cum/bbc/facial " + (text:(twirl:1,9)))]
 
-      (set:$cum_face to (dm:
-      "/characters/ella/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
-      "/characters/ella/cum/bbc/facial 2",(a:"spurt","open mouth","up nose","lying","hair"),
-      "/characters/ella/cum/bbc/facial 3",(a:"ooze","held","tongue","open mouth"),
-      "/characters/ella/cum/bbc/facial 4",(a:"spurt","eyes","forehead","hair","nose","chin","tongue","open mouth"),
-      "/characters/ella/cum/bbc/facial 5",(a:"spatter","open mouth","nose","tongue","held","hair"),
-      "/characters/ella/cum/bbc/facial 6",(a:"open mouth","tongue","spray"),
-      "/characters/ella/cum/bbc/facial 7",(a:"spurt","open mouth","tongue","eyes"),
-      "/characters/ella/cum/bbc/facial 8",(a:"spurt","open mouth","tongue","eyes","chin","hair"),
-      "/characters/ella/cum/bbc/facial 9",(a:"held","forehead","nose","eyes","chin","cheek","face","cumdump"),
-      "/characters/ella/cum/bbc/facial 10",(a:"spurt","open mouth","eyes","tongue","face","forehead","hair"),
-      "/characters/ella/cum/bbc/facial 11",(a:"spurt","open mouth","tongue","eyes"),
-      "/characters/ella/cum/bbc/facial 12",(a:"spurt","open mouth","tongue","eyes","hair","chin")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/jade/cum/bbc/facial " + (text:(twist:1,2)))
-      (if:$load is "big")[(set:$img to "/characters/jade/cum/bbc/facial 1")]
-      (if:$load is "unwilling")[(set:$img to "/characters/jade/cum/bbc/facial " + (text:(twirl:1,2)))]
 
-      (set:$cum_face to (dm:
-      "/characters/jade/cum/bbc/facial 1",(a:"spurt","chin","runny","upper lip","tongue"),
-      "/characters/jade/cum/bbc/facial 2",(a:"spurt","open mouth","face","chin","hair")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/jia/cum/bbc/facial " + (text:(twist:1,3)))
-      (if:$load is "big")[(set:$img to "/characters/jia/cum/bbc/facial " + (text:(twirl:1,2,3)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/jia/cum/bbc/facial " + (text:(twirl:1,2,3)))]
 
-      (set:$cum_face to (dm:
-      "/characters/jia/cum/bbc/facial 1",(a:"ooze","chin","upper lip","tongue"),
-      "/characters/jia/cum/bbc/facial 2",(a:"spurt","tongue","up nose","hair"),
-      "/characters/jia/cum/bbc/facial 3",(a:"spurt","tongue","chin")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/lana/cum/bbc/facial " + (text:(twist:1,10)))
-      (if:$load is "big")[(set:$img to "/characters/lana/cum/bbc/facial " + (text:(twirl:2,3,7,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/lana/cum/bbc/facial " + (text:(twirl:1,4,6)))]
 
-      (set:$cum_face to (dm:
-      "/characters/lana/cum/bbc/facial 1",(a:"spurt","chin","runny","cheek"),
-      "/characters/lana/cum/bbc/facial 2",(a:"spurt","open mouth","eyes","tongue"),
-      "/characters/lana/cum/bbc/facial 3",(a:"spurt","eyes", "forehead","tongue","open mouth"),
-      "/characters/lana/cum/bbc/facial 4",(a:"spurt","tongue","chin"),
-      "/characters/lana/cum/bbc/facial 5",(a:"ooze","chin","nose","tongue","cheek"),
-      "/characters/lana/cum/bbc/facial 6",(a:"ooze","tongue","chin"),
-      "/characters/lana/cum/bbc/facial 7",(a:"spurt","open mouth","tongue","chin"),
-      "/characters/lana/cum/bbc/facial 8",(a:"ooze","chin","cheek","lips","chin"),
-      "/characters/lana/cum/bbc/facial 9",(a:"ooze","chin","cheek"),
-      "/characters/lana/cum/bbc/facial 10",(a:"spurt","cheek","chin","nose","face")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/liya/cum/bbc/facial " + (text:(twist:1,12)))
-      (if:$load is "big")[(set:$img to "/characters/liya/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/liya/bbc/cum/facial " + (text:(twirl:1,9)))]
 
-      (set:$cum_face to (dm:
-      "/characters/liya/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
-      "/characters/liya/cum/bbc/facial 2",(a:"spurt","open mouth","up nose","lying","hair"),
-      "/characters/liya/cum/bbc/facial 3",(a:"ooze","held","tongue","open mouth"),
-      "/characters/liya/cum/bbc/facial 4",(a:"spurt","eyes","forehead","hair","nose","chin","tongue","open mouth"),
-      "/characters/liya/cum/bbc/facial 5",(a:"spatter","open mouth","nose","tongue","held","hair"),
-      "/characters/liya/cum/bbc/facial 6",(a:"open mouth","tongue","spray"),
-      "/characters/liya/cum/bbc/facial 7",(a:"spurt","open mouth","tongue","eyes"),
-      "/characters/liya/cum/bbc/facial 8",(a:"spurt","open mouth","tongue","eyes","chin","hair"),
-      "/characters/liya/cum/bbc/facial 9",(a:"held","forehead","nose","eyes","chin","cheek","face","cumdump"),
-      "/characters/liya/cum/bbc/facial 10",(a:"spurt","open mouth","eyes","tongue","face","forehead","hair"),
-      "/characters/liya/cum/bbc/facial 11",(a:"spurt","open mouth","tongue","eyes"),
-      "/characters/liya/cum/bbc/facial 12",(a:"spurt","open mouth","tongue","eyes","hair","chin")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/mia/cum/bbc/facial " + (text:(twist:1,2)))
-      (if:$load is "big")[(set:$img to "/characters/mia/cum/bbc/facial 1")]
-      (if:$load is "unwilling")[(set:$img to "/characters/mia/cum/bbc/facial 2")]
 
-      (set:$cum_face to (dm:
-      "/characters/mia/cum/bbc/facial 1",(a:"ooze","chin","cheek"),
-      "/characters/mia/cum/bbc/facial 2",(a:"spurt","open mouth","tongue")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/rae/cum/bbc/facial " + (text:(twist:1,4)))
-      (if:$load is "big")[(set:$img to "/characters/rae/cum/bbc/facial " + (text:(twirl:2,3)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/rae/cum/bbc/facial " + (text:(twist:1,4)))]
 
-      (set:$cum_face to (dm:
-      "/characters/rae/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
-      "/characters/rae/cum/bbc/facial 2",(a:"spurt","open mouth","tongue","face","hair"),
-      "/characters/rae/cum/bbc/facial 3",(a:"ooze","hair","tongue","face"),
-      "/characters/rae/cum/bbc/facial 4",(a:"ooze","chin","face")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum on face scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twist:1,12)))
-      (if:$load is "big")[(set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
-      (if:$load is "unwilling")[(set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twirl:1,9)))]
 
-      (set:$cum_face to (dm:
-      "/characters/scarlit/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
-      "/characters/scarlit/cum/bbc/facial 2",(a:"spurt","open mouth","up nose","lying","hair"),
-      "/characters/scarlit/cum/bbc/facial 3",(a:"ooze","held","tongue","open mouth"),
-      "/characters/scarlit/cum/bbc/facial 4",(a:"spurt","eyes","forehead","hair","nose","chin","tongue","open mouth"),
-      "/characters/scarlit/cum/bbc/facial 5",(a:"spatter","open mouth","nose","tongue","held","hair"),
-      "/characters/scarlit/cum/bbc/facial 6",(a:"open mouth","tongue","spray"),
-      "/characters/scarlit/cum/bbc/facial 7",(a:"spurt","open mouth","tongue","eyes"),
-      "/characters/scarlit/cum/bbc/facial 8",(a:"spurt","open mouth","tongue","eyes","chin","hair"),
-      "/characters/scarlit/cum/bbc/facial 9",(a:"held","forehead","nose","eyes","chin","cheek","face","cumdump"),
-      "/characters/scarlit/cum/bbc/facial 10",(a:"spurt","open mouth","eyes","tongue","face","forehead","hair"),
-      "/characters/scarlit/cum/bbc/facial 11",(a:"spurt","open mouth","tongue","eyes"),
-      "/characters/scarlit/cum/bbc/facial 12",(a:"spurt","open mouth","tongue","eyes","hair","chin")))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
 :: sex cum in mouth [around]
 {
@@ -1979,160 +1046,23 @@
   ](else:)[(display:_around)]
 }
 
-:: sex cum in mouth load alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/alina/cum/bbc/mouth " + (text:(twist:1,2)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/alina/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","messy"),
-        "/characters/alina/cum/bbc/mouth 2",(a:"kneeling","external","jerk","chin","in mouth")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/ella/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/ella/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
-        "/characters/ella/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
-        "/characters/ella/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
-        "/characters/ella/cum/bbc/mouth 4",(a:"kneeling","external","direct","feed","held","in mouth"),		
-        "/characters/ella/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","eye")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/jade/cum/bbc/mouth 1")
 
-        (set:$cum_mouth to (dm:	
-        "/characters/jade/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","tongue")))
-      ] 
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/jia/cum/bbc/mouth " + (text:(twist:1,2)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/jia/cum/bbc/mouth 1",(a:"jerk","lying","direct","chin","spit"),
-        "/characters/jia/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","nose","in mouth","tongue")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/lana/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/lana/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
-        "/characters/lana/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
-        "/characters/lana/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
-        "/characters/lana/cum/bbc/mouth 4",(a:"kneeling","external","show tongue","in mouth"),		
-        "/characters/lana/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","chin")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/liya/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/liya/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
-        "/characters/liya/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
-        "/characters/liya/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
-        "/characters/liya/cum/bbc/mouth 4",(a:"kneeling","external","direct","feed","held","in mouth"),		
-        "/characters/liya/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","eye")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/mia/cum/bbc/mouth 1")
 
-        (set:$cum_mouth to (dm:	
-        "/characters/mia/cum/bbc/mouth 1",(a:"jerk","kneeling","external","chin","messy")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/rae/cum/bbc/mouth " + (text:(twist:1,3)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/rae/cum/bbc/mouth 1",(a:"direct","kneeling","external","spit"),
-        "/characters/rae/cum/bbc/mouth 2",(a:"kneeling","external","direct","spit","clothes"),
-        "/characters/rae/cum/bbc/mouth 3",(a:"kneeling","external","direct","spit")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex cum in mouth load scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/scarlit/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to (dm:	
-        "/characters/scarlit/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
-        "/characters/scarlit/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
-        "/characters/scarlit/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
-        "/characters/scarlit/cum/bbc/mouth 4",(a:"kneeling","external","direct","feed","held","in mouth"),		
-        "/characters/scarlit/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","eye")))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
 :: sex oral [around]
 {
@@ -2144,200 +1074,23 @@
   ](else:)(display:_around)
 }
 
-:: sex oral alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/alina/oral/bbc/oral " + (text:(twist:1,6)) + ".mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/alina/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/alina/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/alina/oral/bbc/oral 3.mp4",500,
-      "scenes/characters/alina/oral/bbc/oral 4.mp4",500,
-      "scenes/characters/alina/oral/bbc/oral 5.mp4",500,
-      "scenes/characters/alina/oral/bbc/oral 6.mp4",500))
-      
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/alina/oral/bbc/oral 1.mp4","doggy",
-      "scenes/characters/alina/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/alina/oral/bbc/oral 3.mp4","doggy",
-      "scenes/characters/alina/oral/bbc/oral 4.mp4","doggy",
-      "scenes/characters/alina/oral/bbc/oral 5.mp4","missionary",
-      "scenes/characters/alina/oral/bbc/oral 6.mp4","missionary"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
-:: sex oral ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/ella/oral/bbc/oral " + (text:(twist:1,6)) + ".mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/ella/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/ella/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/ella/oral/bbc/oral 3.mp4",500,
-      "scenes/characters/ella/oral/bbc/oral 4.mp4",500,
-      "scenes/characters/ella/oral/bbc/oral 5.mp4",500,
-      "scenes/characters/ella/oral/bbc/oral 6.mp4",500))
-      
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/ella/oral/bbc/oral 1.mp4","missionary",
-      "scenes/characters/ella/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/ella/oral/bbc/oral 3.mp4","missionary",
-      "scenes/characters/ella/oral/bbc/oral 4.mp4","missionary",
-      "scenes/characters/ella/oral/bbc/oral 5.mp4","missionary",
-      "scenes/characters/ella/oral/bbc/oral 6.mp4","missionary"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
-:: sex oral jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/jade/oral/bbc/oral 1.mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/jade/oral/bbc/oral 1.mp4",500))
 
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/jade/oral/bbc/oral 1.mp4","doggy"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
-:: sex oral jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/jia/oral/bbc/oral " + (text:(twist:1,2)) + ".mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/jia/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/jia/oral/bbc/oral 2.mp4",500))
-      
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/jia/oral/bbc/oral 1.mp4","missionary",
-      "scenes/characters/jia/oral/bbc/oral 2.mp4","missionary"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
-:: sex oral lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/lana/oral/bbc/oral " + (text:(twist:1,3)) + ".mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/lana/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/lana/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/lana/oral/bbc/oral 3.mp4",500))
 
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/lana/oral/bbc/oral 1.mp4","doggy",
-      "scenes/characters/lana/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/lana/oral/bbc/oral 3.mp4","doggy"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
-:: sex oral liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/liya/oral/bbc/oral " + (text:(twist:1,6)) + ".mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/liya/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/liya/oral/bbc/oral 2.mp4",500))
-      
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/liya/oral/bbc/oral 1.mp4","missionary",
-      "scenes/characters/liya/oral/bbc/oral 2.mp4","missionary"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
-:: sex oral mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/mia/oral/bbc/oral " + (text:(twist:1,5)) + ".mp4")
 
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/mia/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/mia/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/mia/oral/bbc/oral 3.mp4",500,
-      "scenes/characters/mia/oral/bbc/oral 4.mp4",500,
-      "scenes/characters/mia/oral/bbc/oral 5.mp4",500))
 
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/mia/oral/bbc/oral 1.mp4","doggy",
-      "scenes/characters/mia/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/mia/oral/bbc/oral 3.mp4","missionary",
-      "scenes/characters/mia/oral/bbc/oral 4.mp4","doggy",
-      "scenes/characters/mia/oral/bbc/oral 5.mp4","missionary"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
-
-:: sex oral rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/rae/oral/bbc/oral " + (text:(twist:1,3)) + ".mp4")
-
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/rae/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/rae/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/rae/oral/bbc/oral 3.mp4",500))
-
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/rae/oral/bbc/oral 1.mp4","missionary",
-      "scenes/characters/rae/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/rae/oral/bbc/oral 3.mp4","missionary"))
-
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
-
-:: sex oral scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/scarlit/oral/bbc/oral " + (text:(twist:1,6)) + ".mp4")
-      
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/scarlit/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/scarlit/oral/bbc/oral 2.mp4",500))
-      
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/scarlit/oral/bbc/oral 1.mp4","missionary",
-      "scenes/characters/scarlit/oral/bbc/oral 2.mp4","missionary"))
-
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
-  ](else:)(display:_around)
-}
 
 :: sex pull out [around]
 {
@@ -2381,242 +1134,23 @@
   ](else:)[(display:_around)]
 }
 
-:: sex pull out alina [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[
-        (set:$pullout_variant to 1)
-        (if:$his_choice is "tits")[
-          (set:$your_choice to "tits")
-          (set:$img to (twirl:
-          "/generic/sex/cum/tits/bbc/white 1",
-          "/generic/sex/cum/tits/bbc/white 4"))
-        ]
-        (else:)[
-          (set:$his_choice to "pull out")
-          (set:$your_choice to "pull out")
-          (if:$position is "missionary")[
-            (set:$img to "/generic/sex/cum/pull out/bbc/" + (text:(twist:1,2)))
-          ]
-          (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
-          (else:)[
-            (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-          ]
-        ]
-      ]
-      (else:)[
-      (set:$his_choice to "pull out")
-      (set:$your_choice to "pull out")
 
-      (set:$img to "/characters/alina/cum/bbc/body 1")
 
-      (set:$text to $img of (dm:	
-        "/characters/alina/cum/bbc/body 1",(a:"body","belly","bed")
-      ))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out ella [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to (twirl:"/characters/ella/cum/bbc/butt 1","/characters/ella/cum/bbc/body 1"))
 
-      (set:$text to $img of (dm:	
-        "/characters/ella/cum/bbc/butt 1",(a:"butt","bed"),
-        "/characters/ella/cum/bbc/body 1",(a:"body","belly","bed")
-      ))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out jade [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$pullout_variant to 1)
-      (set:$his_choice to "pull out")
-      (set:$your_choice to "pull out")
-      (if:$position is "missionary")[
-        (set:$img to "/generic/sex/cum/pull out/bbc/1")
-      ]
-      (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
-      (else:)[
-        (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twirl:2,3)))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out jia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$pullout_variant to 1)
-      (set:$his_choice to "pull out")
-      (set:$your_choice to "pull out")
-      (if:$position is "missionary")[
-        (set:$img to "/generic/sex/cum/pull out/bbc/2")
-      ]
-      (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
-      (else:)[
-        (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/2")
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out lana [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[
-        (set:$pullout_variant to 1)
-        (if:$his_choice is "tits")[
-          (set:$your_choice to "tits")
-          (set:$img to (twirl:
-          "/generic/sex/cum/tits/bbc/white 1",
-          "/generic/sex/cum/tits/bbc/white 3"))
-        ]
-        (else:)[
-          (set:$his_choice to "pull out")
-          (set:$your_choice to "pull out")
-          (if:$position is "missionary")[
-            (set:$img to "/generic/sex/cum/pull out/bbc/1")
-          ]
-          (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
-          (else:)[
-            (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-          ]
-        ]
-      ]
-      (else:)[
-        (set:$img to (twirl:"/characters/lana/cum/bbc/butt 1","/characters/lana/cum/bbc/body 1"))
 
-        (set:$text to $img of (dm:	
-          "/characters/lana/cum/bbc/butt 1",(a:"butt","bed"),
-          "/characters/lana/cum/bbc/body 1",(a:"body","belly","bed")
-        ))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out liya [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:$his_choice is "tits" and $your_choice is "pull out")[
-        (set:$your_choice to "tits")
-        (set:$img to "/characters/liya/cum/bbc/tits 1")
-      ]
-      (else:)[(if:(twist:1,2) is 1)[(set:$img to (twirl:"/characters/liya/cum/bbc/butt 1","/characters/liya/cum/bbc/body 1"))]]
 
-      (set:$text to $img of (dm:	
-        "/characters/liya/cum/bbc/tits 1",(a:"tits","lying")
-        "/characters/liya/cum/bbc/butt 1",(a:"butt","couch"),
-        "/characters/liya/cum/bbc/body 1",(a:"body","belly","couch")
-      ))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out mia [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[
-        (set:$pullout_variant to 1)
-        (if:$his_choice is "tits")[
-          (set:$your_choice to "tits")
-          (set:$img to (twirl:
-          "/generic/sex/cum/tits/bbc/white 1",
-          "/generic/sex/cum/tits/bbc/white 3"))
-        ]
-        (else:)[
-          (set:$his_choice to "pull out")
-          (set:$your_choice to "pull out")
-          (if:$position is "missionary")[
-            (set:$img to "/generic/sex/cum/pull out/bbc/1")
-          ]
-          (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
-          (else:)[
-            (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-          ]
-        ]
-      ]
-      (else:)[
-        (set:$his_choice to "tits")
-        (set:$your_choice to "tits")
-        (set:$img to "/characters/mia/cum/bbc/tits 1")
-        (set:$text to $img of (dm:	
-          "/characters/mia/cum/bbc/tits 1",(a:"tits","lying")
-        ))
-      ]
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out rae [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:(twist:1,4) is 1)[
-        (set:$pullout_variant to 1)
-        (if:$his_choice is "tits")[
-          (set:$your_choice to "tits")
-          (set:$img to "/generic/sex/cum/tits/bbc/white 1")
-        ]
-        (else:)[
-          (set:$his_choice to "pull out")
-          (set:$your_choice to "pull out")
-          (if:$position is "missionary")[
-            (set:$img to "/generic/sex/cum/pull out/bbc/1")
-          ]
-          (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
-          (else:)[
-            (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/2")
-          ]
-        ]
-      ]
-      (else-if:$location_params's "sex location passage" is "beach sex area")[
-        (set:$img to "/characters/rae/cum/bbc/body 2")]
 
-        (set:$text to $img of (dm:	
-          "/characters/rae/cum/bbc/body 2",(a:"body","belly","lying")
-        ))
-      ]
-      (else:)[
-        (set:$img to "/characters/rae/cum/bbc/body 1")
 
-        (set:$text to $img of (dm:	
-          "/characters/rae/cum/bbc/body 1",(a:"body","belly","floor")
-        ))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
 
-:: sex pull out scarlit [around]
-{
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (if:$his_choice is "tits" and $your_choice is "pull out")[
-        (set:$your_choice to "tits")
-        (set:$img to "/characters/scarlit/cum/bbc/tits 1")
-      ]
-      (else:)[(if:(twist:1,2) is 1)[(set:$img to (twirl:"/characters/scarlit/cum/bbc/butt 1","/characters/scarlit/bbc/cum/body 1"))]]
 
-      (set:$text to $img of (dm:	
-        "/characters/scarlit/bbc/cum/tits 1",(a:"tits","lying")
-        "/characters/scarlit/bbc/cum/butt 1",(a:"butt","couch"),
-        "/characters/scarlit/bbc/cum/body 1",(a:"body","belly","couch")
-      ))
-    ](else:)[(display:_around)]
-  ](else:)[(display:_around)]
-}
+
 
 :: quicktime right image [around]
 {

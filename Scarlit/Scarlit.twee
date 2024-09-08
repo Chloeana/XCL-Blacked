@@ -1,0 +1,172 @@
+:: sex doggy transactional scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "scarlit/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
+      (set:$doggy_rhythm to $img of 
+      (dm:
+        "scarlit/sex/doggy/bbc/transactional 1",500,
+        "scarlit/sex/doggy/bbc/transactional 2",500,
+        "scarlit/sex/doggy/bbc/transactional 3",500,
+        "scarlit/sex/doggy/bbc/transactional 4",500))
+      (set:$text to $img of 
+      (dm:
+        "scarlit/sex/doggy/bbc/transactional 1",(a:"","","",""),
+        "scarlit/sex/doggy/bbc/transactional 2",(a:"","","",""),
+        "scarlit/sex/doggy/bbc/transactional 3",(a:"","",""),
+        "scarlit/sex/doggy/bbc/transactional 4",(a:"","","")))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional initialize scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+    (set:$img to "scenes/characters/scarlit/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional blowjob scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+    (set:$img to "scenes/characters/scarlit/bj/bbc/transactional " + (text:(twist:1,5)) + ".mp4")
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional facefuck scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "scarlit/bj/bbc/rough " + (text:(twist:1,2)))
+      (set:$text to $img of (dm:
+      "scarlit/bj/bbc/rough 1","floor",
+      "scarlit/bj/bbc/rough 2","floor"))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: facefuck transactional scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "scarlit/bj/bbc/rough " + (text:(twist:1,2)))
+      (set:$text to $img of (dm:
+      "scarlit/bj/bbc/rough 1","floor",
+      "scarlit/bj/bbc/rough 2","floor"))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional kiss scarlit
+{
+  (set:$kiss_variant to "kiss")
+}
+
+:: sex transactional grope scarlit [around]
+{ 
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$grope to (twirl:"tits","ass"))
+      (if:$grope is "tits")[
+        (set:$grope_img to "tits" + (text:(twist:1,2)))]
+      (else-if:$grope is "ass")[
+        (set:$grope_img to "ass")]
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex creampie image scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "/characters/scarlit/cum/bbc/creampie/" + (text:(twist:1,4)))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex cum on face scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twist:1,12)))
+      (if:$load is "big")[(set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twirl:2,3,4,9,9,10,10)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/scarlit/cum/bbc/facial " + (text:(twirl:1,9)))]
+
+      (set:$cum_face to (dm:
+      "/characters/scarlit/cum/bbc/facial 1",(a:"ooze","chin","runny","upper lip","clothes"),
+      "/characters/scarlit/cum/bbc/facial 2",(a:"spurt","open mouth","up nose","lying","hair"),
+      "/characters/scarlit/cum/bbc/facial 3",(a:"ooze","held","tongue","open mouth"),
+      "/characters/scarlit/cum/bbc/facial 4",(a:"spurt","eyes","forehead","hair","nose","chin","tongue","open mouth"),
+      "/characters/scarlit/cum/bbc/facial 5",(a:"spatter","open mouth","nose","tongue","held","hair"),
+      "/characters/scarlit/cum/bbc/facial 6",(a:"open mouth","tongue","spray"),
+      "/characters/scarlit/cum/bbc/facial 7",(a:"spurt","open mouth","tongue","eyes"),
+      "/characters/scarlit/cum/bbc/facial 8",(a:"spurt","open mouth","tongue","eyes","chin","hair"),
+      "/characters/scarlit/cum/bbc/facial 9",(a:"held","forehead","nose","eyes","chin","cheek","face","cumdump"),
+      "/characters/scarlit/cum/bbc/facial 10",(a:"spurt","open mouth","eyes","tongue","face","forehead","hair"),
+      "/characters/scarlit/cum/bbc/facial 11",(a:"spurt","open mouth","tongue","eyes"),
+      "/characters/scarlit/cum/bbc/facial 12",(a:"spurt","open mouth","tongue","eyes","hair","chin")))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex cum in mouth load scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
+      (else:)[
+        (set:$img to "/characters/scarlit/cum/bbc/mouth " + (text:(twist:1,5)))
+
+        (set:$cum_mouth to (dm:	
+        "/characters/scarlit/cum/bbc/mouth 1",(a:"jerk","kneeling","external","most misses","spit"),
+        "/characters/scarlit/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","eye","in mouth","clothes"),		
+        "/characters/scarlit/cum/bbc/mouth 3",(a:"lying","external","messy","in mouth"),
+        "/characters/scarlit/cum/bbc/mouth 4",(a:"kneeling","external","direct","feed","held","in mouth"),		
+        "/characters/scarlit/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","eye")))
+      ]
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex oral scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$oral_img to "scenes/characters/scarlit/oral/bbc/oral " + (text:(twist:1,6)) + ".mp4")
+      
+      (set:$oral_rhythm to $oral_img of (dm:
+      "scenes/characters/scarlit/oral/bbc/oral 1.mp4",500,
+      "scenes/characters/scarlit/oral/bbc/oral 2.mp4",500))
+      
+      (set:$oral_position to $oral_img of (dm:
+      "scenes/characters/scarlit/oral/bbc/oral 1.mp4","missionary",
+      "scenes/characters/scarlit/oral/bbc/oral 2.mp4","missionary"))
+
+      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
+    ](else:)(display:_around)
+  ](else:)(display:_around)
+}
+
+:: sex pull out scarlit [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (if:$his_choice is "tits" and $your_choice is "pull out")[
+        (set:$your_choice to "tits")
+        (set:$img to "/characters/scarlit/cum/bbc/tits 1")
+      ]
+      (else:)[(if:(twist:1,2) is 1)[(set:$img to (twirl:"/characters/scarlit/cum/bbc/butt 1","/characters/scarlit/bbc/cum/body 1"))]]
+
+      (set:$text to $img of (dm:	
+        "/characters/scarlit/bbc/cum/tits 1",(a:"tits","lying")
+        "/characters/scarlit/bbc/cum/butt 1",(a:"butt","couch"),
+        "/characters/scarlit/bbc/cum/body 1",(a:"body","belly","couch")
+      ))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+

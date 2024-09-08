@@ -1,0 +1,167 @@
+:: sex doggy transactional jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "jia/sex/doggy/bbc/transactional " + (text:(twist:1,5)))
+      (set:$doggy_pic to "<img class='greyborder' 
+      src='img/scenes/characters/jia/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+      (set:$doggy_moan_pic to "<img class='greyborder' 
+      src='img/scenes/characters/jia/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+
+      (set:$doggy_rhythm to $img of 
+      (dm:
+        "jia/sex/doggy/bbc/transactional 1",500,
+        "jia/sex/doggy/bbc/transactional 2",500,
+        "jia/sex/doggy/bbc/transactional 3",500,
+        "jia/sex/doggy/bbc/transactional 4",500,
+        "jia/sex/doggy/bbc/transactional 5",500))
+
+      (set:$text to $img of 
+      (dm:
+        "jia/sex/doggy/bbc/transactional 1",(a:"bed","grab butt","look back"),
+        "jia/sex/doggy/bbc/transactional 2",(a:"bed","grab waist","look back","spank"),
+        "jia/sex/doggy/bbc/transactional 3",(a:"bed","push down"),
+        "jia/sex/doggy/bbc/transactional 4",(a:"bed","pull hair","spank", "push down"),
+        "jia/sex/doggy/bbc/transactional 5",(a:"bed","grab waist","look back")))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional initialize jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+    (set:$img to "scenes/characters/jia/bj/bbc/transactional " + (text:(twist:1,4)) + ".mp4")
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional blowjob jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+    (set:$img to "scenes/characters/jia/bj/bbc/transactional " + (text:(twist:1,4)) + ".mp4")
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional facefuck jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "jia/bj/bbc/rough " + (text:(twist:1,4)))
+      (set:$text to $img of (dm:
+      "jia/bj/bbc/rough 1","bed",
+      "jia/bj/bbc/rough 2","floor",
+      "jia/bj/bbc/rough 3","floor",
+      "jia/bj/bbc/rough 4","bed"))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: facefuck transactional jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "jia/bj/bbc/rough " + (text:(twist:1,4)))
+      (set:$text to $img of (dm:
+      "jia/bj/bbc/rough 1","bed",
+      "jia/bj/bbc/rough 2","floor",
+      "jia/bj/bbc/rough 3","floor",
+      "jia/bj/bbc/rough 4","bed"))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional kiss jia
+{
+  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
+}
+
+:: sex transactional grope jia [around]
+{ 
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$grope to "tits")
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex creampie image jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "/characters/jia/cum/bbc/creampie/" + (text:(twist:1,2)))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex cum on face jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$img to "/characters/jia/cum/bbc/facial " + (text:(twist:1,3)))
+      (if:$load is "big")[(set:$img to "/characters/jia/cum/bbc/facial " + (text:(twirl:1,2,3)))]
+      (if:$load is "unwilling")[(set:$img to "/characters/jia/cum/bbc/facial " + (text:(twirl:1,2,3)))]
+
+      (set:$cum_face to (dm:
+      "/characters/jia/cum/bbc/facial 1",(a:"ooze","chin","upper lip","tongue"),
+      "/characters/jia/cum/bbc/facial 2",(a:"spurt","tongue","up nose","hair"),
+      "/characters/jia/cum/bbc/facial 3",(a:"spurt","tongue","chin")))
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex cum in mouth load jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
+      (else:)[
+        (set:$img to "/characters/jia/cum/bbc/mouth " + (text:(twist:1,2)))
+
+        (set:$cum_mouth to (dm:	
+        "/characters/jia/cum/bbc/mouth 1",(a:"jerk","lying","direct","chin","spit"),
+        "/characters/jia/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","nose","in mouth","tongue")))
+      ]
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+
+:: sex oral jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$oral_img to "scenes/characters/jia/oral/bbc/oral " + (text:(twist:1,2)) + ".mp4")
+      
+      (set:$oral_rhythm to $oral_img of (dm:
+      "scenes/characters/jia/oral/bbc/oral 1.mp4",500,
+      "scenes/characters/jia/oral/bbc/oral 2.mp4",500))
+      
+      (set:$oral_position to $oral_img of (dm:
+      "scenes/characters/jia/oral/bbc/oral 1.mp4","missionary",
+      "scenes/characters/jia/oral/bbc/oral 2.mp4","missionary"))
+
+      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
+    ](else:)(display:_around)
+  ](else:)(display:_around)
+}
+
+:: sex pull out jia [around]
+{
+  (if:(dm-names:$npc) contains "race")[
+    (if:($npc's "race" is "black"))[
+      (set:$pullout_variant to 1)
+      (set:$his_choice to "pull out")
+      (set:$your_choice to "pull out")
+      (if:$position is "missionary")[
+        (set:$img to "/generic/sex/cum/pull out/bbc/2")
+      ]
+      (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
+      (else:)[
+        (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/2")
+      ]
+    ](else:)[(display:_around)]
+  ](else:)[(display:_around)]
+}
+

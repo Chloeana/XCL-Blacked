@@ -56,7 +56,7 @@ The process is *hopefully* straightforward.
 - Kissing
     - `img/scenes/characters/[character id]/foreplay/bbc/kiss.mp4`
 - Grope Tits/Ass
-    - `img/scenes/characters/[character id]/foreplay/bbc/group tits.mp4` / `img/scenes/characters/[character id]/foreplay/bbc/group ass.mp4`
+    - `img/scenes/characters/[character id]/foreplay/bbc/grope tits.mp4` / `img/scenes/characters/[character id]/foreplay/bbc/grope ass.mp4`
     - Can have one or both
 - Cunninlingus
     - `img/scenes/characters/[character id]/oral/bbc/oral 1.mp4`
