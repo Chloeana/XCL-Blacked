@@ -1,0 +1,184 @@
+:: sex doggy transactional lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "lana/sex/doggy/bbc/transactional " + (text:(twist:1,6)))
+    (set:$doggy_pic to "<img class='greyborder' 
+    src='img/scenes/characters/lana/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$doggy_moan_pic to "<img class='greyborder' 
+    src='img/scenes/characters/lana/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+
+    (set:$doggy_rhythm to $img of 
+    (dm:
+      "lana/sex/doggy/bbc/transactional 1",500,
+      "lana/sex/doggy/bbc/transactional 2",500,
+      "lana/sex/doggy/bbc/transactional 3",500,
+      "lana/sex/doggy/bbc/transactional 4",500,
+      "lana/sex/doggy/bbc/transactional 5",500,
+      "lana/sex/doggy/bbc/transactional 6",500))
+
+    (set:$text to $img of 
+    (dm:
+      "lana/sex/doggy/bbc/transactional 1",(a:"bed","grab waist","push down"),
+      "lana/sex/doggy/bbc/transactional 2",(a:"couch","grab butt","look back"),
+      "lana/sex/doggy/bbc/transactional 3",(a:"bed","big thrusts","look back", "balls smacking"),
+      "lana/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","push down"),
+      "lana/sex/doggy/bbc/transactional 5",(a:"bed","grab waist","balls smacking"),
+      "lana/sex/doggy/bbc/transactional 6",(a:"bed","grab waist","look back")))
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional initialize lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "scenes/characters/lana/bj/bbc/transactional " + (text:(twist:1,12)) + ".mp4")
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional blowjob lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "scenes/characters/lana/bj/bbc/transactional " + (text:(twist:1,12)) + ".mp4")
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional facefuck lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "lana/bj/bbc/rough " + (text:(twist:1,8)))
+    (set:$text to $img of (dm:
+    "lana/bj/bbc/rough 1","bed",
+    "lana/bj/bbc/rough 2","floor",
+    "lana/bj/bbc/rough 3","bed",
+    "lana/bj/bbc/rough 4","couch",
+    "lana/bj/bbc/rough 5","couch",
+    "lana/bj/bbc/rough 6","bed",
+    "lana/bj/bbc/rough 7","floor",
+    "lana/bj/bbc/rough 8","floor"))
+  ](else:)[(display:_around)]
+}
+
+:: facefuck transactional lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "lana/bj/bbc/rough " + (text:(twist:1,8)))
+    (set:$text to $img of (dm:
+    "lana/bj/bbc/rough 1","bed",
+    "lana/bj/bbc/rough 2","floor",
+    "lana/bj/bbc/rough 3","bed",
+    "lana/bj/bbc/rough 4","couch",
+    "lana/bj/bbc/rough 5","couch",
+    "lana/bj/bbc/rough 6","bed",
+    "lana/bj/bbc/rough 7","floor",
+    "lana/bj/bbc/rough 8","floor"))
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional kiss lana
+{
+  (set:$kiss_variant to "kiss " + (text:(twist:1,2)))
+}
+
+:: sex transactional grope lana [around]
+{ 
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$grope to (twirl:"tits","ass"))
+  ](else:)[(display:_around)]
+}
+
+:: sex creampie image lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "/characters/lana/cum/bbc/creampie/" + (text:(twist:1,2)))
+  ](else:)[(display:_around)]
+}
+
+:: sex cum on face lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "/characters/lana/cum/bbc/facial " + (text:(twist:1,10)))
+    (if:$load is "big")[(set:$img to "/characters/lana/cum/bbc/facial " + (text:(twirl:2,3,7,10)))]
+    (if:$load is "unwilling")[(set:$img to "/characters/lana/cum/bbc/facial " + (text:(twirl:1,4,6)))]
+
+    (set:$cum_face to (dm:
+    "/characters/lana/cum/bbc/facial 1",(a:"spurt","chin","runny","cheek"),
+    "/characters/lana/cum/bbc/facial 2",(a:"spurt","open mouth","eyes","tongue"),
+    "/characters/lana/cum/bbc/facial 3",(a:"spurt","eyes", "forehead","tongue","open mouth"),
+    "/characters/lana/cum/bbc/facial 4",(a:"spurt","tongue","chin"),
+    "/characters/lana/cum/bbc/facial 5",(a:"ooze","chin","nose","tongue","cheek"),
+    "/characters/lana/cum/bbc/facial 6",(a:"ooze","tongue","chin"),
+    "/characters/lana/cum/bbc/facial 7",(a:"spurt","open mouth","tongue","chin"),
+    "/characters/lana/cum/bbc/facial 8",(a:"ooze","chin","cheek","lips","chin"),
+    "/characters/lana/cum/bbc/facial 9",(a:"ooze","chin","cheek"),
+    "/characters/lana/cum/bbc/facial 10",(a:"spurt","cheek","chin","nose","face")))
+  ](else:)[(display:_around)]
+}
+
+:: sex cum in mouth load lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
+    (else:)[
+      (set:$img to "/characters/lana/cum/bbc/mouth " + (text:(twist:1,5)))
+
+      (set:$cum_mouth to (dm:	
+      "/characters/lana/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
+      "/characters/lana/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
+      "/characters/lana/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
+      "/characters/lana/cum/bbc/mouth 4",(a:"kneeling","external","show tongue","in mouth"),		
+      "/characters/lana/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","chin")))
+    ]
+  ](else:)[(display:_around)]
+}
+
+:: sex oral lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$oral_img to "scenes/characters/lana/oral/bbc/oral " + (text:(twist:1,3)) + ".mp4")
+    
+    (set:$oral_rhythm to $oral_img of (dm:
+    "scenes/characters/lana/oral/bbc/oral 1.mp4",500,
+    "scenes/characters/lana/oral/bbc/oral 2.mp4",500,
+    "scenes/characters/lana/oral/bbc/oral 3.mp4",500))
+
+    (set:$oral_position to $oral_img of (dm:
+    "scenes/characters/lana/oral/bbc/oral 1.mp4","doggy",
+    "scenes/characters/lana/oral/bbc/oral 2.mp4","missionary",
+    "scenes/characters/lana/oral/bbc/oral 3.mp4","doggy"))
+
+    (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
+  ](else:)(display:_around)
+}
+
+:: sex pull out lana [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (if:(twist:1,4) is 1)[
+      (set:$pullout_variant to 1)
+      (if:$his_choice is "tits")[
+        (set:$your_choice to "tits")
+        (set:$img to (twirl:
+        "/generic/sex/cum/tits/bbc/white 1",
+        "/generic/sex/cum/tits/bbc/white 3"))
+      ]
+      (else:)[
+        (set:$his_choice to "pull out")
+        (set:$your_choice to "pull out")
+        (if:$position is "missionary")[
+          (set:$img to "/generic/sex/cum/pull out/bbc/1")
+        ]
+        (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
+        (else:)[
+          (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
+        ]
+      ]
+    ]
+    (else:)[
+      (set:$img to (twirl:"/characters/lana/cum/bbc/butt 1","/characters/lana/cum/bbc/body 1"))
+
+      (set:$text to $img of (dm:	
+        "/characters/lana/cum/bbc/butt 1",(a:"butt","bed"),
+        "/characters/lana/cum/bbc/body 1",(a:"body","belly","bed")
+      ))
+    ]
+  ](else:)[(display:_around)]
+}
