@@ -10,4 +10,4 @@ requiredMods:
       atLeast: "1.8.01"
   - name: "BLACKED"
     version:
-      atLeast: "0.1.0"
+      atLeast: "0.3.0"

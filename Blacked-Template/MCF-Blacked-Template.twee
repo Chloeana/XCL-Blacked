@@ -9,10 +9,8 @@ You don't need to set the "generic" media, there are already checks in the main 
 that will determine which clip to play.
 
 This type of syntax gets used A LOT:
-(if:(dm-names:$npc) contains "race")[
-  (if:($npc's "race" is "black"))[
+(if:(checkdm: $npc, "race", "is", "black"))[
       #### do stuff ####
-  ](else:)[(display:_around)]
 ](else:)[(display:_around)]
 
 In all the places where you see "character_id", that is where you would put your character's id.
@@ -40,135 +38,129 @@ I hope you enjoy adding BBC to your mod as much as I enjoyed creating BLACKED! <
 
 :: sex doggy transactional character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "character_id/sex/doggy/bbc/transactional " + (text:(twist:1,8)))
-      (set:$doggy_pic to "<img class='greyborder' 
-      src='img/scenes/characters/character_id/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
-      (set:$doggy_moan_pic to "<img class='greyborder' 
-      src='img/scenes/characters/character_id/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "character_id/sex/doggy/bbc/transactional " + (text:(twist:1,8)))
+    (set:$doggy_pic to "<img class='greyborder' 
+    src='img/scenes/characters/character_id/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$doggy_moan_pic to "<img class='greyborder' 
+    src='img/scenes/characters/character_id/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
 
-      (set:$doggy_rhythm to $img of 
-      (dm:
-        "character_id/sex/doggy/bbc/transactional 1",500,
-        "character_id/sex/doggy/bbc/transactional 2",500,
-        "character_id/sex/doggy/bbc/transactional 3",500,
-        "character_id/sex/doggy/bbc/transactional 4",500,
-        "character_id/sex/doggy/bbc/transactional 5",500,
-        "character_id/sex/doggy/bbc/transactional 6",500,
-        "character_id/sex/doggy/bbc/transactional 7",500,
-        "character_id/sex/doggy/bbc/transactional 8",500))
+    (set:$doggy_rhythm to $img of 
+    (dm:
+      "character_id/sex/doggy/bbc/transactional 1",500,
+      "character_id/sex/doggy/bbc/transactional 2",500,
+      "character_id/sex/doggy/bbc/transactional 3",500,
+      "character_id/sex/doggy/bbc/transactional 4",500,
+      "character_id/sex/doggy/bbc/transactional 5",500,
+      "character_id/sex/doggy/bbc/transactional 6",500,
+      "character_id/sex/doggy/bbc/transactional 7",500,
+      "character_id/sex/doggy/bbc/transactional 8",500))
 
-        <!-- 
-        Tags trigger the on-screen messages
+      <!-- 
+      Tags trigger the on-screen messages
 
-        ***** First tag is ALWAYS a location *****
-        Valid locations:
-        "bed"
-        "couch"
-        "desk"
-        "floor"
-        "wall"
-        "standing" (turns into wall anyway)
-        *********
+      ***** First tag is ALWAYS a location *****
+      Valid locations:
+      "bed"
+      "couch"
+      "desk"
+      "floor"
+      "wall"
+      "standing" (turns into wall anyway)
+      *********
 
-        Other valid tags:
-        "grab neck"
-        "grab arms"
-        "grab shoulders"
-        "grab boobs"
-        "grab face"
-        "grab head"
-        "grab butt"
-        "grab waist"
-        "pull hair"
-        "mount" <-- ***they mount you, not you mounting them***
-        "stabilize"
-        "spank"
-        "lean against you"
-        "cover mouth"
-        "look back"
-        "leg up"
-        "tits clap"
-        "push down"
-        "standing"
-        "tits rub"
-        "big thrusts"
-        "eyes roll"
-        "nelson"
-        "balls smacking"
+      Other valid tags:
+      "grab neck"
+      "grab arms"
+      "grab shoulders"
+      "grab boobs"
+      "grab face"
+      "grab head"
+      "grab butt"
+      "grab waist"
+      "pull hair"
+      "mount" <-- ***they mount you, not you mounting them***
+      "stabilize"
+      "spank"
+      "lean against you"
+      "cover mouth"
+      "look back"
+      "leg up"
+      "tits clap"
+      "push down"
+      "standing"
+      "tits rub"
+      "big thrusts"
+      "eyes roll"
+      "nelson"
+      "balls smacking"
 
-        Full example of on-screen text: (a:"couch","push down") ->>> "He pushes you down into the couch"
-        -->
-      (set:$text to $img of 
-      (dm:
-        "character_id/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
-        "character_id/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
-        "character_id/sex/doggy/bbc/transactional 3",(a:"floor","grab butt","spank"),
-        "character_id/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
-        "character_id/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
-        "character_id/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
-        "character_id/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
-        "character_id/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
+      Full example of on-screen text: (a:"couch","push down") ->>> "He pushes you down into the couch"
+      -->
+    (set:$text to $img of 
+    (dm:
+      "character_id/sex/doggy/bbc/transactional 1",(a:"bed","grab head","push down"),
+      "character_id/sex/doggy/bbc/transactional 2",(a:"sink","grab waist","look back"),
+      "character_id/sex/doggy/bbc/transactional 3",(a:"floor","grab butt","spank"),
+      "character_id/sex/doggy/bbc/transactional 4",(a:"bed","big thrusts","grab hair"),
+      "character_id/sex/doggy/bbc/transactional 5",(a:"bed","grab boobs","mount"),
+      "character_id/sex/doggy/bbc/transactional 6",(a:"bed","pull hair","eyes roll"),
+      "character_id/sex/doggy/bbc/transactional 7",(a:"couch","look back","spank"),
+      "character_id/sex/doggy/bbc/transactional 8",(a:"couch","look back","mount")))
     
-    ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
 
 <!-- Yes, these next four are two sets of duplicates. Why? I don't know, that's how it is in the code.-->
 :: blowjob transactional initialize character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "scenes/characters/character_id/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
-    ](else:)[(display:_around)]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "scenes/characters/character_id/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
   ](else:)[(display:_around)]
 }
 
 :: sex transactional blowjob character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "scenes/characters/character_id/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
-    ](else:)[(display:_around)]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "scenes/characters/character_id/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
   ](else:)[(display:_around)]
 }
 
 :: blowjob transactional facefuck character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "character_id/bj/bbc/rough " + (text:(twist:1,4)))
-      (set:$text to $img of (dm:
-      "character_id/bj/bbc/rough 1","floor",
-      "character_id/bj/bbc/rough 2","floor",
-      "character_id/bj/bbc/rough 3","counter",
-      "character_id/bj/bbc/rough 4","bed"))
-    ](else:)[(display:_around)]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "character_id/bj/bbc/rough " + (text:(twist:1,4)))
+    (set:$text to $img of (dm:
+    "character_id/bj/bbc/rough 1","floor",
+    "character_id/bj/bbc/rough 2","floor",
+    "character_id/bj/bbc/rough 3","counter",
+    "character_id/bj/bbc/rough 4","bed"))
   ](else:)[(display:_around)]
 }
 
 :: facefuck transactional character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "character_id/bj/bbc/rough " + (text:(twist:1,4)))
-      (set:$text to $img of (dm:
-      "character_id/bj/bbc/rough 1","floor",
-      "character_id/bj/bbc/rough 2","floor",
-      "character_id/bj/bbc/rough 3","counter",
-      "character_id/bj/bbc/rough 4","bed"))
-    ](else:)[(display:_around)]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "character_id/bj/bbc/rough " + (text:(twist:1,4)))
+    (set:$text to $img of (dm:
+    "character_id/bj/bbc/rough 1","floor",
+    "character_id/bj/bbc/rough 2","floor",
+    "character_id/bj/bbc/rough 3","counter",
+    "character_id/bj/bbc/rough 4","bed"))
   ](else:)[(display:_around)]
 }
 
 :: sex transactional grope character_id [around]
 { 
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$grope to (twirl:"tits","ass"))  <!-- If you're able to find a groping scene for both tits and ass -->
-      (set:$grope to "tits")                <!-- Otherwise use this one and set for tits OR ass -->
-    ](else:)[(display:_around)]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$grope to (twirl:"tits","ass"))  <!-- If you're able to find a groping scene for both tits and ass -->
+    
+    (if:$grope is "tits")[ <!-- if you had "tits 1", "tits 2", etc-->
+      (set:$grope_img to "tits " + (text:(twist:1,2)))] 
+    (else-if:$grope is "ass")[
+      (set:$grope_img to "ass")]
+
+    (set:$grope to "tits")                <!-- Otherwise use this one and set for tits OR ass and leave out the variant -->
   ](else:)[(display:_around)]
 }
 
@@ -180,78 +172,69 @@ I hope you enjoy adding BBC to your mod as much as I enjoyed creating BLACKED! <
 
 :: sex creampie image character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/character_id/cum/bbc/creampie/" + (text:(twist:1,4)))
-    ](else:)[(display:_around)]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "/characters/character_id/cum/bbc/creampie/" + (text:(twist:1,4)))
   ](else:)[(display:_around)]
 }
 
 :: sex cum on face character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twist:1,3)))
-      <!-- For your "bigger" facials, put them in this one -->
-      (if:$load is "big")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twirl:2,3)))]
-      <!-- For ones that look like she might not be that into it, put them here. If you don't really have any, you can just
-      set it to be whichever ones you want. -->
-      (if:$load is "unwilling")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twist:1,3)))]
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twist:1,3)))
+    <!-- For your "bigger" facials, put them in this one -->
+    (if:$load is "big")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twirl:2,3)))]
+    <!-- For ones that look like she might not be that into it, put them here. If you don't really have any, you can just
+    set it to be whichever ones you want. -->
+    (if:$load is "unwilling")[(set:$img to "/characters/character_id/cum/bbc/facial " + (text:(twist:1,3)))]
 
-      (set:$cum_face to (dm:
-      "/characters/character_id/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
-      "/characters/character_id/cum/bbc/facial 2",(a:"spurt","open mouth","tongue","face","hair"),
-      "/characters/character_id/cum/bbc/facial 3",(a:"ooze","hair","tongue","face")))
-    ](else:)[(display:_around)]
+    (set:$cum_face to (dm:
+    "/characters/character_id/cum/bbc/facial 1",(a:"spurt","chin","runny","lips","face"),
+    "/characters/character_id/cum/bbc/facial 2",(a:"spurt","open mouth","tongue","face","hair"),
+    "/characters/character_id/cum/bbc/facial 3",(a:"ooze","hair","tongue","face")))
   ](else:)[(display:_around)]
 }
 
 :: sex cum in mouth load character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      <!-- If you can't find a clip, set $cum_mouth_generic to 1 to use generic clips and remove the rest-->
-      (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-      (else:)[
-        (set:$img to "/characters/character_id/cum/bbc/mouth " + (text:(twist:1,5)))
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    <!-- If you can't find a clip, set $cum_mouth_generic to 1 to use generic clips and remove the rest-->
+    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
+    (else:)[
+      (set:$img to "/characters/character_id/cum/bbc/mouth " + (text:(twist:1,5)))
 
-        (set:$cum_mouth to  (dm:	
-        "/characters/character_id/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
-        "/characters/character_id/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
-        "/characters/character_id/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
-        "/characters/character_id/cum/bbc/mouth 4",(a:"kneeling","external","show tongue","in mouth"),		
-        "/characters/character_id/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","chin")))
-      ]
-      
-    ](else:)[(display:_around)]
+      (set:$cum_mouth to  (dm:	
+      "/characters/character_id/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
+      "/characters/character_id/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
+      "/characters/character_id/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
+      "/characters/character_id/cum/bbc/mouth 4",(a:"kneeling","external","show tongue","in mouth"),		
+      "/characters/character_id/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","chin")))
+    ]
   ](else:)[(display:_around)]
 }
 
 :: sex oral character_id [around]
 {
-  (if:(dm-names:$npc) contains "race")[
-    (if:($npc's "race" is "black"))[
-      (set:$oral_img to "scenes/characters/character_id/oral/bbc/oral " + (text:(twist:1,3)) + ".mp4")
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$oral_img to "scenes/characters/character_id/oral/bbc/oral " + (text:(twist:1,3)) + ".mp4")
 
-      (set:$oral_rhythm to $oral_img of (dm:
-      "scenes/characters/character_id/oral/bbc/oral 1.mp4",500,
-      "scenes/characters/character_id/oral/bbc/oral 2.mp4",500,
-      "scenes/characters/character_id/oral/bbc/oral 3.mp4",500))
+    (set:$oral_rhythm to $oral_img of (dm:
+    "scenes/characters/character_id/oral/bbc/oral 1.mp4",500,
+    "scenes/characters/character_id/oral/bbc/oral 2.mp4",500,
+    "scenes/characters/character_id/oral/bbc/oral 3.mp4",500))
 
-      <!-- missionary or doggy is sets the moan face image -->
-      (set:$oral_position to $oral_img of (dm:
-      "scenes/characters/character_id/oral/bbc/oral 1.mp4","missionary",
-      "scenes/characters/character_id/oral/bbc/oral 2.mp4","missionary",
-      "scenes/characters/character_id/oral/bbc/oral 3.mp4","missionary"))
+    <!-- missionary or doggy is sets the moan face image -->
+    (set:$oral_position to $oral_img of (dm:
+    "scenes/characters/character_id/oral/bbc/oral 1.mp4","missionary",
+    "scenes/characters/character_id/oral/bbc/oral 2.mp4","missionary",
+    "scenes/characters/character_id/oral/bbc/oral 3.mp4","missionary"))
 
-      (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
-    ](else:)(display:_around)
+    (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
   ](else:)(display:_around)
 }
 
 :: sex pull out character_id [around]
 {
-  (if:($npc's "race" is "black"))[
+  (if:(checkdm: $npc, "race", "is", "black"))[
     <!--
     For picking which generic clips fit your girls:
 
@@ -260,10 +243,15 @@ I hope you enjoy adding BBC to your mod as much as I enjoyed creating BLACKED! <
     tits/bbc/white 2 = C/D cup
     tits/bbc/white 3 = C/D cup (blonde hair visible)
     tits/bbc/white 4 = A/B cup (brunette hair visible)
+    pull out/bbc/c1 = missionary, thicc-ish (black girl)
     pull out/bbc/1 = missionary, B/C cup, cum on pubic hair (brunette)
     pull out/bbc/2 = missionary, A/B cup, cum on belly/tits
+    pull out/bbc/wiggle/c1 = doggy petite booty black girl
+    pull out/bbc/wiggle/c2 = doggy petite-ish booty black girl
     pull out/bbc/wiggle/1 = sorta thic booty white girl
     pull out/bbc/wiggle/2 = petite booty white girl
+    pull out/bbc/no wiggle/c1 = doggy petite booty black girl
+    pull out/bbc/no wiggle/c2 = doggy thicc booty black girl
     pull out/bbc/no wiggle/1 = doggy thicc booty white girl
     pull out/bbc/no wiggle/2 = doggy petite booty white girl
     pull out/bbc/no wiggle/3 = doggy average booty white girl
@@ -275,47 +263,46 @@ I hope you enjoy adding BBC to your mod as much as I enjoyed creating BLACKED! <
     -->
 
     <!-- Generic Pull out clips below here -->
-    (if:(dm-names:$npc) contains "race")[
-      (if:(twist:1,4) is 1)[
-        (set:$pullout_variant to 1)
-        (if:$his_choice is "tits")[
-          (set:$your_choice to "tits")
-          (set:$img to (twirl:
-          "/generic/sex/cum/tits/bbc/white 2",
-          "/generic/sex/cum/tits/bbc/white 3")) 
-        ]
-        (else:)[
-          (set:$his_choice to "pull out")
-          (set:$your_choice to "pull out")
-          (if:$position is "missionary")[
-            (set:$img to "/generic/sex/cum/pull out/bbc/1")
-          ]
-          (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/" + (text:(twist:1,2)))]
-          (else:)[
-            (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-          ]
-        ]
-      ]
-      <!-- Character Specific Pull out clips below here -->
-      (else:)[
-        (set:$img to (twirl:
-        "/characters/character_id/cum/bbc/butt 1",
-        "/characters/character_id/cum/bbc/body 1",
-        "/characters/character_id/cum/bbc/tits 1"))
 
-        (set:$text to $img of (dm:	
-          "/characters/character_id/cum/bbc/butt 1",(a:"butt","couch"),
-          "/characters/character_id/cum/bbc/body 1",(a:"body","belly","couch"),
-          "/characters/character_id/cum/bbc/tits 1",(a:"tits","lying"),
-        ))
-        <!-- 
-        You can also set the choices here if you only have one type
-        but I'm honestly not sure if they're required. 
-        It doesn't seem to hurt to not set them.(please correct me if I'm wrong!)
-        (set:$his_choice to "tits")
+    (if:(twist:1,4) is 1)[
+      (set:$pullout_variant to 1)
+      (if:$his_choice is "tits")[
         (set:$your_choice to "tits")
-        -->
+        (set:$img to (twirl:
+        "/generic/sex/cum/tits/bbc/white 2",
+        "/generic/sex/cum/tits/bbc/white 3")) 
       ]
-    ](else:)[(display:_around)]
+      (else:)[
+        (set:$his_choice to "pull out")
+        (set:$your_choice to "pull out")
+        (if:$position is "missionary")[
+          (set:$img to "/generic/sex/cum/pull out/bbc/1")
+        ]
+        (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/" + (text:(twist:1,2)))]
+        (else:)[
+          (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
+        ]
+      ]
+    ]
+    <!-- Character Specific Pull out clips below here -->
+    (else:)[
+      (set:$img to (twirl:
+      "/characters/character_id/cum/bbc/butt 1",
+      "/characters/character_id/cum/bbc/body 1",
+      "/characters/character_id/cum/bbc/tits 1"))
+
+      (set:$text to $img of (dm:	
+        "/characters/character_id/cum/bbc/butt 1",(a:"butt","couch"),
+        "/characters/character_id/cum/bbc/body 1",(a:"body","belly","couch"),
+        "/characters/character_id/cum/bbc/tits 1",(a:"tits","lying"),
+      ))
+      <!-- 
+      You can also set the choices here if you only have one type
+      but I'm honestly not sure if they're required. 
+      It doesn't seem to hurt to not set them.(please correct me if I'm wrong!)
+      (set:$his_choice to "tits")
+      (set:$your_choice to "tits")
+      -->
+    ]
   ](else:)[(display:_around)]
 }

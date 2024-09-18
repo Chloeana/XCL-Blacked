@@ -1,0 +1,152 @@
+:: sex doggy transactional jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "jade/sex/doggy/bbc/transactional " + (text:(twist:1,10)))
+    (set:$doggy_pic to "<img class='greyborder' 
+    src='img/scenes/characters/jade/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$doggy_moan_pic to "<img class='greyborder' 
+    src='img/scenes/characters/jade/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+
+    (set:$doggy_rhythm to $img of 
+    (dm:
+      "jade/sex/doggy/bbc/transactional 1",500,
+      "jade/sex/doggy/bbc/transactional 2",500,
+      "jade/sex/doggy/bbc/transactional 3",500,
+      "jade/sex/doggy/bbc/transactional 4",500,
+      "jade/sex/doggy/bbc/transactional 5",500,
+      "jade/sex/doggy/bbc/transactional 6",500,
+      "jade/sex/doggy/bbc/transactional 7",500,
+      "jade/sex/doggy/bbc/transactional 8",500,
+      "jade/sex/doggy/bbc/transactional 9",500,
+      "jade/sex/doggy/bbc/transactional 10",500))
+
+    (set:$text to $img of 
+    (dm:
+      "jade/sex/doggy/bbc/transactional 1",(a:"bed","look back","push down","grab waist"),
+      "jade/sex/doggy/bbc/transactional 2",(a:"bed","mount","big thrusts","balls smacking"),
+      "jade/sex/doggy/bbc/transactional 3",(a:"couch","boobs jiggle","spank","eyes roll"),
+      "jade/sex/doggy/bbc/transactional 4",(a:"bed","look back","spank"),
+      "jade/sex/doggy/bbc/transactional 5",(a:"bed","look back","spank"),
+      "jade/sex/doggy/bbc/transactional 6",(a:"couch","grab waist","look back"),
+      "jade/sex/doggy/bbc/transactional 7",(a:"couch","pull hair","spank","grab waist"),
+      "jade/sex/doggy/bbc/transactional 8",(a:"bed","look back","grab waist", "spank"),
+      "jade/sex/doggy/bbc/transactional 9",(a:"bed","grab arms","look back"),
+      "jade/sex/doggy/bbc/transactional 10",(a:"bed","grab waist","big thrusts")))
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional initialize jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional blowjob jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "scenes/characters/jade/bj/bbc/transactional " + (text:(twist:1,6)) + ".mp4")
+  ](else:)[(display:_around)]
+}
+
+:: blowjob transactional facefuck jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "jade/bj/bbc/rough " + (text:(twist:1,2)))
+    (set:$text to $img of (dm:
+    "jade/bj/bbc/rough 1","bed",
+    "jade/bj/bbc/rough 2","bed"))
+  ](else:)[(display:_around)]
+}
+
+:: facefuck transactional jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "jade/bj/bbc/rough " + (text:(twist:1,2)))
+    (set:$text to $img of (dm:
+    "jade/bj/bbc/rough 1","bed",
+    "jade/bj/bbc/rough 2","bed"))
+  ](else:)[(display:_around)]
+}
+
+:: sex transactional kiss jade
+{
+  (set:$kiss_variant to "kiss " + (text:(twist:1,2)))
+}
+
+:: sex transactional grope jade [around]
+{ 
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$grope to (twirl:"tits","ass"))
+    (if:$grope is "tits")[
+      (set:$grope_img to "tits " + (text:(twist:1,2)))]
+    (else-if:$grope is "ass")[
+      (set:$grope_img to "ass")]
+  ](else:)[(display:_around)]
+}
+
+:: sex creampie image jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (if:$position is "doggy")[(set:$img to "/generic/sex/cum/creampie/w/bbc/doggy " + (text:(twist:1,9)))]
+    (else-if:$position is "missionary")[(set:$img to "/generic/sex/cum/creampie/w/bbc/missionary " + (text:(twist:1,9)))]
+    (else:)[(set:$img to "/generic/sex/cum/creampie/w/bbc/riding " + (text:(twist:1,6)))]
+  ](else:)[(display:_around)]
+}
+
+:: sex cum on face jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$img to "/characters/jade/cum/bbc/facial " + (text:(twist:1,2)))
+    (if:$load is "big")[(set:$img to "/characters/jade/cum/bbc/facial 1")]
+    (if:$load is "unwilling")[(set:$img to "/characters/jade/cum/bbc/facial " + (text:(twirl:1,2)))]
+
+    (set:$cum_face to (dm:
+    "/characters/jade/cum/bbc/facial 1",(a:"spurt","chin","runny","upper lip","tongue"),
+    "/characters/jade/cum/bbc/facial 2",(a:"spurt","open mouth","face","chin","hair")))
+  ](else:)[(display:_around)]
+}
+
+:: sex cum in mouth load jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
+    (else:)[
+      (set:$img to "/characters/jade/cum/bbc/mouth 1")
+
+      (set:$cum_mouth to (dm:	
+      "/characters/jade/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","tongue")))
+    ]
+  ](else:)[(display:_around)]
+}
+
+:: sex oral jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$oral_img to "scenes/characters/jade/oral/bbc/oral 1.mp4")
+    
+    (set:$oral_rhythm to $oral_img of (dm:
+    "scenes/characters/jade/oral/bbc/oral 1.mp4",500))
+
+    (set:$oral_position to $oral_img of (dm:
+    "scenes/characters/jade/oral/bbc/oral 1.mp4","doggy"))
+
+    (set:$sex_loop to $sex_loop + (text:(twist:1,2)))
+  ](else:)(display:_around)
+}
+
+:: sex pull out jade [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$pullout_variant to 1)
+    (set:$his_choice to "pull out")
+    (set:$your_choice to "pull out")
+    (if:$position is "missionary")[
+      (set:$img to "/generic/sex/cum/pull out/bbc/1")
+    ]
+    (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
+    (else:)[
+      (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twirl:2,3)))
+    ]
+  ](else:)[(display:_around)]
+}
