@@ -392,7 +392,7 @@ positions("liya", "passive", "doggy",
         "locations": ["couch"]
     },
     {
-        "name": "rough doggy",
+        "name": "rough doggystyle",
         "flavor": "He's really giving it to you.",
         "type": "passive",
         "subtype": "doggy",

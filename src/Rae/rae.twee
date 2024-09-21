@@ -188,18 +188,20 @@
         ]
       ]
     ]
-    (else-if:$location_params's "sex location passage" is "beach sex area")[
-      (set:$img to "/characters/rae/cum/bbc/body 2")]
+    <!-- Beach Sex Area Only -->
+    (if:$location_params's "sex location passage" is "beach sex area")[
+      (set:$img to "/characters/rae/cum/bbc/body 2")
 
       (set:$text to $img of (dm:	
         "/characters/rae/cum/bbc/body 2",(a:"body","belly","lying")
       ))
-    ]
+      ]
     (else:)[
       (set:$img to "/characters/rae/cum/bbc/body 1")
 
       (set:$text to $img of (dm:	
         "/characters/rae/cum/bbc/body 1",(a:"body","belly","floor")
       ))
+    ]
   ](else:)[(display:_around)]
 }
