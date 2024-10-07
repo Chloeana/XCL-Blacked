@@ -58,24 +58,6 @@
   (set:$kiss_variant to "kiss " + (text:(twist:1,3)))
 }
 
-:: sex transactional grope liya [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$grope to (twirl:"tits","ass"))
-    (if:$grope is "tits")[
-      (set:$grope_img to "tits " + (text:(twist:1,2)))]
-    (else-if:$grope is "ass")[
-      (set:$grope_img to "ass")]
-  ](else:)[(display:_around)]
-}
-
-:: sex creampie image liya [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "/characters/liya/cum/bbc/creampie/" + (text:(twist:1,2)))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face liya [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

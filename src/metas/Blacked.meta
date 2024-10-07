@@ -1,13 +1,10 @@
 metaVersion: 1
 name: "BLACKED"
-version: "0.3.2"
+version: "0.3.3"
 author: "Chloeana"
 baseGameVersion:
-  atLeast: "0.20"
+  atLeast: "0.21"
 requiredMods:
-  - name: "MultipleCharacters"
-    version:
-      atLeast: "1.8.01"
   - name: "BLACKED-Media"
     version:
       atLeast: "0.3.1"

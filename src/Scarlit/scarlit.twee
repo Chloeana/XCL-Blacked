@@ -1,6 +1,11 @@
 :: sex doggy transactional scarlit [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$doggy_pic to "<img class='greyborder' 
+    src='img/scenes/characters/scarlit/sex/doggy/bbc/transactional insert " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+    (set:$doggy_moan_pic to "<img class='greyborder' 
+    src='img/scenes/characters/scarlit/sex/doggy/bbc/moan " + (text:(twist:1,4)) + ".jpg' width=100% height=auto>")
+
     (set:$img to "scarlit/sex/doggy/bbc/transactional " + (text:(twist:1,9)))
     (set:$doggy_rhythm to $img of 
     (dm:
@@ -70,24 +75,6 @@
 :: sex transactional kiss scarlit
 {
   (set:$kiss_variant to "kiss " + (text:(twist:1,4)))
-}
-
-:: sex transactional grope scarlit [around]
-{ 
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$grope to (twirl:"tits","ass"))
-    (if:$grope is "tits")[
-      (set:$grope_img to "tits " + (text:(twist:1,2)))]
-    (else-if:$grope is "ass")[
-      (set:$grope_img to "ass")]
-  ](else:)[(display:_around)]
-}
-
-:: sex creampie image scarlit [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "/characters/scarlit/cum/bbc/creampie/1")
-  ](else:)[(display:_around)]
 }
 
 :: sex cum on face scarlit [around]

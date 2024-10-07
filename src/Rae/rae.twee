@@ -104,20 +104,6 @@
   (set:$kiss_variant to "kiss")
 }
 
-:: sex transactional grope rae [around]
-{ 
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$grope to (twirl:"tits","ass"))
-  ](else:)[(display:_around)]
-}
-
-:: sex creampie image rae [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "/characters/rae/cum/bbc/creampie/" + (text:(twist:1,4)))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face rae [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

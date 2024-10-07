@@ -78,20 +78,6 @@
   (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
 }
 
-:: sex transactional grope mia [around]
-{ 
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$grope to "tits")
-  ](else:)[(display:_around)]
-}
-
-:: sex creampie image mia [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "/characters/mia/cum/bbc/creampie/" + (text:(twist:1,5)))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face mia [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

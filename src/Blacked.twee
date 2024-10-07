@@ -896,6 +896,44 @@
   ]
 }
 
+:: sex transactional grope [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    ($char_passage:"sex transactional grope",[
+      (set:$grope to $character's "id" of (dm:
+      "alina",(twirl:"ass","tits"),
+      "cassidy","tits",
+      "ella",(twirl:"ass","tits"),
+      "jade",(twirl:"ass","tits"),
+      "jia","tits",
+      "lana",(twirl:"ass","tits"),
+      "liya",(twirl:"ass","tits"),
+      "mia","tits",
+      "rae",(twirl:"ass","tits"),
+      "scarlit",(twirl:"ass","tits")
+      ))
+
+      (set:$grope_img to (cond:
+      $character's "id" is "ella" and $grope is "tits", "tits " + (text:(twist:1,3)),
+      $character's "id" is "jade" and $grope is "tits", "tits " + (text:(twist:1,2)),
+      $character's "id" is "liya" and $grope is "tits", "tits " + (text:(twist:1,2)),
+      $character's "id" is "scarlit" and $grope is "tits", "tits " + (text:(twist:1,2)),
+      $grope))],[]) 
+  (replace:?options)[
+  (set:$case to "upper")(display:"npc pronoun") starts (twirl:"groping","fondling") your 
+  (if:$grope is "tits")[
+    (display:"describe breasts")(display:"describe breasts"){
+      (set:(twirl:"reason 1","reason 2","reason 3") of $minigame to "Do you like it when black men grope your " + (text:$breasts) + "?")
+      (set:$minigame's "masculinity level" to (max:60,$minigame's "masculinity level" - 5))}$breasts.
+  ](else:)[
+    {(display:"describe butt")$butt.(display:"describe butt")
+    (set:(twirl:"reason 1","reason 2","reason 3") of $minigame to "Do you like it when black men grope your " + (text:$butt) + "?")
+    (set:$minigame's "masculinity level" to (max:60,$minigame's "masculinity level" - 5))}
+  ]
+  <div class='options'>(link:"Talk dirty")[(set:$option to "talk dirty")(display:"sex transactional grope react")](link:(twirl:"Just moan","Just endure it","Smile","Bite your lip"))[(set:$option to "moan")(display:"sex transactional grope react")]</div>
+  ]](else:)[(display:_around)]
+}
+
 :: sex transactional grope react [around]
 {
   (display:_around)
@@ -938,15 +976,31 @@
 :: sex creampie image [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:_generic_variant to (twist:1,4))
-    (if:_generic_variant is 1)[
+    (set:$generic_creampie_variant to (cond:
+      $character's "id" is "ella",1,
+      $character's "id" is "jade",1,
+      (twist:1,4)))
+
+    (if:$generic_creampie_variant is 1)[
       (if:$character's "race" is "black")[(set:$img to "/generic/sex/cum/creampie/c/bbc/missionary " + (text:(twist:1,2)))]
       (else:)[
         (if:$position is "doggy")[(set:$img to "/generic/sex/cum/creampie/w/bbc/doggy " + (text:(twist:1,9)))]
         (else-if:$position is "missionary")[(set:$img to "/generic/sex/cum/creampie/w/bbc/missionary " + (text:(twist:1,9)))]
         (else:)[(set:$img to "/generic/sex/cum/creampie/w/bbc/riding " + (text:(twist:1,6)))]
       ]
-    ](else:)[(display:"sex creampie image " + $character's "id")]
+    ](else:)[
+      ($char_passage:"sex creampie image",[(set:$img to (cond:
+        $character's "id" is "alina", "/characters/alina/cum/bbc/creampie/" + (text:(twist:1,2)),
+        $character's "id" is "jia","/characters/jia/cum/bbc/creampie/" + (text:(twist:1,2)),
+        $character's "id" is "lana","/characters/lana/cum/bbc/creampie/" + (text:(twist:1,2)),
+        $character's "id" is "liya","/characters/liya/cum/bbc/creampie/" + (text:(twist:1,2)),
+        $character's "id" is "mia","/characters/mia/cum/bbc/creampie/" + (text:(twist:1,5)),
+        $character's "id" is "rae","/characters/rae/cum/bbc/creampie/" + (text:(twist:1,4)),
+        $character's "id" is "scarlit","/characters/scarlit/cum/bbc/creampie/1",
+        "/generic/sex/cum/creampie/w/bbc/doggy 1"
+      ))
+    ],[])
+    ]
     (set:$img to "<video src='img/scenes"+ $img + ".mp4' autoplay='' loop='' muted='' playsinline/>")
   ](else:)[(display:_around)]
 }

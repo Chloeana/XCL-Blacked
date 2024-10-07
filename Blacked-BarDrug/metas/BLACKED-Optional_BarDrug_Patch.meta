@@ -1,0 +1,13 @@
+metaVersion: 1
+name: "BLACKED-BarDrug-Compatibility-Patch"
+version: "0.1.0"
+author: "Chloeana"
+baseGameVersion:
+  atLeast: "0.20"
+requiredMods:
+  - name: "BLACKED"
+    version:
+      atLeast: "0.3.0"
+  - name: "Bar Drug"
+    version:
+      atLeast: "2.8"

@@ -1,0 +1,129 @@
+:: bar drug invitation proceed [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$position to "doggy")
+    (display:"sex insertion")
+    (display:"insertion sounds")
+    (display:"play sound")
+    (set:_orginalnpc to $npc)
+    (display:"generate random guy")
+    "You really are a good girl aren't you?"
+    (replace:?portrait)[(print:"<img class='border' src='img/characters/sex/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]
+    (if:(random:1,2) is 1)[
+      (if:$character's "race" is "black")[
+      (print:"<video src='img/scenes/generic/sex/pre/insert/bbc doggy b.mp4' autoplay='' loop='' muted='' playsinline/>")
+      ](else:)
+      [
+        (print:"<video src='img/scenes/generic/sex/pre/insert/bbc doggy w.mp4' autoplay='' loop='' muted='' playsinline/>")
+      ]
+    ](else:)[
+      (print:"<img class='greyborder' src='img/scenes/characters/" + $character's "id" + "/sex/doggy/bbc/transactional insert " + (text:(random:1,4)) + ".jpg' width=100% height=auto>")
+    ]
+    He slides into you, taking you again, using you like a cheap whore that he paid for, which, incidentially, is what he just did.
+    His thrusts are hard and unrelenting, punishing your small female body with each one. 
+    However after what feels like forever but were probably just a minute or two, he slides out of you again.
+    "Guess he really did wear you down. Guess I'm gonna wreck that pretty face instead!"
+    <div class='options'>
+      (link:"oh no!")[(set:$next to "bar drug face gag")(display:"change screen")]
+    </div>
+  ](else:)[(display:_around)]
+}
+
+
+:: bar drug backroom insert [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    Before you're even sure what's happening, he rips off your pants and slaps your ass. His strong fingers digs into your soft sides before he presses close and forces himself into you, whether you're ready for him or not.(print:"\n\n")
+
+    (display:"sex doggy transactional")
+    (replace:?portrait)[(print:"<img class='border' src='img/characters/sex/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]
+    (if:(random:1,2) is 1)[
+      (if:$character's "race" is "black")[
+          (print:"<video src='img/scenes/generic/sex/pre/insert/bbc doggy b.mp4' autoplay='' loop='' muted='' playsinline/>")
+      ](else:)
+      [
+        (print:"<video src='img/scenes/generic/sex/pre/insert/bbc doggy w.mp4' autoplay='' loop='' muted='' playsinline/>")
+      ]
+    ](else:)[
+      (print:"<img class='greyborder' src='img/scenes/characters/" + $character's "id" + "/sex/doggy/bbc/transactional insert " + (text:(random:1,4)) + ".jpg' width=100% height=auto>")
+    ]
+    (set:$position to "doggy")
+    (display:"sex insertion")
+    (display:"play sound")
+    (print:"\n")
+    (for: each _passage, ...$tagged's "sex_insert")[
+      (display:_passage)
+    ]
+    (print:"\n")
+    (if:$character's "identity" < 80)[
+      (print:"\n\n")Why is this turning you on?(print:"\n")
+      (set:$gain to 1)
+      (display:"gain arousal")
+    ]
+
+    <div class='options'>
+      (link:"This is happening!")[(set:$next to "bar drug backroom sex wait")(display:"change screen")]
+    </div>
+  ](else:)[(display:_around)]
+}
+
+
+:: bar drug face gag [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$position to "bj rough")
+
+    (if:$character's "identity" < 80)[
+      (print:"\n\n")This is strangely arousing!
+      (print:"\n")
+      (set:$gain to 1)
+      (display:"gain arousal")
+    ]
+    (display:"facefuck transactional")
+    <div class='options'>
+      (link:"Don't gag!")[
+        
+        <!-- No BLACKED support for Cassidy -->
+        (if:$character's "id" is "cassidy")[
+          (set:$img to $character's "id" + "/bj/rough " + (cond:
+          $character's "id" is "cassidy", (text:(twist:1,4)),
+          "1"))
+        ]
+        (else:)[
+          (set:$img to $character's "id" + "/bj/bbc/rough " + (cond:
+          $character's "id" is "alina", (text:(twist:1,6)),
+          $character's "id" is "cassidy", (text:(twist:1,2)),
+          $character's "id" is "ella", (text:(twist:1,3)),
+          $character's "id" is "jade", (text:(twist:1,2)),
+          $character's "id" is "jia", (text:(twist:1,4)),
+          $character's "id" is "lana", (text:(twist:1,8)),
+          $character's "id" is "liya", (text:(twist:1,2)),
+          $character's "id" is "mia", (text:(twist:1,2)),
+          $character's "id" is "rae", (text:(twist:1,4)),
+          $character's "id" is "scarlit", (text:(twist:1,5)),
+          "1"))
+        ]
+
+        (set:$backdrop to "scenes/characters/" + $img + ".mp4")
+        (set:$quicktime_params to (dm:
+          "objective","Don't gag!",
+          "points to win",35,
+          "points",15,
+          "skill check","gag reflex",
+          "skill check difficulty",80,
+          "timing message","but not faster than you're being face-fucked.",
+          "result passage","bar drug face end",
+          "time",30,
+          "rhythm",600,
+          "backdrop",$backdrop,
+          "sex loop",$sex_loop,
+          "interrupt passage","bar drug backroom sex wait finished interrupt",
+          "interrupts", 3
+          )
+        )
+
+        (set:$next to "dont cum initialize")(display:"change screen")
+      ]
+    </div>
+  ](else:)[(display:_around)]
+}

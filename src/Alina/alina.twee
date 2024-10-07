@@ -76,20 +76,6 @@
   (set:$kiss_variant to "kiss " + (text:(twist:1,5)))
 }
 
-:: sex transactional grope alina [around]
-{ 
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$grope to (twirl:"tits","ass"))
-  ](else:)[(display:_around)]
-}
-
-:: sex creampie image alina [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "/characters/alina/cum/bbc/creampie/" + (text:(twist:1,2)))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face alina [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
