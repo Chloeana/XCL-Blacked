@@ -52,12 +52,12 @@ The process is *hopefully* straightforward.
 - Cumshot (Mouth)
     - `img/scenes/characters/[character id]/cum/bbc/mouth 1.mp4`
 - Creampie
-    - `img/scenes/characters/[character id]/cum/bbc/creampie/1.mp4`
+    - `img/scenes/characters/[character id]/cum/bbc/creampie 1.mp4`
 - Kissing
-    - `img/scenes/characters/[character id]/foreplay/bbc/kiss.mp4`
+    - `img/scenes/characters/[character id]/foreplay/bbc/kiss 1.mp4`
 - Grope Tits/Ass
-    - `img/scenes/characters/[character id]/foreplay/bbc/grope tits.mp4` / `img/scenes/characters/[character id]/foreplay/bbc/grope ass.mp4`
-    - Can have one or both
+    - `img/scenes/characters/[character id]/foreplay/bbc/grope tits 1.mp4` / `img/scenes/characters/[character id]/foreplay/bbc/grope ass 1.mp4`
+    - Can have either or both. Supports multiples.
 - Cunninlingus
     - `img/scenes/characters/[character id]/oral/bbc/oral 1.mp4`
 - Doggy
