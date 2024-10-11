@@ -73,11 +73,6 @@
   ](else:)[(display:_around)]
 }
 
-:: sex transactional kiss lana
-{
-  (set:$kiss_variant to "kiss " + (text:(twist:1,2)))
-}
-
 :: sex cum on face lana [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
@@ -102,17 +97,14 @@
 :: sex cum in mouth load lana [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-    (else:)[
-      (set:$img to "/characters/lana/cum/bbc/mouth " + (text:(twist:1,5)))
+    (set:$img to "/characters/lana/cum/bbc/mouth " + (text:(twist:1,5)))
 
-      (set:$cum_mouth to (dm:	
-      "/characters/lana/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
-      "/characters/lana/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
-      "/characters/lana/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
-      "/characters/lana/cum/bbc/mouth 4",(a:"kneeling","external","show tongue","in mouth"),		
-      "/characters/lana/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","chin")))
-    ]
+    (set:$cum_mouth to (dm:	
+    "/characters/lana/cum/bbc/mouth 1",(a:"direct","kneeling","internal","in mouth"),
+    "/characters/lana/cum/bbc/mouth 2",(a:"kneeling","external","direct","chin","in mouth","messy"),		
+    "/characters/lana/cum/bbc/mouth 3",(a:"kneeling","external","messy","in mouth"),
+    "/characters/lana/cum/bbc/mouth 4",(a:"kneeling","external","show tongue","in mouth"),		
+    "/characters/lana/cum/bbc/mouth 5",(a:"kneeling","external","messy","in mouth","chin")))
   ](else:)[(display:_around)]
 }
 
@@ -138,33 +130,11 @@
 :: sex pull out lana [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[
-      (set:$pullout_variant to 1)
-      (if:$his_choice is "tits")[
-        (set:$your_choice to "tits")
-        (set:$img to (twirl:
-        "/generic/sex/cum/tits/bbc/white 1",
-        "/generic/sex/cum/tits/bbc/white 3"))
-      ]
-      (else:)[
-        (set:$his_choice to "pull out")
-        (set:$your_choice to "pull out")
-        (if:$position is "missionary")[
-          (set:$img to "/generic/sex/cum/pull out/bbc/1")
-        ]
-        (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
-        (else:)[
-          (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-        ]
-      ]
-    ]
-    (else:)[
       (set:$img to (twirl:"/characters/lana/cum/bbc/butt 1","/characters/lana/cum/bbc/body 1"))
 
       (set:$text to $img of (dm:	
         "/characters/lana/cum/bbc/butt 1",(a:"butt","bed"),
         "/characters/lana/cum/bbc/body 1",(a:"body","belly","bed")
       ))
-    ]
   ](else:)[(display:_around)]
 }

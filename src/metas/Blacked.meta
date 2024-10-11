@@ -1,6 +1,6 @@
 metaVersion: 1
 name: "BLACKED"
-version: "0.3.3"
+version: "0.3.4"
 author: "Chloeana"
 baseGameVersion:
   atLeast: "0.21"
@@ -8,6 +8,9 @@ requiredMods:
   - name: "BLACKED-Media"
     version:
       atLeast: "0.3.1"
+  - name: "BLACKED-Media-Update-Patch"
+    version:
+      atLeast: "0.3.4"
 compatibleMods:
   - name: "DatDude's Office Girls"
     version:

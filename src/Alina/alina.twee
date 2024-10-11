@@ -71,11 +71,6 @@
   ](else:)[(display:_around)]
 }
 
-:: sex transactional kiss alina
-{
-  (set:$kiss_variant to "kiss " + (text:(twist:1,5)))
-}
-
 :: sex cum on face alina [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
@@ -93,14 +88,11 @@
 :: sex cum in mouth load alina [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-    (else:)[
-      (set:$img to "/characters/alina/cum/bbc/mouth " + (text:(twist:1,2)))
+    (set:$img to "/characters/alina/cum/bbc/mouth " + (text:(twist:1,2)))
 
-      (set:$cum_mouth to (dm:	
-      "/characters/alina/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","messy"),
-      "/characters/alina/cum/bbc/mouth 2",(a:"kneeling","external","jerk","chin","in mouth")))
-    ]
+    (set:$cum_mouth to (dm:	
+    "/characters/alina/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","messy"),
+    "/characters/alina/cum/bbc/mouth 2",(a:"kneeling","external","jerk","chin","in mouth")))
   ](else:)[(display:_around)]
 }
 
@@ -132,27 +124,6 @@
 :: sex pull out alina [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[
-      (set:$pullout_variant to 1)
-      (if:$his_choice is "tits")[
-        (set:$your_choice to "tits")
-        (set:$img to (twirl:
-        "/generic/sex/cum/tits/bbc/white 1",
-        "/generic/sex/cum/tits/bbc/white 4"))
-      ]
-      (else:)[
-        (set:$his_choice to "pull out")
-        (set:$your_choice to "pull out")
-        (if:$position is "missionary")[
-          (set:$img to "/generic/sex/cum/pull out/bbc/" + (text:(twist:1,2)))
-        ]
-        (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
-        (else:)[
-          (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-        ]
-      ]
-    ]
-    (else:)[
     (set:$his_choice to "pull out")
     (set:$your_choice to "pull out")
 
@@ -161,6 +132,5 @@
     (set:$text to $img of (dm:	
       "/characters/alina/cum/bbc/body 1",(a:"body","belly","bed")
     ))
-    ]
   ](else:)[(display:_around)]
 }

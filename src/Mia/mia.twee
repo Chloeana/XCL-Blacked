@@ -73,11 +73,6 @@
   ](else:)[(display:_around)]
 }
 
-:: sex transactional kiss mia
-{
-  (set:$kiss_variant to (twirl:"kiss 1", "kiss 2"))
-}
-
 :: sex cum on face mia [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
@@ -94,13 +89,10 @@
 :: sex cum in mouth load mia [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-    (else:)[
-      (set:$img to "/characters/mia/cum/bbc/mouth 1")
+    (set:$img to "/characters/mia/cum/bbc/mouth 1")
 
-      (set:$cum_mouth to (dm:	
-      "/characters/mia/cum/bbc/mouth 1",(a:"jerk","kneeling","external","chin","messy")))
-    ]
+    (set:$cum_mouth to (dm:	
+    "/characters/mia/cum/bbc/mouth 1",(a:"jerk","kneeling","external","chin","messy")))
   ](else:)[(display:_around)]
 }
 
@@ -130,33 +122,11 @@
 :: sex pull out mia [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[
-      (set:$pullout_variant to 1)
-      (if:$his_choice is "tits")[
-        (set:$your_choice to "tits")
-        (set:$img to (twirl:
-        "/generic/sex/cum/tits/bbc/white 1",
-        "/generic/sex/cum/tits/bbc/white 3"))
-      ]
-      (else:)[
-        (set:$his_choice to "pull out")
-        (set:$your_choice to "pull out")
-        (if:$position is "missionary")[
-          (set:$img to "/generic/sex/cum/pull out/bbc/1")
-        ]
-        (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
-        (else:)[
-          (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-        ]
-      ]
-    ]
-    (else:)[
-      (set:$his_choice to "tits")
-      (set:$your_choice to "tits")
-      (set:$img to "/characters/mia/cum/bbc/tits 1")
-      (set:$text to $img of (dm:	
-        "/characters/mia/cum/bbc/tits 1",(a:"tits","lying")
-      ))
-    ]
+    (set:$his_choice to "tits")
+    (set:$your_choice to "tits")
+    (set:$img to "/characters/mia/cum/bbc/tits 1")
+    (set:$text to $img of (dm:	
+      "/characters/mia/cum/bbc/tits 1",(a:"tits","lying")
+    ))
   ](else:)[(display:_around)]
 }

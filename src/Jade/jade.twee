@@ -69,11 +69,6 @@
   ](else:)[(display:_around)]
 }
 
-:: sex transactional kiss jade
-{
-  (set:$kiss_variant to "kiss " + (text:(twist:1,2)))
-}
-
 :: sex cum on face jade [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
@@ -90,13 +85,9 @@
 :: sex cum in mouth load jade [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-    (else:)[
-      (set:$img to "/characters/jade/cum/bbc/mouth 1")
-
-      (set:$cum_mouth to (dm:	
-      "/characters/jade/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","tongue")))
-    ]
+    (set:$img to "/characters/jade/cum/bbc/mouth 1")
+    (set:$cum_mouth to (dm:
+    "/characters/jade/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth","tongue")))
   ](else:)[(display:_around)]
 }
 
@@ -119,14 +110,5 @@
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
     (set:$pullout_variant to 1)
-    (set:$his_choice to "pull out")
-    (set:$your_choice to "pull out")
-    (if:$position is "missionary")[
-      (set:$img to "/generic/sex/cum/pull out/bbc/1")
-    ]
-    (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/2")]
-    (else:)[
-      (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twirl:2,3)))
-    ]
   ](else:)[(display:_around)]
 }

@@ -60,11 +60,6 @@
   ](else:)[(display:_around)]
 }
 
-:: sex transactional kiss ella
-{
-  (set:$kiss_variant to "kiss " + (text:(twist:1,3)))
-}
-
 :: sex cum on face ella [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
@@ -81,12 +76,9 @@
 :: sex cum in mouth load ella [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[(set:$cum_mouth_generic to 1)]
-    (else:)[
-      (set:$img to "/characters/ella/cum/bbc/mouth 1")
-      (set:$cum_mouth to (dm:	
-      "/characters/ella/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth")))
-    ]
+    (set:$img to "/characters/ella/cum/bbc/mouth 1")
+    (set:$cum_mouth to (dm:	
+    "/characters/ella/cum/bbc/mouth 1",(a:"jerk","kneeling","external","in mouth")))
   ](else:)[(display:_around)]
 }
 
@@ -116,37 +108,18 @@
 :: sex pull out ella [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
-    (if:(twist:1,4) is 1)[
-    (set:$pullout_variant to 1)
     (if:$his_choice is "tits")[
       (set:$your_choice to "tits")
-      (set:$img to "/generic/sex/cum/tits/bbc/white 1")
-    ]
-    (else:)[
-      (set:$his_choice to "pull out")
-      (set:$your_choice to "pull out")
-      (if:$position is "missionary")[
-        (set:$img to "/generic/sex/cum/pull out/bbc/1")
-      ]
-      (else-if:$character's "masculinity" < 80 and $orgasms > 0)[(set:$img to "/generic/sex/cum/pull out/bbc/wiggle/1")]
-      (else:)[
-        (set:$img to "/generic/sex/cum/pull out/bbc/no wiggle/" + (text:(twist:2,3)))
-      ]
-    ]
-  ]
-  (else:)[
-    (if:$his_choice is "tits")[
-        (set:$your_choice to "tits")
-        (set:$img to "/characters/ella/cum/bbc/tits " + (text:(twist:1,3)))
+      (set:$img to "/characters/ella/cum/bbc/tits " + (text:(twist:1,3)))
     ](else:)[
-        (set:$img to "/characters/ella/cum/bbc/butt 1")
+      (set:$img to "/characters/ella/cum/bbc/butt 1")
     ]
 
     (set:$text to $img of (dm:	
-        "/characters/ella/cum/bbc/butt 1",(a:"butt","couch"),
-        "/characters/ella/cum/bbc/tits 1",(a:"tits","kneeling"),
-        "/characters/ella/cum/bbc/tits 2",(a:"tits","couch"),
-        "/characters/ella/cum/bbc/tits 3",(a:"tits","lying")
-  ))]
+      "/characters/ella/cum/bbc/butt 1",(a:"butt","couch"),
+      "/characters/ella/cum/bbc/tits 1",(a:"tits","kneeling"),
+      "/characters/ella/cum/bbc/tits 2",(a:"tits","couch"),
+      "/characters/ella/cum/bbc/tits 3",(a:"tits","lying")
+  ))
   ](else:)[(display:_around)]
 }
