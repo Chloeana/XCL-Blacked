@@ -1522,6 +1522,38 @@
   ](else:)[(display:_around)]
 }
 
+:: breedify npc [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (set:$npc's tags to it - (a:"gentleman"))
+    (set:$npc's tags to it + (a:"breeder"))
+    (set:$npc's personality to (min:it,5))
+    ($use_global: "$black_cock_database", "window.GE.black_cock_database", [(set:$npc to it + (twirl:...(find:_cock where _cock's ballsize is 10, ...$black_cock_database)))])
+](else:)[(display:_around)]
+}
+
+:: bigcockify npc [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    ($use_global: "$black_cock_database", "window.GE.black_cock_database", [(set:$npc to it + (twirl:...(find:_cock where _cock's ballsize is 10 and cockrating is 10 and cocklength is 10 and cockfatness is 10, ...$black_cock_database)))])
+  ](else:)[(display:_around)]
+}
+
+:: npc fill in details [around]
+{
+  (if:(checkdm: $npc, "race", "is", "black"))[
+    (unless:(datanames:$npc) contains "last name")[(display:"random guy last name")]
+    (unless:(datanames:$npc) contains "sex name")[(set:$npc's "sex name" to $npc's "name")]
+    (unless:(datanames:$npc) contains "events")[(set:$npc's "events" to (a:"name"))]
+    (unless:(datanames:$npc) contains "fitness")[(set:$npc's "fitness" to (twist:4,6))]
+
+    (unless:(datanames:$npc) contains "cocklength")[
+    ($use_global: "$black_cock_database", "window.GE.black_cock_database", [{
+        (set:$npc to it + (twirl: ...$black_cock_database))
+      }])]
+  ](else:)[(display:_around)]
+}
+
 <!-- For future me. Thanks past me!
 for descriptions, it's these passages: 
 transactional sex describe sensation
