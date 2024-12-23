@@ -1,41 +1,728 @@
-:: blacked compatibility
+:: blacked compatibility [initialize init_new]
 {
+  (set:$blacked_mod_installed to true)
+
   (set:$blacked_compatible_list to (dm:
-  "alina",1,
-  "autumn",0,
-  "cassidy",0,
-  "ella",1,
-  "jade",1,
-  "jia",1,
-  "lana",1,
-  "liya",1,
-  "mia",1,
-  "rae",1,
-  "scarlit",1))
+    "alina",1,
+    "cassidy",0,
+    "ella",1,
+    "jade",1,
+    "jia",1,
+    "lana",1,
+    "liya",1,
+    "mia",1,
+    "rae",1,
+    "scarlit",1
+    ))
 
-  (set:$blacked_secretary to "false")
-}
-
-:: mcf blacked compatibility [initialize]
-{
-  (display:"blacked compatibility")
   (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
   (else:)[(set:$blacked_compatible to 0)]
-}
 
-:: load game postprocessing [around]
-{
-  (display:_around)
-  (display:"blacked compatibility")
-  (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
-  (else:)[(set:$blacked_compatible to 0)]
+  (if:$blacked_stats is 0)[
+    (set:$blacked_stats to (dm:
+    "sex as guy",0,
+    "sex as girl",0,
+    "anal sex as girl",0,
+    "creampies given",0,
+    "creampies received",0,
+    "blowjobs given",0,
+    "blowjobs received",0,
+    "facials given",0,
+    "facials received",0,
+    "came in mouth",0,
+    "loads swallowed",0,
+    "came on tits",0,
+    "came on body",0,
+    "cunnilingus given as guy",0,
+    "cunnilingus given as girl",0,
+    "cunnilingus received",0,
+    "guys fully satisfied",0,
+    "times fertilized",0,
+    "bbc porn watched",0,
+    "rejections",0,
+    "days as secretary",0
+    ))
+  ]
 }
 
 :: blacked compatibility check
 {
-  (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
-  (else:)[(set:$blacked_compatible to 0)]
+  (if:$new_stats is 0)[
+    (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
+    (else:)[(set:$blacked_compatible to 0)]
+  ](else:)[
+    (if:(checkdm:$blacked_compatible_list, $new_stats's "id","is",1))[(set:$blacked_compatible to 1)]
+    (else:)[(set:$blacked_compatible to 0)]
+  ]
+  
 }
+
+:: blacked options [mod_options]
+{
+	(_setting_button:
+		"$blackfreq",(a:
+      "Black Encounters: Normal",
+      "Black Encounters: Less",
+      "Black Encounters: More",
+      "Black Encounters: Always"
+    ), "Determines how often you will encounter black men hitting on you as a female."
+	)
+}
+
+:: view sex stats [around]
+(display:_around)<div class='options'>(link:"Blacked Sex Stats")[(set:$next to "blacked sex stats")(display:"change screen")]</div>
+
+:: blacked sex stats
+(display:"Game Version")<div class='options'>(color:$palette_colors's 4th)[(css:"font-size:5vmin")[<span class='shadow'>Sex Stats (BLACKED)</span>]]</div>
+<span class='shadow'>(color:"bisque")[As a Black guy...]
+Times had sex: (print:$blacked_stats's "sex as guy")
+Blowjobs received: (print:$blacked_stats's "blowjobs received")
+Creampies given: (print:$blacked_stats's "creampies given")
+Facials given: (print:$blacked_stats's "facials given")
+Finished in Mouth: (print:$blacked_stats's "came in mouth")
+Finished on Body: (print:$blacked_stats's "came on body")
+Finished on Tits: (print:$blacked_stats's "came on tits")
+
+(color:"bisque")[As a girl (from/to a Black guy)...]
+Vaginal sex: (print:$blacked_stats's "sex as girl")
+Anal sex: (print:$blacked_stats's "anal sex as girl")
+Blowjobs given: (print:$blacked_stats's "blowjobs given")
+Creampies received: (print:$blacked_stats's "creampies received")
+Facials received: (print:$blacked_stats's "facials received")
+Loads swallowed: (print:$blacked_stats's "loads swallowed")
+Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
+</span>
+
+<div class='options'>(if:$blacked_stats's "sex as girl" is 0 and $blacked_stats's "sex as guy" is 0 and $blacked_stats's "blowjobs given" is 0 and $blacked_stats's "blowjobs received" is 0)[(twirl:"No judgment!","It's ok!","Aw, don't worry about it.","That's totally fine!","This is a judgment-free zone!") (twirl:"Whenever you're ready.","We're on your schedule.","Take your time.","I'm just giving you the stats.","Think of those zeroes like possibilities.")
+](link:"Back")[(set:$next to "view sex stats")(display:"change screen")]</div>
+
+:: blacked tips [tipjar]
+{
+  (set:_tips to it + (a:
+    "If you're looking for some extra cash at night, talk to Dredd at The Broken Drum.",
+    "You may have heard the term 'Size Queen'. It tends to go hand-in-hand with BBC lovers.",
+    "You may have heard the term 'Nympho'. It's not just a fetish. Some people *need* to have sex multiple times a day.",
+    "Black daddies tends to spoil their little snowbunnies, especially when they make them very happy.",
+    "Not all outfits can be purchased in a store... some need to be earned.",
+    "Breeders can be dangerous... but they can also be fun. Like, several times a day fun..."
+  ))
+}
+
+:: blacked init voice lines [initialize init_new]
+{
+  (newtrack:"aubrey bbc addiction","aud/se/npc/blacked/aubrey/voice lines/bbc addiction.mp3")
+  (newtrack:"aubrey careful","aud/se/npc/blacked/aubrey/voice lines/careful.mp3")
+  (newtrack:"aubrey clear throat","aud/se/npc/blacked/aubrey/voice lines/clear throat.mp3")
+  (newtrack:"aubrey craving","aud/se/npc/blacked/aubrey/voice lines/craving.mp3")
+  (newtrack:"aubrey disrobe","aud/se/npc/blacked/aubrey/voice lines/disrobe.mp3")
+  (newtrack:"aubrey excuse me","aud/se/npc/blacked/aubrey/voice lines/excuse me.mp3")
+  (newtrack:"aubrey have a look","aud/se/npc/blacked/aubrey/voice lines/have a look.mp3")
+  (newtrack:"aubrey have a seat","aud/se/npc/blacked/aubrey/voice lines/have a seat.mp3")
+  (newtrack:"aubrey next time","aud/se/npc/blacked/aubrey/voice lines/next time.mp3")
+  (newtrack:"aubrey not bad","aud/se/npc/blacked/aubrey/voice lines/not bad.mp3")
+  (newtrack:"aubrey of course","aud/se/npc/blacked/aubrey/voice lines/of course.mp3")
+  (newtrack:"aubrey rabbit hole","aud/se/npc/blacked/aubrey/voice lines/rabbit hole.mp3")
+  (newtrack:"aubrey serious","aud/se/npc/blacked/aubrey/voice lines/serious.mp3")
+  (newtrack:"aubrey still quit","aud/se/npc/blacked/aubrey/voice lines/still quit.mp3")
+  (newtrack:"aubrey turn up","aud/se/npc/blacked/aubrey/voice lines/turn up.mp3")
+  (newtrack:"aubrey what","aud/se/npc/blacked/aubrey/voice lines/what.mp3")
+  (newtrack:"aubrey you do","aud/se/npc/blacked/aubrey/voice lines/you do.mp3")
+  (newtrack:"isabelle dream intro","aud/se/npc/blacked/isabelle/voice lines/dream intro.mp3")
+  (newtrack:"isabelle left out","aud/se/npc/blacked/isabelle/voice lines/left out.mp3")
+  (newtrack:"isabelle orgasm","aud/se/npc/blacked/isabelle/orgasm/orgasm.mp3")
+}
+
+:: blacked init npcs [initialize init_new]
+{
+  (if:$blacked_npcs is 0)[(set:$blacked_npcs to (dm:))]
+
+  (unless:(datanames:$blacked_npcs) contains "aubreyblack")[
+    (set:$blacked_npcs to it + (dm:"aubreyblack", (dm:
+      "id", "aubreyblack",
+      "name", "Aubrey",
+      "unfamiliar name",(twirl:"Blonde MILF","Sexy Blonde"),
+      "race", "white",
+      "breasts", "E",
+      "bra", "36E",
+      "eyes","hazel",
+      "butt", "bubble",
+      "hair", "blonde",
+      "body type","voluptuous",
+      "familiarity male", 0,
+      "familiarity female", 0,
+      "likes", (a:"wine","doggystyle","rough sex"),
+      "dislikes", (a:"beer"),
+      "traits", (a:"likes assertive","rich","slut","pill","size queen"),
+      "events", (a:),
+      "topics", (a:),
+      "sex positions", (a:),
+      "voice line prefix", "aud/se/npc/blacked/aubrey/voice lines/",
+      "img", "img/npc/girls/blacked/aubrey/portrait_normal.jpg",
+      "img dir", "img/npc/girls/blacked/aubrey/portrait_"
+  )))
+
+    (set:$relationships's aubreyblack to (dm:
+      "id","aubreyblack",
+      "name","Aubrey",
+      "gender","female",
+      "respect",0,
+      "dom",2,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+  ))
+  ]
+
+  (unless:(datanames:$blacked_npcs) contains "isabelledeltore")[
+    (set:$blacked_npcs to it + (dm:"isabelledeltore", (dm:
+      "id", "isabelledeltore",
+      "name", "Isabelle",
+      "unfamiliar name",(twirl:"Blonde Girl","Hot Blonde"),
+      "race", "white",
+      "breasts", "E",
+      "bra", "32E",
+      "eyes","blue",
+      "butt", "bubble",
+      "hair", "blonde",
+      "body type","average",
+      "familiarity male", 0,
+      "familiarity female", 0,
+      "likes", (a:"fruity drink","cowgirl","rough sex"),
+      "dislikes", (a:"beer"),
+      "traits", (a:"likes assertive","bimbo","pill","only bbc"),
+      "events", (a:),
+      "topics", (a:),
+      "sex positions", (a:),
+      "voice line prefix", "aud/se/npc/blacked/isabelle/voice lines/",
+      "img", "img/npc/girls/blacked/isabelle/portrait_normal.jpg",
+      "img dir", "img/npc/girls/blacked/isabelle/portrait_"
+  )))
+
+    (set:$relationships's isabelledeltore to (dm:
+      "id","isabelledeltore",
+      "name","Isabelle",
+      "gender","female",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+  ))
+  ]
+}
+
+:: blacked voice macro [initialize init_new]
+{
+  (set:$npc_vo to (macro: str-type _gender, str-type _npc, str-type _line, [
+    (if:_gender is "female")[
+      (unless:$female_vo is "Female NPC Voiceovers: Disabled")[
+        ($play:"sound", (_npc + " " + _line))
+      ]
+    ] (else-if:_gender is "male")[
+      (unless:$male_vo is "Male NPC Voiceovers: Disabled")[
+        ($play:"sound", (_npc + " " + _line))
+      ]
+    ]
+    (out:)[]
+  ]))
+}
+
+:: blacked dance time [dance_time]
+{}
+
+:: blacked buy girl drink [buy_girl_drink]
+{}
+
+:: blacked girl pickup line success [girl_pickup_line_success]
+{}
+
+:: blacked girl number [girl_number]
+{}
+
+:: blacked girl approach [girl_approach]
+{}
+
+:: blacked male npc approach [male_npc_approach]
+{}
+
+:: blacked take pill [take_pill]
+{}
+
+:: blacked check buffs [check_buffs]
+{}
+
+:: blacked wear clothes [wear_clothes]
+{
+  (if:$outfit's tags contains "blacked")[(display:"blacked trigger branded")]
+}
+
+:: blacked orgasm sex [orgasm_sex]
+{}
+
+:: blacked interrupt_chance [interrupt_chance]
+{}
+
+:: blacked number gain male [number_gain_male]
+{
+  (set:$black_fuckbuddies to (a:))
+  (for: each _npc, ...(datanames:$relationships))[
+    (set:$select to (text:_npc) of $relationships)
+    (if:$select's tags contains "fuckbuddy" and $select's race is "black")[
+      (set:$black_fuckbuddies to it + (a:$select's id))
+    ]
+  ]
+  (if:length of $black_fuckbuddies >= 5)[(display:"blacked trigger hood bicyle")]
+}
+
+:: blacked new pregnancy [new_pregnancy]
+{
+  (if:(checkdm:$preg_npc, "race", "is", "black"))[
+    (set:$blacked_stats's "times fertilized" to it + 1)
+  ]
+}
+
+:: blacked newly discovered pregnancy [newly_discovered_pregnancy]
+{
+  (if:$blacked_stats's "times fertilized" is 1)[(display:"blacked trigger first pregnancy")]
+  (else-if: $blacked_stats's "times fertilized" is 5)[(display:"blacked trigger fifth pregnancy")]
+}
+
+:: blacked npc cock rating [npc_cock_rating] 
+{
+(if:(cock:"girth","npc") is 10 and (cock:"length","npc") is 10 and (cock:"balls","npc") is 10)[
+  (if:(checkdm:$npc, "race", "is", "black"))[(display:"blacked trigger moby dick")
+    ]
+  ]
+}
+
+:: blacked sex insert [sex_insert]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:$blacked_stats's "sex as girl" is 0)[(display:"blacked trigger virginity")]
+    (set:$blacked_stats's "sex as girl" to it + 1)
+    (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  ]
+}
+
+:: blacked sex finish [sex_finish]
+{
+  (if:$npc's cockrating < 7 and $npc's race is not "black")[
+    ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","Discover the truth about BBC...")]
+  (else-if:$npc's race is "black")[
+    (display:"blacked sex tally")
+    (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+    (if:$mood's "mood" is not "ashamed")[(set:$curiosity_check to "shame-free black sex")(display:"curiosity check")]
+    (if:$his_satisfaction is 10)[(set:$curiosity_check to "black satisfaction")(display:"curiosity check")]
+    ]
+}
+
+:: blacked watch porn [watch_porn]
+{
+  (if:$select contains "bbc" or $select contains "black cock")[
+    (set:$blacked_stats's "bbc porn watched" to it + 1)
+    (set:$blacked_daily_stats's "bbc porn watched" to it + 1)
+    (set:$curiosity_check to "bbc porn")(display:"curiosity check")
+    (if:($has_ap_mod:"bbc porn mod"))[(display:"action point mod trigger")]
+    (if:$blacked_stats's "bbc porn watched" > 49)[(display:"blacked trigger gooner")]
+  ]
+}
+
+:: sex creampie closeup [around]
+{
+  (display:_around)
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:$blacked_stats's "creampies received" to it + 1)
+    (set:$blacked_daily_stats's "creampies received" to it + 1)
+    (if:(pill:"Breeder"))[
+      (set:$blacked_daily_stats's "breeder creampies" to it + 1)
+      (if:$blacked_daily_stats's "breeder creampies" is 3)[(display:"blacked trigger breeder")]
+      ]
+    (set:$curiosity_check to "black creampie")(display:"curiosity check")
+    ]
+}
+
+:: girl cum [around]
+{
+  (display:_around)
+  (if:$npc's race is not "black" and $character's race is "black")[
+    (if:$type is "creampie")[
+      (set:$blacked_stats's "creampies given" to it + 1)
+      (set:$blacked_daily_stats's "creampies given" to it + 1)
+      (if:$npc's race is "white")[(set:$curiosity_check to "white girl creampie")(display:"curiosity check")]
+      ]
+    (else-if:$type is "pull out")[
+      (set:$blacked_stats's "came on body" to it + 1)
+      (set:$blacked_daily_stats's "came on body" to it + 1)
+    ]
+    (else-if:$type is "facial")[
+      (set:$blacked_stats's "facials given" to it + 1)
+      (set:$blacked_daily_stats's "facials given" to it + 1)
+    ]
+    (else-if:$type is "mouth")[
+      (set:$blacked_stats's "came in mouth" to it + 1)
+      (set:$blacked_daily_stats's "came in mouth" to it + 1)
+    ]
+    (else-if:$type is "cum tits")[
+      (set:$blacked_stats's "came on tits" to it + 1)
+      (set:$blacked_daily_stats's "came on tits" to it + 1)
+    ]
+    ]
+}
+
+:: secretary office sex insert [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:$blacked_stats's "sex as girl" to it + 1)
+    (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  ]
+  (display:_around)
+}
+
+:: secretary he cums [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+    (display:"blacked sex tally")
+  ]
+}
+
+:: register fuck girl [around]
+{
+  (display:_around)
+  (if:(checkdm:$character, "race", "is", "black"))[
+    (set:$blacked_stats's "sex as guy" to it + 1)
+    (set:$blacked_daily_stats's "sex as guy" to it + 1)
+    (if:(checkdm:$npc, "race", "is", "white"))[
+      (set:$curiosity_check to "white girl fuck")(display:"curiosity check")
+    ]
+  ]
+}
+
+:: jungle waterfall hikers [around]
+{
+  (display:_around)
+  (if:$stage is 8 or $stage is 9) [
+    (if:(checkdm:$character, "race", "is", "black"))[
+      (set:$blacked_stats's "blowjobs received" to it + 1)
+      (set:$blacked_daily_stats's "blowjobs received" to it + 1)
+    ]
+  ]
+}
+
+:: proposition reject success [around]
+{
+  (display:_around)
+  (if:(checkdm:$npc, "race", "is not", "black"))[
+      (set:$blacked_stats's "rejections" to it + 1)
+      (set:$blacked_daily_stats's "rejections" to it + 1)
+      (display:"blacked rejection tally")
+    ]
+}
+
+:: beach sex area [around]
+{
+  (display:_around)
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:$blacked_daily_stats's "beach sex" to it + 1)
+  ]
+}
+
+:: bar dance start blowjob [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "blowjobs given" to it + 1)
+  (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+}
+
+:: bar dance start sex [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "sex as girl" to it + 1)
+  (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+}
+
+:: dredd job sex finish [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "sex as girl" to it + 1)
+  (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (if:$bar_party's times > 9)[(display:"blacked trigger besties")]
+  (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+}
+
+:: bar dance end final [around]
+{
+  (display:_around)
+  (if:$bar_dance's "times danced" > 9)[(display:"blacked trigger stripper")]
+}
+
+:: invite guy sex intro stepdad [around]
+{
+  (if:$npc's race is "black" and $npc's age > 39)[(display:"blacked trigger new daddy")]
+  (display:_around)
+}
+
+:: register swallow [around]
+{
+  (display:_around)
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:$blacked_stats's "loads swallowed" to it + 1)
+    (set:$blacked_daily_stats's "loads swallowed" to it + 1)
+    (display:"blacked swallow tally")
+  ]
+}
+
+:: blacked sex tally
+{
+  (if:$blacked_stats's "sex as girl" is 1)[(display:"blacked trigger first sex")]
+  (else-if:$blacked_stats's "sex as girl" > 99)[(display:"blacked trigger sex100")]
+  (else-if:$blacked_stats's "sex as girl" > 49)[(display:"blacked trigger sex50")]
+  (else-if:$blacked_stats's "sex as girl" > 24)[(display:"blacked trigger sex25")]
+}
+
+:: blacked swallow tally
+{
+  (if:$blacked_stats's "loads swallowed" > 99)[(display:"blacked trigger swallow100")]
+  (else-if:$blacked_stats's "loads swallowed" > 49)[(display:"blacked trigger swallow50")]
+  (else-if:$blacked_stats's "loads swallowed" > 24)[(display:"blacked trigger swallow25")]
+}
+
+:: blacked rejection tally
+{
+  (if:$blacked_stats's "rejections" > 99)[(display:"blacked trigger reject100")]
+  (else-if:$blacked_stats's "rejections" > 49)[(display:"blacked trigger reject50")]
+  (else-if:$blacked_stats's "rejections" > 24)[(display:"blacked trigger reject25")]
+}
+
+:: blacked side effects init [init_side_effects]
+{
+  (set:$side_effect_names to it + (dm:
+    "QoS","👑 Queen of Spades ♠️",
+    "bbc sizequeen","Size Queen",
+    "bbc addiction","Addicted to BBC"
+  ))
+  <!-- 
+  "BBC Size Queen","Extra pleasure for *BIG* Cocks. Less pleasure for tiny cocks."
+  "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without."
+  -->
+
+  (set:$side_effect_descriptions to it + (dm:
+    "QoS", "Once you go black... you never go back. It's more than a preference, you will find it nearly impossible to resist Black men.",
+    "bbc sizequeen","You've been stretched out from taking all those Big Black Cocks! Small dicks are much less effective on you now.",
+    "bbc addiction","BBC is constantly on your mind. Going too long without it could be bad..."
+  ))
+}
+
+:: blacked QoS buff
+{
+  (set:$new_status to (dm:
+    "status","qos buff",
+    "emoji","👑",
+    "strength",8,
+    "length",6,
+    "cause","Straighten your crown, Queen ♠️",
+    "charm buff",2,
+    "intellect buff",1,
+    "fitness buff",1
+	))(display:"new status")(display:"refresh stats")
+}
+
+:: blacked QoS debuff
+{
+  (set:$new_status to (dm:
+    "status","qos debuff",
+    "emoji","👎🏾",
+    "strength",8,
+    "length",9,
+    "cause","You've disappointed your Black Kings. Go find a BBC!",
+    "charm buff",-2,
+    "intellect buff",-1,
+    "fitness buff",-1
+	))(display:"new status")(display:"refresh stats")
+}
+
+:: blacked mood proud
+{
+  (set:$new_mood to (dm:
+    "mood","proud",
+    "emoji","😊",
+    "strength",6,
+    "length",6,
+    "cause",$cause_text,
+    "charm buff",3,
+    "intellect buff",1,
+    "fitness buff",1,
+    "effect text","+3 🍀 / +1 🧠 / +1 💪 from " + $effect_text
+	))(display:"new mood")(display:"refresh stats")
+}
+
+:: blacked mood ashamed
+{
+  (set:$new_mood to (dm:
+    "mood","ashamed",
+    "emoji","😔",
+    "strength",10,
+    "length",6,
+    "cause",$cause_text,
+    "charm buff",-3,
+    "intellect buff",-1,
+    "fitness buff",-1,
+    "effect text","-3 🍀 / -1 🧠 / -1 💪 from " + $effect_text
+	))(display:"new mood")(display:"refresh stats")
+}
+
+:: blacked mood satisfied
+{
+  (set:$new_mood to (dm:
+    "mood","satisfied",
+    "emoji","💯",
+    "strength",6,
+    "length",6,
+    "cause",$cause_text,
+    "charm buff",2,
+    "effect text","+2 🍀 from " + $effect_text
+    ))
+  (display:"new mood")(display:"refresh stats")
+}
+
+:: blacked mood unsatisfied
+{
+  (set:$new_mood to (dm:
+    "mood","unsatisfied",
+    "emoji","😑",
+    "strength",10,
+    "length",6,
+    "cause",$cause_text,
+    "charm buff",-2,
+    "effect text","-2 🍀 from " + $effect_text
+    ))
+  (display:"new mood")(display:"refresh stats")
+}
+
+:: serendipity buy porn [around]
+{
+  (display:"add porn black cock heaven")
+  (display:_around)
+}
+
+:: add porn bbc babecock
+{
+  (set:$porn_list to it + (a:
+  (dm:
+    "name", "bbc babecock",
+    "type", "Mainstream",
+    "option", "BBC`_`BABECOCK.EXE",
+    "description", "This disk is a collection of SIX files featuring both BABES and BBC!",
+    "price", 69,
+    "img", "scenes/home/porn/mainstream/bbc babecock/3.mp4")))
+  
+  (set:$porn_scenes to it + (a:
+  (dm:
+    "disk", "bbc babecock",
+    "name", "File `#`1",
+    "img", "1"),
+  (dm:
+    "disk", "bbc babecock",
+    "name", "File `#`2",
+    "img", "2"),
+  (dm:
+    "disk", "bbc babecock",
+    "name", "File `#`3",
+    "img", "3"),
+  (dm:
+    "disk", "bbc babecock",
+    "name", "File `#`4",
+    "img", "4"),
+  (dm:
+    "disk", "bbc babecock",
+    "name", "File `#`5",
+    "img", "5"),
+  (dm:
+    "disk", "bbc babecock",
+    "name", "File `#`6",
+    "img", "6")))
+}
+
+:: add porn black cock heaven
+{
+  (set:$porn_list to it + (a:
+  (dm:
+    "name", "black cock heaven",
+    "type", "Mainstream",
+    "option", "BLACK`_`COCK`_`HEAVEN.EXE",
+    "description", "A collection of THREE files showing babes being taken to BLACK COCK HEAVEN!!!",
+    "price", 69,
+    "img", "scenes/home/porn/mainstream/black cock heaven/3.mp4")))
+  
+  (set:$porn_scenes to it + (a:
+  (dm:
+    "disk", "black cock heaven",
+    "name", "File `#`1",
+    "img", "1"),
+  (dm:
+    "disk", "black cock heaven",
+    "name", "File `#`2",
+    "img", "2"),
+  (dm:
+    "disk", "black cock heaven",
+    "name", "File `#`3",
+    "img", "3")))
+}
+
+:: add porn bbc pmvs
+{
+  (set:$porn_list to it + (a:
+  (dm:
+    "name", "bbc pmvs",
+    "type", "Mainstream",
+    "option", "BBC`_`PMVS.EXE",
+    "description", "Porn Music Videos (PMVs) are all the hype, especially ones with BBC!! This MEGA collection includes NINE files",
+    "price", 99,
+    "img", "scenes/home/porn/mainstream/bbc pmvs/everything black.mp4")))
+  
+  (set:$porn_scenes to it + (a:
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Gimme More",
+    "img", "babecock gimme more"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Best Friends",
+    "img", "best friends"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "More Than Life",
+    "img", "more than life"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Everything Black",
+    "img", "everything black"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Get Busy",
+    "img", "get busy"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Bounce",
+    "img", "bounce"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Nasty Girl",
+    "img", "nasty girl"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "ASAP Ferg",
+    "img", "asap ferg"),
+  (dm:
+    "disk", "bbc pmvs",
+    "name", "Blah Blah Blah",
+    "img", "blah blah blah")))
+}
+
+
 
 :: New-U new ID [around]
 {
@@ -49,16 +736,26 @@
   (display:"blacked compatibility check")
 }
 
-:: blacked options [mod_options]
+:: New-U roll side effects [around]
 {
-	(_setting_button:
-		"$blackfreq",
-		(a:"Black Encounters: Normal",
-    "Black Encounters: Less",
-    "Black Encounters: More",
-    "Black Encounters: Always"),
-		"Determines how often you will encounter black men hitting on you as a female."
-	)
+  (display:"blacked compatibility check")
+  (if:$blacked_compatible is 1)[
+    (set:$newu_side_effects to it + (dm:
+    "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without.",
+    "BBC Size Queen","Extra pleasure for *Big Black Cocks*. Less pleasure for tiny cocks."
+    )) 
+  ](display:_around)
+}
+
+:: New-U roll double side effects [around]
+{
+  (display:"blacked compatibility check")
+  (if:$blacked_compatible is 1)[
+    (set:$newu_side_effects to it + (dm:
+    "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without.",
+    "BBC Size Queen","Extra pleasure for *Big Black Cocks*. Less pleasure for tiny cocks."
+    )) 
+  ](display:_around)
 }
 
 :: npc race check
@@ -70,35 +767,14 @@
     $blackfreq is "Black Encounters: Always", "black",
     ,"white"
   ))
-
-  (set:$blacked_girl_petname_nice to (cond:
-    $character's "race" is "white", (twirl:"snowbunny","ivory queen","porcelain princess"),
-    $character's "race" is "asian", (twirl:"ricebunny","lotus blossom","sakura sweetheart"),
-    $character's "race" is "latin", (twirl:"spicybunny","mojito mistress","tropical señorita"),
-    $character's "race" is "black", (twirl:"brownbunny","ebony empress","chocolate goddess"),
-    $character's "race" is "mixed", (twirl:"blendedbunny","bronze diva","mystic muse"),
-    ,(twirl:"sexbunny","princess","baby doll")
-  ))
-
-  (set:$blacked_girl_petname_dirty to (cond:
-    $character's "race" is "white", (twirl:"white trash bitch","trailer park queen","creamy cocksleeve"),
-    $character's "race" is "asian", (twirl:"geisha bitch","sushi slut","dragon doll"),
-    $character's "race" is "latin", (twirl:"hot tamale","mamacita","taco temptress"),
-    $character's "race" is "black", (twirl:"hoodrat bitch","shaniqua","chocolate whore"),
-    $character's "race" is "mixed", (twirl:"mixed mutt","hybrid harlot","fusion freak"),
-    ,(twirl:"jungle fever junkie","black cock whore","BBC slut")
-  ))
 }
 
 :: generate random guy [around]
 {
-(display:"npc race check")
-(if:$racecheck is "black" and $blacked_compatible is 1)[
-  (if:(dm-names:$location_params) contains "sex location passage")[
-    (if:$location_params's "sex location passage" is "office sex room")[(display:_around)]
-    (else:)[(display:"generate black guy")]
-  ](else:)[(display:_around)]
-](else:)[(display:_around)]
+  (display:"npc race check")
+  (if:$racecheck is "black" and $blacked_compatible is 1)[
+    (display:"generate black guy")]
+  (else:)[(display:_around)]
 }
 
 :: generate black guy
@@ -125,8 +801,8 @@
 (set:$types to (a:"96","97","98","99"))
 
 (if:$npc_type is "coworker")[
-  (if:$coworkers is 0)[(set:$coworkers to (a:))]
-  (for: each _coworker, ...$coworkers)[(set:$types to it - (a:(text:(words:_coworker)'s 3rd)))]
+  (if:$black_coworkers is 0)[(set:$black_coworkers to (a:))]
+  (for: each _coworker, ...$black_coworkers)[(set:$types to it - (a:(text:(words:_coworker)'s 3rd)))]
 ]
 
 (set:str-type _variant to (text:(twirl:...$types)))
@@ -155,7 +831,7 @@
   ) + (twirl: ...$black_cock_database))
   }])
 
-(set:$npc's "race" to "black")
+<!-- (set:$npc's "race" to "black") -->
 
 (if:(twist:1,2) is 1)[
   (set:$npc's "stamina" to (min:$npc's "stamina", (cock:"rating","npc") + 5))
@@ -339,7 +1015,7 @@
 
 :: npc position inventory
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (unless:(datanames:$npc) contains "dominance")[(set:$npc's "dominance" to 8)]
     ($use_global: "$position_database", "window.GE.position_database", [{
     (set:_filtered_positions to (a:), _positions to (a:), _index to 1)
@@ -434,7 +1110,7 @@
 
 :: check for new positions
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$found to "false")
     (display:"starting positions")
     ($use_global: "$position_database", "window.GE.position_database", [{
@@ -682,7 +1358,7 @@
 
 :: sex transactional bed position options [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     []<position_options|
     (live:0.1s)[(display:"starting positions")(set:$sex_loop_continue to "true")(if:$option is "breeder check")[(set:$next to "sex transactional breeder check")(display:"change screen")](else:)[{(replace:?options)[{<div class='options'>
     (set:$select_his_position to 0)
@@ -736,14 +1412,14 @@
 :: sex transactional initialize [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$minigame's "cock type" to "bbc")
   ]
 }
 
 :: sex doggy transactional [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (display:"sex doggy transactional " + $character's "id")
 
     (set:$doggy_pic to "<img class='greyborder' 
@@ -761,7 +1437,7 @@
 
 :: blowjob transactional initialize [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$scene_type to "blowjob")
     (if:(datanames:$blowjob) contains "interrupt chance")[(set:$interrupt_chance to $blowjob's "interrupt chance")(set:$interrupt_roll to $blowjob's "interrupt roll")](else:)[(set:$interrupt_chance to 0)(set:$interrupt_roll to 1)]
     (set:$satisfaction to 0)
@@ -819,7 +1495,7 @@
 
 :: sex transactional blowjob [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (if:(twist:1,4) is 1)[
       (if:($character's "race" is "black"))[(set:$img to "scenes/generic/sex/bj/bbc/dark " + (text:(twist:1,4)) + ".mp4")]
       (else-if:(twist:1,3) is 1)[(set:$img to "scenes/generic/sex/bj/bbc/clothed " + (text:(twist:1,3)) + ".mp4")]
@@ -867,7 +1543,7 @@
 
 :: blowjob transactional cum [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (replace:?right_options)[](if:(twist:1,2) is 1)[(print:"<video disableRemotePlayback src='img/scenes/generic/sex/pre/bbc/jerking.mp4' autoplay='' loop='' muted='' playsinline/>")](else:)[(print:$img)]
     (if:(win:))[
       <mark>His satisfaction +1!</mark>(set:$satisfaction to $satisfaction + 1)
@@ -890,7 +1566,7 @@
 :: sex transactional kiss [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     ($char_passage:"sex transactional kiss",[
       (set:$kiss_variant to (cond:
       $character's "id" is "alina", "kiss " + (text:(twist:1,5)),
@@ -914,7 +1590,7 @@
 
 :: sex transactional grope [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     ($char_passage:"sex transactional grope",[
       (set:$grope to $character's "id" of (dm:
       "alina",(twirl:"ass","tits"),
@@ -952,7 +1628,7 @@
 :: sex transactional grope react [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (if:$grope_img is 0)[
       (set:$grope_img to $grope)
     ]
@@ -963,7 +1639,7 @@
 :: sex transactional option links [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (if:$npc's "cock" is "in you")[(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/bbc/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")]]
   ]
 }
@@ -971,7 +1647,7 @@
 :: sex transactional insert check [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (replace:?image)[(print:"<img class='greyborder' src='img/characters/sex/insert/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
     (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
   ]
@@ -980,7 +1656,7 @@
 :: sex transactional pre result [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (unless:$minigame_played is "true")[
         (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
     ]
@@ -989,7 +1665,7 @@
 
 :: sex creampie image [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$generic_creampie_variant to (cond:
       $character's "id" is "ella",1,
       $character's "id" is "jade",1,
@@ -1029,7 +1705,7 @@
 
 :: sex cum on face [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (display:"change pov")
     (if:$pov is "1st")[
       (set:$cum_face to (dm:))
@@ -1051,7 +1727,7 @@
 
 :: sex cum in mouth [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (if:(datanames:$npc) contains "ballsize")[(if:$npc's "ballsize" > (twist:8,10))[(set:$load to "big")]]
     (else:)[(set:$load to "normal")]
 
@@ -1124,7 +1800,7 @@
 
 :: sex oral [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$sex_loop to "licking loop " + $character's "id" + " ")
     (display:"sex oral " + $character's "id")
   ](else:)(display:_around)
@@ -1132,7 +1808,7 @@
 
 :: sex pull out [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$pullout_variant to (twist:1,4))
     (display:"sex pull out " + $character's "id")
 
@@ -1229,7 +1905,7 @@
 
 :: quicktime right image [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (if:$type is "transactional sex")[
     (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
     ](else:)[
@@ -1282,7 +1958,7 @@
 :: invite guy sex room [around]
 {
   (display:_around)
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$minigame's "cock type" to "bbc")
   ]
 }
@@ -1321,30 +1997,28 @@
   hot and ready
   secretary
   ready maid
+  dairy queen
   -->
   (display:_around)
   (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
-  (else-if:$product's "id" is "secretary" and $blacked_secretary is "true")[(set:$minigame's "cock type" to "bbc")]
 }
 
 :: sales demo strip [around]
 {
   (display:_around)
   (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
-  (else-if:$product's "id" is "secretary" and $blacked_secretary is "true")[(set:$minigame's "cock type" to "bbc")]
 }
 
 :: sales demo bj [around]
 {
   (display:_around)
   (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
-  (else-if:$product's "id" is "secretary" and $blacked_secretary is "true")[(set:$minigame's "cock type" to "bbc")]
 }
 
 :: girl rough dirty talk [around]
 { 
   <!-- For Male MC talking to Female NPC -->
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$character, "race", "is", "black"))[
     (nl:2)
     [
       "(twirl:"Fuck yes","Yesss","Mmmm","Oh fuck yes","Oh god, yes","Oh yeah, fuck","Yeah")
@@ -1495,7 +2169,7 @@
 
 :: invite guy load [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (if:($blacked_compatible is 0))[
       (set:$se to "phone call")(display:"play sound")
       (set:$ambience to "bedroom")
@@ -1524,7 +2198,7 @@
 
 :: breedify npc [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (set:$npc's tags to it - (a:"gentleman"))
     (set:$npc's tags to it + (a:"breeder"))
     (set:$npc's personality to (min:it,5))
@@ -1534,14 +2208,14 @@
 
 :: bigcockify npc [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     ($use_global: "$black_cock_database", "window.GE.black_cock_database", [(set:$npc to it + (twirl:...(find:_cock where _cock's ballsize is 10 and cockrating is 10 and cocklength is 10 and cockfatness is 10, ...$black_cock_database)))])
   ](else:)[(display:_around)]
 }
 
 :: npc fill in details [around]
 {
-  (if:(checkdm: $npc, "race", "is", "black"))[
+  (if:(checkdm:$npc, "race", "is", "black"))[
     (unless:(datanames:$npc) contains "last name")[(display:"random guy last name")]
     (unless:(datanames:$npc) contains "sex name")[(set:$npc's "sex name" to $npc's "name")]
     (unless:(datanames:$npc) contains "events")[(set:$npc's "events" to (a:"name"))]
@@ -1554,13 +2228,263 @@
   ](else:)[(display:_around)]
 }
 
-<!-- For future me. Thanks past me!
-for descriptions, it's these passages: 
-transactional sex describe sensation
-transactional sex describe sound
-transactional sex describe he talks
-transactional sex describe body
-transactional sex describe action
-transactional sex describe thought
-transactional sex describe you talk
--->
+:: proposition pet name [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (unless:$npc contains "petname")[
+      (set:$petname to "none")
+      (if:$pickup is "racial")[
+        (if:$character's race is "white")[
+          (if:$npc's tags contains "bully")[
+            (set:$petname to (twirl:"my spoiled little snowbunny", "my pale princess", "my uptight snow white angel", "my snow white brat", "my ivory tease", "my little porcelain prize", "prissy white girl", "my fair-skinned bitch"))
+          ]
+          (else-if:$npc's tags contains "nerd")[
+            (set:$petname to (twirl:"my anime waifu", "my player two", "my little level-up queen", "my cosplay princess", "my comic con cutie", "my magic card goddess", "my white mage", "my fantasy elf", "my sci-fi siren", "my tabletop temptress"))
+          ]
+          (else-if:$npc's tags contains "nice")[
+            (set:$petname to (twirl:"my lovely snow angel", "my stunning vanilla beauty", "my gentle ivory rose", "my fair queen", "my elegant fair-skinned goddess", "my soft-spoken angel", "my delicate dream", "my ivory enchantress", "my sweet darling"))
+          ]
+          (else:) [
+            (set:$petname to (twirl:"my snowbunny", "my vanilla queen", "my ivory goddess", "my fair-skinned stunner", "my white-hot babe", "my sweet milkshake", "my creamy dream", "my snow angel", "my soft-skinned treat"))
+          ]
+        ]
+
+        (else-if:$character's race is "asian")[
+          (if:$npc's tags contains "bully")[
+            (set:$petname to (twirl:"my little China doll", "my delicate plaything", "my uptight lotus", "my quiet little tease", "my soft-spoken doll", "my demure annoyance", "my porcelain pest", "my stubborn cherry blossom", "my silk-skinned troublemaker", "my ivory irritation"))
+          ]
+          (else-if:$npc's tags contains "nerd")[
+            (set:$petname to (twirl:"my otaku dream", "my waifu IRL", "my little cosplayer", "my manga queen", "my kawaii goddess", "my video game rival", "my senpai", "my little anime babe", "my pocket healer", "my RPG rogue"))
+          ]
+          (else-if:$npc's tags contains "nice")[
+            (set:$petname to (twirl:"my lovely cherry blossom", "my graceful lotus", "my gentle jade beauty", "my delicate angel", "my soft-spoken queen", "my sweet muse", "my beautiful pearl", "my tender silk doll", "my charming goddess", "my little joy"))
+          ]
+          (else:) [
+            (set:$petname to (twirl:"my exotic cutie", "my little cherry blossom", "my Asian goddess", "my lithe dream", "my petite powerhouse", "my fierce tigress", "my feisty firecracker", "my silk-skinned queen", "my breathtaking lotus", "my bold jade beauty"))
+          ]
+        ]
+
+        (else-if:$character's race is "latin")[
+          (if:$npc's tags contains "bully")[
+            (set:$petname to (twirl:"my spicy pest", "my little firecracker", "my stubborn Latina", "my bossy señorita", "my fiery troublemaker", "my sassy Latina doll", "my feisty annoyance", "my spicy handful", "my hot-headed princess", "my wild brat"))
+          ]
+          (else-if:$npc's tags contains "nerd")[
+            (set:$petname to (twirl:"my RPG rogue", "my anime senorita", "my little tabletop queen", "my game-night goddess", "my pop-culture babe", "my little comic-con cutie", "my senpai", "my cosplaying queen", "my nerdy Latin doll", "my kawaii Latina"))
+          ]
+          (else-if:$npc's tags contains "nice")[
+            (set:$petname to (twirl:"my beautiful señorita", "my Latin rose", "my graceful muse", "my sweet salsa queen", "my warm-hearted angel", "my loving little rose", "my charming goddess", "my tender Latina beauty", "my elegant señorita", "my darling treasure"))
+          ]
+          (else:) [
+            (set:$petname to (twirl:"my spicy señorita", "my salsa queen", "my hot tamale", "my fiery Latina bombshell", "my luscious Latina", "my curvy firecracker", "my sultry salsa goddess", "my bold Latina princess", "my caliente muse", "my Latin flame"))
+          ]
+        ]
+      ]
+
+      (else-if:$pickup is "body")[
+        (if:$trigger is "breasts")[
+          (set:$petname to (twirl:"my big-titted beauty", "my big-breasted beauty", "my big-breasted bombshell", "my cute lil' milk truck", "my busty babe", "my top-heavy temptress", "my voluptuous vixen", "my curvaceous cutie", "my stacked sweetheart", "my full-figured fox"))]
+          (else-if:$trigger is "butt")[(set:$petname to (twirl:"little miss fat-ass", "my big-assed cutie", "my big-assed bombshell", "my little dumptruck", "my bootylicious babe", "badonkadonky kong","my peachy princess","princess peachy"))
+        ]
+      ]
+    
+      (if:$petname is "none")[
+        (if:$npc's "tags" contains "coworker")[
+          (set:$petname to (twirl:"sweet thing","sugar lips","pretty lady","lil’ heartbreaker","hot stuff","beautiful","gorgeous","miss thang","lil’ temptress","mami","suga’"))
+        ](else-if:$npc's tags contains "nerd")[
+          (set:$petname to (twirl:"goddess", "cutie", "my queen"))
+        ](else:)[
+          (set:$petname to (twirl:"cutie", "baby", "doll", "sweetie", "hun", "babe", "my lovely"))
+        ]
+      ]
+
+      (if:$npc's "age" < 23 and (twist:1,3) is 1)[
+        (set:$petname to (twirl:"bae", "my lil' snacc", "shawty", "lil' mama", "bad biddie", "fire emoji","dime piece"))
+      ]
+      
+      (set:$npc's "petname" to $petname)
+    ] 
+    (if:$npc's "dominance" > 6 and $npc's "personality" < 5)[(display:"asshole gives you a petname")]
+  ]
+  (else:)[(display:_around)]
+}
+
+:: asshole gives you a petname [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:$character's race is "white")[
+      (set:$petname to (twirl:"my filthy little snowbunny", "my slutty black cock whore", "my dirty milkmaid whore", "my pale-skinned cum dump", "my white trash slut", "trailer park queen", "my little white-bred cock holster", "my BBC fucktoy", "my submissive cream slut"))
+    ]
+    (else-if:$character's race is "asian")[
+      (set:$petname to (twirl:"my tight little geisha slut", "my exotic cum rag", "my submissive ricebunny", "my obedient rice slut", "my little geisha whore", "my Asian cock sleeve", "my silk-skinned cum bucket", "my dirty oriental fucktoy"))
+    ]
+    (else-if:$character's race is "latin")[
+      (set:$petname to (twirl:"my little spicybunny", "my Latina cum dumpster", "my slutty brown plaything", "my filthy tamale slut", "my little salsa cock puppet", "my taco temptress", "my spicy cock slut", "my dirty chica whore"))
+    ]
+    (else-if:$character's race is "black")[
+      (set:$petname to (twirl:"my little brownbunny", "my dirty hoodrat bitch", "my filthy black slut", "my little black cock puppet", "my chocolate whore", "my BBC slut", "my black cum guzzler"))
+    ]
+    (else:)[
+      (set:$petname to (twirl:"my nasty little fucktoy", "my filthy cum rag", "jungle fever junkie", "my black cock whore", "my BBC slut", "my stupid little cumdump", "my obedient cockholster", "my horny little meat puppet", "my slutty little sidepiece", "my trashy fuckdoll"))
+    ]
+    (set:$npc's "petname" to $petname)
+  ]
+  (else:)[(display:_around)]
+}
+
+:: sex transactional butt comment [around]
+{ <!-- This is here because the original has a reference for scarlit about black girls, which a black man wouldn't make. Rest of the passage was fine as-is -->
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:$character's "id" is "scarlit")[
+      (set:$phat to (twirl:"phat","round","peachy","premi-*yum*","fantASStic","thick","fat","fat","nice, round","humongous","juicy","beautiful"))
+      (set:$butt to (twirl:"ass","butt","rear","ass","trunk","ass","ass","butt","badonkadonk"))
+      "(twirl:"Your ass is literally built for grabbing.","That $butt has a NICE jiggle to it.","That $butt is nice and FAT!","That $butt is nice and PHAT.","Nice $butt. You could bounce quarters off that thing,")"
+      (if:$outfit's "tags" contains "nude")[
+        (print:"<img class='greyborder' src='img/characters/nude/butt/" +  $character's "id" + ".jpg' width='100%' height=auto>")] 
+      (unless:(datanames:$npc) contains "petname")[
+        (set:$npc's petname to (twirl:"little miss fat-ass","my big-assed cutie","my big-assed bombshell","my little dumptruck","my nice slice of cake"))
+        "(twirl:"I'm gonna call you","Think I'm gonna call you","Gonna call you") (print:$npc's petname)(twirl:" from now on.",".")"(set:$petname to $npc's petname)]
+    ]
+  ](else:)[(display:_around)]
+}
+
+:: transactional sex describe he talks [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:_race to $character's "race")
+    (set:_cock to (cock:"rating","npc"))
+    (set:_tags to $npc's "tags")
+    (set:_personality to $npc's "personality")
+    (set:_age to $npc's "age")
+
+    (set:_phat to (cond:
+      $character's "butt" is "slim", (twirl:"peachy", "slender", "cute lil'", "juicy", "cute", "tight", "perky", "premi-*yum*", "fantASStic", "nice", "beautiful", "delicate", "petite", "sleek", "smooth", "lean", "compact", "grabbable", "toned", "trim", "firm", "dainty"),
+      $character's "butt" is "bubble", (twirl:"round", "peachy", "fat", "heart-shaped", "dump-truck", "juicy", "bimbo-sized", "cute", "tight", "perky", "premi-*yum*", "fantASStic", "nice", "beautiful", "plump", "squeezable", "bouncy", "curvy", "shapely", "alluring", "cushiony", "voluptuous", "mouthwatering"),
+      $character's "butt" is "big", (twirl:"big", "round", "peachy", "thick", "fat", "jiggling", "juicy", "bimbo-sized", "mega-size", "premi-*yum*", "fantASStic", "nice", "humongous", "beautiful", "massive", "lush", "hefty", "overflowing", "gigantic", "sumptuous", "immense", "heaving", "plush", "cushion-like"),
+      (twirl:"phat","round","peachy","premi-*yum*","fantASStic")
+    ))
+
+    (set:$tits to (cond:
+      $character's "breasts" is "A" or $character's "breasts" is "B",(twirl:"tits","boobs","tits","boobs","bee stings","itty-bitties","little cherries"),
+      $character's "breasts" is "C" or $character's "breasts" is "D",(twirl:"milkers","tits","udders","boobs","tits","boobs"),
+      (twirl:"massive milkers","udders","bazongas","tits","milkers","udders","cow-tits","boobs","big, floppy tits")
+    ))
+
+    (set:_girl to (cond:
+      _age > 39 and (twist:1,2) is 1 and _race is "black", (twirl:"lady","woman","doll","cutie","girl","sweetie","babe"),
+      _age > 39 and (twist:1,2) is 1, (twirl:"lady","woman","doll","cutie","_race girl","sweetie","_race babe","girl","babe"),
+      _age < 20 and (twist:1,2) is 1 and _race is "black", (twirl:"shawty","bae","baddie","cutie","girlie","chick","shorty","sweetie","girl"),
+      _age < 20 and (twist:1,2) is 1, (twirl:"shawty","bae","_race baddie","cutie","girlie","_race chick","shorty","sweetie","_race girl","girl","baddie","chick"),
+      _race is "black" and (_tags contains "fuckboy" or _tags contains "jock" or _tags contains "bully" or _tags contains "chad"), (twirl:"slut","chick","thot","baddie","hottie","tease","piece","snack"),
+      _tags contains "fuckboy" or _tags contains "jock" or _tags contains "bully" or _tags contains "chad", (twirl:"_race slut","chick","_race thot","baddie","_race hottie","tease","piece","_race snack","thot","slut","hottie","snack"),
+      _race is "black" and (_tags contains "gentleman" or _tags contains "nice" or _tags contains "nerd"), (twirl:"lady","sweetheart","cutie","angel","beauty","darling","queen"),
+      _tags contains "gentleman" or _tags contains "nice" or _tags contains "nerd", (twirl:"lady","sweetheart","_race cutie","_race angel","_race beauty","darling","_race queen","queen","cutie","beauty","angel"),
+      (twirl:"girl","lady","beauty","babe","woman","girl","girl","lady")
+    ))
+
+    (set:_cum to (cond:
+    _race is "black", (twirl:"cum","cum","cum","load","seed","jizz"),
+    (twirl:"black cum","black cum","cum", "cum","load","black seed","jizz")
+    ))
+
+    (set:$your_sex_name to (twirl:"bitch","slut","whore",$your_name,$your_name,"bitch","slut"))
+    (if:_tags contains "gentleman")[(set:$your_sex_name to (twirl:$your_name,$your_name,"baby","babygirl",$petname,$petname))]
+    (if:_tags contains "fuckboy")[(set:$your_sex_name to (twirl:"bitch","slut","whore","cunt",$your_name,$your_name,"bitch","slut","babygirl","babygirl"))]
+    (if:_tags contains "chad")[(set:$your_sex_name to (twirl:"bitch","slut","whore",$your_name,$your_name,"bitch",$your_name,$your_name,"slut","fucktoy"))]
+    (if:_tags contains "creepy")[(set:$your_sex_name to (twirl:"bitch","slut","whore",$your_name,$your_name,"bitch",$your_name,$your_name,"slut","cunt","cunt","fucktoy",$petname,$petname,"you little slut"))]
+    (if:_tags contains "jock")[(set:$your_sex_name to (twirl:"bitch","slut",$your_name,$your_name,"bitch",$your_name,$your_name,"slut","fucktoy"))]
+
+    (set:$dick to (twirl:"cock","dick","cock","cock"))
+    (if:_cock > 7 and (twist:1,2) is 1)[(set:$cock to (twirl:"big $dick","big, fat $dick","big fucking $dick","fucking cock","big ol' schlong"))](else:)[(set:$cock to $dick)]
+
+    (set:$pussy to (twirl:"tight little pussy","pussy","wet little pussy","pussy","wet little cunt","pussy","pussy"))
+    (if:$npc's "age" > 39)[(set:$pussy to (twirl:"tight young pussy","pussy","wet little pussy","pussy","wet little cunt","pussy","pussy"))]
+
+    (set:$face to (twirl:"pretty little face","pretty face","cute little face","pretty face","beautiful face","face","face","face"))
+    (if:$npc's "personality" < 4)[(set:$face to (twirl:"stupid little face","pretty face","whorish little face","slutty face","beautiful face","face","stupid face","face","dumb little face"))]
+
+    (if:_race is "black")[
+      (if:_cock > 7 and _tags contains "chad")[(set:$cock to (twirl:"bitch-wrecker","big, fuck-stick","big fat cock","slut-wrecker","slut-stick","slut-maker","big fuckpole","bitch-breaker"))]
+      (if:_cock > 7)[(set:$cock to (twirl:"big $dick","big, thick $dick","big $dick"))]
+      (if:_personality < 6)[(set:$pussy to (twirl:"tight little pussy","pussy","cunt","tight little pussy","wet little pussy","pussy","wet little cunt","pussy","cunt"))]
+    ] (else:)[
+      (if:_cock > 7 and _tags contains "chad")[(set:$cock to (twirl:"bitch-wrecker","big, black fuck-stick","big fat black $dick","slut-wrecker","slut-stick","slut-maker","big black fuckpole","bitch-breaker"))]
+      (if:_cock > 7)[(set:$cock to (twirl:"big black $dick","big, black $dick"))]
+      (else:)[(set:$cock to (twirl:"black $dick","$dick"))]
+      (if:_personality < 6)[(set:$pussy to (twirl:"tight little _race pussy","_race pussy","_race cunt","tight little pussy","wet little _race pussy","pussy","wet little _race cunt","_race pussy","pussy"))]
+    ]
+
+    (set:$descriptions to (twisted:"take my cock","own this pussy","feels good","cum choice","cant believe","you love it","cum soon","look back","grab boobs","grab butt","pull hair","tits clap","spank","push down"))
+    (if:$npc's tags contains "breeder")[(set:$descriptions to (twisted:"cum choice","cum choice",...$descriptions))]
+    (unless:$his_choice is "none")[(set:$descriptions to $descriptions - (a:"cum choice"))]
+    (unless:($npc's "looks" < 5) or $npc's "tags" contains "nerd" or ($npc's "age" > 39) or ($npc's "age" < 20) or $npc's "tags" contains "chubby")[
+    (set:$descriptions to $descriptions - (a:"cant believe"))
+    ]
+    (if:$npc's "tags" contains "chad" or $npc's "tags" contains "jock")[(set:$descriptions to $descriptions - (a:"cant believe"))]
+
+    (unless:$his_pleasure_threshold - $his_pleasure < 4)[(set:$descriptions to $descriptions - (a:"cum soon"))]
+    (unless:$doggy_text contains "look back")[(set:$descriptions to $descriptions - (a:"look back"))](unless:$doggy_text contains "grab boobs")[(set:$descriptions to $descriptions - (a:"grab boobs"))](unless:$doggy_text contains "grab butt")[(set:$descriptions to $descriptions - (a:"grab butt"))](unless:$doggy_text contains "pull hair")[(set:$descriptions to $descriptions - (a:"pull hair"))](unless:$doggy_text contains "tits clap")[(set:$descriptions to $descriptions - (a:"tits clap"))](unless:$doggy_text contains "spank" and $npc's "personality" < 5)[(set:$descriptions to $descriptions - (a:"spank"))](unless:$doggy_text contains "push down" and $npc's "personality" < 5)[(set:$descriptions to $descriptions - (a:"push down"))]
+    (set:$description to 1st of $descriptions)
+
+    (if:$description is "feels good")[(inc:'his_pleasure')(display:"update his pleasure")]
+    (if:$description is "cum choice")[(set:$his_choice to (twirl:"creampie","pull out","face","mouth","creampie"))(if:_tags contains "breeder")[(set:$his_choice to "creampie")]]
+
+
+    (set:$text to (cond:
+    $description is "push down", (twirl:"face down, ass up - just like nature intended","get down","stay right there. I'm gonna fuck you hard until I nut","this is nature's perfect fucking position","stay down while I fuck you"),
+    $description is "spank", (twirl:"you're a bad girl","I'm treating you like the BAD girl you are","you know who owns you now, huh? Yeah you do","take this! And this","who's a naughty little $girl, huh? You are"),
+    $description is "tits clap", (twirl:"I love watching those $tits clap together","I'm making those $tits clap together","your $tits are giving each other a high five","I love makin' those titties clap"),
+    $description is "pull hair", (twirl:"I love pulling your hair while I fuck you","I love pulling your hair","hair is a girl's natural handle"),
+    $description is "grab butt", (twirl:"I love watching this _phat ass jiggle","I love watching your _phat ass bounce and jiggle on my $cock","I love making your _phat ass jiggle"),
+    $description is "grab boobs", (twirl:"your $tits feel so good","love these $tits of yours","I love how your $tits swing","I love these $tits"),
+    $description is "look back", (twirl:"look at me while I fuck you. Just like that","look back at me while I fuck you","you're going cross-eyed","I think you're going cross-eyed","your eyes are rolling back in your head - must mean you're enjoying this"),
+    $description is "cum soon" and _tags contains "breeder", (twirl:"I'm fixin' to bust a nut in you","I feel it coming... I'm gonna breed that fucking $pussy now","Fuck yes, take it slut, you'll make a great single mother"),
+    $description is "cum soon", (twirl:"I'm gonna cum soon","I think I'm gonna nut soon","you're gonna make me blow","you're gonna make me nut","you're gonna make me cum real soon"),
+    $description is "you love it" and _tags contains "breeder" and _race is not "black", (twirl:"you WANT to make some mixed babies","you WANT to carry my baby in that _race womb","you WANT me to empty these black balls inside you, and make you fucking pregnant","you WANT me to fucking breed that $pussy of yours"),
+    $description is "you love it" and _tags contains "breeder" and _race is "black", (twirl:"you WANT to have my baby","you WANT to carry my baby in your womb","you WANT me to empty these balls inside you, and make you fucking pregnant","you WANT me to fucking breed that $pussy of yours"),
+    $description is "you love it" and _tags contains "nerd", (twirl:"you love this! You're making the ahegao face","your $face looks like one of those girls in hentai","you love this, don't you? You should see the look on your face","you fucking love my $cock","you love getting fucked like this","you love getting used by my $cock","you love getting fucked","you just LOVE getting pounded, don't you? Yeah you do","you should see the look of bliss on your $face"),
+    $description is "you love it", (twirl:"that look on your $face - you love this","you should see yourself in the mirror, you love this $cock","you love this $cock, don't you? You should see the look on your face","you fucking love my BBC","you love getting fucked like this","you love getting used by my $cock","you love getting fucked","you just LOVE getting pounded a big strong man, don't you? Yeah you do","you should see the look of bliss on your $face"),
+    $description is "cant believe" and $npc's "looks" < 5 and _tags contains "breeder" and _race is "black", (twirl:"I might be ugly, but our kids are gonna be good looking, like you","Summer City is great, even an ugly guy like me can breed a _girl like you"),
+    $description is "cant believe" and $npc's "looks" < 5 and _tags contains "breeder", (twirl:"I might be ugly, but our mixed kids are gonna be good looking, like you","Summer City is great, even an ugly guy like me can breed a _girl like you"),
+    $description is "cant believe" and $npc's "looks" < 5, (twirl:"I guess even ugly guys like me can get lucky. Can't believe I get to fuck a hot _girl like you","Summer City is great - even an ugly guy like me can fuck a _girl as hot as you","and my friends say I'm out of my league, hitting on _girls like you","can't believe I get to fuck you","can't believe I really get to fuck $pussy tonight"),
+    $description is "cant believe" and $npc's age < 21 and _tags contains "breeder", (twirl:"I can't believe I'm breeding a _girl in her 20s. Yeah! This is fucking lit","this is wack. Can't believe I'm gonna impregnate a _girl who looks like a fucking pornstar, when I'm only _age","I'm only _age and already making mixed babies","can't believe I'm only _age, and getting to breed a hot _girl like you"),
+    $description is "cant believe" and $npc's age < 21 and _tags contains "nerd", (twirl:"I guess even nerds like me can get lucky. Can't believe I get to fuck you","Summer City is great - even a nerdy guy like me can fuck a hot _girl like you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a hot _girl... I'm gonna tell all my friends","this is just like fucking anime chicks","this is even better than porn","this is so much better than watching porn","I guess my mom was right when she said to get outside and meet girls","can't believe a hot _girl like you would even talk to a nerd like me","can't believe I'm fucking a _girl like you","you're even hotter than my anime statues"),
+    $description is "cant believe" and $npc's age > 39, (twirl:"I can't believe an old guy like me gets to fuck a $girl like you","I can't believe I'm fucking a hot _girl like you","can't believe I'm fucking a $girl like you","at my age, I didn't think I'd get to taste a sweet _girl like you again","your $pussy is like the fountain of youth for me"),
+    $description is "cant believe", (twirl:"I can't believe I get to fuck a hot _girl like you","Can't believe I get to fuck a _girl as hot as you","can't believe I'm fucking you right now"),
+    $description is "take my cock" and (_tags contains "chad" or _tags contains "jock"), (twirl:"that's right, take my $cock","feel my $cock inside your $pussy","take my $cock like a good little _girl","take it. Take my fucking cock","you love it. Yeah, you love my fucking cock","you'll be thinking about my $cock for weeks after this. Yeah, take it","take. My. Fucking. Cock. Yes! Take it"),
+    $description is "take my cock" and _tags contains "fuckboy", (twirl:"this is what girls like you were made for. Taking my $cock","take it like a good little _girl. Yeah, just like that","take my $cock. Feel it inside you, slut. Yeah - FUCK"),
+    $description is "take my cock" and (_tags contains "bully"  or $npc's personality < 3), (twirl:"this is what you're made for. Taking my $cock","take it like a good _girl. Yeah, just like that","I bet you'll dream about my $cock for weeks after this, ho. Yeah, take it","take this $cock. Feel it inside you, slut. Yeah - FUCK"),
+    $description is "take my cock" and (_tags contains "gentleman" or $npc's personality > 7), (twirl:"I hope this feels as good for you as it does for me. Taking my $cock","enjoy yourself on my $cock","take my $cock - yes, like that","you're so good at taking $cock","I like how you take my cock"),
+    $description is "take my cock" and _tags contains "breeder" and _race is not "black", (twirl:"take my $cock, it's gonna make you pregnant","take my $cock, yes, just like that - it's gonna erupt in your _race womb","take my $cock, I'm gonna breed your $pussy with it"),
+    $description is "take my cock", (twirl:"that's right $your_sex_name, take my $cock","moan for this $cock bitch","take my $cock"),
+    $description is "own this pussy" and _tags contains "chad" and _age > 35, (twirl:"that's right, show daddy who owns this pussy","we both know I own this $pussy now","this pussy is mine now","your $pussy won't ever forget my $cock","you won't be able to cum from any cock other than mine after this","show daddy who owns you now","daddy owns you now","show me who owns you now"),
+    $description is "own this pussy" and (_tags contains "chad" or _tags contains "jock"), (twirl:"that's right, who owns this pussy $your_sex_name?","we both know I own this $pussy now","this pussy is mine now. It is my property.","your $pussy won't ever forget this $cock","you won't be able to cum from any cock other than mine after I'm through with you","show me who owns you now","I own you now, $your_sex_name","show me who owns you now"),
+    $description is "own this pussy" and _tags contains "fuckboy", (twirl:"this $pussy was made for me. You love it","you know I own this $pussy now","your $pussy belongs to my $cock"),
+    $description is "own this pussy" and _tags contains "nerd", (twirl:"squeeze my theorem, while I Poly your Nomial","I own this $pussy. Yeah! Can't wait to tell my friends","your $pussy is gonna crave my nerdy cock after this","how does it feel, having your $pussy belong to a nerd like me? Heh. So fucking good","your $pussy is mine. Way better than the ones in VR"),
+    $description is "own this pussy" and (_tags contains "bully" or $npc's personality < 3), (twirl:"this $pussy was made for me. You love it","you know I own this $pussy now","your $pussy is mine","there's no going back now, I own this pussy","tell me who owns this pussy","I fucking own this $pussy now","this $pussy is mine now","your $pussy belongs to my $cock now"),
+    $description is "own this pussy" and (_tags contains "gentleman" or $npc's personality > 7), (twirl:"your $pussy is mine","I own this $pussy","I fucking own this $pussy","my $cock owns this $pussy","I think your $pussy loves my $cock","your $pussy loves my $cock","your $pussy belongs to me now"),
+    $description is "own this pussy" and _tags contains "breeder", (twirl:"your $pussy is gonna belong to me, after I flood it with my _cum","your $pussy belongs to me now. I'm gonna fucking breed it","your $pussy loves my $cock. I think it knows I'm gonna make you a single mother today"),
+    $description is "own this pussy", (twirl:"this $pussy is mine","I own this $pussy","I fucking own this $pussy","my $cock owns this $pussy"),
+    $description is "feels good" and _age > 39, (twirl:"I'll never age, if I got to fuck a $pussy like this for the rest of my life","your $pussy feels amazing on my _age-old cock","it feels amazing to fuck a young $girl like you","your $pussy feels amazing","your $pussy feels incredible"),
+    $description is "feels good" and _age < 21, (twirl:"your $pussy feels amazing on my _age-old cock","your $pussy feels amazing","damn, your $pussy's tight, feels crazy good", "this $pussy hittin' different, feels too good", "I could stay buried in this $pussy all day, feels amazing"),
+    $description is "feels good" and _tags contains "nerd",(twirl:"your $pussy feels even better than my fleshlight","your $pussy feels soo good","my friends were right, real pussy feels so much better than jerking off","your $pussy feels like what hentai looks like","your $pussy is AMAZING","your $pussy feels so good, the way it grips my $cock","your $pussy feels so nice") ,
+    $description is "feels good" and (_tags contains "chad" or _tags contains "jock"), (twirl:"your $pussy feels good","your $pussy is wrapped SO fuckin' tight around my $cock","your $pussy loves having my $cock inside it","your $pussy feels damn good"),
+    $description is "feels good", (twirl:"your $pussy feels so good","your $pussy feels so fucking good","so fucking good. Your $pussy is really gripping my $cock","your $pussy feels so good, the way it grips my $cock"),
+    $description is "cum choice" and $his_choice is "creampie" and _tags contains "breeder", (twirl:"I wanna get you fucking pregnant","I wanna breed that tight $pussy","I'm gonna breed you $your_sex_name","I'm gonna fucking fill that $pussy to the brim with my _cum","we're gonna make little mixed babies","I'm gonna fill that fertile $pussy of yours with my _cum","I'm gonna make you a single mother"),
+    $description is "cum choice" and $his_choice is "creampie" and _personality > 6, (twirl:"I wanna fill you with my _cum","I hope you like creampies","I wanna fill you up with _cum - hope you're ready","I'm gonna fucking fill you up","I wanna cum inside you","I wanna pump you full of my _cum","I'm gonna bust a nut inside you"),
+    $description is "cum choice" and $his_choice is "creampie" and _tags contains "nerd", (twirl:"I wanna fill you with my _cum","I'm gonna bust a nut inside you","I'm gonna fucking fill you up","I wanna cum inside your $pussy","I wanna pump that $pussy full of my _cum") + " " + (twirl:"like you're one of my fleshlights","like they do in hentai","like they do in porn"),
+    $description is "cum choice" and $his_choice is "creampie", (twirl:"I wanna fill your $pussy with my _cum","I'm gonna bust a fat nut inside you","I'm gonna fucking fill you up","I wanna cum inside you","I wanna pump you full of my _cum","I'm gonna bust a nut inside you"),
+    $description is "cum choice" and $his_choice is "pull out", (twirl:"I can't wait to blow my load all over you","I wanna cover you with my _cum","I'm gonna bust a nut all over you","I'm gonna fucking hose you down with my _cum","I wanna glaze you with _cum, like a donut"),
+    $description is "cum choice" and $his_choice is "face", (twirl:"I can't wait to blow my load all over that $face","I wanna paint your $face with my _cum","I'm gonna bust a nut all over your $face","I'm gonna fucking cover your $face with my _cum","I wanna cum on your $face","I wanna hose down your $face with my _cum","I can't wait to drain these balls all over your $face"),
+    $description is "cum choice" and $his_choice is "mouth", (twirl:"I can't wait to watch you swallow my load","You're gonna be a _cum swallower today","I'm gonna cum in your mouth","I'm gonna fucking cum down your throat","I wanna cum in your mouth","I wanna bust a nut in your mouth","Hope you swallow, I'm pretty backed up"),
+    (twirl:"that's right $your_sex_name, take my $cock","moan for daddy, $your_sex_name","take my $cock $your_sex_name")
+    ))
+
+    (set:$fuck to (twirl:"Fuck","Ngggh","Goddamn","Fucking hell","Holy fuck","Unnggh","Mnnngh","Fuck","Fuck","GodDAMN","Yeah","Fuck yeah","Hell yeah","Yes","That's right","Fuck yeah","Nggh- NGGH yes","FUCK yes","FUCK yeah"))
+    (if:$npc's "generation" is "genz" and (twist:1,2) is 1)[(set:$fuck to (twirl:"Fuck","Ngggh","Goddamn","Fucking hell","Holy fuck","Unnggh","Mnnngh","Fuck","Fuck yeah","Shiiiit","Skrrt","Shit, fam","Sheesh","Sheeesh"))]
+    
+    (if:(twist:1,3) is 1)["(print:$fuck)(twirl:",","...","-")" (display:"npc pronoun") (twirl:"says","grunts","says","moans","says","grunts","groans","grunts")(if:(twist:1,2) is 1)[ (twirl:"as he pounds you","as he fucks you","as he rails you","as he fucks you")]. "(print:(upperfirst:$text))(if:(twist:1,2) is 1)[, $your_sex_name](twirl:"...","!",".")"]
+    (else:)[(if:(twist:1,3) is 1)["(print:$fuck)(twirl:",","...","-") (print:$text)](else:)["(print:(upperfirst:$text))](if:(twist:1,2) is 1)[, $your_sex_name](if:(twist:1,2) is 1)[(twirl:"...","!",".")"](else:)[(twirl:"...","!",",")" (display:"npc pronoun") (twirl:"says","grunts","says")(if:(twist:1,2) is 1)[ (twirl:"as he pounds you","as he fucks you","as he rails you","as he fucks you")].]]
+  ]
+  (else:)[(display:_around)]
+}
+

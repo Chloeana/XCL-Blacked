@@ -6,3 +6,5 @@ img/
 *.png
 *.mp4
 *.mp3
+
+*.code-workspace

@@ -1,0 +1,110 @@
+<!-- Compulsions -->
+:: blacked compulsion porn [compulsion]
+{
+(set:_beta_loser to (cond:$character's "masculinity" < 79 and (is_male:) and $blacked_stats's "bbc porn watched" > 3,true,false))
+(if:_beta_loser)[
+  (unless:($has_ap_mod:"bbc porn mod"))[
+    (set:$action_point_mods to it + (a:(dm:
+      "name","bbc porn mod",
+      "title","BBC Porn Addict",
+      "description","You are getting kind of addicted to seeing Big Black Cocks in your pornos.",
+      "good message","You love seeing a nice, huge, Black cock on your computer screen.",
+      "addiction message","Face it gooner, you're getting addicted to watching BBC. If you don't do it often, your max action points will get a penalty.",
+      "bad message","You've been slacking gooner... time to fire up your computer? Don't forget the lotion.",
+      "normal wear off","It's been a while since you've watched BBC porn...",
+      "type","slot",
+      "removal criteria","Get your masculinity up to 80 if you want to remove this compulsion.",
+      "addiction threshold",25,
+      "times triggered",0,
+      "cooldown",5,
+      "lower cooldown",8,
+      "cooldown floor",3,
+      "last day",-1
+      )))
+    ]
+  ](else:)[
+    (set:$action_point_mods to it - (find:_mod where _mod's name is "bbc porn mod",...$action_point_mods))
+]
+}
+
+<!-- Curiosities -->
+:: generate curiosity [around]
+{
+  (if:$character's race is "black")[
+    (set:$curiosity_triggers to it + (ds:"is black"))
+  ]
+  (if:$blacked_compatible is 1)[
+    (set:$curiosity_triggers to it + (ds:"blacked compatible"))
+  ]
+  (if:$blacked_stats's "sex as girl" is 0 or $blacked_stats's "sex as guy" is 0)[
+    (set:$curiosity_triggers to it + (ds:"virgin"))
+  ]
+  (else-if:$blacked_stats's "sex as girl" > 10 or $blacked_stats's "sex as guy" > 10)[
+    (set:$curiosity_triggers to it + (ds:"pro"))
+  ]
+
+  (if:(is_fem:))[
+    (if:$blacked_stats's "sex as girl" > 0 and $blacked_stats's "sex as girl" < 5)[
+      (set:$curiosity_triggers to it + (ds:"amateur"))
+    ]
+    (else-if:$blacked_stats's "sex as girl" > 4 and $blacked_stats's "sex as girl" < 11)[
+      (set:$curiosity_triggers to it + (ds:"mid"))
+    ]
+  ] (else:) [
+    (if:$blacked_stats's "sex as guy" > 0 and $blacked_stats's "sex as guy" < 5)[
+      (set:$curiosity_triggers to it + (ds:"amateur"))
+    ]
+    (else-if:$blacked_stats's "sex as guy" > 4 and $blacked_stats's "sex as guy" < 11)[
+      (set:$curiosity_triggers to it + (ds:"mid"))
+    ]
+  ]
+  (display:_around)
+}
+
+:: blacked curiosity init [init_curiosity_quests]
+{
+  (set:$curiosity_quest_set to it + (a:
+  (dm:
+		"description","fucking a white girl.",
+		"objective","Have sex with a white girl, she'll never go back!",
+		"triggers",(ds:"male","is black","virgin"),
+		"duration",15,
+		"solution","white girl fuck"),
+  (dm:
+		"description","breeding a white girl.",
+		"objective","Cum inside a white girl!",
+		"triggers",(ds:"male","mid","is black"),
+		"duration",15,
+		"solution","white girl creampie"),
+  (dm:
+		"description","BBC porn. Normal guys aren't that big... It's just because they're pornstars. Right?",
+		"objective","Watch some BBC Porn!",
+		"triggers",(ds:"high reluctance","blacked compatible","virgin"),
+		"duration",5,
+		"solution","bbc porn"),
+  (dm:
+    "description",(twirl:"black cocks. Are they really bigger?","black guys. Is it true what they say?","BBC. It's just an internet phrase, right?"),
+    "objective","Discover the truth about BBC...",
+    "triggers",(ds:"high reluctance","blacked compatible","virgin"),
+    "duration",5,
+    "solution","fucked bbc"),
+  (dm:
+    "description","experiencing shame-free sex with a black man.",
+		"objective","Have sex with a black man without experiencing the *Ashamed* mood.",
+		"triggers",(ds:"mid reluctance","blacked compatible","amateur"),
+		"duration",10,
+		"solution","shame-free black sex"),
+  (dm:
+	  "description","satisfying a black guy completely.",
+		"objective","Finish a sexual encounter with a black guy *fully* satisfied.",
+		"triggers",(ds:"mid","blacked compatible"),
+		"duration",10,
+		"solution","black satisfaction"),
+  (dm:
+	  "description","black guy creampies.",
+		"objective","Ask a black guy to finish inside you.",
+		"triggers",(ds:"pro","blacked compatible"),
+		"duration",10,
+		"solution","black creampie")
+  ))
+}
