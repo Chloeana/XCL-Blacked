@@ -1,0 +1,198 @@
+:: blacked dredd setup [initialize init_new]
+{
+    (if:$dredd is 0)[
+        (set:$dredd to $npcs_men's dredd)
+        (set:$dredd's "location" to "home")
+        (set:$dredd's "visits" to 0)
+    ]
+
+    (unless:$bar_party's "times" is 0)[
+        (if:$dredd's "visits" is 0)[(set:$dredd's "visits" to $bar_party's "times")]
+    ]
+}
+
+:: Go to Dredd's House [fullscreen]
+{
+    (display:"blacked set up fullscreen")
+    (masteraudio:"stopall")
+    (set:$dredd's "visits" to it + 1)
+    (set:$current_location to "Dredd's House")
+    (set:$location_name to "Outside Dredd's House")
+    (set:$location_params to (dm:
+	"name","Outside Dredd's House",
+    "location pic","places/blacked/dredds house/exterior.jpg",
+	"crowded","no",
+	"sleaze",0,
+	"change clothes","false",
+	"intro passage","blacked dredd house exterior intro",
+	"options passage","blacked dredd house options",
+	"ambience","morning",
+	"location refresh","location and time and inventory",
+	"tags",(a:""),
+	"home","Go to Dredd's House",
+	"home option","Front Door"))
+
+    (replace:?right_screen)[(display:$location_params's "location refresh")]
+    (replace:?image)[($pic:$location_params's "location pic")]
+    (replace:?text)[(display:$location_params's "intro passage")]
+    (replace:?options)[(display:$location_params's "options passage")]    
+}
+
+:: blacked dredd house [fullscreen]
+{
+    (set:$blacked_events to it - (a:"dredd visit ready"))
+    (display:"blacked set up fullscreen")
+    (set:$current_location to "Dredd's House")
+    (set:$location_params to (dm:
+	"name","Dredd's House",
+    "location pic","places/blacked/dredds house/living room.jpg",
+	"crowded","no",
+	"sleaze",0,
+	"change clothes","false",
+	"intro passage","blacked dredd house intro",
+	"options passage","blacked dredd house options",
+	"ambience","morning",
+	"changing location name","the guest bathroom",
+	"changing location pic","<img class='greyborder' src='img/places/blacked/dredds house/bathroom.jpg' width=100% height=auto>",
+    "pause screen option","Bathroom",
+    "pause screen code","mall pause screen",
+	"bj location passage","blacked dredd house bj room",
+	"bj location name","the living room",
+	"bj location pic","<img class='greyborder' src='img/places/blacked/dredds house/living room.jpg' width=100% height=auto>",
+    "sex location passage","blacked dredd house sex room",
+	"sex location name","the living room",
+	"sex location pic","<img class='greyborder' src='img/places/blacked/dredds house/living room.jpg' width=100% height=auto>",
+	"location refresh","location and time and inventory",
+	"tags",(a:""),
+	"home","blacked dredd house",
+	"home option","Back to Main Area"))
+
+    (replace:?right_screen)[(display:$location_params's "location refresh")]
+    (replace:?image)[($pic:$location_params's "location pic")]
+    (replace:?text)[(display:$location_params's "intro passage")]
+    (replace:?options)[(display:$location_params's "options passage")]
+}
+
+:: blacked dredd house options
+{
+    (if:$blacked_events contains "kendra clone accepted" and $blacked_events does not contain "kendra clone completed")[
+        (link:$kendra + " Clone")[(set:$next to "blacked kendra story 9")(display:"next")]
+    ]
+    (else:)[
+        (if:$current_location is "Dredd's Front Door")[
+            (link:"Ring Doorbell")[(set:$next to "blacked dredd house answers")(display:"next")]
+            (link:"Leave")[(set:$next to "blacked dredd exit check")(display:"next")]
+        ]
+        (else-if:$current_location is "Outside Dredd's House")[
+            (link:"Go Swimming")[(set:$next to "blacked dredd house pool")(display:"next")]
+            (link:"Play Basketball")[(set:$next to "blacked dredd house basketball")(display:"next")]
+            (link:"Pool House")[(set:$next to "blacked dredd house intro")(display:"next")]
+            (link:"Main House")[(set:$next to "blacked dredd house intro")(display:"next")]
+            (link:"Leave")[(set:$next to "blacked dredd exit check")(display:"next")]
+        ]
+        (else:)[
+            (link:"Living Room")[(set:$next to "blacked dredd house living room")(display:"next")]
+            (link:"Bathroom")[(set:$next to "blacked dredd house bathroom")(display:"next")]
+            (link:"Master Bedroom")[(set:$next to "blacked dredd house master bedroom")(display:"next")]
+            (link:"Guest Bedroom")[(set:$next to "blacked dredd house guest bedroom")(display:"next")]
+            (link:"Backyard")[(set:$next to "blacked dredd house backyard")(display:"next")]
+            (link:"Leave")[(set:$next to "blacked dredd exit check")(display:"next")]
+        ]
+    ]
+}
+
+:: blacked dredd house exterior intro
+{
+    (set:$current_location to "Dredd's Front Door")
+    (inc:"dredd's visits")
+    (replace:?image)[($pic:"places/blacked/dredds house/front door.jpg")]
+
+    (twirl:
+    "The transition from Palm Grove to Elysian Heights feels like entering another world. The neatly kept lawns and modest homes give way to sprawling estates with ornate gates and long driveways, each one a statement of wealth.",
+    "Driving up through the hills, the cityscape disappears in your rearview mirror. The roads wind higher, flanked by pristine mansions with sleek cars parked in the driveways. It feels like you've stumbled into a lifestyle reserved for the elite.",
+    "The bustling town strip fades behind you as you climb into the hills. The houses grow larger, the landscaping more extravagant. A fountain here, a meticulously sculpted hedge there...it’s clear money flows freely here.",
+    "Passing through the commercial area, your eyes catch designer boutiques and upscale cafes. Soon, the buildings space out, replaced by towering modern homes perched precariously along the hillside.",
+    "As you wind up the narrow, polished roads of Elysian Heights, the quiet affluence presses down on you. The air feels lighter, cleaner, like even nature has conspired to make this place perfect.",
+    "The drive up the hills is both scenic and humbling. Beyond the panoramic views of the city below, the houses here flaunt wealth in a way that feels almost surreal.",
+    "The houses in Palm Grove seem so ordinary compared to the architectural wonders in Elysian Heights. Passing a mansion with a glass facade, you wonder who lives there and if their life is as glamorous as it looks.",
+    "The contrast is stark. Palm Grove’s middle-class charm is quickly overshadowed by Elysian Heights’ opulence. The closer you get to Dredd’s place, the less you feel like you belong.",
+    "Each turn reveals another jaw-dropping home. The thought of living somewhere like this feels impossible, but for Dredd, it’s just life as usual.",
+    "As you climb higher into the hills, the noise of the city fades. The only sounds are the hum of your engine and the faint rustling of manicured hedges in the breeze. This place practically screams exclusivity."
+    )(nl:2)
+
+    (if:$dredd's "visits" <= 3)[
+        (twirl:
+        "Dredd's house is a masterpiece of modern design, all sharp lines and clean angles, with walls of glass that shimmer in the sunlight. It’s intimidating in its perfection.",
+        "Dredd’s home sits like a crown jewel on the hillside, its stark white and black exterior radiating sleek sophistication. The manicured lawn and glinting pool in the back only add to the grandeur.",
+        "Stepping out of your car, you’re struck by how pristine everything is. The driveway looks polished enough to eat off of, and the house seems to tower above you, daring you to dream of this kind of luxury.",
+        "The air feels cooler here, fresher. Dredd’s house dominates the view, its minimalist aesthetic screaming wealth. The massive windows give you a peek into a life of comfort and indulgence.",
+        "It’s the kind of house you’d expect to see in a movie about the obscenely rich. Expansive, pristine, and unapologetically opulent, it’s a stark contrast to anything you’ve ever known.",
+        "The black and white structure is striking against the blue sky. You catch a glimpse of the backyard, a glistening pool and a basketball court... it feels like stepping into another universe.",
+        "Even before you reach the front door, you feel the weight of the house’s presence. It’s not just a home; it’s a statement of power and success.",
+        "The pool house, basketball court, and perfectly groomed hedges tell you everything you need to know: Dredd’s life is leagues above yours, and this house is proof.",
+        "The way the sunlight reflects off the glass panels and the sharp lines of the architecture makes you feel small, like you’re standing in front of a palace meant for royalty.",
+        "The silence is what gets you. No street noise, no chatter, just the hum of your own thoughts as you take in the immaculate surroundings. This is how the other half lives."
+        )
+    ]
+    (else:)[
+        (twirl:
+        "The house no longer feels intimidating, but it still carries an air of unattainable luxury. Each visit reminds you how different your worlds are.",
+        "You’ve grown used to the sharp lines and pristine surfaces, but the sheer size of the place still leaves you in awe.",
+        "The pool house and basketball court don’t feel as out of reach anymore. They’re just part of the scenery now, though still impressive.",
+        "The modern aesthetic of the house has grown on you. It’s not as cold as it first seemed, but it still feels like a world apart from your own.",
+        "Each visit feels like a glimpse into another life. One where money isn’t a concern, and every detail is curated to perfection.",
+        "You’ve started noticing little things: the subtle landscaping choices, the way the sun hits the glass at just the right angle. It’s a reminder of how much thought went into creating this place.",
+        "The silence no longer feels eerie but peaceful. It’s easy to see why someone like Dredd would choose to live here.",
+        "Walking up the driveway doesn’t feel as daunting as it used to, but the house’s grandeur still leaves an impression every time.",
+        "The luxury doesn't shock you as much, but you haven’t stopped envying the life it represents.",
+        "You’ve grown comfortable in the space, but a part of you always feels like an outsider, like you’re only borrowing this world for a moment.")
+    ]
+
+    (nl:1)
+
+    (if:$bar_party's "times" > 0)[(nl:1)
+        Your
+        (if:(is_male:))[ cock twitches ](else:)[ face flushes ]
+        a little as you think back to the mindblowing sex with Maurice... and watching $gabbie with Dredd. (nl:2)
+    ]
+    
+    (if:$blacked_events contains "kendra clone demo")[
+        (nl:1)
+        The door swings open before you can even knock...(nl:1)
+    ]
+}
+
+:: blacked dredd house intro
+{
+    The impressive modern decor inside Dredd's house is a stark contrast to the retro furnishings you're used to seeing.(nl:1)
+    The living room is spacious and well-appointed, with a large TV and a comfortable-looking couches. The pool and poolhouse are visible through the back door, and you can see a hallway leading to the bedrooms and bathroom.(nl:2)
+}
+
+:: blacked dredd exit check
+{
+    (if:$exit_index < length of $tagged's $exit_tag)[
+        (inc:'exit_index')
+        (set:$next to "exit check")
+        (display:"next")
+    ](else:)[
+        (display:"advance time")
+    ]
+}
+
+:: blacked dredd house answers
+{
+    (set:$npc to $npcs_men's "dredd")
+    (display:"npc screen update")
+    Dredd greets you at the door, a smile on his face.(nl:1)
+    “Hey, $your_name, come in.”
+    (link:"Go Inside")[(set:$next to "blacked dredd house living room")(display:"next")]
+}
+
+:: blacked dredd house no answer
+{
+    You ring the bell, but there's no answer. You wait a moment. (nl:2)
+    (after:time + 5s)[
+        It seems like Dredd isn't home.(nl:1)
+        (link:"Leave")[(set:$next to "advance time")(display:"next")]
+    ]
+}

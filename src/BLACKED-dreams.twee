@@ -1,0 +1,560 @@
+
+:: check dreams [around]
+{
+  (display:"check blacked dreams")(display:_around)
+}
+
+:: check blacked dreams
+{
+    <!-- Use More Dreams setting, if exists, to determine dream repeat. Otherwise set to 14 days -->
+    (if:$dream_repeat_wait is 0)[(set:$dream_wait_time to 14)]
+    (else:)[(set:$dream_wait_time to (cond:
+        $dream_repeat_wait is "Wait Time: 14",14,
+        $dream_repeat_wait is "Wait Time: 28",28,
+        $dream_repeat_wait is "Wait Time: 56",56,
+        $dream_repeat_wait is "Wait Time: 365",365,
+        $dream_repeat_wait is "Wait Time: 7",7,14
+    ))]
+    
+}
+
+:: blacked dream npcs
+{
+  (set:$blacked_npcs's "aubreyblack"'s "unfamiliar name" to (cond:$character's "status" is "dream", "Doctor Black",(twirl:"Blonde MILF","Sexy Blonde")))
+  (set:$blacked_npcs's "aubreyblack"'s "img" to (cond:$character's "status" is "dream","img/places/blacked/doctor/aubrey portrait.jpg","img/npc/girls/blacked/aubrey/portrait_normal.jpg"))
+  (set:$blacked_npcs's "isabelledeltore"'s "unfamiliar name" to (cond:$character's "status" is "dream", "Nurse Isabelle",(twirl:"Blonde Girl","Hot Blonde")))
+  (set:$blacked_npcs's "isabelledeltore"'s "img" to (cond:$character's "status" is "dream","img/places/blacked/doctor/isabelle portrait.jpg","img/npc/girls/blacked/isabelle/portrait_normal.jpg"))
+}
+
+:: night thought blacked kendra story intro trigger [night_thought]
+{
+(if:($recall:"blacked kendra story intro") and not (checkdm:$memory,"tags","contains","night thought"))[(set:$night_thought to "blacked kendra story intro")]
+}
+
+:: night thought blacked kendra story intro
+{
+    (set:$tags to $memory's tags)
+    (if:$tags contains "refused")[
+        *Ugh. Why didn't $kendra just say it was about Bruce up front...*
+        [{<div class="options">
+        (link:"I should text her")[(replace:?reply)[(nl:2)*Fuck Bruce... I have to help her.*(nl:1)It's late though... I'll let her sleep, I can text her tomorrow.]]
+        </div>}]<reply|
+    ]
+    (else:)[
+        *I guess I'm going to be $kendra tomorrow...*
+        [{<div class="options">
+        (link:"It can't be that bad")[(replace:?reply)[(nl:2)*Fuck Bruce... I can't let him win.*(nl:2)]]
+        </div>}]<reply|
+    ]
+    ($remember_update:"add","blacked kendra story intro","night thought")
+}
+
+:: blacked dream kendra car
+{
+    (masteraudio:"stopall")(set:$options to "false")
+    (set:$newtime to 0)
+    (if:(is_fem:))[(set:$character's "status" to "dream")(display:"refresh portrait")]
+    []<image|
+    [*You toss in bed, thinking about that bastard Bruce... (if:$corpo_revenge is 2)[and that horrible party...]*(nl:2)]<text|
+    []<options|
+    (after:time + 3s)[(append:?text)[
+        (if:$tags contains "refused")[
+            *You start to wonder what kind of trouble $kendra is in and how it involves Bruce...*
+        ]
+        (else:)[
+            *You hope Dredd and Maurice can figure out something with this pill... to get some kind of leverage against Bruce.*(nl:1)
+            *It won't be so bad, being $kendra for a day. Could even be fun...*
+        ]
+        (nl:2)]]
+    (after:time + 6s)[(append:?text)[
+        *Just then, your phone buzzes, lighting up your nightstand. A text from $kendra.*(nl:2)
+        *Not like you can really sleep anyway... huh, there's a video attached. It's taking a while to load.*(nl:1)]
+        (replace:?options)[(link:"Wait")[
+            (replace:?image)[($vid:"scenes/home/dreams/blacked/kendra dream car.mp4","left")]
+            (replace:?text)[
+                *Wait, what is this?*(nl:2)
+                (after:time + 2.82s)[*Did she mean to...*(nl:2)]
+                (after:time + 5.64s)[*She sent this on purpose?*(nl:2)]
+                (after:time + 8.46s)[*I mean, it's kinda hot...*(nl:2)]
+                (after:time + 14.1s)[*Oh wow...look at them.*(nl:2)]
+            ]
+            (after:time + 25s)[(replace:?options)[(link:"Close Message")[($cs:"blacked dream kendra car wake up")]]]
+            ]
+        ]
+    ]
+}
+
+:: blacked dream kendra car wake up
+{
+    (display:"location and time")
+    ($pic:"scenes/home/dreams/wake up.jpg")(inc:'day')
+    (set:$character's status to $character's gender)(display:"refresh portrait")
+    ($play:"ambience","morning")
+    The morning light shining through your window onto your face wakes you from your slumber, just two minutes before your alarm was set to go off.(nl:2)
+
+    *You reach over and turn it off before it can go off.*(nl:1)
+    *As you stretch and yawn, you look over at the nightstand and see your phone. Thinking back to $kendra's message from last night.*(nl:2)
+
+    “Did she mean to send me that...?”(nl:1)
+    *You go to bring up her text, but it isn't there. There's no message.*(nl:2)
+
+    “Did I delete it?”(nl:1)
+    “Did I... dream it?”(nl:1)
+    (if:$tags contains "refused")[“I should talk to her today.”(nl:1)(set:$blacked_events to it + (a:"kenda intro second chance"))]
+    (else:)[“Oh well, here we go...”]
+    (set:$overnight_messages to it + (a:$dream's id))($forget:$dream's id)(dec:'day')($simple_option:"advance day","Start the day...")
+}
+
+:: blacked bbc addict dream 1
+{
+  (masteraudio:"stopall")(set:$options to "false")
+  (set:$newtime to 0)
+  (newtrack:'bgm','aud/se/scene/dreams/blacked/bbc addict/bgm.mp3')
+  (newtrack:'dream','aud/se/scene/dreams/blacked/bbc addict/ambience dream.mp3')
+  ($play:"ambience","dream")
+  ($pic:"places/blacked/doctor/doctor office.jpg")
+  (set:$character's "status" to "dream")(display:"refresh portrait")
+  (display:"blacked dream npcs")
+  "Sorry to keep you waiting so long Miss (print:$character's "female name").
+  The doctor will see you now."(nl:1)
+  ($npc_vo:"female","isabelle","dream intro")
+  A voice from the other side of the room calls out.(nl:2)
+  Your head is swimming... things are fuzzy. Were you roofied? Why is it daytime?(nl:2)
+  You try to remember the events of the day...(nl:1)
+  ... it's no use, your whole day is a blur.
+  (nl:2)
+  (after: time + 5s)[
+    ($gain_arousal:1)(nl:1)
+    ($npc_vo:"female","aubrey","clear throat")
+    (size:0.5)[*Ahem*] ... a faint echo in front of you. You hear it again.(nl:1)
+  ]
+  (after: time + 7s)[
+    ($npc_vo:"female","aubrey","clear throat")
+    "Ahem..."(nl:1)
+    ($simple_option:"blacked bbc addict dream 2","Snap out of it")
+  ]
+}
+
+:: blacked bbc addict dream 2
+{
+  (set:$npc to $blacked_npcs's "aubreyblack")
+  (display:"npc screen update")
+  ($npc_vo:"female","aubrey","have a seat")
+  ($pic:"places/blacked/doctor/aubrey greet.jpg","left")
+  A mature blonde woman in a doctor's coat stands in front of you, looking right at you with a confident gaze.(nl:2)
+  "Hello dear. I'm Doctor Black, please have a seat."(nl:2)
+  "We've been reviewing your results and it appears we’re dealing with a pretty interesting case..."(nl:2)
+  Doctor Black moves over in front of her desk, leafs through a clipboard for a moment and frowns slightly.(nl:2)
+  She tilts her head as she examines you. Her gaze is piercing, like she can see straight through to your innermost thoughts.(nl:1)
+  ($simple_option:"blacked bbc addict dream 3","What do you mean interesting?")
+}
+
+:: blacked bbc addict dream 3
+{
+  [($pic:"places/blacked/doctor/isabelle greet.jpg","left")]<pic|
+  [Almost as soon as you ask, you hear the nurse come into the room.(nl:2)
+  Accompanied by another doctor, he crosses in front of you and stands next to the Nurse, as they review your chart.(nl:2)
+  ... He's quite attractive too.(nl:1)]<dream_text|
+  (link:"Take a Closer Look")[(replace:?pic)[($pic:"places/blacked/doctor/bbc addict/1a.jpg")]
+  (replace:?dream_text)[The male doctor is slim, but fit. The athletic type. A dark hunk of man meat.(nl:2)
+  You find yourself wondering what he would look like without that doctor's coat on.(nl:2) 
+  ...or anything for that matter...(nl:2)
+  You narrow your gaze down to his pants... you swear you can see the outline of his...(nl:1)
+  ($gain_arousal:1)(nl:1)]
+  ($simple_option:"blacked bbc addict dream 4","Next")]
+}
+
+:: blacked bbc addict dream 4
+{
+  ($pic:"places/blacked/doctor/bbc addict/1a.jpg")
+  "You can’t stop thinking about it, can you?"(nl:2) 
+  Doctor Black had snuck over while you were eye-fucking the other doctor, she leans in next to your face.(nl:2)
+  "Everywhere you go, it’s on your mind. An insatiable... craving, one might say?"(nl:2)
+  You shift uncomfortably in your seat.(nl:1)
+  ($npc_vo:"female","aubrey","craving")
+  ($simple_option:"blacked bbc addict dream 5","I don't know what you mean","No... it's not that bad")
+}
+
+:: blacked bbc addict dream 5
+{
+  ($pic:"places/blacked/doctor/bbc addict/1b.jpg")(nl:1)
+  (if:$choice is "No... it's not that bad")[($npc_vo:"female","aubrey","not bad")
+    "It's not that bad? Do you hear yourself? Let me guess..."(nl:1)]
+  (else-if:$choice is "I don't know what you mean")[($npc_vo:"female","aubrey","you do")
+    "I think you do... And I know what you're thinking."(nl:1)]
+  "You can quit anytime, right? Well, that’s exactly what we’re here to find out. Nurse?"(nl:2)
+  The nurse puts down the clipboard, locking eyes with the male doctor, a silent agreement takes place... they both nod.(nl:2)
+  "We're ready doctor."(nl:1)
+  ($simple_option:"blacked bbc addict dream 6","Ready for what?")
+}
+
+:: blacked bbc addict dream 6
+{
+  ($pic:"places/blacked/doctor/bbc addict/0.jpg","left")(nl:1)
+  [($npc_vo:"female","aubrey","bbc addiction")
+  "We're diagnosing you with what I call a (text-style:"emboss")[*BBC Addiction*]."(nl:2)
+  ]<dream_text|
+  (link:"Excuse me?")[
+    "I understand you're a bit skeptical... So, to help prove our theory, we’re going to run a simple test."(nl:2)
+    "I've asked Nurse Isabelle and Doctor Jack to assist with a demonstration."(nl:2)
+    "If you can watch this demonstration without becoming... affected, then we’ll declare you cured."(nl:2)
+    "Ready?"(nl:1)
+    ($simple_option:"blacked bbc addict dream 7","You can't be serious?","Ready?? For what?")
+  ]
+}
+
+:: blacked bbc addict dream 7
+{
+  [($pic:"places/blacked/doctor/bbc addict/2a.jpg","left")(nl:1)]<pic|
+  [(if:$choice is "You can't be serious?")[($npc_vo:"female","aubrey","serious")
+    "I'm a medical professional, performing a diagnosis...of course I am serious."(nl:2)]
+  (else-if:$choice is "Ready?? For what?")[($npc_vo:"female","aubrey","of course")
+    "Why, the demonstration, of course."(nl:2)]
+    Doctor Black nods to Nurse Isabelle, who’s now standing close beside Doctor Jack.(nl:2)]<dream_text|
+  (link:"Next")[
+    (set:$npc to $blacked_npcs's "isabelledeltore")
+    (display:"npc screen update")
+    ($play:"song","bgm")
+    (replace:?pic)[($pic:"places/blacked/doctor/bbc addict/2b.jpg","left")(nl:1)]
+    (replace:?dream_text)[You watch as Nurse Isabelle’s fingers work one button at a time, deliberately unfastening her shirt. Each click seems louder than it should, each movement a careful revelation.(nl:2)
+    Your heart pounds, a mix of curiosity and something harder to define—a pull you weren’t expecting.(nl:2) 
+    Across from you, Doctor Jack leans against the examination table, his dark eyes fixed on Isabelle with that easy, assured smirk. He’s completely focused on her, and you feel almost like an intruder, yet you find yourself unable to look away.(nl:1)]
+    (link:"Next")[
+      (replace:?pic)[($pic:"places/blacked/doctor/bbc addict/2c.jpg","left")(nl:1)]
+      (replace:?dream_text)[When Isabelle’s shirt falls open, revealing delicate lace lingerie that fits her curves perfectly, your breath catches.(nl:2)
+      She shrugs off her medical jacket, and for a brief moment, she locks eyes with you, a sly smile pulling at her lips. She knows you’re watching, she seems to enjoy the way this scene is affecting you.(nl:2)
+      The heat in your face spreads, making you feel strangely vulnerable, even though it’s her undressing.(nl:2)
+      ($gain_arousal:1)(nl:1)]
+      (link:"Next")[
+        (replace:?pic)[($pic:"places/blacked/doctor/bbc addict/2d.jpg","left")(nl:1)]
+        (replace:?dream_text)[She lets her bra slide away, leaving her bare and open. Doctor Jack moves in, his large hands sliding up from her waist to cup her breasts.(nl:2) 
+        You swallow, your throat suddenly dry.(nl:2) 
+        Isabelle leans into him, letting his hands explore her breasts. Her own hand slipping up to the back of his neck.(nl:2) 
+        You try to look away, but your gaze lingers on the way he touches her, the almost hypnotic way she responds, pressing herself back against him.(nl:1)
+        ($simple_option:"blacked bbc addict dream 8","Is it getting hot in here?")
+        ]
+      ]
+    ]
+  ]
+}
+
+:: blacked bbc addict dream 8
+{
+  [($pic:"places/blacked/doctor/bbc addict/3.jpg")(nl:1)]<pic|
+  [Doctor Jack turns her to face him and leans down, his mouth capturing one of her nipples.(nl:2) 
+  You feel a tingling heat low in your stomach, as if you’re right there in her place, and a flush creeps across your skin.(nl:2) 
+  The way his mouth moves over her, the way she arches into him with that soft gasp—it’s like every detail is being etched into your mind.(nl:2)
+  ]<dream_text|
+  (link:"Next")[
+    (replace:?pic)[($pic:"places/blacked/doctor/bbc addict/4.jpg")(nl:1)]
+    (replace:?dream_text)[She climbs onto the examination table, sliding her panties away and spreading her legs. Your pulse skips. She locks eyes with you again, almost challenging you to look away, yet you don't. (text-style:"expand")[You can’t.](nl:2) 
+    Jack’s head dips between her thighs, his mouth moving over her as she leans back, gasping and glancing over her shoulder in your direction, her eyes blazing with a look you can’t quite describe.(nl:2) 
+    It’s like she wants you to see everything, to experience it with her.(nl:2)
+    Every move he makes, so smooth, so fluid. Were you ever *that* good, when you were a guy? She moans with desire.(nl:2)
+    ($gain_arousal:1)(nl:1)
+    ($simple_option:"blacked bbc addict dream 9","He stands up")
+    ]
+  ]
+}
+
+:: blacked bbc addict dream 9
+{
+  [($pic:"places/blacked/doctor/bbc addict/5.jpg")(nl:1)]<pic|
+  Jack stands, hands reaching for his belt. Isabelle lowers herself to her knees before him, meeting his gaze with a look of pure desire.(nl:1) 
+  She opens her mouth, taking him in slowly. Her eyes flicking to you with an almost playful glint.(nl:1) 
+  The way she works him, the way she seems to enjoy every second… your breath quickens, a simmering ache spreading through you that’s both (text-style:"rumble")[exhilarating] and (text-style:"shudder")[unnerving].(nl:2)
+  ($gain_arousal:1)(nl:1)
+  ($simple_option:"blacked bbc addict dream 10","Next")
+}
+
+:: blacked bbc addict dream 10
+{
+  (set:$npc's img to "img/places/blacked/doctor/bbc addict/bj.jpg")
+  (display:"npc screen update")
+  (masteraudio:"stopall")
+  ($vid:"places/blacked/doctor/bbc addict/bj.mp4")(nl:1)
+  As you watch, things begin to (text-style:"blurrier")[BLUR]. The edges of the room, the faint hum of the (text-style:"smear")[lights], everything around her.(nl:2) 
+  (after:time + 10s)[Suddenly, Isabelle's figure blurs and fades, leaving only Doctor Jack’s (text-style:"outline")[big black cock] as a crisp, undeniable focal point.(nl:2)
+  You (text-style:"blink")[blink], trying to focus, feeling oddly detached, as if your mind is struggling to make sense of the scene.(nl:2)
+  ($gain_arousal:1)(nl:1)
+  ($simple_option:"blacked bbc addict dream 11","Wait! Something's wrong!")]
+}
+
+:: blacked bbc addict dream 11
+{
+  (set:$npc to $blacked_npcs's "aubreyblack")
+  (display:"npc screen update")
+  "What? What is it?"(nl:1) 
+  Doctor Black's voice penetrating through the slurping and moan noises.(nl:2)
+  She comes into focus as she takes your pulse. (nl:1)
+  "Hmm, slightly elevated... but otherwise normal. Perhaps the problem lies elsewhere."(nl:2)
+  ($npc_vo:"female","aubrey","what")
+  ($simple_option:"blacked bbc addict dream 12","Isabelle! She was blurry!")
+}
+
+:: blacked bbc addict dream 12
+{
+  ($npc_vo:"female","aubrey","excuse me")
+  She moves over to the pair, patting a kneeling Nurse Isabella on the head. "Excuse me sweetie."(nl:1)
+  Isabelle giggles and stands up.(nl:2)
+  "Well, she seems fine to me. You could see Doctor Jack clearly?"(nl:1)
+  ($simple_option:"blacked bbc addict dream 13","Yes, he was perfectly clear...")
+}
+
+:: blacked bbc addict dream 13
+{
+  ($pic:"places/blacked/doctor/bbc addict/6a.jpg")(nl:1)
+  "I think I see the problem. Jack, be a dear, finish disrobing and hop up on the table for me."(nl:1)
+  ($npc_vo:"female","aubrey","disrobe")
+  ($simple_option:"blacked bbc addict dream 14","Next")
+}
+
+:: blacked bbc addict dream 14
+{
+  ($pic:"places/blacked/doctor/bbc addict/6b.jpg","left")(nl:1)
+  "Now, let's have a look. Shall we?"(nl:1)
+  ($npc_vo:"female","aubrey","have a look")
+  ($simple_option:"blacked bbc addict dream 15","Next")
+}
+
+:: blacked bbc addict dream 15
+{
+  ($play:"ambience","dream")
+  (set:$npc's img to "img/npc/girls/blacked/aubrey/portrait_titfuck.jpg")(display:"npc screen update")
+  [($vid:"places/blacked/doctor/bbc addict/titfuck.mp4")(nl:1)]<pic|
+  [
+    Doctor Black’s fingers wrap around Jack’s shaft with a clinical precision that feels oddly intimate, her expression focused, as though she’s inspecting an instrument rather than a person.(nl:2) 
+    Watching her, you feel a strange pang. A blend of fascination, envy, and something deeper that you’re almost afraid to name.(nl:2) 
+    You can’t deny the surge of heat that floods your body as you watch her hands and mouth work over him, testing his reaction to every slow stroke, each gentle squeeze.(nl:2)
+  ($gain_arousal:1)(nl:1)
+  ]<dream_text|
+  (link:"Why does it look like that?")[
+    (replace:?dream_text)[Your mind starts to filter out the unimportant details, as she continues to test his member.(nl:2)]
+    (link:"Ow, my head...")[
+      (replace:?dream_text)[Your head (text-style:"shudder")[pounds]. You (text-style:"blink")[blink.] Doctor Black's tits are now wrapped around Jack's cock.(nl:2)]
+      ($simple_option:"blacked bbc addict dream 16","Snap out of it")
+    ]
+  ]
+}
+
+:: blacked bbc addict dream 16
+{
+  (set:$npc's img to "img/places/blacked/doctor/aubrey portrait.jpg")(display:"npc screen update")
+  ($pic:"places/blacked/doctor/bbc addict/6b.jpg","left")(nl:1)
+  [
+    Suddenly, a snapping sound brings you out of it.(nl:1)
+    Doctor Black looks up, meeting your gaze with a knowing smirk. "It seems fine to me" she murmurs, as if sensing your unease and taking pleasure in it.(nl:2) 
+  ]<dream_text|
+  (link:"Wait, how is your bra still on??")[
+    (replace:?dream_text)[
+      She glances between you and Jack, then to Isabelle, a spark of something mischievous lighting in her eyes.(nl:2)
+      With a casual gesture, she steps back, nodding to Isabelle. "Perhaps it’s not quite enough," she says. "Let's turn things up a notch. Go ahead you two."(nl:1)
+    ]
+  ]
+  ($npc_vo:"female","aubrey","turn up")
+  ($simple_option:"blacked bbc addict dream 17","Next")
+}
+
+:: blacked bbc addict dream 17
+{
+  (set:$npc to $blacked_npcs's "isabelledeltore")
+  (set:$npc's img to "img/places/blacked/doctor/isabelle portrait.jpg")
+  (display:"npc screen update")
+  [($pic:"places/blacked/doctor/bbc addict/7.jpg")(nl:1)]<pic|
+  [
+    Doctor Jack catches Isabelle’s hand, guiding her back towards him. She lifts a leg onto the examination table, positioning herself perfectly, her body aligning with his in a way that feels both calculated and natural.(nl:2) 
+    His hands glide along her thigh as he presses against her, the slow, inevitable joining making you swallow hard, the lump in your throat almost painful.(nl:1) 
+    Isabelle’s head falls back, and her eyes flutter closed, her lips parting in a soft gasp as he fills her.(nl:1)
+  ]<dream_text|
+  (link:"Watch them")[
+    (set:$npc's img to "img/npc/girls/blacked/isabelle/portrait_sex.jpg")
+    (display:"npc screen update")
+    (replace:?pic)[($vid:"places/blacked/doctor/bbc addict/sex.mp4")(nl:1)]
+    (replace:?dream_text)[You feel the moment stretch, your breath catching as his rhythm picks up, her body rocking against him, each movement synchronized, deliberate, and all-consuming.(nl:2)
+    You find yourself holding your breath, the world around you narrowing to the two of them, to the raw intensity of their movements.(nl:2)
+    But something isn’t right...Isabelle’s face, her expression, begins to blur, her features shifting, softening...(nl:2)
+    ...For just a fleeting second, it was almost like you’re staring at your own reflection.(nl:2)]
+    (link:"She's so lucky")[
+      (replace:?dream_text)[
+          ($gain_arousal:1)(nl:1)
+          The sensation leaves you dizzy.. Your hands clench as you fight the urge to step forward, to close that distance between them and you.(nl:2) 
+          (after:time + 2s)[You want to look away, yet a part of you craves that closeness, the intensity, as if something deep within you is calling out to feel what they’re feeling, to be where she is...](nl:2) 
+          (after:time + 4s)[...to be her.(nl:2)]
+        ]
+      (after:time + 5s)[
+        (set:$npc's img to "img/characters/sex/doggy/moan/bbc/"+ $character's id +".jpg")
+        (set:$npc's "unfamiliar name" to $character's "female name")(display:"npc screen update")
+        ($simple_option:"blacked bbc addict dream 18","This doesn't feel right...")
+      ]
+    ]
+  ]
+}
+
+:: blacked bbc addict dream 18
+{
+  (set:$npc to $blacked_npcs's "aubreyblack")
+  (display:"npc screen update")
+  [($pic:"places/blacked/doctor/bbc addict/sex.jpg","left")(nl:1)]<pic|
+  [($npc_vo:"female","aubrey","rabbit hole")
+    A soft murmur slips from your lips— (text-style:"condense")[(size:0.8)["This doesn’t feel right"]] —but it’s swallowed up in the moans and ragged breaths filling the room.(nl:2) 
+    Doctor Black only smirks, arching an eyebrow as if silently amused. "Perhaps we need to go even further down the rabbit hole."(nl:1)
+  ]<dream_text|
+  (link:"Next")[
+    (set:$npc to $blacked_npcs's "isabelledeltore")
+    (set:$npc's img to "img/places/blacked/doctor/bbc addict/anal.jpg")
+    (set:$npc's "unfamiliar name" to "Nurse Isabelle")(display:"npc screen update")
+    (replace:?pic)[($pic:"places/blacked/doctor/bbc addict/8.jpg")(nl:1)]
+    (replace:?dream_text)[
+      Isabelle shifts, her body flings down towards the table, face pressed down, her hips high and inviting as Jack positions himself behind her, this time taking her with a force that steals her breath in a single, throaty cry.(nl:2)
+      You feel the tension coil within you as you watch his huge cock slam into her hungry asshole, her back arching under his grip, fingers digging into the table for balance as he holds her hair in his fist, her entire body bending to his will.(nl:2)
+      ($gain_arousal:1)(nl:1)
+    ]
+    ($simple_option:"blacked bbc addict dream 19","Down the Rabbit Hole")
+  ]
+}
+
+:: blacked bbc addict dream 19
+{
+  [($vid:"places/blacked/doctor/bbc addict/anal.mp4")(nl:1)]<pic|
+  [(after:time + 3s)[
+      As their pace intensifies, so does the hazy distortion in your vision, Isabelle’s face now almost unrecognizable—a blur of colors and shapes that somehow merge with your own likeness.(nl:2)
+      It's as though your mind is fighting to put you in her place, to make you feel what she feels, to experience it fully.(nl:2)
+      ($gain_arousal:1)(nl:1)]
+  ]<dream_text|
+  (after:time + 5s)[(link:"Cum with her!")[
+    The moment reaches its peak, and just as Isabelle’s body trembles with release, your own pulse races to match the rhythm. Your body spasms in sync with hers.(nl:2)
+    (replace:?pic)[($pic:"characters/sex/missionary/moan/"+ $character's "id" +".jpg","left")]
+    ($play:"sound","isabelle orgasm")
+    ($play:"sound","orgasm solo " + $character's "id")
+    (set:$character's arousal to 0)(display:"refresh stats")
+    (after:time + 5s)[($simple_option:"blacked bbc addict dream 20","Next")]
+  ]]
+}
+
+:: blacked bbc addict dream 20
+{
+  [($pic:"places/blacked/doctor/bbc addict/precum.jpg","left")(nl:1)]<pic|
+  [As Jack pulls out, Isabelle slides down to her knees, eyes fixed on him as she leans forward, waiting for his load. (nl:1) 
+  You watch her intently, each slow, deliberate movement sparking a mix of envy and thrill inside you.(nl:2)
+  The way she waits—poised, ready—sends a shiver through you, her heartbeat mirroring your own as she prepares for what's to come. (nl:1)
+  Her recent orgasm has only deepened her desire, her chest rising and falling with anticipation, and it’s harder to ignore the ache building within you, making your mouth water with jealousy.(nl:2)
+  ]<dream_text|
+  (link:"Take his load")[
+    (replace:?dream_text)[
+      Then, with a grunt, Jack releases, several thick streams coating Isabelle's face. The first warm strand drips down her cheek, pooling at her chin before spilling down her collarbone, marking her breasts.(nl:1) 
+      She catches some on her tongue with a satisfied hum, then carelessly spits a bit onto her chest, smearing it across her skin. (nl:2)
+      A pulse of jealousy flares within you—she’s wasting it! (nl:1) 
+      She should be swallowing (text-style:"smear")[every last drop], not letting it (text-style:"buoy")[slip away].(nl:2) 
+      The sight of her, smeared and glowing, only fuels the possessive heat within, making you long to claim that moment for yourself.(nl:1)
+    ]
+    (set:$npc's img to "img/places/blacked/doctor/bbc addict/cum.jpg")(display:"npc screen update")
+    (replace:?pic)[($vid:"places/blacked/doctor/bbc addict/cum.mp4")(nl:1)]
+    ($simple_option:"blacked bbc addict dream 21","Next")
+  ]
+}
+
+:: blacked bbc addict dream 21
+{
+  (set:$npc to $blacked_npcs's "aubreyblack")
+  (display:"npc screen update")
+  (masteraudio:"stopall")
+  ($npc_vo:"female","aubrey","clear throat")
+  [($pic:"places/blacked/doctor/bbc addict/9.jpg","left")(nl:1)]<pic|
+  ($npc_vo:"female","aubrey","still quit")
+    Doctor Black clears her throat, pulling you from your thoughts. Her gaze meets yours with a knowing glint, her expression one of calm satisfaction.(nl:2) 
+    "So... still think you can quit whenever you want to?" she says, a hint of amusement dancing on her lips.(nl:2)
+    "I think we can consider this a confirmed diagnosis..."(nl:2)
+    "Perhaps next time, you’ll be a more...direct participant."(nl:1)
+  ($simple_option:"blacked bbc addict dream 22","I could have joined?!?")
+}
+
+:: blacked bbc addict dream 22
+{
+  (set:$npc to $blacked_npcs's "isabelledeltore")
+  (set:$npc's img to "img/places/blacked/doctor/bbc addict/cum.jpg")
+  (display:"npc screen update")
+  ($pic:"places/blacked/doctor/bbc addict/10a.jpg")(nl:1)
+  ($npc_vo:"female","isabelle","left out")
+  Jack chuckles, giving Isabelle a playful tap on the shoulder as he pulls away. She looks up, grinning as she wipes the cum string from her chin.(nl:2) 
+  "What’s the matter?" Isabelle teases, her gaze flicking over to you. "Feeling left out?" Her voice is light, but there’s a glimmer of challenge in her eyes, daring you to acknowledge that simmering jealousy.(nl:2)
+  ($simple_option:"blacked bbc addict dream 23","Next")
+}
+
+:: blacked bbc addict dream 23
+{
+  (set:$npc to $blacked_npcs's "aubreyblack")
+  (display:"npc screen update")
+  ($pic:"places/blacked/doctor/bbc addict/10b.jpg")(nl:1)
+  ($npc_vo:"female","aubrey","careful")
+  Doctor Black hops up on the table, facing away from you. She looks over her shoulder, her tone soft but firm.(nl:2) 
+  "There’s no need to hide this addiction, just be careful with it."(nl:1) 
+  "Next time, your step-sister might not be there to bring you in."(nl:1)
+  ($simple_option:"blacked bbc addict dream 24","Alexia brought me here?")
+}
+
+:: blacked bbc addict dream 24
+{
+  ($pic:"places/blacked/doctor/aubrey leave.jpg","left")(nl:2)
+  Thank you for your payment.(nl:3)
+  ($play:"sound","kaching")
+  Please confirm your diagnosis below:(nl:1)
+  <span class='shadow'>Side effect gained: BBC Addict</span>(nl:2)
+  Big Black Cocks are constantly on your mind. (nl:1)
+  Your addiction will reward you for sleeping with Black men... and punish you going without.(nl:2)
+  (link:"I am addicted to BBC!")[($cs:"blacked bbc addict wake up")]
+  [(link:("I'm not addicted!"))[
+    (replace:?forced)[
+      (link:("No really, I'm fine. I don't have a problem..."))[
+        (replace:?forced)[
+        (link:"I have a BBC addiction!")[($cs:"blacked bbc addict wake up")]
+        (link:"BBC is so yummy!")[($cs:"blacked bbc addict wake up")]
+        (link:"I can't live without BBC!")[($cs:"blacked bbc addict wake up")]
+        (link:"BBC for every meal!")[($cs:"blacked bbc addict wake up")]
+        (link:"I need BBC!")[($cs:"blacked bbc addict wake up")]
+        ]
+      ]
+    ]
+  ]]<forced|
+}
+
+
+:: blacked bbc addict wake up
+{
+  (set:$npc to 0)(display:"npc screen update")
+  (display:"location and time")
+  ($pic:"scenes/home/dreams/wake up.jpg")(inc:'day')
+  (set:$character's status to $character's gender)(display:"refresh portrait")
+  (display:"blacked dream npcs")
+  ($play:"ambience","morning")
+  [Upon waking, you’re greeted by the warmth of morning light filtering through your room, but that’s not what immediately commands your attention...(nl:2) 
+  The sheets beneath you are damp, and your clothes are soaked, clinging uncomfortably to your skin. Did you piss yourself? (nl:2)
+  For a long moment, you lie there, somehow exhausted after a full night's rest, just catching your breath. A warthm flowing throughout your body, but not from the damp sheets.(nl:2) 
+  Were you dreaming? You think back, recalling all too vividly: Isabelle kneeling, Jack’s huge cock, Doctor Black’s words... every detail sharp and unrelenting.(nl:1)
+  Doctor Black's words, echoing in your head... (text-style:"fade-in-out")["We're diagnosing you with what I call a *BBC Addiction*."](nl:2)]<dream_text|
+  (link:"How did this happen?")[
+    (replace:?dream_text)[
+      Recent events flood your mind, each sexual encounter you endured to reach this point—a parade of black bodies and sensations, all leading you here, to this vivid vision that seems to have embedded itself deep in your psyche.(nl:2) 
+      A flush creeps over you as you remember, not just the actions, but the strange thrill you felt with each cock. Not just any cock, Black cocks.(nl:2) 
+      You feel that thrill even now, mingled with this ever-growing sense of hunger—one that doesn’t simply vanish with the light of day.(nl:1)
+      ($gain_arousal:4)(nl:1)
+    ]
+    (link:"Next")[
+      (replace:?dream_text)[
+        This is your new reality. You shift on the bed, feeling the weight of that knowledge settling over you like a shroud. An addiction. It’s there, the insistent, undeniable ache, just beneath the surface, tugging at you.(nl:2) 
+        But as the initial haze of the dream fades, you take a steadying breath, reminding yourself that you can handle this. It might not be easy, but you know you’re stronger than any desire simmering inside you.(nl:2)
+        (link:"I can do this")[
+          (replace:?dream_text)[
+            With new resolve, you sit up, peeling the sheets from your skin.(nl:2) 
+            Whatever urges still linger, you’ll handle them. You’re in charge here. That's right, (print:$character's "female name") is in charge here!(nl:2) 
+            A small smile finds its way to your lips as you gather yourself and start preparing for the day.(nl:2)
+            (set:$achievement_condition_select to "sex10-blacked")
+            (display:"add achievement to lists")
+            (set:$character's "side effects" to it + (a:"bbc addiction"))
+            (set:$overnight_messages to it + (a:$dream's id))($forget:$dream's id)(dec:'day')($simple_option:"advance day","Start the day...")
+          ]
+        ]
+      ]
+    ]
+  ]
+}
+

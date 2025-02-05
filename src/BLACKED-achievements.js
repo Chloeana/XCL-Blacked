@@ -73,7 +73,7 @@ achievements("BLACKED",
     },
     {
       "name": "BLACKED Branded",
-      "hint": "Purchase a certain brand's outfit.",
+      "hint": "Purchase a BLACKED outfit.",
       "flavor":
         `(twirl:"Stylin' and profilin'!", "Welcome to the exclusive club.", "Only the best for you!")`,
       "condition_name": "outfit-blacked",
@@ -120,7 +120,7 @@ achievements("BLACKED",
       "name": "Queen of Spades",
       "hint": "Sleep with 100 black men!",
       "flavor":
-        '(twirl:"A well-earned crown.", "You’ve reached the peak!", "Long may you reign!")',
+        '(twirl:"A well-earned crown.", "You’ve reached your peak!", "Long may you reign!")',
       "condition_name": "sex100-blacked",
       "visible": "1",
       "emoji": "👸🏼"
@@ -237,18 +237,9 @@ achievements("BLACKED",
       "name": "Asking for it!",
       "hint": "Take 3 creampies, from BBC, while on a breeder... in a single day.",
       "flavor":
-        '(twirl:"Playing with fire… and loving it.", "Definitely pushing limits.", "You knew what you were getting into.")',
+        '(twirl:"Playing with fire… and loving it.", "Looking to turn that spare room into a Nursery?", "You knew what you were getting into.")',
       "condition_name": "breeder-blacked",
       "visible": "0",
       "emoji": "💦🥧"
-    },
-    {
-      "name": "Brand Affiliate",
-      "hint": "Earn a certain brand's secret outfit.",
-      "flavor":
-        '(twirl:"Wearing it loud and proud.", "Proof that loyalty has its rewards.", "Exclusive threads for exclusive tastes.")',
-      "condition_name": "outfit-secret-blacked",
-      "visible": "0",
-      "emoji": "👙🔥"
     }
 )

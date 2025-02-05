@@ -40,32 +40,32 @@
     "times fertilized",0,
     "bbc porn watched",0,
     "rejections",0,
-    "days as secretary",0
+    "big cocks",0
     ))
   ]
+
+  (if:$blacked_events is 0)[(set:$blacked_events to (a:))]
 }
 
 :: blacked compatibility check
 {
-  (if:$new_stats is 0)[
-    (if:(checkdm:$blacked_compatible_list, $character's "id","is",1))[(set:$blacked_compatible to 1)]
-    (else:)[(set:$blacked_compatible to 0)]
-  ](else:)[
-    (if:(checkdm:$blacked_compatible_list, $new_stats's "id","is",1))[(set:$blacked_compatible to 1)]
-    (else:)[(set:$blacked_compatible to 0)]
-  ]
-  
+  (if:$blackfreq is "Black Encounters: Never")[(set:$blacked_compatible to 0)]
+  (else-if:(checkdm:$blacked_compatible_list, (cond:$new_stats is 0,("$character's","$new_stats's")), "id","is",1))[
+    (set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
 }
 
 :: blacked options [mod_options]
 {
+  (print:"BLACKED Settings:")(nl:1)
 	(_setting_button:
 		"$blackfreq",(a:
       "Black Encounters: Normal",
       "Black Encounters: Less",
       "Black Encounters: More",
-      "Black Encounters: Always"
-    ), "Determines how often you will encounter black men hitting on you as a female."
+      "Black Encounters: Always",
+      "Black Encounters: Never"
+    ), "Determines how often you will encounter random black men hitting on you as a female."
 	)
 }
 
@@ -77,6 +77,7 @@
 <span class='shadow'>(color:"bisque")[As a Black guy...]
 Times had sex: (print:$blacked_stats's "sex as guy")
 Blowjobs received: (print:$blacked_stats's "blowjobs received")
+Cunnilingus given: (print:$blacked_stats's "cunnilingus given as guy")
 Creampies given: (print:$blacked_stats's "creampies given")
 Facials given: (print:$blacked_stats's "facials given")
 Finished in Mouth: (print:$blacked_stats's "came in mouth")
@@ -87,10 +88,11 @@ Finished on Tits: (print:$blacked_stats's "came on tits")
 Vaginal sex: (print:$blacked_stats's "sex as girl")
 Anal sex: (print:$blacked_stats's "anal sex as girl")
 Blowjobs given: (print:$blacked_stats's "blowjobs given")
+Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 Creampies received: (print:$blacked_stats's "creampies received")
 Facials received: (print:$blacked_stats's "facials received")
 Loads swallowed: (print:$blacked_stats's "loads swallowed")
-Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
+Huge cocks inserted: (print:$blacked_stats's "big cocks")
 </span>
 
 <div class='options'>(if:$blacked_stats's "sex as girl" is 0 and $blacked_stats's "sex as guy" is 0 and $blacked_stats's "blowjobs given" is 0 and $blacked_stats's "blowjobs received" is 0)[(twirl:"No judgment!","It's ok!","Aw, don't worry about it.","That's totally fine!","This is a judgment-free zone!") (twirl:"Whenever you're ready.","We're on your schedule.","Take your time.","I'm just giving you the stats.","Think of those zeroes like possibilities.")
@@ -103,7 +105,6 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     "You may have heard the term 'Size Queen'. It tends to go hand-in-hand with BBC lovers.",
     "You may have heard the term 'Nympho'. It's not just a fetish. Some people *need* to have sex multiple times a day.",
     "Black daddies tends to spoil their little snowbunnies, especially when they make them very happy.",
-    "Not all outfits can be purchased in a store... some need to be earned.",
     "Breeders can be dangerous... but they can also be fun. Like, several times a day fun..."
   ))
 }
@@ -130,17 +131,27 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
   (newtrack:"isabelle dream intro","aud/se/npc/blacked/isabelle/voice lines/dream intro.mp3")
   (newtrack:"isabelle left out","aud/se/npc/blacked/isabelle/voice lines/left out.mp3")
   (newtrack:"isabelle orgasm","aud/se/npc/blacked/isabelle/orgasm/orgasm.mp3")
+  (newtrack:"kendra dominated","aud/se/npc/blacked/kendra/voice lines/dominated.mp3")
+  (newtrack:"kendra go down","aud/se/npc/blacked/kendra/voice lines/go down.mp3")
+  (newtrack:"kendra grab ass","aud/se/npc/blacked/kendra/voice lines/grab ass.mp3")
+  (newtrack:"kendra hot","aud/se/npc/blacked/kendra/voice lines/hot.mp3")
+  (newtrack:"kendra loving it","aud/se/npc/blacked/kendra/voice lines/loving it.mp3")
+  (newtrack:"kendra watching","aud/se/npc/blacked/kendra/voice lines/watching.mp3")
 }
 
 :: blacked init npcs [initialize init_new]
 {
-  (if:$blacked_npcs is 0)[(set:$blacked_npcs to (dm:))]
+  (set:$kendra to $npcs's kendra's name)
+  (set:$gabbie to $npcs's gabbie's name)
 
-  (unless:(datanames:$blacked_npcs) contains "aubreyblack")[
+  (if:$blacked_npcs is 0)[(set:$blacked_npcs to (dm:))]
+  (if:$blacked_npcs_men is 0)[(set:$blacked_npcs_men to (dm:))]
+
+  (if:(datanames:$blacked_npcs) does not contain "aubreyblack")[
     (set:$blacked_npcs to it + (dm:"aubreyblack", (dm:
       "id", "aubreyblack",
       "name", "Aubrey",
-      "unfamiliar name",(twirl:"Blonde MILF","Sexy Blonde"),
+      "unfamiliar name",(twirl:"Blonde MILF", "Older Blonde Babe", "Hot Blonde Mom"),
       "race", "white",
       "breasts", "E",
       "bra", "36E",
@@ -150,7 +161,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       "body type","voluptuous",
       "familiarity male", 0,
       "familiarity female", 0,
-      "likes", (a:"wine","doggystyle","rough sex"),
+      "likes", (a:"wine","cowgirl","rough sex"),
       "dislikes", (a:"beer"),
       "traits", (a:"likes assertive","rich","slut","pill","size queen"),
       "events", (a:),
@@ -159,7 +170,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       "voice line prefix", "aud/se/npc/blacked/aubrey/voice lines/",
       "img", "img/npc/girls/blacked/aubrey/portrait_normal.jpg",
       "img dir", "img/npc/girls/blacked/aubrey/portrait_"
-  )))
+    )))
 
     (set:$relationships's aubreyblack to (dm:
       "id","aubreyblack",
@@ -171,14 +182,14 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       "attraction",0,
       "tags",(a:),
       "events",(a:)
-  ))
+    ))
   ]
 
-  (unless:(datanames:$blacked_npcs) contains "isabelledeltore")[
+  (if:(datanames:$blacked_npcs) does not contain "isabelledeltore")[
     (set:$blacked_npcs to it + (dm:"isabelledeltore", (dm:
       "id", "isabelledeltore",
       "name", "Isabelle",
-      "unfamiliar name",(twirl:"Blonde Girl","Hot Blonde"),
+      "unfamiliar name",(twirl:"Busty Blonde", "Slutty Looking Blonde", "Blonde Bombshell"),
       "race", "white",
       "breasts", "E",
       "bra", "32E",
@@ -188,7 +199,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       "body type","average",
       "familiarity male", 0,
       "familiarity female", 0,
-      "likes", (a:"fruity drink","cowgirl","rough sex"),
+      "likes", (a:"black","fruity cocktail","doggystyle","rough sex"),
       "dislikes", (a:"beer"),
       "traits", (a:"likes assertive","bimbo","pill","only bbc"),
       "events", (a:),
@@ -197,7 +208,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       "voice line prefix", "aud/se/npc/blacked/isabelle/voice lines/",
       "img", "img/npc/girls/blacked/isabelle/portrait_normal.jpg",
       "img dir", "img/npc/girls/blacked/isabelle/portrait_"
-  )))
+    )))
 
     (set:$relationships's isabelledeltore to (dm:
       "id","isabelledeltore",
@@ -209,8 +220,359 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       "attraction",0,
       "tags",(a:),
       "events",(a:)
-  ))
+    ))
   ]
+
+  (if:(datanames:$blacked_npcs_men) does not contain "jasonbrown")[
+    (set:$relationships's jasonbrown to (dm:
+      "id","jasonbrown",
+      "name","Jason",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"jasonbrown", (dm:
+      "id", "jasonbrown",
+      "img", "img/npc/guys/blacked/jasonbrown/portrait_normal.jpg",
+      "first name", "Jason",
+      "last name", "Brown",
+      "name", "Jason",
+      "sex name", "Jason",
+      "unfamiliar name", "handsome black man",
+      "race", "black",
+      "generation", "millennial",
+      "type", "chad",
+      "breath", "vodka",
+      "age", 25,
+      "agecat", "twenties",
+      "looks", 8,
+      "wealth", 6,
+      "stamina", 12,
+      "oral skill", 8,
+      "fitness", 10,
+      "intellect", 6,
+      "dominance", 10,
+      "hygiene", 7,
+      "personality", 8,
+      "kissing style", "dominant",
+      "tags", (a:"chad", "dominant", "fuckboy"),
+      "favorite color", "red",
+      "favorite style", "slutty",
+      "preference", "tits",
+      "alternate names", (a:"he", "the dominant black guy", "the chad"),
+      "alternate possessive names", (a:"his", "the dominant guy's"),
+      "hands", "strong",
+      "events", (a:""),
+      "cock",999,
+      "ballsdesc","smooth",
+      "cockdesc","long",
+      "tipdesc","mushroom-shaped",
+      "cockrating",9,
+      "cockfatness",8,
+      "cocklength",9,
+      "ballsize",7,
+      "cockimg","img/npc/guys/blacked/jasonbrown/cock.jpg"
+    )))
+  ]
+
+  (if:(datanames:$blacked_npcs_men) does not contain "isiahmaxwell")[
+    (set:$relationships's isiahmaxwell to (dm:
+      "id","isiahmaxwell",
+      "name","Isiah",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"isiahmaxwell", (dm:
+      "id", "isiahmaxwell",
+      "img", "img/npc/guys/blacked/isiahmaxwell/portrait_normal.jpg",
+      "first name", "Isiah",
+      "last name", "Maxwell",
+      "name", "Isiah",
+      "sex name", "Isiah",
+      "unfamiliar name", "handsome black man",
+      "race", "black",
+      "generation", "millennial",
+      "type", "lad",
+      "breath", "wine",
+      "age", 30,
+      "agecat", "thirties",
+      "looks", 10,
+      "wealth", 8,
+      "stamina", 14,
+      "oral skill", 9,
+      "fitness", 10,
+      "intellect", 8,
+      "dominance", 7,
+      "hygiene", 10,
+      "personality", 9,
+      "kissing style", "passionate",
+      "tags", (a:"smells good", "nice", "charming"),
+      "favorite color", "white",
+      "favorite style", "elegant",
+      "preference", "tits",
+      "alternate names", (a:"he"),
+      "alternate possessive names", (a:"his"),
+      "hands", "firm",
+      "events", (a:""),
+      "cock",999,
+      "ballsdesc","full-looking",
+      "cockdesc","long",
+      "tipdesc","thick",
+      "cockrating",9,
+      "cockfatness",8,
+      "cocklength",9,
+      "ballsize",9,
+      "cockimg","img/npc/guys/blacked/isiahmaxwell/cock.jpg"
+    )))
+  ]
+
+  (if:(datanames:$blacked_npcs_men) does not contain "johnjohnson")[
+    (set:$relationships's johnjohnson to (dm:
+      "id","johnjohnson",
+      "name","John",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"johnjohnson", (dm:
+      "id", "johnjohnson",
+      "img", "img/npc/guys/blacked/johnjohnson/portrait_normal.jpg",
+      "first name", "John",
+      "last name", "Johnson",
+      "name", "John",
+      "sex name", "John",
+      "unfamiliar name", "rugged black man",
+      "race", "black",
+      "generation", "millennial",
+      "type", "chad",
+      "breath", "tequila",
+      "age", 32,
+      "agecat", "thirties",
+      "looks", 8,
+      "wealth", 5,
+      "stamina", 14,
+      "oral skill", 8,
+      "fitness", 9,
+      "intellect", 6,
+      "dominance", 9,
+      "hygiene", 7,
+      "personality", 7,
+      "kissing style", "aggressive",
+      "tags", (a:"bully", "chad"),
+      "favorite color", "black",
+      "favorite style", "sexy",
+      "preference", "ass",
+      "alternate names", (a:"he"),
+      "alternate possessive names", (a:"his"),
+      "hands", "manly",
+      "events", (a:""),
+      "cock",999,
+      "ballsdesc","dangling",
+      "cockdesc","thick",
+      "tipdesc","sculpted",
+      "cockrating",9,
+      "cockfatness",10,
+      "cocklength",8,
+      "ballsize",9,
+      "cockimg","img/npc/guys/blacked/johnjohnson/cock.jpg"
+    )))
+  ]
+
+  (if:(datanames:$blacked_npcs_men) does not contain "natturnher")[
+    (set:$relationships's natturnher to (dm:
+      "id","natturnher",
+      "name","Nat",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"natturnher", (dm:
+      "id", "natturnher",
+      "img", "img/npc/guys/blacked/natturnher/portrait_normal.jpg",
+      "first name", "Nat",
+      "last name", "Turnher",
+      "name", "Nat",
+      "sex name", "Nat",
+      "unfamiliar name", "muscular black man",
+      "race", "black",
+      "generation", "genx",
+      "type", "chad",
+      "breath", "scotch",
+      "age", 41,
+      "agecat", "forties",
+      "looks", 8,
+      "wealth", 7,
+      "stamina", 12,
+      "oral skill", 10,
+      "fitness", 9,
+      "intellect", 6,
+      "dominance", 10,
+      "hygiene", 8,
+      "personality", 7,
+      "kissing style", "dominant",
+      "tags", (a:"jock", "chad"),
+      "favorite color", "pink",
+      "favorite style", "slutty",
+      "preference", "ass",
+      "alternate names", (a:"he"),
+      "alternate possessive names", (a:"his"),
+      "hands", "smooth",
+      "events", (a:""),
+      "cock",999,
+      "ballsdesc","bloated",
+      "cockdesc","fat",
+      "tipdesc","glistening",
+      "cockrating",8,
+      "cockfatness",9,
+      "cocklength",7,
+      "ballsize",8,
+      "cockimg","img/npc/guys/blacked/natturnher/cock.jpg"
+    )))
+  ]
+
+  (if:(datanames:$blacked_npcs_men) does not contain "rickyjohnson")[
+    (set:$relationships's rickyjohnson to (dm:
+      "id","rickyjohnson",
+      "name","Ricky",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"rickyjohnson", (dm:
+      "id", "rickyjohnson",
+      "img", "img/npc/guys/blacked/rickyjohnson/portrait_normal.jpg",
+      "first name", "Ricky",
+      "last name", "Johnson",
+      "name", "Ricky",
+      "sex name", "Ricky",
+      "unfamiliar name", "ripped young black man",
+      "race", "black",
+      "generation", "genz",
+      "type", "chad",
+      "breath", "whisky",
+      "age", 23,
+      "agecat", "early twenties",
+      "looks", 10,
+      "wealth", 6,
+      "stamina", 14,
+      "oral skill", 10,
+      "fitness", 10,
+      "intellect", 7,
+      "dominance", 7,
+      "hygiene", 8,
+      "personality", 7,
+      "kissing style", "aggressive",
+      "tags", (a:"fuckboy", "jock"),
+      "favorite color", "white",
+      "favorite style", "sexy",
+      "preference", "tits",
+      "alternate names", (a:"he"),
+      "alternate possessive names", (a:"his"),
+      "hands", "smooth",
+      "events", (a:""),
+      "cock",999,
+      "ballsdesc","tight",
+      "cockdesc","long",
+      "tipdesc","uncircumcised",
+      "cockrating",9,
+      "cockfatness",9,
+      "cocklength",9,
+      "ballsize",7,
+      "cockimg","img/npc/guys/blacked/rickyjohnson/cock.jpg"
+    )))
+  ]
+
+  (if:(datanames:$blacked_npcs_men) does not contain "maurice")[
+    (set:$relationships's maurice to (dm:
+      "id","maurice",
+      "name","Maurice",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",(cond:
+        $bar_party's "times" > 0,(max:25,$bar_party's "times" * 2),
+        0),
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"maurice", (dm:
+      "id", "maurice",
+      "img", "img/npc/guys/blacked/maurice/portrait_normal.jpg",
+      "first name", "Maurice",
+      "last name", "Pressure",
+      "name", "Maurice",
+      "sex name", "Maurice",
+      "unfamiliar name", "muscular black man",
+      "race", "black",
+      "generation", "millennial",
+      "type", "chad",
+      "breath", "rum and coke",
+      "age", 33,
+      "agecat", "thirties",
+      "looks", 9,
+      "wealth", 9,
+      "stamina", 14,
+      "oral skill", 10,
+      "fitness", 10,
+      "intellect", 8,
+      "dominance", 6,
+      "hygiene", 8,
+      "personality", 8,
+      "kissing style", "aggressive",
+      "tags", (a:"smells good", "jock", "chad"),
+      "favorite color", "yellow",
+      "favorite style", "slutty",
+      "preference", "tits",
+      "alternate names", (a:"he"),
+      "alternate possessive names", (a:"his"),
+      "hands", "firm",
+      "events", (a:"name"),
+      "cock",999,
+      "ballsdesc","hefty",
+      "cockdesc","huge",
+      "tipdesc","thick",
+      "cockrating",10,
+      "cockfatness",10,
+      "cocklength",10,
+      "ballsize",9,
+      "cockimg","img/npc/guys/blacked/maurice/cock.jpg"
+    )))
+  ]
+
 }
 
 :: blacked voice macro [initialize init_new]
@@ -250,19 +612,19 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 :: blacked take pill [take_pill]
 {}
 
-:: blacked check buffs [check_buffs]
-{}
-
-:: blacked wear clothes [wear_clothes]
-{
-  (if:$outfit's tags contains "blacked")[(display:"blacked trigger branded")]
-}
-
 :: blacked orgasm sex [orgasm_sex]
 {}
 
 :: blacked interrupt_chance [interrupt_chance]
 {}
+
+:: blacked check buffs [check_buffs]
+{}
+
+:: blacked wear clothes [wear_clothes]
+{
+  (if:$outfit's tags contains "blacked")[(display:"blacked trigger outfit")]
+}
 
 :: blacked number gain male [number_gain_male]
 {
@@ -286,14 +648,15 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 :: blacked newly discovered pregnancy [newly_discovered_pregnancy]
 {
   (if:$blacked_stats's "times fertilized" is 1)[(display:"blacked trigger first pregnancy")]
-  (else-if: $blacked_stats's "times fertilized" is 5)[(display:"blacked trigger fifth pregnancy")]
+  (else-if:$blacked_stats's "times fertilized" is 5)[(display:"blacked trigger fifth pregnancy")]
 }
 
 :: blacked npc cock rating [npc_cock_rating] 
 {
-(if:(cock:"girth","npc") is 10 and (cock:"length","npc") is 10 and (cock:"balls","npc") is 10)[
-  (if:(checkdm:$npc, "race", "is", "black"))[(display:"blacked trigger moby dick")
-    ]
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:(cock:"girth","npc") is 10 and (cock:"length","npc") is 10 and (cock:"balls","npc") is 10)[(display:"blacked trigger moby dick")]
+    (if:(cock:"rating","npc") >= 9)[(set:$blacked_stats's "big cocks" to it + 1)]
+    (if:$blacked_stats's "big cocks" >= 15)[(display:"blacked trigger size queen")]
   ]
 }
 
@@ -325,7 +688,16 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     (set:$blacked_daily_stats's "bbc porn watched" to it + 1)
     (set:$curiosity_check to "bbc porn")(display:"curiosity check")
     (if:($has_ap_mod:"bbc porn mod"))[(display:"action point mod trigger")]
-    (if:$blacked_stats's "bbc porn watched" > 49)[(display:"blacked trigger gooner")]
+    (if:$blacked_stats's "bbc porn watched" >= 50)[(display:"blacked trigger gooner")]
+  ]
+}
+
+:: register receive facial [around]
+{
+  (display:_around)
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (set:$blacked_stats's "facials received" to it + 1)
+    (set:$blacked_daily_stats's "facials received" to it + 1)
   ]
 }
 
@@ -341,6 +713,15 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       ]
     (set:$curiosity_check to "black creampie")(display:"curiosity check")
     ]
+}
+
+:: girl lick [around]
+{
+  (display:_around)
+  (if:(checkdm:$character, "race", "is", "black"))[
+    (set:$blacked_stats's "cunnilingus given as guy" to it + 1)
+    (set:$blacked_daily_stats's "cunnilingus given as guy" to it + 1)
+  ]
 }
 
 :: girl cum [around]
@@ -386,6 +767,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
     (display:"blacked sex tally")
   ]
+  (display:_around)
 }
 
 :: register fuck girl [around]
@@ -405,6 +787,28 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
   (display:_around)
   (if:$stage is 8 or $stage is 9) [
     (if:(checkdm:$character, "race", "is", "black"))[
+      (set:$blacked_stats's "blowjobs received" to it + 1)
+      (set:$blacked_daily_stats's "blowjobs received" to it + 1)
+    ]
+  ]
+}
+
+:: alexia motel 6 [around]
+{
+  (display:_around)
+  (if:$stage is 8 or $stage is 9) [
+    (if:(checkdm:$character, "race", "is", "black"))[
+      (set:$blacked_stats's "blowjobs received" to it + 1)
+      (set:$blacked_daily_stats's "blowjobs received" to it + 1)
+    ]
+  ]
+}
+
+:: girl sex add stats [around]
+{
+  (display:_around)
+  (if:(checkdm:$character, "race", "is", "black"))[
+    (if:$sex_events contains "blowjobs received")[
       (set:$blacked_stats's "blowjobs received" to it + 1)
       (set:$blacked_daily_stats's "blowjobs received" to it + 1)
     ]
@@ -447,21 +851,22 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 :: dredd job sex finish [around]
 {
   (display:_around)
+  (inc:"dredd's visits")
   (set:$blacked_stats's "sex as girl" to it + 1)
   (set:$blacked_daily_stats's "sex as girl" to it + 1)
-  (if:$bar_party's times > 9)[(display:"blacked trigger besties")]
+  (if:$bar_party's times >= 10)[(display:"blacked trigger besties")]
   (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
 }
 
 :: bar dance end final [around]
 {
   (display:_around)
-  (if:$bar_dance's "times danced" > 9)[(display:"blacked trigger stripper")]
+  (if:$bar_dance's "times danced" >= 10)[(display:"blacked trigger stripper")]
 }
 
 :: invite guy sex intro stepdad [around]
 {
-  (if:$npc's race is "black" and $npc's age > 39)[(display:"blacked trigger new daddy")]
+  (if:$npc's race is "black" and $npc's age >= 40)[(display:"blacked trigger new daddy")]
   (display:_around)
 }
 
@@ -478,23 +883,23 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 :: blacked sex tally
 {
   (if:$blacked_stats's "sex as girl" is 1)[(display:"blacked trigger first sex")]
-  (else-if:$blacked_stats's "sex as girl" > 99)[(display:"blacked trigger sex100")]
-  (else-if:$blacked_stats's "sex as girl" > 49)[(display:"blacked trigger sex50")]
-  (else-if:$blacked_stats's "sex as girl" > 24)[(display:"blacked trigger sex25")]
+  (else-if:$blacked_stats's "sex as girl" >= 100)[(display:"blacked trigger sex100")]
+  (else-if:$blacked_stats's "sex as girl" >= 50)[(display:"blacked trigger sex50")]
+  (else-if:$blacked_stats's "sex as girl" >= 25)[(display:"blacked trigger sex25")]
 }
 
 :: blacked swallow tally
 {
-  (if:$blacked_stats's "loads swallowed" > 99)[(display:"blacked trigger swallow100")]
-  (else-if:$blacked_stats's "loads swallowed" > 49)[(display:"blacked trigger swallow50")]
-  (else-if:$blacked_stats's "loads swallowed" > 24)[(display:"blacked trigger swallow25")]
+  (if:$blacked_stats's "loads swallowed" >= 100)[(display:"blacked trigger swallow100")]
+  (else-if:$blacked_stats's "loads swallowed" >= 50)[(display:"blacked trigger swallow50")]
+  (else-if:$blacked_stats's "loads swallowed" >= 25)[(display:"blacked trigger swallow25")]
 }
 
 :: blacked rejection tally
 {
-  (if:$blacked_stats's "rejections" > 99)[(display:"blacked trigger reject100")]
-  (else-if:$blacked_stats's "rejections" > 49)[(display:"blacked trigger reject50")]
-  (else-if:$blacked_stats's "rejections" > 24)[(display:"blacked trigger reject25")]
+  (if:$blacked_stats's "rejections" >= 100)[(display:"blacked trigger reject100")]
+  (else-if:$blacked_stats's "rejections" >= 50)[(display:"blacked trigger reject50")]
+  (else-if:$blacked_stats's "rejections" >= 25)[(display:"blacked trigger reject25")]
 }
 
 :: blacked side effects init [init_side_effects]
@@ -519,11 +924,11 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 :: blacked QoS buff
 {
   (set:$new_status to (dm:
-    "status","qos buff",
+    "status","feeling like a queen",
     "emoji","👑",
     "strength",8,
     "length",6,
-    "cause","Straighten your crown, Queen ♠️",
+    "cause","♠️ Straighten your crown ♠️",
     "charm buff",2,
     "intellect buff",1,
     "fitness buff",1
@@ -533,14 +938,15 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 :: blacked QoS debuff
 {
   (set:$new_status to (dm:
-    "status","qos debuff",
+    "status","not feeling very queen-like",
     "emoji","👎🏾",
     "strength",8,
     "length",9,
-    "cause","You've disappointed your Black Kings. Go find a BBC!",
+    "cause","You've disappointed your Black Kings. Go find some BBC!",
     "charm buff",-2,
     "intellect buff",-1,
-    "fitness buff",-1
+    "fitness buff",-1,
+    "arousal buff",3,
 	))(display:"new status")(display:"refresh stats")
 }
 
@@ -570,6 +976,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     "charm buff",-3,
     "intellect buff",-1,
     "fitness buff",-1,
+    "arousal buff",-1,
     "effect text","-3 🍀 / -1 🧠 / -1 💪 from " + $effect_text
 	))(display:"new mood")(display:"refresh stats")
 }
@@ -583,6 +990,8 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     "length",6,
     "cause",$cause_text,
     "charm buff",2,
+    "intellect buff",0,
+    "fitness buff", 0,
     "effect text","+2 🍀 from " + $effect_text
     ))
   (display:"new mood")(display:"refresh stats")
@@ -597,6 +1006,9 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     "length",6,
     "cause",$cause_text,
     "charm buff",-2,
+    "intellect buff",0,
+    "fitness buff", 0,
+    "arousal buff",2,
     "effect text","-2 🍀 from " + $effect_text
     ))
   (display:"new mood")(display:"refresh stats")
@@ -604,7 +1016,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 
 :: serendipity buy porn [around]
 {
-  (display:"add porn black cock heaven")
+  (unless:$porn_list contains "black cock heaven")[(display:"add porn black cock heaven")]
   (display:_around)
 }
 
@@ -722,8 +1134,6 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     "img", "blah blah blah")))
 }
 
-
-
 :: New-U new ID [around]
 {
   (display:_around)
@@ -736,7 +1146,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
   (display:"blacked compatibility check")
 }
 
-:: New-U roll side effects [around]
+:: Blacked New-U Side Effect Check
 {
   (display:"blacked compatibility check")
   (if:$blacked_compatible is 1)[
@@ -744,18 +1154,48 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without.",
     "BBC Size Queen","Extra pleasure for *Big Black Cocks*. Less pleasure for tiny cocks."
     )) 
-  ](display:_around)
+  ](else:)[
+    (if:(dmnames:$newu_side_effects) contains "BBC Addict")[
+      (move:$newu_side_effects's "BBC Addict" into _buffer)
+    ]
+    (if:(dmnames:$newu_side_effects) contains "BBC Addict")[
+      (move:$newu_side_effects's "BBC Size Queen" into _buffer)
+    ]
+  ]
+}
+
+:: New-U roll side effects [around]
+{
+  (display:"Blacked New-U Side Effect Check")
+  (display:_around)
 }
 
 :: New-U roll double side effects [around]
 {
-  (display:"blacked compatibility check")
-  (if:$blacked_compatible is 1)[
-    (set:$newu_side_effects to it + (dm:
-    "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without.",
-    "BBC Size Queen","Extra pleasure for *Big Black Cocks*. Less pleasure for tiny cocks."
-    )) 
+  (display:"Blacked New-U Side Effect Check")
+  (display:_around)
+}
+
+:: ensure all coworkers loaded [around]
+{
+  (set:$coworkers to it - $black_coworkers)
+  (display:_around)
+}
+
+:: save coworker [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (display:"save npc male")
+    (unless:$black_coworkers contains (text:$npc's "id"))[
+      (set:$black_coworkers to it + (a:(text:$npc's id)))
+    ]
   ](display:_around)
+}
+
+:: corpo revenge cleanup [around]
+{
+  (set:$coworkers to it + $black_coworkers)
+  (display:_around)
 }
 
 :: npc race check
@@ -765,252 +1205,280 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     $blackfreq is "Black Encounters: Less" and (twist:1,3) is 1, "black",
     $blackfreq is "Black Encounters: More" and (twist:1,3) is not 1, "black",
     $blackfreq is "Black Encounters: Always", "black",
+    $blackfreq is "Black Encounters: Never", "white",
     ,"white"
   ))
 }
 
 :: generate random guy [around]
 {
-  (display:"npc race check")
-  (if:$racecheck is "black" and $blacked_compatible is 1)[
-    (display:"generate black guy")]
-  (else:)[(display:_around)]
+  (if:$npc_type is "coworker" and $current_activity is "Go to the mall")[(display:_around)]
+  (else:)[
+    (display:"npc race check")
+    (if:$racecheck is "black" and $blacked_compatible is 1)[
+      (display:"generate black guy")]
+    (else:)[(display:_around)]
+  ]
 }
 
 :: generate black guy
 {
-(if:$min_npc_age is 0)[(set:$min_npc_age to "Min Age: 18")]
-(if:$max_npc_age is 0)[(set:$max_npc_age to "Max Age: 55")]
+  (if:$min_npc_age is 0)[(set:$min_npc_age to "Min Age: 18")]
+  (if:$max_npc_age is 0)[(set:$max_npc_age to "Max Age: 55")]
 
-(set:_min_age to (num: 1st of (str-find: (p-many: digit), $min_npc_age)))
-(set:_max_age to (num: 1st of (str-find: (p-many: digit), $max_npc_age)))
-(set:_max_age to (cond: (twist:1,2) is 1, 30, _max_age))
-(set:_age to (twist:_min_age, _max_age))
-(set:_agecat to (cond:
-  _age < 20, "late teens",
-  _age < 25, "early twenties",
-  _age < 30, "twenties",
-  _age < 40, "thirties",
-  _age < 50, "forties",
-  "fifties"
-))
-(set:_generation to (cond: _age < 24, "genz", _age < 38, "millenial", "genx"))
-
-(set:_type to (cond:$npc_type is "coworker","coworker",(twirl:"chad","bad","lad")))
-
-(set:$types to (a:"96","97","98","99"))
-
-(if:$npc_type is "coworker")[
-  (if:$black_coworkers is 0)[(set:$black_coworkers to (a:))]
-  (for: each _coworker, ...$black_coworkers)[(set:$types to it - (a:(text:(words:_coworker)'s 3rd)))]
-]
-
-(set:str-type _variant to (text:(twirl:...$types)))
-
-(set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + _variant + ".jpg")
-
-($use_global: "$black_cock_database", "window.GE.black_cock_database", [{
-  (set:$npc to (dm:
-    "tags", (a:),
-    "events", (a:),
-    "race", "black",
-    "stamina", (twist:8,15),
-    "oral skill", (twist:1,10),
-    "kissing style", "normal",
-    "alternate names", (a:),
-    "alternate possessive names", (a:),
-    "favorite color", (twirl:"red","white","black","yellow","purple","pink","orange"),
-    "favorite style", (twirl:"elegant","slutty","cute","casual","sexy"),
-    "age", _age,
-    "agecat", _agecat,
-    "generation", _generation,
-    "type", _type,
-    "img", _img,
-    "last name", "Smith",
-    "preference", (twirl:"ass","tits")
-  ) + (twirl: ...$black_cock_database))
-  }])
-
-<!-- (set:$npc's "race" to "black") -->
-
-(if:(twist:1,2) is 1)[
-  (set:$npc's "stamina" to (min:$npc's "stamina", (cock:"rating","npc") + 5))
-]
-
-(set:$npc's "variant" to _variant)
-
-(if:_agecat is "late teens")[
-  (set:"alternate names" of $npc to it + (a:"he","the teen"))
-  (set:"alternate possessive names" of $npc to it + (a:"his","the teen's"))
-](else-if:_agecat is "fifties")[
-  (set:"alternate names" of $npc to it + (a:"he","the old guy"))
-  (set:"alternate possessive names" of $npc to it + (a:"his","the old guy's"))
-]
-
-(set: _wealth_range to (cond: 
-  _generation is "genx", (a: 5, 10),
-  _generation is "millenial", (a: 1, 10),
-  _generation is "genz" and (twist:1,4) is 1, (a: 1, 10),
-  (a: 1, 4)
-))
-
-(set: wealth of $npc to (twist: _wealth_range's 1st, _wealth_range's 2nd))
-
-(set: _guys to (cond:
-    _generation is "millenial", (a: "guy", "dude", "guy", "dude", "guy", "fellow"),
-    _generation is "genz" and age of $npc < 20, (a: "dude", "guy", "fellow", "teen", "teenager", "teen", "boy"),
-    _generation is "genz", (a: "dude", "guy", "fellow", "twenty-something"),
-    (a: "man", "guy")
-))
-(set: _guy to (twirl: ..._guys))
-
-($use_global: '$guy_database', 'window.GE.guy_database', [{
-  (set:_generation_guys to _generation of $guy_database)
-  (set:_npc to _variant of _type of _generation_guys)
-
-  (set:"unfamiliar name" of _npc to (replaced:"_guy", _guy, (twirl:..."unfamiliar names" of _npc)))
-  (set:"description" of _npc to (replaced:"_guy", _guy, (twirl:..."descriptions" of _npc)))
-  (set:"first name" of _npc to (twirl:...("first names" of _generation_guys)))
-  (set:"hands" of _npc to (twirl:...("hands" of _generation_guys)))
-
-  (set:$npc to it + _npc)
-}])
-(set:$npc's "unfamiliar name" to (upperfirst:it))
-
-
-(set: intellect of $npc to (cond: 
-    ($npc's tags contains "fuckboy") or ($npc's tags contains "jock"), (twist: 1, 5),
-    ($npc's tags contains "nerd"), (twist: 5, 10),
-    (twist: 1, 10)
-))
-
-(set: fitness of $npc to (cond: 
-    ($npc's tags contains "nerd") or ($npc's tags contains "chubby"), (twist: 1, 5),
-    ($npc's tags contains "jock") or ($npc's tags contains "chad"), (twist: 5, 10),
-    (twist: 1, 10)
-))
-
-(if: fitness of $npc > 8)[
-    (set: $npc's tags to it + (a: "jock"))
-]
-
-(display:"generate black guy name")
-
-(set:"name" of $npc to (cond:_age > 35, "Mr. " + "last name" of $npc, "first name" of $npc))
-(set:$npc's "sex name" to (upperfirst:$npc's "name"))
-
-(if:length of $npc's "tags" is 0)[
-  (set:$npc's tags to it + (a:(twirl:"selfish","nice","unremarkable","cool")))
-]
-(if:$npc's "tags" contains "fuckboy")[
-  (set:$npc's tags to it + (a:"selfish"))
-]
-(if:$npc's "tags" contains "bully" or $npc's "tags" contains "smug")[
-  (set:$npc's tags to it + (a:"selfish"))
-]
-
-(set: _personalityRange to (cond:
-  $npc's "tags" contains "gentleman", (a: 7, 10),
-  $npc's "tags" contains "nice", (a: 5, 10),
-  $npc's "tags" contains any of (a: "cool", "charming", "jock"), (a: 5, 8),
-  $npc's "tags" contains "unremarkable", (a: 4, 6),
-  $npc's "tags" contains any of (a: "annoying", "creepy"), (a: 1, 5),
-  $npc's "tags" contains any of (a: "selfish", "fuckboy", "bully"), (a: 1, 6),
-  (a: 1, 10)
-))
-(set: $npc's "personality" to (twist: _personalityRange's 1st, _personalityRange's 2nd))
-
-(if: $npc's "tags" contains "charming")[ 
-    (set: $npc's "alternate names" to it + (a: "he", "the charming guy"))
-    (set: $npc's "alternate possessive names" to it + (a: "his", "the charming guy's"))
-](else-if: $npc's "tags" contains "gentleman")[ 
-    (set: $npc's "alternate names" to it + (a: "he", "the gentleman"))
-    (set: $npc's "alternate possessive names" to it + (a: "his", "the gentleman's"))
-]
-
-(display:"npc outfit modifiers")
-
-(set: $npc's "hygiene" to (cond: 
-    $npc's "tags" contains "gentleman", (twist: 5, 10),
-    $npc's "tags" contains "smells good", (twist: 7, 10),
-    $npc's "tags" contains "charming", (twist: 5, 8),
-    $npc's "tags" contains "smelly", (twist: 1, 3),
-    $npc's "tags" contains "chubby", (twist: 1, 6),
-    $npc's "tags" contains "chad", (twist: 3, 7),
-    $npc's "tags" contains "nerd", (twist: 1, 7),
-    (twist: 1, 10)
-))
-
-(set: $npc's "hands" to (cond: 
-    $npc's "tags" contains any of (a: "chubby"), (twirl: "pudgy", "chubby"),
-    $npc's "tags" contains any of (a: "chad"), (twirl: "strong", "firm", "manly"),
-    $npc's "tags" contains any of (a: "nerd", "smelly"), (twirl: "clammy", "sweaty", "soft"),
-    $npc's "tags" contains "gentleman", (twirl: "firm", "smooth", "graceful", "gentlemanly"),
-    "firm"
-))
-
-(set: $npc's "kissing style" to (cond: 
-    $npc's "tags" contains any of (a:"fuckboy","jock"),"aggressive",
-    $npc's "tags" contains any of (a: "charming", "chad", "dominant"), "dominant",
-    $npc's "tags" contains "nerd", (twirl: "weak", "slobber", "normal"),
-    $npc's "tags" contains "smelly", "gross",
-    "normal"
-))
-
-(if:$npc's "tags" contains "chad")[
-  (set:$npc's "alternate possessive names" to it + (a:"his","the chad's"))
-]
-(if:$npc's "tags" contains "nerd")[
-  (set:$npc's "alternate possessive names" to it + (a:"his","the nerd's"))
-]
-
-(display:"guy breath update")
-
-(if:$npc's "tags" contains "breeder")[
-  (set:$npc's tags to it - (a:"gentleman"))
-  (set:$npc's personality to (min:it,5))
-  ($use_global: "$black_cock_database", "window.GE.black_cock_database", [(set:$npc to it + (twirl:...(find:_cock where _cock's ballsize is 10, ...$black_cock_database)))])
-]
-(set:$npc's age to (max:18,it))
-
-(set: $npc's dominance to (cond:
-    $npc's tags contains any of (a: "chad", "bully", "jock", "breeder"), (twist: 8, 10),
-    $npc's age < 22 or $npc's tags contains "nerd", (twist: 2, 6),
-    $npc's age > 34, (twist: 4, 8),
-    (twist: 1, 10)
-))
-
-(if:$npc_type is "coworker")[
-  (set:$npc's tags to $npc's tags + (a:"coworker"))
-  (set:$npc's "sales level" to (cond:$npc's age >= 55,(twist:6,10),$npc's age >= 50,(twist:7,8),$npc's age >= 40,(twist:5,8),$npc's age >= 30,(twist:4,6),$npc's age >= 20,(twist:1,5),$npc's age >= 18,(twist:1,4)))
-  (if:$npc's tags contains "ambitious")[(set:$npc's "sales level" to it + (twist:1,3))]
-  (if:$npc's tags contains "lazy")[(set:$npc's "sales level" to it - (twist:1,3))]
-  (unless:$npc's "tags" contains "coworker")[(set:$npc's "tags" to it + (a:"coworker"))]    
-  (set:$npc's "sales level" to (max:1,(min:$npc's "sales level",10)))
-  (set:$npc's "wealth" to $npc's "sales level")
-  (display:"npc generate id coworker")
-  (set:$npc's "events" to it + (a:"your name"))
-  (set:$relationships's (text: "npc " + (text:$npc's "id")) to (dm:
-    "id",(text: "npc " + (text:$npc's "id")),
-    "name",$npc's name,
-    "gender","male",
-    "respect",0,
-    "dom",0,
-    "friendship",0,
-    "attraction",0,
-    "tags",(a:"coworker")
+  (set:_min_age to (num: 1st of (str-find: (p-many: digit), $min_npc_age)))
+  (set:_max_age to (num: 1st of (str-find: (p-many: digit), $max_npc_age)))
+  (set:_max_age to (cond: (twist:1,2) is 1, 30, _max_age))
+  (set:_age to (twist:_min_age, _max_age))
+  (set:_agecat to (cond:
+    _age < 20, "late teens",
+    _age < 25, "early twenties",
+    _age < 30, "twenties",
+    _age < 40, "thirties",
+    _age < 50, "forties",
+    "fifties"
   ))
-](else:)[    
-  (display:"npc generate id")
-]
-(set:$npc's appeal to $npc's looks)
-(display:"alcohol modify appeal")
+  (set:_generation to (cond: _age < 24, "genz", _age < 38, "millenial", "genx"))
+
+  (set:_activity_list to (dm:
+    "Go to work","coworker",
+    "Go to the beach","beach",
+    "Go to the mall","mall",
+    "Workout","gym",
+    "Hit the bar","bar",
+    "Go clubbing","club"
+  ))
+
+  (set:_type to "generic")
+  (if:(dmnames:_activity_list) contains $current_activity)[
+    (set:_type to $current_activity of _activity_list)
+  ]
+
+  (set:$types to (cond:
+    _type is "bar",(altered: via (str: it), ...(range:85,99)),
+    (altered: via (str: it), ...(range:90,99))))
+
+  (if:$npc_type is "coworker")[
+    (if:$coworkers is 0)[(set:$coworkers to (a:))]
+    (for: each _coworker, ...$coworkers)[(set:$types to it - (a:(text:(words:_coworker)'s 3rd)))]
+  ]
+
+  (set:str-type _variant to (text:(twirl:...$types)))
+
+  (set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + _variant + ".jpg")
+
+  ($use_global: "$black_cock_database", "window.GE.black_cock_database", [{
+    (set:$npc to (dm:
+      "tags", (a:),
+      "events", (a:),
+      "race", "black",
+      "stamina", (twist:8,15),
+      "oral skill", (twist:1,10),
+      "kissing style", "normal",
+      "alternate names", (a:),
+      "alternate possessive names", (a:),
+      "favorite color", (twirl:"red","white","black","yellow","purple","pink","orange"),
+      "favorite style", (twirl:"elegant","slutty","cute","casual","sexy"),
+      "age", _age,
+      "agecat", _agecat,
+      "generation", _generation,
+      "type", _type,
+      "img", _img,
+      "last name", "Smith",
+      "preference", (twirl:"ass","tits")
+    ) + (twirl: ...$black_cock_database))
+    }])
+
+  (if:(twist:1,2) is 1)[
+    (set:$npc's "stamina" to (min:$npc's "stamina", (cock:"rating","npc") + 5))
+  ]
+
+  (set:$npc's "variant" to _variant)
+
+  (if:_agecat is "late teens")[
+    (set:"alternate names" of $npc to it + (a:"he","the teen"))
+    (set:"alternate possessive names" of $npc to it + (a:"his","the teen's"))
+  ](else-if:_agecat is "fifties")[
+    (set:"alternate names" of $npc to it + (a:"he","the old guy"))
+    (set:"alternate possessive names" of $npc to it + (a:"his","the old guy's"))
+  ]
+
+  (set: _wealth_range to (cond: 
+    _generation is "genx", (a: 5, 10),
+    _generation is "millenial", (a: 1, 10),
+    _generation is "genz" and (twist:1,4) is 1, (a: 1, 10),
+    (a: 1, 4)
+  ))
+
+  (set: wealth of $npc to (twist: _wealth_range's 1st, _wealth_range's 2nd))
+
+  (set: _guys to (cond:
+      _generation is "millenial", (a: "guy", "dude", "guy", "dude", "guy", "fellow"),
+      _generation is "genz" and age of $npc < 20, (a: "dude", "guy", "fellow", "teen", "teenager", "teen", "boy"),
+      _generation is "genz", (a: "dude", "guy", "fellow", "twenty-something"),
+      (a: "man", "guy")
+  ))
+  (set: _guy to (twirl: ..._guys))
+
+  ($use_global: '$guy_database', 'window.GE.guy_database', [{
+    (set:_generation_guys to _generation of $guy_database)
+    (set:_npc to _variant of _type of _generation_guys)
+
+    (set:"unfamiliar name" of _npc to (replaced:"_guy", _guy, (twirl:..."unfamiliar names" of _npc)))
+    (set:"description" of _npc to (replaced:"_guy", _guy, (twirl:..."descriptions" of _npc)))
+    (set:"first name" of _npc to (twirl:...("first names" of _generation_guys)))
+    (set:"hands" of _npc to (twirl:...("hands" of _generation_guys)))
+
+    (set:$npc to it + _npc)
+  }])
+  (set:$npc's "unfamiliar name" to (upperfirst:it))
+
+
+  (set: intellect of $npc to (cond: 
+      ($npc's tags contains "fuckboy") or ($npc's tags contains "jock"), (twist: 1, 5),
+      ($npc's tags contains "nerd"), (twist: 5, 10),
+      (twist: 1, 10)
+  ))
+
+  (set: fitness of $npc to (cond: 
+      ($npc's tags contains "nerd") or ($npc's tags contains "chubby"), (twist: 1, 5),
+      ($npc's tags contains "jock") or ($npc's tags contains "chad"), (twist: 5, 10),
+      (twist: 1, 10)
+  ))
+
+  (if: fitness of $npc > 8)[
+      (set: $npc's tags to it + (a: "jock"))
+  ]
+
+  (display:"generate black guy name")
+
+  (set:"name" of $npc to (cond:_age > 35, "Mr. " + "last name" of $npc, "first name" of $npc))
+  (set:$npc's "sex name" to (upperfirst:$npc's "name"))
+
+  (if:length of $npc's "tags" is 0)[
+    (set:$npc's tags to it + (a:(twirl:"selfish","nice","unremarkable","cool")))
+  ]
+  (if:$npc's "tags" contains "fuckboy")[
+    (set:$npc's tags to it + (a:"selfish"))
+  ]
+  (if:$npc's "tags" contains "bully" or $npc's "tags" contains "smug")[
+    (set:$npc's tags to it + (a:"selfish"))
+  ]
+
+  (set: _personalityRange to (cond:
+    $npc's "tags" contains "gentleman", (a: 7, 10),
+    $npc's "tags" contains "nice", (a: 5, 10),
+    $npc's "tags" contains any of (a: "cool", "charming", "jock"), (a: 5, 8),
+    $npc's "tags" contains "unremarkable", (a: 4, 6),
+    $npc's "tags" contains any of (a: "annoying", "creepy"), (a: 1, 5),
+    $npc's "tags" contains any of (a: "selfish", "fuckboy", "bully"), (a: 1, 6),
+    (a: 1, 10)
+  ))
+  (set: $npc's "personality" to (twist: _personalityRange's 1st, _personalityRange's 2nd))
+
+  (if: $npc's "tags" contains "charming")[ 
+      (set: $npc's "alternate names" to it + (a: "he", "the charming guy"))
+      (set: $npc's "alternate possessive names" to it + (a: "his", "the charming guy's"))
+  ](else-if: $npc's "tags" contains "gentleman")[ 
+      (set: $npc's "alternate names" to it + (a: "he", "the gentleman"))
+      (set: $npc's "alternate possessive names" to it + (a: "his", "the gentleman's"))
+  ]
+
+  (display:"npc outfit modifiers")
+
+  (set: $npc's "hygiene" to (cond: 
+      $npc's "tags" contains "gentleman", (twist: 5, 10),
+      $npc's "tags" contains "smells good", (twist: 7, 10),
+      $npc's "tags" contains "charming", (twist: 5, 8),
+      $npc's "tags" contains "smelly", (twist: 1, 3),
+      $npc's "tags" contains "chubby", (twist: 1, 6),
+      $npc's "tags" contains "chad", (twist: 3, 7),
+      $npc's "tags" contains "nerd", (twist: 1, 7),
+      (twist: 1, 10)
+  ))
+
+  (set: $npc's "hands" to (cond: 
+      $npc's "tags" contains any of (a: "chubby"), (twirl: "pudgy", "chubby"),
+      $npc's "tags" contains any of (a: "chad"), (twirl: "strong", "firm", "manly"),
+      $npc's "tags" contains any of (a: "nerd", "smelly"), (twirl: "clammy", "sweaty", "soft"),
+      $npc's "tags" contains "gentleman", (twirl: "firm", "smooth", "graceful", "gentlemanly"),
+      "firm"
+  ))
+
+  (set: $npc's "kissing style" to (cond: 
+      $npc's "tags" contains any of (a:"fuckboy","jock","aggressive"),"aggressive",
+      $npc's "tags" contains any of (a: "charming", "chad", "dominant"), "dominant",
+      $npc's "tags" contains "nerd", (twirl: "weak", "slobber", "normal"),
+      $npc's "tags" contains "smelly", "gross",
+      "normal"
+  ))
+
+  (if:$npc's "tags" contains "chad")[
+    (set:$npc's "alternate possessive names" to it + (a:"his","the chad's"))
+  ]
+  (if:$npc's "tags" contains "nerd")[
+    (set:$npc's "alternate possessive names" to it + (a:"his","the nerd's"))
+  ]
+
+  (display:"guy breath update")
+
+  (if:$npc's "tags" contains "breeder")[
+    (set:$npc's tags to it - (a:"gentleman"))
+    (set:$npc's personality to (min:it,5))
+    ($use_global: "$black_cock_database", "window.GE.black_cock_database", [(set:$npc to it + (twirl:...(find:_cock where _cock's ballsize is 10, ...$black_cock_database)))])
+  ]
+  (set:$npc's age to (max:18,it))
+
+  (set: $npc's dominance to (cond:
+      $npc's tags contains any of (a: "chad", "bully", "jock", "breeder"), (twist: 8, 10),
+      $npc's age < 22 or $npc's tags contains "nerd", (twist: 2, 6),
+      $npc's age > 34, (twist: 4, 8),
+      (twist: 1, 10)
+  ))
+
+  (if:$npc_type is "coworker")[
+    (set:$npc's tags to $npc's tags + (a:"coworker"))
+    (if:$npc's tags contains "executive")[
+      (set:$npc's "sales level" to (twist:8,10))
+    ]
+    (else:)[
+      (set:$npc's "sales level" to (cond:$npc's age >= 55,(twist:6,10),$npc's age >= 50,(twist:7,8),$npc's age >= 40,(twist:5,8),$npc's age >= 30,(twist:4,6),$npc's age >= 20,(twist:1,5),$npc's age >= 18,(twist:1,4)))
+      (if:$npc's tags contains "ambitious")[(set:$npc's "sales level" to it + (twist:1,3))]
+      (if:$npc's tags contains "lazy")[(set:$npc's "sales level" to it - (twist:1,3))]
+    ]
+      
+    (unless:$npc's "tags" contains "coworker")[(set:$npc's "tags" to it + (a:"coworker"))]    
+    (set:$npc's "sales level" to (max:1,(min:$npc's "sales level",10)))
+
+    (set:$npc's "wealth" to (cond:
+      $npc's "tags" contains "wealthy",(twist:8,10),
+      $npc's "tags" contains "rich",10,
+      $npc's "sales level"))
+    
+    (display:"npc generate id coworker")
+    (set:$npc's "events" to it + (a:"your name"))
+    (set:$relationships's (text: "npc " + (text:$npc's "id")) to (dm:
+      "id",(text: "npc " + (text:$npc's "id")),
+      "name",$npc's name,
+      "gender","male",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:"coworker")
+    ))
+  ](else:)[    
+    (display:"npc generate id")
+  ]
+
+  (set:$npc's appeal to $npc's looks)
+  (display:"alcohol modify appeal")
 }
 
 :: generate black guy name
 {
-(set:"first name" of $npc to (twirl:"Rod","Jax","Flash","Damion","Rob","Booker","Emmett","Dontrell","Tyrone","Keenan","Lamonte","Tyrus","Darius","Isiah","Jamal","Marcel","Warren","Lex","DeAngelo","Jayce","Omar","Andre","Shane","Oscar","Autry"))
-(set:"last name" of $npc to (twirl:"Yahshua","Slayher","Jackson","Johnson","Diggler","Piper","Maxwell","Harden","Brown","Black","Jackson","Davis","Wilson","Thompson","Steele","Michaels","Strong","Mac","Pumper","Hard","Long","Hammer","Diesel"))
+(set:"first name" of $npc to (twirl:"Rod","Jax","Marcus","Damion","Rob","Booker","Emmett","Dontrell","Tyrone","Keenan","Lamonte","Tyrus","Darius","Jamal","Marcel","Warren","Lex","DeAngelo","Jayce","Omar","Andre","Shane","Oscar","Autry","Malik","Terrell","Devon","Marquise","Lorenzo","Xavier","Antoine","Rashad","Kendall","Leon","Deshawn","Javon","Kendrick","Maurice","Isaiah","Dante","Lamont","Quincy","Tobias","Trey","Cedric","Dominic","Carlton","Byron","Tyrell","Aaron")) 
+(set:"last name" of $npc to (twirl:"Jackson","Johnson","Diggler","Piper","Harden","Black","Jackson","Davis","Wilson","Thompson","Michaels","Strong","Mac","Ross","Hard","Long","Anderson","Carter","Harris","Walker","Robinson","Lewis","Hill","Moore","Adams","King","Brown","Green","Turner","Brooks","Young","Allen","Carter","Taylor","Clark","Hall","Wright","Scott","Stewart","Parker","Porter","Collins","Reed","Howard","Mitchell","Watson","Bryant","Foster","Barnes","Alexander","Coleman","Jenkins")) 
 }
 
 :: npc position inventory
@@ -1449,7 +1917,11 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       (else:)[(set:$img to "scenes/generic/sex/bj/bbc/light " + (text:(twist:1,6)) + ".mp4")]
       ](else:)[(display:"blowjob transactional initialize " + (text:$character's "id"))]
 
-    (replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")](set:$stats's "blowjobs given" to $stats's "blowjobs given" + 1)
+    (replace:?portrait)[($pic:"characters/bj/bbc/" + (text:$character's "id") + ".jpg")]
+    <!--(replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]-->
+    (set:$stats's "blowjobs given" to it + 1)
+    (set:$blacked_stats's "blowjobs given" to it + 1)
+    (set:$blacked_daily_stats's "blowjobs given" to it + 1)
 
     (if:(datanames:$npc) contains "tags")[(set:$tags to $npc's tags)](else:)[(set:$tags to (a:))]
 
@@ -1502,7 +1974,11 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       (else:)[(set:$img to "scenes/generic/sex/bj/bbc/light " + (text:(twist:1,6)) + ".mp4")]
     ](else:)[(display:"sex transactional blowjob " + $character's "id")]
     
-    (replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")](set:$stats's "blowjobs given" to $stats's "blowjobs given" + 1)
+    (replace:?portrait)[($pic:"characters/bj/bbc/" + (text:$character's "id") + ".jpg")]
+    <!--(replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]-->
+    (set:$stats's "blowjobs given" to it + 1)
+    (set:$blacked_stats's "blowjobs given" to it + 1)
+    (set:$blacked_daily_stats's "blowjobs given" to it + 1)
 
     (if:(datanames:$npc) contains "tags")[(set:$tags to $npc's tags)](else:)[(set:$tags to (a:))]
     (display:"npc describe cock")(set:(either:"reason 1","reason 2","reason 3") of $minigame to "The way you got down on your knees and just sucked his " + (text:$cock) + "...")(set:$minigame's "masculinity level" to (max:60,$minigame's "masculinity level" - 5))
@@ -1584,7 +2060,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     (if:$kiss_variant is 0)[
       (set:$kiss_variant to "kiss")
     ]
-    (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/" + $kiss_variant + ".mp4' autoplay='' loop='' muted='' playsinline/>")]
+    (replace:?image)[($vid:"scenes/characters/" + $character's "id" + "/foreplay/bbc/" + $kiss_variant + ".mp4")]
   ]
 }
 
@@ -1632,7 +2108,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
     (if:$grope_img is 0)[
       (set:$grope_img to $grope)
     ]
-    (replace:?image)[(print: "<video disableRemotePlayback src='img/scenes/characters/" + $character's "id" + "/foreplay/bbc/grope " + $grope_img +".mp4' autoplay='' loop='' muted='' playsinline/>")]
+    (replace:?image)[($vid:"scenes/characters/" + $character's "id" + "/foreplay/bbc/grope " + $grope_img + ".mp4")]
   ]
 }
 
@@ -1640,7 +2116,10 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 {
   (display:_around)
   (if:(checkdm:$npc, "race", "is", "black"))[
-    (if:$npc's "cock" is "in you")[(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/bbc/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")]]
+    (if:$npc's "cock" is "in you")[
+      <!--(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/bbc/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")] -->
+      (replace:?right_options)[($pic:"characters/sex/bbc/doggy/" +  $character's "id" + ".jpg")]
+      ]
   ]
 }
 
@@ -1648,8 +2127,10 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 {
   (display:_around)
   (if:(checkdm:$npc, "race", "is", "black"))[
-    (replace:?image)[(print:"<img class='greyborder' src='img/characters/sex/insert/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
-    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+    (replace:?image)[($pic:"characters/sex/insert/bbc/" +  $character's "id" + ".jpg")]
+    <!--(replace:?image)[(print:"<img class='greyborder' src='img/characters/sex/insert/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]-->
+    (replace:?right_options)[($pic:"characters/sex/doggy/bbc/" + $character's "id" + ".jpg")]
   ]
 }
 
@@ -1658,7 +2139,8 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
   (display:_around)
   (if:(checkdm:$npc, "race", "is", "black"))[
     (unless:$minigame_played is "true")[
-        (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+        <!--(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]-->
+        (replace:?right_options)[($pic:"characters/sex/doggy/bbc/" +  $character's "id" + ".jpg")]
     ]
   ]
 }
@@ -1907,7 +2389,8 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 {
   (if:(checkdm:$npc, "race", "is", "black"))[
     (if:$type is "transactional sex")[
-    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
+    <!--(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]-->
+    (replace:?right_options)[($pic:"characters/sex/doggy/bbc/" +  $character's "id" + ".jpg")]
     ](else:)[
     (replace:?right_options)[]
     ]
@@ -1972,12 +2455,32 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 {
   (set:$minigame's "cock type" to "bbc")
   (display:_around)
+  (display:"blacked sex tally")
+}
+
+:: bar dance start blowjob [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "blowjobs given" to it + 1)
+  (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+}
+
+:: bar dance start sex [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "sex as girl" to it + 3)
+  (set:$blacked_daily_stats's "sex as girl" to it + 3)
 }
 
 :: dredd job sex they orgasm 4 [around]
 {
   (display:_around)
   (set:$minigame's "cock type" to "bbc")
+  (set:$blacked_stats's "blowjobs given" to it + 1)
+  (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+  (set:$blacked_stats's "sex as girl" to it + 1)
+  (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (display:"blacked sex tally")
 }
 
 :: story the fisherman sex 15 pose options [around]
@@ -1986,9 +2489,24 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
   (set:$minigame's "cock type" to "bbc")
 }
 
+:: story the fisherman sex 17 [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "blowjobs given" to it + 1)
+  (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+}
+
+:: fisherman sex end [around]
+{
+  (display:_around)
+  (set:$blacked_stats's "sex as girl" to it + 1)
+  (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (display:"blacked sex tally")
+}
+
 :: sales demo sex begin [around]
 {
-  <!-- 
+  <!-- demo names:
   goodgirl basic
   goodgirl max
   goodgirl petite
@@ -2001,6 +2519,8 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
   -->
   (display:_around)
   (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
+  (set:$blacked_stats's "sex as girl" to it + 1)
+  (set:$blacked_daily_stats's "sex as girl" to it + 1)
 }
 
 :: sales demo strip [around]
@@ -2013,6 +2533,8 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 {
   (display:_around)
   (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
+  (set:$blacked_stats's "blowjobs given" to it + 1)
+  (set:$blacked_daily_stats's "blowjobs given" to it + 1)
 }
 
 :: girl rough dirty talk [around]
@@ -2044,7 +2566,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
 
 :: girl introduce yourself [around]
 {
-  (unless:(is_fem:))[
+  (unless:(is_fem:) and $blacked_compatible is 0)[
     (display:"load relationship")
     (if:$npc's "traits" contains "only bbc")[
       (if:$character's "race" is "black")[
@@ -2089,8 +2611,8 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
         $blackfreq is "Black Encounters: Always", 5,
         ,0
         ))
+        (if:$blackfreq is "Black Encounters: Always")[(set:$uninterested to "true")]
         ]
-      (if:$blackfreq is "Black Encounters: Always")[(set:$uninterested to "true")]
       (set:$events to $events + (a:"introduce"))
       (set:$npc's "events" to $npc's "events" + (a:"introduce"))
       (set:$npc's "familiarity male" to 1)
@@ -2339,7 +2861,7 @@ Cunnilingus received: (print:$blacked_stats's "cunnilingus received")
       (set:$butt to (twirl:"ass","butt","rear","ass","trunk","ass","ass","butt","badonkadonk"))
       "(twirl:"Your ass is literally built for grabbing.","That $butt has a NICE jiggle to it.","That $butt is nice and FAT!","That $butt is nice and PHAT.","Nice $butt. You could bounce quarters off that thing,")"
       (if:$outfit's "tags" contains "nude")[
-        (print:"<img class='greyborder' src='img/characters/nude/butt/" +  $character's "id" + ".jpg' width='100%' height=auto>")] 
+        ($pic:"characters/nude/butt/" + $character's "id" + ".jpg")]
       (unless:(datanames:$npc) contains "petname")[
         (set:$npc's petname to (twirl:"little miss fat-ass","my big-assed cutie","my big-assed bombshell","my little dumptruck","my nice slice of cake"))
         "(twirl:"I'm gonna call you","Think I'm gonna call you","Gonna call you") (print:$npc's petname)(twirl:" from now on.",".")"(set:$petname to $npc's petname)]

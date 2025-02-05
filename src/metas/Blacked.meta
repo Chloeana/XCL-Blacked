@@ -3,7 +3,7 @@ name: "BLACKED"
 version: "0.4.0"
 author: "Chloeana"
 baseGameVersion:
-  atLeast: "0.21.3"
+  atLeast: "0.21.4"
 requiredMods:
   - name: "BLACKED-Media"
     version:

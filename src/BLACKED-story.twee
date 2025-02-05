@@ -1,0 +1,3062 @@
+:: blacked set up screen
+{
+    <div id='scrollable-content'  class='center_screen' data-simplebar>[
+        []<image|
+        []<text|
+        <div class="options">[]<options|</div>
+    ]<screen|</div>
+}
+
+:: blacked set up fullscreen
+{
+    [(display:"character status")]<status|
+    <div id='scrollable-content'  class='center_screen' data-simplebar>[
+        []<image|
+        []<text|
+        <div class="options">[]<options|</div>
+    ]<screen|</div>
+    <div class='top_right' data-simplebar>[(display:"location and time")]<right_screen|</div>
+}
+
+:: blacked activities [daily]
+{
+    (activities:$blacked_events contains "kendra clone accepted", "Go to Dredd's House", "daytime", true, "Time to become " + $kendra + "...")
+    (activities:$blacked_events contains "dredd visit ready", "Go to Dredd's House", "daytime", false, "none", "🍾")
+}
+
+:: events [around]
+{
+    (if:$time is 3 and $blacked_events contains "kenda intro second chance")[
+        ($nx:"blacked kendra story second chance")
+    ]
+    (else:)[(display:_around)]
+}
+
+:: blacked kendra transform
+{
+    (set:$temp_pill to (dm:
+        "id","genesis prototype",
+        "name",$kendra))
+    (display:"take temporary pill")
+    (set:$your_name to $temp_pill's name)
+    (replace:?status)[(display:"character status")]
+    (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
+}
+
+:: blacked kendra revert
+{
+    (display:"temp pill expires")
+    (set:$character's "gender" to $character's "real gender")
+    (replace:?status)[(display:"character status")]
+}
+
+:: temp pill icon [around]
+{
+    (if:$temp_pill's "id" is "genesis prototype")[
+        ($show_tooltip:[🧬],[Knockoff pill: Genesis Prototype™ 
+        Brand: SWP 
+        Effect: You're (print:$temp_pill's name)... basically.])
+    ]
+    (else:)[(display:_around)]
+}
+
+:: blacked kendra story setup
+{
+    (unless:$blacked_events contains "kendra clone talked" and $blacked_compatible is 0)[
+        (set:$kendradm to $npcs's kendra)
+        (if:(datanames:$kendradm) does not contain "sex times")[(set:$kendradm's "sex times" to 0)]
+
+        (set:$kendradrink to (cond:
+            (is_preg:),"soda",
+            $kendradm's likes contains "whisky","whisky",
+            $kendradm's likes contains "wine","wine",
+            $kendradm's likes contains "beer","beer",
+            $kendradm's likes contains "tequila","tequila",
+            $kendradm's likes contains "fruity cocktail","strawberry daiquiri",
+            "soda"))
+        
+        (if:($recall:"corpo revenge party"))[(set:$corpo_revenge to 2)]
+        (else-if:$office_events contains "visit victor")[(set:$corpo_revenge to 1)]
+    ]
+}
+
+:: test kendra
+{
+    (set:$bar_party's times to 4)
+    (set:$corpo_revenge to 1)
+}
+
+:: Hit the bar [around]
+{
+    (display:"blacked kendra story setup")
+    
+    (if:$blacked_events does not contain "kendra clone talked")[
+        (if:$bar_party's times > 2 and $corpo_revenge > 0)[($cs:"blacked kendra story intro")]
+        (else:)[(display:_around)]
+    ]
+    (else:)[(display:_around)]
+}
+
+:: blacked kendra story intro [fullscreen]
+{
+    (display:"blacked set up fullscreen")
+    (masteraudio:"stopall")
+    (newtrack:'bar outdoor ambience','aud/ambience/club/crowd outdoor.mp3')
+    (set:$ambience to "bar outdoor ambience")
+    (display:"play ambience")
+    (set:$blacked_events to it + (a:"kendra clone talked"))
+    (replace:?image)[($pic:"places/bar/outside.jpg")]
+    (replace:?right_screen)[
+        (set:$select to "kendra")
+        (display:"load npc")
+        (set:$npc_select to "kendra")
+        (if:(is_fem:) and $npc's "events" does not contain "knows xchange")[(set:$npc's "events" to it + (a:"knows xchange"))]
+        (set:$npc's img to "img/npc/girls/blacked/kendra/outside bar.jpg")
+        (display:"load relationship")
+        (display:"npc screen update")
+    ]
+    (replace:?text)[
+        As you approach the bar, you see 
+        (if:$kendradm's events contains "name")[$kendra ]
+        (else:)[a familiar looking (print:$kendradm's "unfamiliar name") girl, ]
+        standing off to the side of the entrance, pacing slightly, engrossed in a phone call.(nl:1)
+        She seems frustrated, gesturing with her free hand.(nl:2)
+        When she notices you, she hangs up and calls out to you. “Hey! (cond:
+            (is_fem:) and $kendradm's events contains "seen female",$character's "female name",
+            (is_fem:) and not ($bar_dance's "stripper name" is $character's "female name"),$bar_dance's "stripper name"+ "! I mean..." + $character's "female name",
+            (is_fem:),$character's "female name",
+            $character's "male name"
+            )! Wait up!”(nl:1)
+        Rushing over, her heels clicking against the pavement, phone still clutched in her hand. Her usual confident smirk is replaced by something more serious.(nl:1)
+    ]
+    (replace:?options)[
+        ($simple_option:"blacked kendra story 1","display",(cond:
+        ($kendradm's events does not contain "name"),"Do I know you?",
+        ($kendradm's "sex times" >=2 and $character's charm >= 5),"Hey, "+$kendra+", your place or mine tonight?",
+        ((is_male:) and $kendradm's events contains "introduce"),"Hey, "+$kendra+", what's wrong?",
+        (is_fem:) and $relationships's kendra's friendship >= 5,"Everything okay?",
+        "Yeah?"),"Sorry, I’m late for a drink. Can this wait?")
+    ]
+}
+
+:: blacked kendra story 1
+{
+    (replace:?image)[($pic:"npc/girls/blacked/kendra/outside bar tall.jpg","left")]
+    (replace:?text)[
+        (if:$choice is "Everything okay?")[
+            “Yeah, yeah, I’m fine. Just… dealing with some stuff, but I think you might be able to help.”(nl:2)
+            *She steps closer and lowers her voice slightly, as if not wanting anyone else to hear.*(nl:1)
+            “Listen, I need a favor.”(nl:2)
+            ]
+        (else-if:$choice is "Do I know you?")[
+            *She chuckles dryly.* “Sorta. Indirectly. I've seen you around the bar before...and $gabbie has told me all about you…”(nl:2)
+            *She lets out a little sigh...* “She also said you might be able to help us. So, just... hear me out?”  
+            ]
+        (else-if:$choice is "Hey, "+$kendra+", your place or mine tonight?")[
+            (if:$npc's traits contains "slut")[
+                *She smirks, tilting her head slightly.* “You don’t waste any time, do you? I like that... But let’s just say my ‘place’ comes with strings tonight, and not the fun kind.”  
+                (nl:2)  
+                *Her tone shifts, more serious now.* “Seriously though, I need your help with something first.”  
+            ](else:)[
+                *She raises an eyebrow, unimpressed.* “So it’s like that now is it? Maybe later, I need your help with something first.”  
+                (nl:2)  
+                *She sighs, softening a little.* “Look, this isn’t a hookup. It’s… complicated. But I need someone I can trust.”  
+            ]
+        ]
+        (else-if:$choice is "Hey, "+$kendra+", what's wrong?")[
+            *She glances at you, her lips pressing into a thin line before letting out a sigh.*(nl:1)
+            “Honestly? A lot. And I need some help.”  
+            (nl:2)  
+            *She rubs the back of her neck awkwardly.*  
+            “Let’s just say I’ve gotten myself into a situation, and I need a little… creative problem-solving. You up for it?” 
+        ]
+        (else-if:$choice is "Sorry, I’m late for a drink. Can this wait?")[*She rolls her eyes.* “Trust me, what I’ve got is way more interesting than whatever’s going on in there. You can drink later.”]
+        (nl:2)
+
+        (if:$npc's events does not contain "name")[
+            “I'm $kendra by the way… ” (nl:1)
+            (set:$npc's "events" to it + (a:"name"))
+            (display:"npc screen update")
+            (display:"update relationship name girl")
+        ]
+    ]
+
+    (if:$npc's events does not contain "introduce" and (is_male:))[
+        (set:$npc's "events" to it + (a:"introduce"))
+    ]
+    (else-if:$npc's events does not contain "introduce female" and (is_fem:))[
+        (set:$npc's "events" to it + (a:"introduce female"))
+    ]
+
+    (if:$npc's "familiarity male" is 0 and (is_male:))[
+        (set:$npc's "familiarity male" to 1)
+    ]
+
+    (if:$choice is "Sorry, I’m late for a drink. Can this wait?")[
+        (replace:?options)[
+            (link:(twirl:"Not interested, I'm busy","Figure it out yourself"))[
+                (display:"blacked kendra story decline bar")
+            ]
+            (link:"Alright, I'll bite. Tell me more.")[
+                (set:$choice to "Alright, I'll bite. Tell me about the favor.")
+                (display:"blacked kendra story 2")
+            ]
+        ]
+    ]
+    (else:)[
+        (replace:?options)[($simple_option:"blacked kendra story 2","display","What kind of favor?","Is this about a guy? Because if it is…","Alright, I'll bite. Tell me about the favor.")]
+    ]
+}
+
+:: blacked kendra story decline bar
+{
+    (replace:?image)[($pic:"npc/girls/blacked/kendra/bar taunt.jpg","right")]
+
+    (replace:?text)[
+        $kendra looks pissed...(nl:2)
+        Just as you’re about to walk away, a white Ferrari Testarossa pulls up right next to you.(nl:1)
+        As the door swings open, $kendra’s demeanor shifts and her lips form into a smirk. A black man gets out and she instantly embraces him, planting a wet fat kiss on his lips.(nl:2)
+
+        (if:(is_male:))[
+            “Who’s the loser?”(nl:2)
+            “Nobody...
+        ]
+        (else:)[
+            “She joining us tonight?”(nl:2)
+            “No...
+        ]
+
+        they were just leaving...”(nl:2)
+
+        (if:(is_fem:))[“Too bad”...(nl:1)]
+
+        (replace:?options)[
+            (link:"Watch them get in the car")[
+                (replace:?image)[($pic:"npc/girls/blacked/kendra/bar leave.jpg")]
+                (replace:?text)[
+                    *He walks around and gets in the passenger side, leaving $kendra to take the driver’s seat. She digs a napkin out of the car’s console and scribbles something down on it.*(nl:2)
+
+                    “Here, in case you wise up and change your mind...” *She hands you the folded napkin.*(nl:2)
+
+                    *The car squeals its tires as it speeds away.*(nl:1)
+                    (link:"Look at the napkin")[
+                        (replace:?image)[($pic:"places/bar/outside.jpg")]
+                        (replace:?text)[
+                            It says: *It's about Bruce... I need your help.* and has her number written out.(nl:2)
+
+                            “Shit. Of course it's about Bruce...”(nl:1)
+
+                            (if:$kendradm's "events" contains "got number")[(nl:1)“I already have her number”, you think to yourself.(nl:1)]
+                            (else:)[(set:$npc's "events" to it + (a:"got number"))(display:"save npc")]
+                            
+                            (set:$excluded_npcs_from_bar to it + (a:"kendra"))
+                            ($remember:"blacked kendra story intro",7,"kendra","none","refused","dream","blacked dream kendra car")
+
+                            (replace:?options)[
+                                (link:"Continue into the Broken Drum")[($cs:"Hit the bar")]
+                                (if:$kendradm's "sex times" > 0)[(link:"Go to $kendra's Apartment")[(set:$choice to "Second Chance")(display:"blacked kendra story 3")]]
+                                (link:"Go Home")[
+                                    (set:$exit_index to 0)
+                                    (set:$exit_tag to "bar_exit")
+                                    (set:$exit_chk to "bar exit check")
+                                    (set:$exit_loc to $location)
+                                    (set:$spike_chance to 0)
+                                    (set:$next to "bar exit check")
+                                    (display:"change screen")
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story second chance [fullscreen]
+{
+    (masteraudio:"stopall")
+    (display:"blacked set up fullscreen")
+    (replace:?right_screen)[
+        (display:"location and time contents")
+    ]
+    (replace:?text)[Just as you are about to begin your evening, your phone rings. It's $kendra.(nl:2)]
+    (replace:?options)[(link:"Answer it")[
+        (replace:?right_screen)[
+            (set:$select to "kendra")
+            (set:$npc_select to "kendra")
+            (display:"load npc")
+            (set:$npc's img to "img/npc/girls/blacked/kendra/outside bar.jpg")
+            (display:"load relationship")
+            (display:"npc screen update")
+        ]
+        (replace:?text)[
+            “Hey $your_name!(nl:1)
+            (if:$kendradm's traits contains "bitch")[
+                Decide to help or are you too scared of Bruce? Haha. Okay, fine... Can you just come over so I can tell you what’s going on?
+            ]
+            (else-if:$kendradm's traits contains "rich")[
+                You ready to help me yet? I don’t wanna talk about it over the phone. Can you come over so I can explain everything?
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                ($bimbo:[So like, I know I totally didn’t get to ask you, but I *really* need your help!😬
+                … and, like, I can’t explain everything over the phone! 😳 Can you come over so I can tell you all about it? 💖 Pretty please? 😘])
+            ]
+            (else:)[
+                You ready to hear about my situation? It’s a bit too much to explain over the phone. Can you come over so I can fill you in?
+            ]
+            ”(nl:2)
+        ]
+        (replace:?options)[
+            (link:(twirl:"Yeah, I'll be over","Sure, I'll come over","Be there in 15"))[(set:$choice to "Second Chance")(display:"blacked kendra story 3")]
+            (link:(twirl:"Just tell me over the phone","Can't you just tell me?"))[
+                (replace:?text)[
+                    “*Ugh*, no. It’s too much. Just come over. It’s important, please? $gabbie said you would help us out.”(nl:2)
+                    “You *and* $gabbie?...” (nl:2)
+                    “Yes, she said you were trustworthy and that you would help us...”(nl:1)
+                    (replace:?options)[(link:"Alright, I’ll be over")[(set:$choice to "Second Chance")(display:"blacked kendra story 3")]]
+                ]
+            ]
+            (link:(twirl:"No, I don't think so", "I don't need any more problems"))[
+                (replace:?text)[
+                    *She lets out a huge sigh of frustration.*(nl:2)
+                    “Listen, just, come over and hear me out. Okay? $gabbie said you could help.” (nl:2)
+                    “If you don’t like what I have to say, then, well, I guess it’s a no.” (nl:2)
+                    *She hangs up without giving you a chance to respond.*(nl:2)
+                ]
+                (replace:?options)[(link:"Maybe I should just go over...")[(set:$choice to "Second Chance")(display:"blacked kendra story 3")]]
+            ]
+        ]
+        (set:$excluded_npcs_from_bar to it - (a:"kendra"))
+        (set:$location_params to (dm:"name","$kendra's apartment"))
+        (set:$blacked_events to it - (a:"kenda intro second chance"))
+    ]]
+}
+
+:: blacked kendra story 2
+{
+    (replace:?image)[($pic:"npc/girls/blacked/kendra/outside bar tall.jpg","left")]
+    
+    (replace:?text)[
+        (if:$choice is "What kind of favor?")[
+            “It’s… complicated. But it’s not dangerous. Well, probably not. I just need someone (cond:
+            (is_fem:) and $kendradm's events contains "seen female","I can trust.",
+            $kendradm's "sex times" > 2,"that cares.",
+            ,"that can help.")”(nl:2)
+        ]
+        (else-if:$choice is "Is this about a guy? Because if it is…")[*She starts laughing.* “A guy? Please. If this were about a guy, I’d handle it myself. This is bigger. Trust me.”(nl:2)]
+        (else-if:$choice is "Alright, I'll bite. Tell me about the favor.")[*She grins slightly.* “That’s the spirit. You might even have some fun. Or, you know, hate me forever. It’s a gamble.”(nl:2)]
+        *She glances around, discreetly, as if somebody might be watching.*(nl:1)
+        *Her voice lowers to almost a whisper.* “It’s about Bruce. And SWP. I’ll explain everything, but not here. Can we go somewhere quieter?”(nl:2)
+    ]
+
+    (replace:?options)[($simple_option:"blacked kendra story 3","display",(cond:$corpo_revenge is 2, "Of course it’s about Bruce...", "Ugh, Bruce..."),"Alright","Sure, let's go")]
+}
+
+:: blacked kendra story 3
+{
+    (set:$ambience to "evening home")(display:"play ambience")
+    (replace:?right_screen)[
+        (set:$current_location to $kendra + "'s apartment")
+        (display:"location and time and inventory no wardrobe")
+    ]
+    
+    (replace:?image)[($pic:"places/blacked/kendras apartment/0.jpg","left")]
+
+    (replace:?text)[
+        (if:$choice is "Sure, let's go")[
+            *She offers you a small smile, some of her usual confidence returning.*(nl:1)
+            “Thanks. We can talk at my place(if:$kendradm's "sex times" is 0)[ it isn’t far].”(nl:2)
+        ]
+        (else-if:$choice is "Ugh, Bruce...")[
+            *She sighs and nods.*(nl:1)
+            “Yes, *that* Bruce.”(nl:2)
+        ]
+        (else-if:$choice is "Of course it’s about Bruce...")[
+            *She raises an eyebrow, smirking faintly.*(nl:1)
+            “Relax, I’m not interested in your Maddox drama-fest.”(nl:2)
+        ]
+
+        (unless:$choice is "Second Chance")[
+            *You follow $kendra down the street, leaving the noise of the bar behind. She walks quickly but isn’t in a rush, her expression a mix of focus and frustration.*(nl:2)
+        ]
+
+        *When you arrive, $kendra unlocks the door and waves you inside.*
+        (if:$choice is "Second Chance")[
+            - “Look who finally decided to show up.”
+        ](nl:2)
+
+        *The apartment is tidy but full of personality, with bold-colored decor and a few scattered personal items giving it a cozy vibe.*(nl:2)
+
+        (if:$kendradm's "sex times" > 0)[
+            (if:$kendradm's traits contains "rich" and $kendradm's traits contains "bitch")[
+                *She crosses her arms, leaning against the doorframe as you step in.*(nl:1)
+                “You’ve been here before, so you know the rules. Don’t touch anything you can’t afford to replace. Let’s get to it.”
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                *She glances at you with a smirk, though her voice has an edge of seriousness.*(nl:1)
+                “Come on in. We’re not here to mess around... but maybe we can... celebrate later?”  
+            ]
+            (else:)[
+                *She tosses her bag onto the couch, gesturing for you to sit.*(nl:1)
+                “You can sit, I'll get us some drinks. Wait, you like $kendradrink right? I can't remember, whatever!”  
+            ]
+        ]
+        (else:)[
+            (if:$kendradm's traits contains "rich" and $kendradm's traits contains "bitch")[
+                *She surveys the room briefly, motioning for you to sit as she hangs her coat up.*(nl:1)
+                “It’s not a penthouse, but it works. We’re not here to talk about the decor anyway, so sit.”  
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                *She folds her arms, leaning against the wall with a faint smirk.*(nl:1)
+                “Not bad, right? Cozy enough for a serious chat. Sit tight, I’ll be right back.”  
+            ]
+            (else:)[
+                *She gestures around the room casually, before tossing her purse onto the couch.*(nl:1)
+                “It’s cute, right? Needs a little more pink. Anyway, sit down.”  
+            ]
+        ]
+        (nl:2)
+        *She disappears into the kitchen and returns moments later with two glasses of $kendradrink.*(nl:1)
+    ]
+
+    (replace:?options)[($simple_option:"blacked kendra story 4","display","Sit down")]
+}
+
+:: blacked kendra story 4
+{
+    (replace:?image)[($pic:"places/blacked/kendras apartment/1.jpg","left")]
+    
+    (replace:?text)[
+        (if:$kendradm's traits contains "rich" and $kendradrink is "wine")[*She hands you a glass. “Hope red’s fine. This label isn’t great, but it’s decent enough for this chat.”* (nl:2)]
+        (else-if:$kendradm's traits contains "bimbo" or (is_bim:) and $kendradrink is "strawberry daiquiri")[*She hands you a colorful cocktail in a mismatched glass.*(nl:1) ($bimbo:[“I’m pretty sure this is, like, vodka… or rum? Who cares—it’s soooo yummy! 🍹💕”])]
+        (else-if:$kendradm's traits contains "slut")[*She returns with a drink in each hand, her eyes lingering on you. “Here you go. Don’t worry, I didn’t spike it… this time.”* (nl:2)]
+        (else:)[*Placing a glass in front of you, she settles into the chair opposite yours.*]
+
+        “So, here’s the thing. You know Bruce, obviously. Well, a few months ago, he convinced me and $gabbie to volunteer our DNA for one of SWP’s *big new projects*. Paid us and everything(if:$kendradm's traits contains "rich")[, not that I needed it].(nl:1)
+        At the time, it sounded harmless enough...(if:$kendradm's traits contains "bimbo")[($bimbo:[It’s some kinda, like, clone-y pill or whatever? 🤔 I dunno! Science-y stuff!🧬])]
+        (else:)[Something about a prototype pill for cloning DNA or some shit like that.]
+        
+        Anyway, we didn’t think much of it at the time.”(nl:2)
+
+        *She leans forward, her tone dropping slightly.*(nl:1)
+        “But now, things are getting weird. Dredd is asking us questions and Maurice keeps texting non-stop about it...(nl:1)
+        I think SWP might be up to some weird shit.”(nl:2)
+    ]
+
+    (replace:?options)[($simple_option:"blacked kendra story 5","display","Dredd and Maurice?","Why do you need my help?","Go on.")]
+}
+
+:: blacked kendra story 5
+{
+    (replace:?image)[($pic:"places/blacked/kendras apartment/2.jpg","left")]
+    
+    (replace:?text)[
+    (if:$choice is "Dredd and Maurice?")[
+        *$kendra leans back slightly, swirling her $kendradrink thoughtfully.*(nl:1)
+        “Yeah, Dredd has certain... connections. He’ll make sure it gets in front of the right people. But...” *She frowns slightly.* “He’s not going to risk his reputation on untested junk.”(nl:2)
+        *Her gaze sharpens as she looks at you.*(nl:1)
+        “Maurice feels the same way. They don’t trust Bruce, but they trust *me*. Or at least, they trust *you*… and it helps that Gabbie vouches for you. She told me how reliable you are. That’s why I need you for this.”(nl:2)
+    ]
+    (else-if:$choice is "Why do you need my help?")[
+        *$kendra sighs, setting her $kendradrink down with a soft clink.*(nl:1)
+        “Because I can’t exactly test it on myself, can I? And let’s face it—you’ve handled crazier stuff than this.”(nl:2)
+        *Her lips twitch into a faint smirk, but there’s genuine seriousness in her gaze.*(nl:1)
+        “Gabbie told me how dependable you are, and I trust her. But this isn’t just about me—it’s about having someone Dredd and Maurice can trust when you show them that this pill works.”(nl:2)
+    ]
+    (else-if:$choice is "Go on.")[
+        *Her grin widens slightly, though her tone stays low and conspiratorial.*(nl:1)
+        “This pill… this *clone* pill… it’s supposed to let someone take on another person’s DNA and literally become them. Looks, voice, mannerisms, everything.”  
+        *She pauses, swirling her drink.*(nl:1)
+        “$gabbie and I were some of the first tests. Bruce isn’t telling us the whole story, but Dredd and Maurice have started asking tough questions. It’s getting serious.”(nl:2)
+    ]
+
+    “If this pill really does clone somebody, like Bruce implied, then Maurice needs to see it himself. Run tests. Try to get ahead of it.”(nl:2)
+    *You think back to your chat in Victor’s office and hacking the New-U machine.*(nl:1)
+    The... <span class='chromatic'>Genesis Engine</span>...(nl:1)
+    You know exactly where this is going.(nl:2)
+
+    *$kendra continues, her tone growing more urgent.*(nl:1)
+    “I need you to take the pill, to *become me*. That’s the only way we can find out if it’s safe. If Dredd and Maurice see it work, they’ll have no choice but to help us. And maybe we’ll help get some answers about Bruce and SWP’s real agenda.”(nl:1)        
+    ]
+
+    (replace:?options)[($simple_option:"blacked kendra story 6","display","You want me to… become you?","What’s the catch?","Maybe... but you'll owe me, big time.")]
+}
+
+:: blacked kendra story 6
+{
+    (replace:?image)[($pic:"places/blacked/kendras apartment/3.jpg","left")]
+    
+    (replace:?text)[
+        (if:$choice is "You want me to… become you?")[
+            *$kendra grins, tilting her head slightly as if daring you to back out.*(nl:1)
+            (if:$kendradm's traits contains "rich")[
+                “That’s the idea. You’d be stepping into my shoes—my designer heels, by the way.” *She smirks.*(nl:2)
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                ($bimbo:[“That’s, like, the whole idea! You’d totally get to be me! 😍 Can you even imagine? Like, soooo much fun! It’s the ultimate, y’know, glow-up! 💖✨])
+                *She giggles, then pauses.* “Oh, but, like… focus on the Dredd and Maurice thing, okay? Its important.”(nl:2)
+            ]
+            (else:)[
+                “That’s the idea. You’d be me—my looks, my charm, my everything. Dredd and Maurice won’t know what hit them. But don’t enjoy it *too much.*”(nl:2)
+            ]
+            (if:$kendradm's traits contains "bitch")[
+                “Just don’t screw it up—I’ve got a reputation to maintain.”(nl:2)
+            ]
+        ]
+        (else-if:$choice is "What’s the catch?")[
+            *$kendra shrugs, setting her $kendradrink down.*(nl:1)
+            (if:$kendradm's traits contains "rich")[
+                “The catch? Aside from letting you borrow *all this*?” *She gestures at herself with a sly grin.* “It’s experimental. Maurice says it’s mostly safe, but SWP isn’t exactly known for playing by the rules.”(nl:1)
+                *Her tone shifts slightly.* “If it wasn’t important, I wouldn’t even be considering this. But it’s not permanent, and you’ll get through it.”(nl:2)
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                ($bimbo:[“The catch? Oh, it’s, like, totally experimental or whatever! 😯 But Maurice says it’s mostly fine? 🤷‍♀️ I dunno, science-y stuff! 🧬])
+                *She twirls a lock of her hair between her fingers.*(nl:1)
+                “I wouldn’t ask if I didn’t think you could handle it!”  
+                *She smiles brightly, her sincerity shining through her usual playful demeanor.*(nl:2)
+            ]
+            (else:)[
+                “The catch? Well, I guess you’ll get to know how it feels to be *this* hot for a while.”  
+                *She grins wickedly, but her tone grows softer.* “But seriously… it’s experimental, and there’s some risk. I wouldn’t ask if it wasn’t important.”(nl:2)
+            ]
+        ]
+        (else-if:$choice is "Maybe... but you'll owe me, big time.")[
+            (if:$kendradm's traits contains "rich")[
+                “Deal. I’ll owe you… and I don’t owe *just anyone*, you know. But trust me, this will be worth it for both of us.”(nl:1)
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                ($bimbo:[“Deal! Ohmygawd, I’ll owe you, like, sooo big time! 😘 Like, for real, I’ll totally make it up to you! This is gonna be UH-MAY-ZINGGG! 💖✨])
+            ]
+            (else:)[
+                “Deal! Drinks, favors… maybe even more if you’re lucky. You’re going to love this.”(nl:1)
+            ]
+            
+            *She leans forward, her expression more serious now.* “But really, thanks. This means a lot.”(nl:2)
+        ]
+        *Her tone gets a little more serious.* “Head over to Dredd’s place tomorrow and I’ll arrange everything. Deal?”(nl:2)
+    ]
+
+    (replace:?options)[($simple_option:"blacked kendra story 7","display","I’ll think about it.","This still sounds risky. Are you sure it’s safe?","What happens if something goes wrong?")]
+}
+
+:: blacked kendra story 7
+{
+    (replace:?image)[($pic:"places/blacked/kendras apartment/2.jpg","left")]
+    
+    (replace:?text)[
+        (if:$choice is "I’ll think about it.")[
+            (if:$kendradm's traits contains "bitch")[
+                *Her grin twists into a scowl.*(nl:1)
+                “What’s there to think about? Either you’re in, or you’re wasting my time. Don’t make me regret asking you.”
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                *She pouts, her tone taking on a teasing edge.*(nl:1)
+                “Oh, come on. Don’t play coy. You know you want to… and trust me, you’ll love being me.”
+            ]
+
+            (nl:2)
+        ]
+        (else-if:$choice is "This still sounds risky. Are you sure it’s safe?")[
+            (if:$kendradm's traits contains "rich")[
+                *She hesitates for a moment, her confidence flickering.*(nl:1)
+                “Safe? Nothing worth having comes without a little risk. But if it helps, Maurice doesn’t mess around. You’ll be fine.”(nl:2)
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                *She pauses, her brow furrowing briefly before she smiles again.*(nl:1)
+                ($bimbo:[“Safe? Like, totally! I mean... well, like, mostly! 😜 Maurice does all the, like, science-y stuff, so it’s fineee~! You’ll be, like, totally fine! 💖✨])
+            ]
+            (else:)[
+                “Safe? That’s… kinda the point of this test, right? But look, Maurice is going to check you out after. If anything’s wrong, he’ll fix it. He’s the best.”(nl:2)
+            ]
+
+            *You reach up and scratch your head for a moment, looking unconvinced.*(nl:2)
+
+            (if:$kendradm's traits contains "bitch")[
+                *She rolls her eyes, her voice laced with impatience.*(nl:1)
+                “Ugh, you’re such a buzzkill. Maurice is handling it. Do you really think I’d screw this up?”  
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                *She leans closer, her expression softening slightly.*(nl:1)
+                “It’s risky, sure, but isn’t that part of the fun? You’ve got this babe, trust me.”
+            ]
+            (nl:2)
+        ]
+        (else-if:$choice is "What happens if something goes wrong?")[
+            (if:$kendradm's traits contains "bitch")[
+                *She narrows her eyes, her tone sharpening.*(nl:1)
+                “Seriously? That’s what you’re worried about? Get over it. You’re not a rookie.”(nl:2)
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                *She sighs softly, a faint smile playing on her lips.*(nl:1)
+                “If something goes wrong, we’ll deal with it. Together. But nothing’s going to happen. Trust me.”(nl:2)
+            ]
+
+            “Besides, Maurice will be there.
+            (if:$kendradm's traits contains "rich")[
+                He’s brilliant, and he owes me a favor. You’ll be fine.”(nl:2)
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                ($bimbo:[He is, like, *super smart*. He’ll totally handle it!])(nl:1)
+            ]
+            (else:)[
+                He’ll be able to help.”(nl:2)
+            ]
+        ]
+        “We both know you’ve already decided to do it... so why waste any more time?”(nl:2)
+        *You sigh, considering the points she’s made.*(nl:2)
+        *$kendra sets the glass aside, sizing you up while you make your decision.*(nl:2)
+
+        “So? What’ll it be?”(nl:1)
+    ]
+
+    (replace:?options)[($simple_option:"blacked kendra story 8","display","Alright, I'll do it.","You’re really not giving me a choice, are you?","Sorry, but no.")]
+}
+
+:: blacked kendra story 8
+{
+    (unless:$choice is "Sorry, but no.")[(replace:?image)[($pic:"places/blacked/kendras apartment/4.jpg","left")]]
+
+    (replace:?text)[
+        (if:$choice is "Alright, I'll do it.")[
+            (if:$kendradm's traits contains "rich")[
+                *Her grin widens, her relief palpable, though she tries to play it cool.*(nl:1)
+                “I knew you’d step up. Honestly...
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                *Her grin widens, and she claps her hands together excitedly.*(nl:1)
+                ($bimbo:[“Yaaaay! 💖 I knew you’d say yes! 🥰 This is gonna be, like, the BEST thing everrr! 🎉✨”])
+                “Really though...
+            ]
+            (else:)[
+                *A look of relief rolls across her face*(nl:1)
+                “Perfect. I knew you'd say yes. Honestly...
+            ]
+
+            (if:$kendradm's traits contains "bitch")[
+                you’d be crazy to turn down a chance like this.”  
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                you’re going to *love* being me. It’ll be wild!”  
+            ]
+            
+            (nl:2)
+
+        ]
+        (else-if:$choice is "You’re really not giving me a choice, are you?")[
+            (if:$kendradm's traits contains "bitch")[
+                *She rolls her eyes, her tone dripping with sarcasm.*(nl:1)
+                “Oh, stop whining. You’ll survive. Besides, you’re lucky to even have this chance.”  
+            ]
+            (else-if:$kendradm's traits contains "slut")[
+                “Trust me, you won’t regret it. You’re going to love this.”  
+            ]
+                
+            (nl:2)
+        ]
+
+        (unless:$choice is "Sorry, but no.")[
+            “You’ll need to head to Dredd’s place to make this happen. You remember where it’s at?”(nl:1)
+            *You nod, recalling the various parties there with $gabbie, Maurice, and Dredd.*(nl:2)
+
+            “Alright good. Maurice can run the tests at Dredd’s, after you transform.”(nl:1)
+            *She finishes her $kendradrink and stands up.*(nl:1)
+            “Alright, you should get some rest. Big day tomorrow. And don’t overthink it, okay? It’s gonna be (if:$kendradm's traits contains "bimbo" )[so much ]fun!”(nl:2)
+
+            *Before you can leave, she steps forward and pulls you into a quick hug, surprising you with the gesture.*(nl:1)
+            (if:$kendradm's traits contains "slut")[
+                *She holds the hug a little longer than necessary, squeezing your butt a little before she pulls back with a playful smile.*(nl:1)
+            ]
+            (else-if:$kendradm's traits contains "bimbo")[
+                *It is quick but enthusiastic, her excitement bubbling over as she grins at you.*(nl:1)
+            ]
+            “Thanks again. I mean it.”(nl:2)
+            *With that, she sees you out, leaving you to make your way back home.*(nl:2)
+            ($remember:"blacked kendra story intro",100,"kendra","none","accepted","dream","blacked dream kendra car")
+            (set:$blacked_events to it + (a:"kendra clone accepted","dredd visit ready"))
+            (set:$gain_respect to 10)
+            (set:$gain_friendship to 10)
+            (set:$gain_attraction to 10)
+            (display:"change relationship")
+        ]
+
+        (if:$choice is "Sorry, but no.")[
+            (set:$confirmation to (confirm:"This choice is irreversible. By proceeding, you won't be able to continue $kendra's storyline...and it'll really piss her off. Are you sure you want to proceed?","Yes, I'm sure","No, take me back"))
+            (if:$confirmation is true)[(set:$choice to "Alright, I'll do it.")(display:"blacked kendra story 8")]
+            (else:)[
+                (if:(is_fem:))[
+                    *She lets out a long sigh and shakes her head* “I guess $gabbie was wrong about you...”
+                    ]
+                (else:)[
+                    “You’re out there selling your pilled stripper ass on that pole and getting used half the time! I’m offering you a way better time than that, giving you even more, and you're turning ME down?”(nl:2)
+                    
+                    (if:$kendradm's traits contains "bitch")[
+                        “Get the fuck out of my sight (if:$character's "race" is "white")[you tiny dicked white boy](else:)[pathetic loser]!”
+                    ]
+                ](nl:1)
+                *She practically shoves you out of apartment.*(nl:1)
+                Well, that went well...
+                (set:$blacked_events to it + (a:"kendra clone declined"))
+                (set:$npc's events to it + (a:"hates cock"))
+                (set:$gain_respect to -20)
+                (set:$gain_friendship to -20)
+                (set:$gain_attraction to -20)
+                (set:$gain_dom to 20)
+                (display:"change relationship")
+            ]
+        ]
+    ]
+    
+    (display:"save npc")
+    (set:$excluded_npcs_from_bar to it - (a:"kendra"))
+
+    (replace:?options)[
+        (link:"Go Home")[
+            (set:$exit_index to 0)
+            (set:$exit_tag to "bar_exit")
+            (set:$exit_chk to "bar exit check")
+            (set:$exit_loc to $location)
+            (set:$spike_chance to 0)
+            (set:$next to "bar exit check")
+            (display:"change screen")
+        ]
+    ]
+}
+
+:: blacked kendra story 9 [fullscreen]
+{
+    (display:"blacked set up fullscreen")
+    (newtrack:"kendra clone","aud/music/sex/transactional/" + (twirl:"royals","snap") + ".mp3")
+    ($play:"song","kendra clone")
+    (replace:?right_screen)[
+        (set:$npc to $npcs_men's "dredd")
+        (set:$npc's img to "img/npc/guys/blacked/dredd/portrait.jpg")
+        (display:"npc screen update")
+    ]
+    (replace:?image)[($pic:"places/blacked/dredds house/front door.jpg")]
+    (replace:?text)[{
+        *Dredd stands in the doorway, his broad frame and commanding presence impossible to miss.*(nl:1)
+        “You’re late, (print:$bar_dance's "stripper name")” he says with a smirk.(nl:2)
+        “$your_name.” *You correct him under your breath.*(nl:2)
+        “$kendra had to take off, but she left a bag for you.”(nl:2)
+        *He steps aside to let you in.*(nl:1)
+        “Come on, let’s not waste time. The bathroom’s down the hall. You’ll find the pill in there, along with one of $kendra’s outfits. Take the pill, get dressed, and then meet me back here.”(nl:2)
+    }]
+    (replace:?options)[
+        (link:"How did you get the pill?")[
+            (replace:?image)[($pic:"places/blacked/dredds house/living room.jpg")]
+            (replace:?text)[
+                “Kira. My niece. She works for SWP. Don’t ask me how she managed it, but she snuck one of these prototypes out.(nl:1)
+                But this is the only one with $kendra’s DNA, so you’ve only got one shot... No do-overs. Got it?”(nl:2)
+                *With that, he motions for you to head down the hallway.*(nl:1)
+                “Bathroom’s the third door on the left. Time is money baby, let’s go, I’ve got places to be.”(nl:2)
+                ($simple_option:"blacked kendra story 10","display","Head to the bathroom")
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story 10
+{
+    (if:(exists:"load male body stats old"))[(display:"load male body stats old")]
+    (else:)[
+        (unless:(dmnames:$character) contains "male height cm")[(set:$character to it + (dm:"male height cm",(twist:165,185)))]
+        (unless:(dmnames:$character) contains "male frame")[(set:$character to it + (dm:"male frame",(twirl:"average","athletic","stocky","slim")))]
+    ]
+
+    (set:$current_location to "Dredd's Bathroom")
+    (display:"location and time and inventory no wardrobe")
+    (replace:?image)[($pic:"places/blacked/dredds house/bathroom.jpg")]
+    (replace:?text)[The bathroom is sleek and modern, with everything neatly arranged. On the counter, you spot a small pill in a paper envelope next to a designer bag.(nl:1)
+    “That must be $kendra’s”, you say out loud to no one.(nl:2)
+    You take a quick look inside and find a tight... white... revealing swimsuit... with heels, of course.(nl:2)
+    “*Sigh*. Here goes nothing...”(nl:1)]
+    (replace:?options)[
+        (link:"Take the Pill")[
+            (replace:?text)[
+                You take a deep breath and pick up the pill, hesitating for only a moment before swallowing it.(nl:1) 
+                At first, there’s nothing. No change. Maybe it’s a dud?(nl:2)
+                But then, a wave of heat spreads through your entire body, as if your blood is boiling. Your muscles tense, and your skin begins to tingle.(nl:2) 
+                You watch your reflection in the mirror as it blurs and shifts like a mirage, and you can feel the transformation starting to take hold.(nl:1)
+            ]
+            (link:"The changes begin...")[
+                (replace:?image)[]
+                (set:$se to "fire 3")
+                (display:"play sound")
+                (after: time + 0.8s)[(display:"blacked kendra transform")(replace:?right_options)[($pic:"scenes/blacked/kendra 5v1/bathroom change 1.jpg")]]
+                (replace:?text)[
+                    (if:$character's race is not "white")[
+                        *Your skin tingles as the pigmentation begins to change, shifting to a fair, creamy tone. The changes flow from your hands to your arms, your legs, and finally your face.*(nl:1)
+                        (if:$character's race is "black")[
+                            *Your textured hair straightens and lightens into silky, golden strands.*(nl:1)
+                        ]
+                        (if:$character's race is "asian")[
+                            *Your almond-shaped eyes widen slightly, and the soft golden hue of your skin fades into $kendra’s pale, flawless complexion.*(nl:1)
+                        ]
+                        (if:$character's race is "latin")[
+                            *The warm, tan tones of your skin smooth into $kendra’s porcelain shade, and your hair morphs into silky, golden locks.*(nl:1)
+                        ]
+                        (nl:1)
+                    ]
+                    (if:(is_fem:))[
+                        Your feminine frame starts to change, adapting to match $kendra’s perfect proportions.(nl:2)
+                        (if:$character's "breasts" is not "E")[*Your (print:$character's "breasts")-cup breasts reshape, morphing until they become $kendra’s full, natural E-cups.*(nl:2)]
+
+                        (if:$character's "body type" is not "slim")[
+                            Your (cond:
+                                $character's "body type" is "voluptuous","voluptuous body",
+                                "body"
+                                ) 
+                                slims down, shrinking at the waist... accentuating your new curves.(nl:2)
+                            ]
+
+                        (if:$character's "butt" is not "bubble")[
+                            Your (cond:
+                                $character's "butt" is "slim","cute lil’ butt",
+                                $character's "butt" is "big","juicy ass",
+                                "butt"
+                                ) 
+                                reshapes into a tight, bubble-like curve.(nl:2)
+                            ]
+
+                        (if:$character's "height cm" is not 175)[
+                            (if:$character's "height cm" < 175)[*You feel a stretch as your frame grows taller, reaching $kendra’s height.*(nl:2)]
+                            (if:$character's "height cm" > 175)[*You feel yourself shrinking slightly, your perspective lowering as your height adjusts to match $kendra’s.*(nl:2)]
+                        ]
+                    ]
+                    (else:)[
+                        Your masculine features begin to dissolve, reshaping into $kendra’s feminine form.(nl:2)
+                        (if:$character's masculinity > 70)[
+                            The shift is jarring, your once-dominant masculine traits softening and fading away entirely.(nl:2)
+                        ]
+                        (else:)[Your masculine body starts to change *drastically*.(nl:2)]
+                        
+                        (if:$character's "male height cm" is not 175)[
+                            (if:$character's "male height cm" < 175)[*Your body stretches upward, your new height feeling elegant and poised.*(nl:2)]
+                            (if:$character's "male height cm" > 175)[*You feel yourself shrinking, the loss of height making you feel smaller and more delicate.*(nl:2)]
+                        ]
+                        (if:$character's "male frame" is not "slim")[
+                            Your (cond:
+                                $character's "male frame" is "stocky","broad shoulders shrink down to match",
+                                $character's "male frame" is "athletic","muscular form morphs into",
+                                "male frame compresses and shifts into"
+                            ) $kendra’s slim build.(nl:2)
+                        ]
+                        Your muscles soften, your chest swells into perky E-cup breasts with sensitive, pierced nipples.(nl:2) 
+                        Your (cond:
+                            $character's cockrating is 10,"huge fuckstick",
+                            $character's cockrating > 7,"respectable cock",
+                            $character's cockrating > 5,"cock",
+                            $character's cockrating is 1,"micropenis",
+                            $character's cockrating <= 3,"small dick",
+                            "cock")
+                        vanishes entirely as your groin tingles and shifts, replaced by an unfamiliar warm slit.(nl:1) 
+                        (if:$character's archetype is "playboy")[“No no no!”(nl:1)]
+                        (nl:1)
+                        Your once-male features soften into a delicate, feminine beauty, with smooth skin that feels impossibly soft to the touch.(nl:2)
+                    ]
+
+                    Your reflection sharpens into someone entirely different...$kendra.(nl:1) 
+                    Her sharp cheekbones, full lips, and captivating hazel eyes stare back at you. Her long blonde hair frames (text-style:"double-strike")[her] your youthful, flawless face.(nl:2)
+                ]
+                (link:"$kendra's bag calls to you")[
+                    ($play:"sound","makeup items")
+                    (replace:?text)[
+                        You turn a bit side to side, enjoying each different angle of your new, smirking, confident self. Something’s off though...(nl:2)
+
+                        You reach into $kendra’s bag and pull out a hairbrush. Working it quickly through your long hair, your hands seemingly move on their own, twisting the golden strands into two neat braids.(nl:2)
+
+                        You reach back into the bag and instinctively pull out a smaller makeup bag full of goodies. You start expertly applying them as if it were nothing.(nl:2)
+                        (if:(get_makeup:) >= 2)[
+                            (if:(is_bim:))[($bimbo_dialogue:[Oh my gawd!!! 😍 My makeup is totally UH-MAZING!!])]
+                            (else:)[*Wow, my makeup looks so good!*](nl:2)
+                        ]
+                        (text-style:"smear")[“There we go. So much better, mmm.”]... *Where the hell did THAT come from??*(nl:1)
+                    ]
+                    (link:"You notice the mental changes...")[
+                        (replace:?right_options)[($pic:"scenes/blacked/kendra 5v1/bathroom change 2.jpg")]
+                        (replace:?text)[
+                            The transformation moves beyond the physical...$kendra’s personality and desires continue to flood your mind.(nl:2)
+                            (if:$character's reluctance >= 7)[*You fight against the changes, your thoughts resisting her influence. But her confidence and allure are so overwhelming, making it hard to hold onto your sense of self.*(nl:2)]
+                            (else-if:$character's reluctance < 4)[*The changes overwhelm you. $kendra’s personality fits into your mind like a perfect puzzle piece.*(nl:2)]
+
+                            (if:$kendradm's traits contains "bitch")[
+                                A sharp, commanding confidence fills your thoughts, with a hint of superiority. You catch yourself smirking, amused by how much better you look now.(nl:2)
+                            ]
+                            (else-if:$kendradm's traits contains "slut")[
+                                A deep craving for attention and touch grows within you. You crave to be the center of attention. More than that, you (text-style:"double-strike")[want] need to be desired.(nl:2)
+                            ]
+
+                            (if:$kendradm's traits contains "rich")[
+                                You suddenly feel an air of entitlement, an expectation for luxury and fine treatment. Hundred dollar bottles of champagne with dinner every night. The thought of settling for less feels ridiculous.
+                                (if:$character's money < 5000)[
+                                    (nl:1)You can hear her mocking you, in your mind, calling you a little broke (cond:(is_male:),"boy","girl").]
+                                (nl:2)
+                            ]
+                            (else-if:$kendradm's traits contains "bimbo" or (is_bim:))[
+                                A playful, carefree attitude bubbles up, along with an urge to... giggle ($bimbo_dialogue:[*hehe*]). You glance at your hair and feel a sudden appreciation for how *cute* the braids look.(nl:2)
+                            ]
+    
+                            You randomly remember that $kendra is (if:$kendradm's traits contains "no pill")[not ]on birth control. Wait, did you know that before?(nl:1) 
+                            “Does that apply to me now too?” You wonder.(nl:2)
+
+                            Your new thoughts are also colored by who you once were, creating a strange blend of the old and new.(nl:2)
+                            (if:$character's "archetype" is "loser")[
+                                You can’t help but think for a moment... a Princess Leia comparison pops into your mind as you touch your braids. “I look just like her?? No way!” The realization makes you both nervous and giddy, as your newfound confidence clashes with your usual awkwardness.(nl:1)
+                            ]
+                            (else-if:$character's "archetype" is "nerd")[
+                                Your logical mind tries to process what’s happening. “This is impossible. It’s like her DNA is overwriting mine.” But even as you think this, a part of you starts to admire your curves, feeling a strange thrill at the attention you know this body will attract.(nl:1)
+                            ]
+                            (else-if:$character's "archetype" is "jock")[
+                                You remember a cheerleader from your high school days who looked just like this. “Damn, I used to hook up with her all the time,” you think, only to realize you *are* her now. A mix of nostalgia and embarrassment rushes over you.(nl:1)
+                            ]
+                            (else-if:$character's "archetype" is "playboy")[
+                                You can’t help but grin at your reflection. “This is wild... I used to chase girls like this, and now I *am* one.” The irony isn’t lost on you, and neither is the fact that you’ve gone from the hunter to the hunted.(nl:1)
+                            ]
+                        ]
+                        (link:"Look in the mirror...")[
+                            (newtrack:"remember to take a long hard look","aud/se/taunt/remember to take a long hard look.mp3")
+                            (set:$se to "remember to take a long hard look")
+                            (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
+                            (replace:?image)[($pic:'scenes/blacked/kendra 5v1/bathroom.jpg')]
+                            (replace:?right_options)[]
+                            (replace:?text)[It’s like you can hear her, in your head]
+                            (after:time + 1500)[
+                                (newtrack:"bikini 1","aud/se/clothing/bikini 1.mp3")
+                                ($play:"sound","bikini 1")
+                            ]
+                            (after:time + 3s)[
+                                (replace:?image)[($vid:'scenes/blacked/kendra 5v1/get dressed.mp4')]
+                                (replace:?text)[
+                                    *You step back from the mirror, the realization of what’s happened fully settling in. You’re $kendra now...her looks, her presence, her desires. Every step feels different, every movement a little more seductive, as if your body has its own will.(nl:2)
+                                    
+                                    You glance at the outfit lying on the counter, already feeling the urge to slip into it and embrace what you’ve become.*(nl:1)
+                                    As you start to dress, a (text-style:"blur")[conflict] lurks in your mind. A mix of your own thoughts and hers vying for control.(nl:1)
+                                    (text-style:"double-strike")[Her] Your tight swimsuit clinging to *your* body as you adjust it, accentuating every curve.(nl:2)
+                                    ($simple_option:"blacked kendra story 11","display","Finish getting dressed and head back to Dredd")
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story 11
+{
+    (set:$current_location to "Dredd's Living Room")
+    (display:"location and time and inventory no wardrobe")
+    (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
+    (replace:?image)[($pic:'npc/guys/blacked/dredd/portrait_wide.jpg')]
+    (replace:?text)[Dressed in $kendra’s swimsuit, *if you want to call it that*, you return to the living room where Dredd is waiting.(nl:1) 
+    He stands up, his eyes narrowing as he looks you up and down.(nl:2)
+    “Well, I’ll be damned,” he mutters. “It actually worked.”(nl:2)]
+    (replace:?options)[
+        (link:"Yeah, it did")[
+            (replace:?text)[
+                “Told you, I clean up nice.”(nl:2)
+                *Your mind reels...those weren’t your words... They were (text-style:"smear")[$kendra’s].*(nl:2)
+                (replace:?options)[(link:"Dredd?")[
+                    (replace:?text)[
+                        As you look at Dredd, new thoughts and desires flood your mind. Has he always been that handsome?(nl:2)
+
+                        He’s old enough to be your (text-style:"double-strike")[daddy] dad... but he always seems to have girls hanging off of him.(nl:1)
+                        *You start to picture him with his shirt off, lifting weights... it feels strangely familiar...(nl:1)
+                        *You get lost in the image, and then ... his pants fall to the floor...*(nl:2)
+                        
+                        (if:$kendradm's traits contains "slut")[And out pops his huge black cock...(nl:1)]
+                        The image is just so... (text-style:"emboss")[vivid]... so real...(nl:2) 
+                        Not like you’re imagining it. Almost like you're... (text-style:"blur")[remembering] it.(nl:2)
+                        Your thighs press together on their own. You don't realize that you're biting your lip as you look at him.(nl:1)
+                        *Dredd clears his throat, snapping you out of your thoughts.*(nl:1)
+                        (replace:?options)[(link:(twirl:"What?","Huh?","Come again?"))[
+                            (replace:?text)[
+                                ($gain_arousal:1)
+                                “I said...(nl:1)
+                                Maurice is on his way over here to check you out. Run some tests on you.(nl:2) 
+                                In the meantime, just hang out. Jason’s out by the pool, if you want. He’ll keep you company while you wait.(nl:2) 
+                                I’ve gotta get back, got some business to handle. We’ll catch up later!”(nl:2)
+                                ($simple_option:"blacked kendra story 12","display","Head to the pool")
+                            ]
+                        ]]
+                    ]
+                ]]
+            ]
+        ]  
+    ]
+}
+
+:: blacked kendra story 12
+{
+    (set:$blacked_npcs_men's jasonbrown's "events" to it + (a:"name"))
+    (set:$npc to $blacked_npcs_men's "jasonbrown")
+    (display:"npc screen update")
+    (replace:?image)[($pic:'scenes/blacked/kendra 5v1/guys pool.jpg')]
+    (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
+    (replace:?text)[*You step outside and spot Jason lounging by the pool with four of his friends.*(nl:1) 
+    You don't know Jason, but $kendra does, he's Dredd's nephew. And she knows his friends too, apparently.(nl:1)
+    They’re all tall, dark, and muscular. Their bare chests glistening with a mix of sweat and pool water, tracing slow, tantalizing paths down their toned bodies...(nl:1)]
+    (replace:?options)[
+        (link:"Approach")[
+            (replace:?text)[
+                *As you approach, their conversation halts.*(nl:2)
+                “$kendra?” he asks, his voice full of surprised amusement. “Didn’t know you’d be stopping by.”(nl:2)
+                Jason stands, a broad grin on his face.(nl:1)
+                They're all staring at you. Their names float easily to the front of your mind. Ricky, John, Nat, and Isiah.(nl:2)
+                (text-style:"double-strike")[She] I know all of them ...(nl:1)
+                (set:$blacked_npcs_men's isiahmaxwell's "events" to it + (a:"name"))
+                (set:$blacked_npcs_men's natturnher's "events" to it + (a:"name"))
+                (set:$blacked_npcs_men's johnjohnson's "events" to it + (a:"name"))
+                (set:$blacked_npcs_men's rickyjohnson's "events" to it + (a:"name"))
+                (replace:?options)[(link:(cond:
+                    $kendradm's traits contains "slut","...and they're all so hot",
+                    $kendradm's traits contains "bimbo" or (is_bim:),"*giggle*... Um, hi",
+                    "Hi..."))[
+                    (replace:?text)[
+                        ($gain_arousal:1)
+                        (if:$character's reluctance >= 7)[*You clear your throat, forcing yourself to stay calm as your mind buzzes with lustful thoughts...thoughts that don’t feel entirely your own.*(nl:2)]
+                        “Surprised to see me? Dredd said I could hang out here while I wait for Maurice.”(nl:2)
+                        Jason and his friends exchange glances, their grins widening as they make space for you by the pool.(nl:1)
+                        “Sure, you’re always welcome here,” *Jason says, his tone warm and inviting.*(nl:2)
+                        As you smile at his hospitality, your thoughts become harder to control, the boundaries between your mind and $kendra’s blurring even further...(nl:2)
+                        ($simple_option:"blacked kendra story 13","display","So hot...","Resist these urges")
+                    ]
+                ]]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story 13
+{
+    (replace:?image)[($pic:'scenes/blacked/kendra 5v1/kendra jason.jpg')]
+    (replace:?text)[*Jason pats the pool chair beside him, his warm smile somehow managing to both reassure and ignite a fire within you.*(nl:1)
+    “Come on, sit with me,” *he says, his voice smooth and inviting.*(nl:2)
+    The other guys exchange knowing looks, their quiet chuckles only fueling the strange mix of confidence and arousal swirling inside you.(nl:2)
+    ]
+
+    (replace:?options)[
+        (if:$choice is "So hot...")[
+            (link:"Join them")[
+                (replace:?text)[
+                    ($gain_arousal:1)
+                    (if:$kendradm's traits contains "slut")[
+                        You give a seductive smile, as you look at these (if:$kendradm's traits contains "bimbo" or (is_bim:))[totally yummy ]black guys.(nl:1)
+                        Your hips sway a little more than they should as you wiggle over to Jason.(nl:2)
+                    ]
+                    (else-if:$kendradm's traits contains "rich")[
+                        You subtly eye each of the muscular, hot, black men- like a lioness eyeing her prey. Even though, deep down, you know you’re likely their prey.(nl:1)
+                        Your lips press together, to surpress a smile. You hold your head high as you strut over to Jason.(nl:2)
+                    ]
+
+                    *You settle beside him, the closeness of his body making your skin tingle. His gaze lingers on your lips before sliding lower, and you know he can sense your growing tension.*(nl:1)
+                    “So, what brings you here today, $kendra?”(nl:2)
+
+                    (if:$kendradm's traits contains "bitch")[
+                        *You stiffen slightly, trying to fight the sudden rush of heat flooding your chest. His confidence is infuriatingly disarming, and $kendra’s memories only make it worse. Vivid flashes of her with Jason—the way she melted under his touch, the thrill she felt at his attention—surge through your mind. You shake your head subtly, trying to focus on your own thoughts, not hers, but it’s like trying to swim against the tide.*(nl:2)
+                    ]
+                    (else-if:$kendradm's traits contains "slut")[
+                        *His scent washes over you, your pulse quickens, the heat rising in your chest spreading lower. $kendra’s memories come rushing in—her lips on his, the way his touch made her body hum with desire. It’s overwhelming, blurring the lines between her instincts and your own. You let out a shaky breath, trying to resist, but Jason’s steady gaze pulls you in.*(nl:2)
+                    ]
+
+                    (if:$kendradm's traits contains "rich")[
+                        “Dredd said to wait for Maurice,” you reply, keeping your tone steady, though your hands tighten slightly in your lap. Jason doesn’t miss a beat, his smile easy and confident, like he knows exactly how to make you let go.(nl:2)
+                    ]
+                    (else-if:$kendradm's traits contains "bimbo" or (is_bim:))[
+                        *A soft giggle escapes your lips before you can stop it, $kendra’s memories still blending with your own thoughts in a confusing, heady mix. His scent makes your head spin, and it’s hard to tell if the warmth blooming inside you is hers or yours.*(nl:2)
+                        ($bimbo_dialogue:[Oh, um, Dredd was like, ‘Wait out there,’ so here I am! Hehe!]), you say, smiling at him, your voice light and airy. Jason tilts his head, his presence utterly magnetic, and you feel your resistance slipping away with every second.(nl:2)
+                    ]
+                    (else-if:$kendradm's traits contains "feminine")[
+                        *You tuck a strand of hair behind your ear, a self-conscious habit that feels oddly out of place with the boldness of $kendra’s memories flooding your mind. You swallow hard, trying to reconcile her instincts with your own, but his scent doesn’t make it any easier.*(nl:2)
+                        “Dredd asked me to wait out here,” you say, your voice soft but measured. Jason tilts his head, his gaze studying you intently, and the way he smiles makes your chest tighten in a way you can’t fully fight.(nl:2)
+                    ]
+
+                    *Before you can stop yourself, you’re leaning in, your lips finding his in a heated kiss. The collective intake of breath from his friends barely registers in your mind...it’s Jason’s hands, strong and sure, that command your attention now.*(nl:1)
+                    ($simple_option:"blacked kendra story 14","display","Give in.")
+                ]
+            ]
+        ] 
+        (else-if:$choice is "Resist these urges")[
+            (link:"Okay but...")[
+                (replace:?text)[
+                    *You hesitantly sit down, fighting the heat rising in your chest, clutching the armrests of your chair as if they could ground you. Jason notices your hesitation and tilts his head, his brow furrowing slightly.*(nl:1)
+                    “Everything okay, $kendra?” *he asks, his tone soft but laced with curiosity.*(nl:2)
+
+                    (if:$character's reluctance >= 7)[
+                        *Your smile wavers, but a spark of confidence keeps you upright. $kendra’s desires buzz faintly at the edges of your mind, but you push them back with effort.*(nl:1)
+                        “Nothing I can’t handle,” *you reply, more firmly this time. Jason’s hand brushes against yours, the gesture strangely comforting.*(nl:2)
+                    ]
+                    (else-if:$character's reluctance >= 4)[
+                        *You manage a shaky smile, though your heart pounds in your chest. The whispers of $kendra’s memories persist, but you steel yourself against them...barely.*(nl:1)
+                        “Just a lot on my mind,” *you offer weakly. Jason nods, his expression softening.*(nl:2)
+                    ]
+                    (else-if:$character's reluctance < 4)[
+                        *You force a smile, but it’s a brittle shield against the storm inside you. $kendra’s thoughts press harder, whispering to you, filling your mind with vivid, dangerous desires.*(nl:1)
+                        “I’m fine,” *you murmur, but even to your ears, it sounds like a lie. Jason’s eyes narrow slightly as if he senses the battle you’re fighting.*(nl:2)
+                    ]
+                    
+                    “Hey,” he says quietly, his tone gentler now. “You know you can relax? Just be yourself. We’re all friends here.”(nl:2)
+                    *The irony isn’t lost on you, but his smile is disarming. Against your better judgment, you relax slightly, leaning into his touch.(nl:1)
+                    His hand trails down your arm, and before you realize it, you’re kissing him...hungrily, desperately...as the last of your resistance crumbles in the face of his warmth.*(nl:1)
+                    ($simple_option:"blacked kendra story 14","display","Give in.")
+                ]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story 14
+{
+    (replace:?image)[($pic:'scenes/blacked/kendra 5v1/group.jpg')]
+    (replace:?text)[($gain_arousal:1)(nl:1)
+        Jason’s kiss igniting a fire within you that you can’t ignore. It’s not just *you* anymore...$kendra’s desires, her instincts, and her personality all swirl together, amplifying the heat of the moment.(nl:2)
+        *You feel Jason’s hand slide along your back, pulling you closer, and a spark of excitement shoots through you. A stray thought floats to the surface, impossible to tell if it’s yours or hers...* (nl:1)]
+    (replace:?options)[
+        (link:"Next")[
+            (replace:?image)[($vid:'scenes/blacked/kendra 5v1/watching.mp4')]
+            (replace:?text)[
+                ($gain_arousal:1)
+                ($npc_vo:"female","kendra","watching")
+                (text-style:"smear")[I could tell his friends were watching, but it turned me on.](nl:2)
+                *Jason’s hands are firm but gentle, guiding you as the kiss deepens. A wave of heat rushes through you as you instinctively lower your kiss towards his shorts.*(nl:1)
+                (replace:?options)[(link:"Next")[
+                    (replace:?image)[($vid:'scenes/blacked/kendra 5v1/go down.mp4')]
+                    (replace:?text)[
+                        ($gain_arousal:1)
+                        ($npc_vo:"female","kendra","go down")
+                        (text-style:"smear")[I couldn’t believe I started doing that, but Jason had me go down on him, in front of his friends...](nl:1)
+                        *The thought echoes in your mind, stronger now, pulling you deeper into $kendra’s world.*(nl:2)
+                        *You sink downward, your body moving on autopilot as Jason leans back, his grin widening. His friends murmur their surprise and amusement, but their stares only excite you more.*(nl:1)
+                        (replace:?options)[(link:"Next")[
+                            (replace:?image)[($vid:'scenes/blacked/kendra 5v1/loving it.mp4')]
+                            (replace:?text)[
+                                ($gain_arousal:1)
+                                ($npc_vo:"female","kendra","loving it")
+                                (text-style:"smear")[They were all watching and staring at me... but... I was loving it.](nl:2)
+                                *Jason’s hand slides to your cheek as you glance around, seeing the intensity in the eyes of the men surrounding you. One of them, Ricky, steps closer, his hands brushing over your hips and ass.*(nl:1)
+                                (replace:?options)[(link:"Next")[
+                                    (replace:?image)[($vid:'scenes/blacked/kendra 5v1/grab ass.mp4')]
+                                    (replace:?text)[
+                                        ($gain_arousal:1)
+                                        ($npc_vo:"female","kendra","grab ass")
+                                        (text-style:"smear")[When one of his friends started to grab my ass, I sorta knew what would happen.](nl:2)
+                                        *Your breath quickens as more hands join in. Two? Six? Eight? All caressing your skin. Shivering all over as your anticipation builds and builds.*(nl:2)
+                                        You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as (print:$bar_dance's "stripper name"). The rush... the thrill... of their hands all over you.(nl:1)
+                                        (replace:?options)[(link:"Next")[
+                                            (replace:?image)[($vid:'scenes/blacked/kendra 5v1/hot.mp4')]
+                                            (replace:?text)[
+                                                ($gain_arousal:2)
+                                                ($npc_vo:"female","kendra","hot")
+                                                (text-style:"smear")[The other guys started to get curious, and before I knew it, I was surrounded by these five, HOT, black men.](nl:2)
+                                                *You’re pressed further into the moment, their collective heat and energy consuming you completely. $kendra’s voice in your mind urges you forward, and you let go, surrendering entirely to the wave of desire.*(nl:1)
+                                                (replace:?options)[(link:"Next")[
+                                                    (replace:?image)[($vid:'scenes/blacked/kendra 5v1/dominated.mp4')]
+                                                    (replace:?text)[
+                                                        ($gain_arousal:2)
+                                                        ($npc_vo:"female","kendra","dominated")
+                                                        (text-style:"smear")[I wanted to be dominated. I wanted to be taken by Jason and his friends.](nl:2)
+                                                        *Her voice, practically screaming in your head...*(nl:2)
+                                                        (text-style:"smear")[“You mean your voice?”](nl:1)
+                                                        “M..my voice?”(nl:2)
+                                                        (text-style:"smear")[“Let go of your inhibitions... Give in... Embrace the moment.”](nl:1)
+                                                        ($simple_option:"blacked kendra 5v1 sex start","display","Let go","display")
+                                                    ]
+                                                ]]
+                                            ]
+                                        ]]
+                                    ]
+                                ]]
+                            ]
+                        ]]
+                    ]
+                ]]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra 5v1 sex start
+{
+    (masteraudio:"stopall")
+    (set:$pleasure to (dm:
+        "jason", 1,
+        "isiah", 0,
+        "ricky", 0,
+        "john", 0,
+        "nat", 1,
+        "total",0
+    ))
+    (set:$old_name to (cond:
+    $character's "real gender" is "male", $character's "male name",
+    $character's "female name"))
+    (if:is_breeder:)[(set:$breeder_ruined_orgasms to 0)(set:$beg_creampie to "false")]
+    (set:$stamina_stat to "enabled")
+    (set:$lubrication_stat to "enabled")
+    (set:$stage to 1)
+    (display:"blacked kendra 5v1 sex info")
+    (set:$position to $available_positions's "warmup")
+    (set:$current_position to "none")
+    (set:$pleasure_target to "them")
+    (set:$lubrication to 7)
+    (set:$energy to (max:4,(get_fitness:)))
+    (set:$max_energy to (max:4,(get_fitness:)))
+    (set:$gangbang_events to (a:))
+    (set:$bjs_left to 5)
+    (set:$sex_left to 5)
+    (set:$orgasms to 0)
+    (set:$stage_orgasms to 0)
+    (set:$your_pleasure to 0)
+    (set:$spit_roast to 0)
+    (set:$riding to 0)
+    (set:$cumshot to 0)
+    (display:"safeword button")
+    (display:"blacked kendra 5v1 refresh")
+}
+
+:: blacked kendra 5v1 refresh
+{
+    (display:"refresh stats sex girl")
+    (display:"blacked kendra 5v1 sex details")
+    (display:"blacked kendra 5v1 video")
+    (display:"blacked kendra 5v1 sidebar")
+    (display:"blacked kendra 5v1 sex text")
+    (display:"blacked kendra 5v1 sex options")
+}
+
+:: blacked kendra 5v1 video
+{
+    (set:$img to "scenes/blacked/kendra 5v1/" + (cond:
+        $stage is 1, "1 warmup",
+        $stage is 2, "2 grope",
+        $stage is 3, "3 eat out",
+        $stage is 4, "4 group blow",
+        $stage is 5, "5 blowbang",
+        $stage is 6, "6 bj "+ $pleasure_target,
+        $stage is 7 and $current_position is "insert", "7 insert",
+        $stage is 7 and $current_position is "orgasm", "7 orgasm "+ (text:(twist:1,2)),
+        $stage is 7, "7 sex "+ $pleasure_target,
+        $stage is 8 and $current_position is "orgasm", "8 orgasm",
+        $stage is 8, "8 spit roast " + (text:$spit_roast),
+        $stage is 9 and $current_position is "orgasm", "9 orgasm",
+        $stage is 9, "9 riding " + (text:$riding),
+        $stage is 10 and $current_position is "beg", "10 beg",
+        $stage is 10 and $current_position is "orgasm", "9 orgasm",
+        $stage is 10, "10 cum "+ (text:$cumshot),
+        $stage is 11, "11 final",
+        "1 warmup"))
+
+    (if:$stage is in (a:3,4,5,6))[
+        (replace:?image)[($pic:$img+".jpg")]
+    ]
+    (else-if:$stage is in (a:7,8,9) and $current_position is "orgasm")[
+        (replace:?image)[($vid:$img+".mp4")]
+    ]
+    (else-if:$stage is in (a:7,8,9) and $current_position is not "orgasm")[
+        (replace:?image)[($pic:$img+".jpg")]
+    ]
+    (else:)[
+        (replace:?image)[($vid:$img+".mp4")]
+    ]
+}
+
+:: blacked kendra 5v1 sex options
+{
+    (replace:?options)[
+        (if:$stage is 1)[
+            (link:"I can't believe I'm doing this")[
+                (inc:'stage')
+                (set:$pleasure's "isiah" to it + 1)
+                (set:$pleasure's "ricky" to it + 1)
+                (set:$pleasure's "john" to it + 1)
+                (display:"blacked kendra 5v1 refresh")
+            ]
+        ]
+        (else-if:$stage is 2)[
+            (link:"Nat turns you around")[
+                (set:$position to $available_positions's "eat out")
+                (inc:'stage')
+                (set:$lubrication to it + 1)
+                (display:"blacked kendra 5v1 minigame")
+            ]
+        ]
+        (else-if:$stage is 3)[
+            (if:$your_pleasure > 9)[(display:"blacked kendra 5v1 orgasm")]
+            (else:)[
+                (link:"Drop to your knees ⚡")[
+                    (set:$position to $available_positions's "group blow")
+                    (dec:'energy',$position's effort)
+                    (inc:'stage')
+                    (set:$lubrication to it + 1)
+                    (display:"blacked kendra 5v1 minigame")
+                ]
+            ]
+        ]
+        (else-if:$stage is 4)[
+            (link:"Gag on their cocks ⚡⚡")[
+                (set:$position to $available_positions's "blowbang")
+                (dec:'energy',$position's effort)
+                (inc:'stage')
+                (set:$lubrication to it + 1)
+                (display:"blacked kendra 5v1 minigame")
+            ]
+        ]
+        (else-if:$stage is 5)[
+            (link:"Focus on one cock")[
+                (inc:'stage')
+                (display:"blacked kendra 5v1 sex options")
+            ]
+        ]
+        (else-if:$stage is 6)[
+
+            (if:$energy is 0)[
+                (link:"Get fucked")[
+                    (inc:'stage')
+                    (replace:?image)[($vid:'scenes/blacked/kendra 5v1/7 insert.mp4')]
+                    (replace:?text)[
+                        "OHH Ff..f....fuccckkk" you whimper. "Oh my god, it's so BIG"(nl:2)
+                        It *IS* big. It barely fits! (nl:1)
+                    ]
+                    (set:$temp_timer to 0)
+                    (live:1s)[
+                        (inc:'temp_timer')
+                        (if:$temp_timer is 6)[(replace:?text)[](display:"blacked kendra 5v1 refresh")(stop:)]]
+                ]]
+
+            (else:)[
+                (unless:$gangbang_events contains "bj isiah")[
+                    (link:"Suck Isiah's Cock ⚡")[
+                        (set:$position to $available_positions's "bj isiah")
+                        (dec:'energy',$position's effort)
+                        (set:$gangbang_events to it + (a:"bj isiah"))
+                        (set:$bjs_left to it - 1)
+                        (set:$blacked_stats's "blowjobs given" to it + 1)
+                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "bj ricky")[
+                    (link:"Suck Ricky's Cock ⚡")[
+                        (set:$position to $available_positions's "bj ricky")
+                        (dec:'energy',$position's effort)
+                        (set:$gangbang_events to it + (a:"bj ricky"))
+                        (set:$bjs_left to it - 1)
+                        (set:$blacked_stats's "blowjobs given" to it + 1)
+                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "bj john")[
+                    (link:"Suck John's Cock ⚡")[
+                        (set:$position to $available_positions's "bj john")
+                        (dec:'energy',$position's effort)
+                        (set:$gangbang_events to it + (a:"bj john"))
+                        (set:$bjs_left to it - 1)
+                        (set:$blacked_stats's "blowjobs given" to it + 1)
+                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "bj nat")[
+                    (link:"Suck Nat's Cock ⚡")[
+                        (set:$position to $available_positions's "bj nat")
+                        (dec:'energy',$position's effort)
+                        (set:$gangbang_events to it + (a:"bj nat"))
+                        (set:$bjs_left to it - 1)
+                        (set:$blacked_stats's "blowjobs given" to it + 1)
+                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "bj jason")[
+                    (link:"Suck Jason's Cock ⚡")[
+                        (set:$position to $available_positions's "bj jason")
+                        (dec:'energy',$position's effort)
+                        (set:$gangbang_events to it + (a:"bj jason"))
+                        (set:$bjs_left to it - 1)
+                        (set:$blacked_stats's "blowjobs given" to it + 1)
+                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (if:$bjs_left is 0)[
+                    (link:"Get fucked")[
+                        (inc:'stage')
+                        (replace:?image)[($vid:'scenes/blacked/kendra 5v1/7 insert.mp4')]
+                        (replace:?text)[
+                            "OHH Ff..f....fuccckkk" you whimper. "Oh my god, it's so BIG"(nl:2)
+                            It *IS* big. It barely fits! (nl:1)
+                        ]
+                        (set:$temp_timer to 0)
+                        (live:1s)[
+                            (inc:'temp_timer')
+                            (if:$temp_timer is 6)[
+                                (replace:?text)[]
+                                (display:"blacked kendra 5v1 refresh")
+                                (set:$current_position to "missionary")
+                                (stop:)
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+        (else-if:$stage is 7)[
+            (if:$your_pleasure > 9)[(display:"blacked kendra 5v1 orgasm")]
+            (else:)[
+                (unless:$gangbang_events contains "sex isiah")[
+                    (link:"Get fucked by Isiah")[
+                        (set:$position to $available_positions's "sex isiah")
+                        (set:$gangbang_events to it + (a:"sex isiah"))
+                        (set:$sex_left to it - 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "sex ricky")[
+                    (link:"Get fucked by Ricky")[
+                        (set:$position to $available_positions's "sex ricky")
+                        (set:$gangbang_events to it + (a:"sex ricky"))
+                        (set:$sex_left to it - 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "sex john")[
+                    (link:"Get fucked by John")[
+                        (set:$position to $available_positions's "sex john")
+                        (set:$gangbang_events to it + (a:"sex john"))
+                        (set:$sex_left to it - 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "sex nat")[
+                    (link:"Get fucked by Nat")[
+                        (set:$position to $available_positions's "sex nat")
+                        (set:$gangbang_events to it + (a:"sex nat"))
+                        (set:$sex_left to it - 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (unless:$gangbang_events contains "sex jason")[
+                    (link:"Get fucked by Jason")[
+                        (set:$position to $available_positions's "sex jason")
+                        (set:$gangbang_events to it + (a:"sex jason"))
+                        (set:$sex_left to it - 1)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (if:$sex_left is 0)[
+                    (link:"Get spit roasted")[
+                        (inc:'stage')
+                        (inc:'spit_roast')
+                        (inc:'energy')
+                        (set:$stage_orgasms to 0)
+                        (set:$position to $available_positions's "spit roast")
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+            ]
+        ]
+        (else-if:$stage is 8)[
+            (if:$your_pleasure > 9)[(display:"blacked kendra 5v1 orgasm")]
+            (else:)[
+                (if:$spit_roast < 3)[
+                    (link:"Take more dick")[
+                        (inc:'spit_roast')
+                        (inc:'energy')
+                        (set:$position to $available_positions's "spit roast")
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (else:)[
+                    (link:"Climb on top ⚡")[
+                        (inc:'stage')
+                        (inc:'riding')
+                        (set:$stage_orgasms to 0)
+                        (set:$position to $available_positions's "riding")
+                        (dec:'energy',$position's effort)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+            ]
+        ]
+        (else-if:$stage is 9)[
+            (if:$your_pleasure > 9)[(display:"blacked kendra 5v1 orgasm")]
+            (else:)[
+                (if:$riding <= 2)[
+                    (link:"Ride some cock ⚡")[
+                        (inc:'riding')
+                        (set:$position to $available_positions's "riding")
+                        (dec:'energy',$position's effort)
+                        (display:"blacked kendra 5v1 minigame")
+                    ]
+                ]
+                (else:)[
+                    (inc:'stage')
+                    (set:$pleasure_target to "them")
+                    (set:$current_position to "beg")
+                    (display:"blacked kendra 5v1 refresh")
+                ]
+            ]
+        ]
+        (else-if:$stage is 10)[
+            (if:$your_pleasure > 9)[(set:$current_position to "riding")(display:"blacked kendra 5v1 orgasm")]
+            (else:)[
+                (if:$cumshot is 0)[
+                    (link:"Take the first load")[
+                        (inc:'cumshot')
+                        (set:$current_position to "cum")
+                        (display:"blacked kendra 5v1 refresh")
+                    ]
+                ]
+                (else-if:$cumshot < 4)[
+                    (link:"Take the next load")[
+                        (inc:'cumshot')
+                        (display:"blacked kendra 5v1 refresh")
+                    ]
+                ]
+                (else-if:$cumshot is 4)[
+                    (link:"Take the final load")[
+                        (inc:'cumshot')
+                        (display:"blacked kendra 5v1 refresh")
+                    ]
+                ]
+                (else-if:$cumshot is 5)[
+                    (link:"Next")[
+                        (inc:'stage')
+                        (display:"blacked kendra 5v1 refresh")
+                    ]
+                ]
+            ]
+        ]
+        (else-if:$stage is 11)[
+            ($simple_option:"blacked kendra 5v1 finish","display","Smile",(cond:(is_pp:),"Big Smile","Stare"))
+        ]
+    ]
+}
+
+:: blacked kendra 5v1 minigame
+{
+    (set:$pleasure_target to $position's "pleasure target")
+    (display:"blacked kendra 5v1 refresh")
+
+    (set:_skill_check to (cond:
+        $current_position is "blowjob","bj",
+        $current_position is "blowbang","gag reflex",
+        $stage is 3,"orgasm control",
+        $stage is 9,"active sex",
+        "passive sex"))
+    (set:_skill_difficulty to (min:60,(max:30,$stage * $character's "arousal")))
+
+    (if:$stage is 3)[
+        (set:$quicktime_params to (dm:
+            "difficulty","medium",
+            "objective","Keep your pleasure under control!",
+            "skill check",_skill_check,
+            "skill check difficulty",_skill_difficulty,
+            "interrupt passage","blacked kendra 5v1 interrupt",
+            "interrupts", (twist:2,4),
+            "time",($character's "arousal" * 4),
+            "timing message","but not faster than he eats you out.",
+            "rhythm",(twist:1400,1669) - ($character's "arousal" * 100),
+            "result passage","blacked kendra 5v1 minigame result",
+            "backdrop",$img + ".mp4"))
+        ($cs:"dont cum initialize")
+    ]
+    (else-if:$stage is 7 or $stage is 8)[
+        (replace:?image)[
+            ($vid:$img + ".mp4")
+            (set:$timer to (ceil:_skill_difficulty / 2))
+            (set: $waitOptions to 
+                (dm: 
+                    "img", "none",
+                    "sex loop", "none",
+                    "talk1", "blacked kendra 5v1 talk 1", 
+                    "talk2", "blacked kendra 5v1 talk 2", 
+                    "talk3", "blacked kendra 5v1 talk 3", 
+                    "duration", $timer, 
+                    "buttoneffect", 10, 
+                    "buttonname", "Talk dirty", 
+                    "finish", "blacked kendra 5v1 minigame result", 
+                    "mascpenalty", true, 
+                    "buttontalk1", "blacked kendra 5v1 dirty talk 1",
+                    "buttontalk2", "blacked kendra 5v1 dirty talk 2",
+                    "buttontalk3", "blacked kendra 5v1 dirty talk 3",
+                    "changescreen", true
+                )
+            )
+            (display:"wait progress begin")
+        ]
+        (replace:?options)[]
+        (replace:?text)[]
+    ]
+    (else:)[
+        (set:$quicktime_params to (dm:
+            "objective text",(twirl:"Please them.","Make them happy.","Be a good slut."),
+            "difficulty","medium",
+            "skill check",_skill_check,
+            "skill check difficulty",_skill_difficulty,
+            "points to win",_skill_difficulty,
+            "points",10,
+            "victory","Who knew you were *this* good at pleasing 5 BBC at once.",
+            "defeat","*There's too many... and they're all so big...*",
+            "sequence",(twisted:"left","right","right","left","up","down","up","up","down","right","up","down","up","down","left","right","up","down","left","down","right","up"),
+            "quicktime timer",1,
+            "interrupt passage","blacked kendra 5v1 interrupt",
+            "interrupt count", (twist:2,4),
+            "result passage","blacked kendra 5v1 minigame result",
+            "backdrop",$img + ".mp4"))
+        ($cs:"quicktime initialize")
+    ]
+}
+
+:: blacked kendra 5v1 minigame result [fullscreen]
+{
+    (if:$result is "fail")[
+        (if:$position's "their pleasure" > 0)[
+            (if:$pleasure_target is "them")[
+                (set:$pleasure's isiah to it + (floor:$position's "their pleasure"/2))
+                (set:$pleasure's ricky to it + (floor:$position's "their pleasure"/2))
+                (set:$pleasure's john to it + (floor:$position's "their pleasure"/2))
+                (set:$pleasure's nat to it + (floor:$position's "their pleasure"/2))
+                (set:$pleasure's jason to it + (floor:$position's "their pleasure"/2))
+            ]
+            (else:)[
+                (set:$pleasure's $pleasure_target to it + (floor:$position's "their pleasure"/2))
+            ]
+        ]
+        (if:$position's "your pleasure" > 0)[
+            (set:$your_pleasure to it + (floor:$position's "your pleasure"/2))
+        ]
+    ]
+    (else:)[
+        (if:$roll > 15)[(inc:'energy')]
+        (if:$position's "their pleasure" > 0)[
+            (if:$pleasure_target is "them")[
+                (set:$pleasure's isiah to it + $position's "their pleasure")
+                (set:$pleasure's ricky to it + $position's "their pleasure")
+                (set:$pleasure's john to it + $position's "their pleasure")
+                (set:$pleasure's nat to it + $position's "their pleasure")
+                (set:$pleasure's jason to it + $position's "their pleasure")
+            ]
+            (else:)[
+                (set:$pleasure's $pleasure_target to it + $position's "their pleasure")
+            ]
+        ]
+        (if:$position's "your pleasure" > 0)[
+            (if:$roll is 20)[
+                (set:$pleasure_bonus to 10)
+                (set:$your_pleasure to (min:$your_pleasure + $pleasure_bonus,10))
+                (set:$energy to $max_energy)
+            ]
+            (else:)[(set:$your_pleasure to it + $position's "your pleasure")]
+        ]
+    ]
+    (display:"blacked set up fullscreen")
+    (display:"blacked kendra 5v1 refresh")
+    (prepend:?text)[
+        (if:$position's "your pleasure" > 0)[
+            (if:$roll is 20)[CRITICAL SUCCESS! Pleasure meter filled 💦]
+        ]
+    ]
+}
+
+:: blacked kendra 5v1 interrupt
+{
+    (if:$position's "id" is "eat out")[
+        (twirl:"He lifts you off the ground like you weigh nothing","He's so strong...","You can feel yourself losing control")
+    ]
+    (else-if:$position's "id" is "group blow")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease them","Worship those BBCs"))
+            (set:$bad_choice to (twirl:"Forget to breathe","Accidentally use teeth","Gag reflex kicks in","Go too deep"))
+        ]
+        (if:$text is "good")[
+            (twirl:"That’s a good girl.","He keeps calling you a good girl...Someone has a praise fetish.","The grunts of pleasure tell you all you need to know.")
+        ]
+        (if:$text is "bad")[
+            (twirl:"The salty taste and musky scent overwhelm your senses.","They don't seem too impressed.","That didn't do much for them.")
+        ]
+    ]
+    (else-if:$position's "id" is "blowbang")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease them","Worship those BBCs"))
+            (set:$bad_choice to (twirl:"Go too fast","Scrape with your teeth","Choke on your drool","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"You're a nasty girl.","You hear them call you a freak.","Gag reflex? Never heard of it.")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Terrible.")
+        ]
+    ]
+    (else-if:$position's "id" is "bj isiah")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease Isiah","Worship that BBC"))
+            (set:$bad_choice to (twirl:"Go too fast","Scrape with your teeth","Choke on your drool","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"“Let me see that sexy little mouth of yours.”","“You’re so sexy, look at you. Oh my god…”","“You’re just letting me fuck your pretty little mouth.”")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Terrible.")
+        ]
+    ]
+    (else-if:$position's "id" is "bj jason")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease Jason","Worship that BBC"))
+            (set:$bad_choice to (twirl:"Go too fast","Scrape with your teeth","Choke on your drool","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"“There you go, baby, that’s right.”","Muffled moans escape from your mouth as his cock tickles the back of your throat.","I wonder if you're as good as " + $kendra + ".")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Terrible.")
+        ]
+    ]
+    (else-if:$position's "id" is "bj john")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease John","Worship that BBC"))
+            (set:$bad_choice to (twirl:"Go too fast","Scrape with your teeth","Choke on your drool","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"“There you go, just like that.”","gluck gluck gluck bitch.","He's fucking your face!")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Terrible.")
+        ]
+    ]
+    (else-if:$position's "id" is "bj nat")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease Nat","Worship that BBC"))
+            (set:$bad_choice to (twirl:"Go too fast","Scrape with your teeth","Choke on your drool","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"Dayum his cock is THICK!","Your mouth hole is his fuck hole.","So enthusiastic.")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Terrible.")
+        ]
+    ]
+    (else-if:$position's "id" is "bj ricky")[
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Tease Ricky","Worship that BBC"))
+            (set:$bad_choice to (twirl:"Go too fast","Scrape with your teeth","Choke on your drool","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"The guttural groans of approval suggest that he likes it.","“Good girl. That’s it, suck that dick, you fucking freak.”","You have to learn to breathe AROUND the cock.")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Dumb cunt.")
+        ]
+    ]
+    (else-if:$position's "id" is "riding")[  
+        (if:$text is "options")[
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Roll your hips","Gring on that BBC"))
+            (set:$bad_choice to (twirl:"Go too fast","Hit a weird angle","Your foot slips","Forget to pace yourself"))
+        ]
+        (if:$text is "good")[
+            (twirl:"Every inch of his BBC stretches your tight little pussy.","Your pale, jiggling tits slap against your chest as you grind down","He grabs your hips, pulling you down harder as he growls, 'Ride it, slut.'","Your thighs trembling as his cock kisses your cervix, sending you spiraling into bliss.")
+        ]
+        (if:$text is "bad")[
+            (twirl:"Not like that.","You're going to have to do better.","Dumb cunt.")
+        ]
+    ]
+}
+
+:: blacked kendra 5v1 talk 1
+{
+    *
+    (twirl:"BBC stretches you so wide it feels like you might split.",  
+            "You’re completely overwhelmed, a BBC stuffed deep into your throat while another slams into your dripping pussy.",
+            "He grins down at you, as he slams his massive cock into your tight little pussy.",  
+            "He grips your pale thighs, spreading you wide as his monster cock splits you open.",
+            "Your pale skin contrasts against his dark, muscular body.",
+            "You gasp, your big tits bouncing wildly, as he growls, 'Take it, snowbunny. You’re made for this.'")
+    *
+}
+
+:: blacked kendra 5v1 talk 2
+{
+    *
+    (twirl:"Your legs shake uncontrollably, pinned under his weight as he grinds deeper, claiming you completely.",  
+            "You can barely form words, reduced to incoherent moans as his BBC bullies your pussy.",  
+            "He leans down, 'You love being wrecked by my big black cock.'",
+            "BBC pounds into you so hard your body jolts with every thrust.", 
+            "You bite your lip, whimpering as his fat cock stretches you wider than you thought possible.", 
+            "Your nails scrape down his back, your body shuddering uncontrollably as he pounds you harder.")  
+    *
+}
+
+:: blacked kendra 5v1 talk 3
+{
+    *
+    (twirl:"His cock slams into your pussy with brutal force, making your toes curl and your eyes roll back.",  
+            "He grabs your hips and forces you to take every thick, punishing inch.",  
+            "Your pussy clenches around him uncontrollably, your body betraying how much you love this.",
+            "*SMAK*, he slaps your ass hard and laughs, 'That’s right, slut, take it all.'",
+            "You’re reduced to a trembling, drooling mess, barely able to think.",
+            "Each thrust a wave of pleasure and pain, leaving you a drooling, whimpering mess.")
+    *
+}
+
+:: blacked kendra 5v1 dirty talk 1
+{
+    (replace:?talk_text)[{
+        (if:(twist:1,3) is 1)[
+            You (twirl:
+                "just whimper",
+                "whimper",
+                "mewl",
+                "groan",
+                "moan",
+                "can only moan",
+                "can only mewl",
+                "can only whimper"
+            ) (twirl:
+                "pathetically",
+                "helplessly",
+                "weakly"
+            )(if:(twist:1,2) is 1)[(twirl:
+                "as they use you",
+                "as they pummel your poor pussy"
+            )].
+        ]
+        (else:)[
+            (set:$talk_dirty to 1)
+            (dec:"timer",(twist:5,10))
+            “
+            (twirl:
+                "Use me! Treat me like a slut!",
+                "Oh fuck yeah, just like that baby, mmm.",
+                "FUCK! Fuck fuck mmmmm you're so deep...",
+                "Ngghg...Mmmfff...uck me! Don't stop, don't stop!!",
+                "These big black cocks are **PERFECT**!"
+            )
+            ”
+        ]
+    }]
+}
+
+:: blacked kendra 5v1 dirty talk 2
+{
+    (replace:?talk_text)[{
+        (dec:"timer",(twist:5,10))
+        (set:$talk_dirty to 2)
+        (if:(twist:1,3) is 1)[
+            (twirl:
+                "You can barely breathe, let alone speak, as you're relentlessly pounded",
+                "“Harder! Fuck my cunt!” you cry out between ragged breaths.",
+                "You try to speak, but the pure pleasure short-circuits your brain, producing only muffled moans"
+            )
+        ]
+        (else:)[
+            “
+            (twirl:
+                "Yesss mmmppfffuu...ucck me!",
+                "Don't stop, don't stop, don't stoooooppppp....fffuucck!",
+                "Treat me like a dirty whore! Use me!",
+                "YES! Slam your big BLACK cocks into this tight cunt!!",
+                "MMmm fuck yes, I'm a whore for black cock!"
+            )
+            ”
+        ]
+    }]
+}
+
+:: blacked kendra 5v1 dirty talk 3
+{
+    (replace:?talk_text)[{
+        (dec:"timer",(twist:5,10))
+        (set:$talk_dirty to 3)
+        (twirl:
+            "You manage to gasp out a quick moan before a cock silences you again.",
+            "Don't you dare cum yet, who's next?",
+            "Mo-more cocks, I need more cocks!",
+            "You grab ahold of one of the cocks “You're fucking me next!”",
+            "Fuck me like a whore! A black cock whore!!"
+        )
+    }]
+}
+
+:: blacked kendra 5v1 sex details
+{
+    (unless:$current_position is "cum" or $current_position is "beg")[(set:$current_position to $position's "position")]
+    (set:$pleasure_target to $position's "pleasure target")
+    (set:$character's status to (cond:
+        $stage >= 4 and $stage <=6,"bj/bbc",
+        $stage >= 7 and $stage <= 9,"sex",
+        $stage >= 10, "cum",
+        ($core_female_status:)))
+    (set:$pleasure's "total" to ($pleasure's "isiah" + $pleasure's "ricky" + $pleasure's "jason" + $pleasure's "nat" + $pleasure's "john"))
+}
+
+:: blacked kendra 5v1 sex text
+{ 
+    (if:$stage is 1)[
+        (replace:?text)[
+            Jason and Nat guide you into the pool house, their hands on your back as the warm air inside envelops you. You watch as they both drop their trunks, their hard cocks standing proudly.(nl:2)
+
+            “Sup, baby, can I join the party?” John asks, his voice low and teasing.(nl:1)
+
+            “Help my friend out right there,” Jason says, motioning to John.(nl:2)
+
+            One by one the others join in.(nl:1)
+            You glance over at Jason, “All of you?”
+            (text-style:"smear")[*Yes all of them*](nl:1)
+            “Yeah, baby.”(nl:1)
+        ]
+    ]
+    (else-if:$stage is 2)[
+        (replace:?text)[
+            “Oh my god, I can’t believe I’m doing this,” you say aloud.(nl:1)
+            (text-style:"smear")[*I can*](nl:2)
+
+            The words feel like they’re your own, but they come out in $kendra’s breathless, sultry voice, perfectly matching the swirl of desire flooding your mind.(nl:2)
+
+            “There’s so many of you...”(nl:2)
+
+            The air feels charged, their touch pushing you closer to a breaking point you’re not sure you can resist anymore.(nl:1)
+        ]
+    ]
+    (else-if:$stage is 3)[
+        (replace:?text)[
+            Nat sets you down. You lay there, surrounded by them. Their hard cocks tower in front of you, and you automatically reach for their cocks.(nl:1)
+        ]
+    ]
+    (else-if:$stage is 4)[
+        (replace:?text)[
+            (text-style:"smear")[“Mmm, give me more cocks”], the thought manifests directly in your throat, behind the cock, and comes out on it's own.(nl:2)
+            The guys are happy to oblige.(nl:1)
+        ]
+        
+    ]
+    (else-if:$stage is 5 or ($stage is 6 and $bjs_left > 0))[
+        (replace:?text)[
+            (twirl:"Best not leave anyone out, make sure everybody gets a turn",
+            "Each one deserves your undivided attention...you’d better not disappoint.",
+            "No slowing down now, there are still plenty of cocks waiting for you.",
+            "You’ve got your work cut out for you...don’t forget to show some enthusiasm.",
+            "Make it memorable for each of them; it’s what you’re here for, after all.",
+            "Every single one of them is expecting the *best* from you...don’t let them down.",
+            "This isn’t the time to get sloppy; or maybe it is...they’re all watching and waiting.",
+            "It’s a long line, but you wouldn’t want to leave anyone unsatisfied, would you?",
+            "Better keep up the energy...no one likes a lazy mouth.",
+            "Each one deserves their moment; you’d better make it count.")(nl:1)
+        ]
+    ]
+    (else-if:$stage is 6 and $bjs_left is 0 and $sex_left is 5)[
+        (replace:?text)[
+            Nat pulls you up off your knees and guides you to the edge of the couch, lying you on your back, letting Ricky and Isiah catch you.(nl:1)
+            (text-style:"smear")[It's time to get fucked!](nl:1)
+        ]
+    ]
+    (else-if:$stage is 7)[
+        (unless:$your_pleasure > 9)[
+            (replace:?text)[
+                (twirl:"They’re lining up to fuck you, each one harder and deeper than the last.",
+                "You’re just a hole for them to use, and they’re making sure you know it.",
+                "Their big black cocks are stretching you wide, and you can’t get enough.",
+                "They’re pounding you relentlessly, and all you can do is moan and beg for more.",
+                "You’re dripping, shaking, and loving every second of being their plaything.",
+                "Each one is claiming you, filling you up, leaving no part of you untouched.",
+                "You’re jerking and sucking like a pro while they take turns wrecking you.",
+                "You’re surrounded by their cocks, your body completely at their mercy.",
+                "You’ve never been fucked like this before, and you don’t want it to stop.")
+                (nl:1)
+            ]
+        ]
+    ]
+    (else-if:$stage is 8)[
+        (unless:$your_pleasure > 9)[
+            (replace:?text)[
+                (twirl:"You’re sandwiched between them, taking cock in your mouth and pussy while your hands keep the others happy.",
+                "Your throat is full, your pussy is stretched, and your hands are busy stroking every thick cock in reach.",
+                "They’re using you like the filthy little slut you’ve become, and you’re loving every second of it.",
+                "You’re gagging and moaning, your body shaking as they take turns wrecking you from every angle.",
+                "The one in your mouth thrusts deep, making you choke as the one behind you slams into your dripping pussy.",
+                "Your hands are coated in slick, stroking their massive lengths while you’re stuffed at both ends.",
+                "You’re their plaything, stretched, filled, and dripping as they take you like you’ve always dreamed.",
+                "Each thrust from behind makes you push forward, gagging on the cock in your mouth as your hands keep stroking.",
+                "You’re a mess, moaning and drooling, surrounded by their cocks and begging for more.",
+                "Your body is their playground, your holes stuffed and your hands working hard to please them all.")
+                (nl:1)
+            ]
+        ]
+    ]
+    (else-if:$stage is 9)[
+        (replace:?text)[
+            (unless:$your_pleasure > 9)[
+                (twirl:"You’re bouncing on his thick cock, your moans echoing as you stroke and suck the others.",
+                "Every thrust drives you wild, your hands and mouth working overtime to keep the others satisfied.",
+                "You’re riding like a desperate slut, dripping wet as you worship the cocks surrounding you.",
+                "His cock stretches you wide while your lips and fingers stay busy pleasuring the others.",
+                "You can’t get enough, grinding on him while tasting and stroking every cock within reach.",
+                "You’re a vision of depravity, your body moving in perfect rhythm to take and please them all.",
+                "You’re bouncing shamelessly, drooling around a cock in your mouth as your hands stroke their lengths.",
+                "The way you ride him leaves no doubt...you're their personal slut, eager to take every inch.",
+                "His cock fills you deep as you moan around the one in your mouth, hands sliding up and down the others.",
+                "You’re completely surrounded, your body on display as you fuck, suck, and stroke with reckless abandon.")
+                (nl:1)
+            ]  
+        ]
+    ]
+    (else-if:$stage is 10 and $current_position is "beg")[
+        (replace:?text)[
+            “You want it baby?” (nl:2)
+
+            Your mind briefly thinks about the chemical response to cum, from the Insta-Strip pills, 
+            but any fear is quickly shoved out of your head and replaced with a *need* for cum.(nl:2)
+
+            (twirl:"“Mmm, please? Please give it to me!”",
+            "“Yes! Please!”",
+            "“Yes, yes, give it to me!”")(nl:2)
+
+            *The instinctive response is no longer foreign in your mind.* (nl:1)
+            (text-style:"smear")[You really do want it, don't you?](nl:1)
+        ]
+    ]
+    (else-if:$stage is 10 and $current_position is "cum")[
+        (replace:?text)[
+            (if:$cumshot is 1)[
+                (after:time + 1714)[($play:"sound","splat 1")]
+                (twirl:"The first jet squirts across your face, running down your cheek. Several others leak out, into your mouth, and drip down onto your tits.",
+                "He makes a mess of your clean face, hosing you down with his cum. It drips down your cheek, pooling up on your fun bags.",
+                "Nat rewards all his good girls with cum!")(nl:2)
+
+                (twirl:"“Heh... good girl.”",
+                "“Mmm, so sexy with my cum all over your face.”",
+                "“Don’t you move, there’s more for you.”")(nl:1)
+            ]
+            (else-if:$cumshot is 2)[
+                (after:time + 5805)[($play:"sound","splat 2")]
+                (twirl:"Like a hose dousing a fire, he sprays his cum all over you.",
+                "His big black balls twitch as he milks his load out, depositing it all over your face and tits.",
+                "Isiah draws a cum line from your nose to your chin.")(nl:2)
+                
+                (twirl:"“Get it, get it baby.”",
+                "“Ooohhh, mmmmm. So good.”",
+                "“We ain’t done yet baby.”")(nl:1)
+            ]
+            (else-if:$cumshot is 3)[ 
+                (after:time + 1930)[($play:"sound","splat 3")]
+                (twirl:"Your already covered face gleefully accepts his huge load.",
+                "How much cum did he have saved up?!? It gets on your nose, in your mouth, in your eye, AND on your tits!! ",
+                "Jason empties his cum-filled balls all over your face.")(nl:2)
+                
+                (twirl:"“Shiiiiiit...”",
+                "“Fffff..ucck...”",
+                "“Mpfhhhuck, baby.”")(nl:1)
+            ]
+            (else-if:$cumshot is 4)[
+                (after:time + 3180)[($play:"sound","splat 4")]
+                (twirl:"The scent of 3... no 4 men's cum, all over your face, is overwhelming.",
+                "Squirt, after squirt, he's covering you!",
+                "John shoves his cock right in your face as his seed spills all over your nose, cheek, lips, and on your tongue.")(nl:2)
+
+                (twirl:"“You’re so fucking nasty...”",
+                "“There ya go baby.”",
+                "“Mmm, fuck, baby.”")(nl:1)
+            ]
+            (else-if:$cumshot is 5)[
+                (after:time + 1347)[($play:"sound","splat 5")]
+                (twirl:"After what seems like an eternity, Ricky finally unloads his gooey load all over your already battered face.",
+                "There's nowhere else for it to go, it just runs down your face and plops onto your udders.",
+                "His pungent load drrriips down your face, leaving you with a cummy chin. Just call you Cummy Clause.")(nl:2)
+
+                (twirl:"“Nggh-”",
+                "“That’s a good girl.”",
+                "“Mmph-uckk.”")(nl:1)
+            ]
+        ]  
+    ]
+    (else-if:$stage is 11)[
+        (replace:?text)[
+            “Wow, (print:$bar_dance's "stripper name"), you’re completely covered...”(nl:2)
+            *Through the thick fog of cock and cum, you could have sworn he called you by a different name.*(nl:1)
+            (text-style:"smear")[“$kendra”](nl:2)
+            “Yeah, that’s what I said... Oh hey, look, my uncle’s camera. We *have* to take a picture, c’mon now, big smile!”(nl:1)
+        ]
+    ]
+}
+
+:: blacked kendra 5v1 orgasm
+{
+    (set:$current_position to "orgasm")
+
+    (set:$your_pleasure to (cond:
+        (is_breeder:), $your_pleasure - (twist:4,7),
+        (min:$orgasms,8)))
+    
+    (inc:'stage_orgasms')
+
+    (display:"blacked kendra 5v1 video")
+    (display:"blacked kendra 5v1 sidebar")
+    (display:"blacked kendra 5v1 sex options")
+
+    (replace:?text)[
+        (if:(is_breeder:))[
+            <span class='chromatic'>(if:$pill_known is "false")[You can't cum, for some reason!](else:)[(twirl:"You try to cum, but can't!","You can't cum without a creampie on a breeder!")]</span> (nl:2)
+            (if:$orgasms is 0)[
+                You gasp, body quivering as pleasure coils deep inside you, winding tighter and tighter—so close, so unbearably close. But just as you brace for the peak, the sensation fizzles into nothing, a cruel short-circuit that leaves you aching, empty.
+                (nl:2)
+                A strangled whimper escapes your lips. Your body trembles, desperate for release, but it just won’t come.
+                (nl:2)
+                “Wha—why? Nnngh—no, no, no—!” Your voice is shaky, high-pitched with frustration. Your hips grind uselessly, seeking that final push, but the pleasure only teases, mocking you.
+                (nl:2)
+                The pleasure surges, teeters—then vanishes again, leaving you squirming in needy agony.
+                (nl:2)
+                Oh god—please… I need it! I can't—It won't—!
+                (nl:2)
+                Tears sting your eyes as the unbearable tension mounts, your thoughts unraveling into frantic, incoherent babbling. Someone smacks your ass, the sharp sting making you jolt, but it only fuels your desperation.
+                (nl:2)
+                “I—I can’t cum! Please, I need—ahhh~” Your voice cracks, wrecked with helpless need. Your body trembles, wired tight, trapped in agonizing limbo.
+                (nl:2)
+                (if:$pill_known is "true")[(size:1.5)[
+                    Your body is craving something very specific: the cum of Jason and his friends, all inside your cunt, completing the cycle that the Breeder pill demands.
+                    ](nl:2)]
+            ]
+            (if:$orgasms is 1)[
+                The tension coils again, even tighter than before. Your whole body is screaming for release—every nerve alight, every muscle tightening as you climb—
+                (nl:2)
+                But just like before, it vanishes.
+                (nl:2)
+                The pleasure doesn’t crash down into satisfaction—it rips away, leaving you stranded at the edge of oblivion. Your eyes widen in horror, a strangled cry catching in your throat.
+                (nl:2)
+                “N-no! No, no, no—fuck! Why won’t it happen?! I need—” Your voice dissolves into frantic whimpers as you thrash down onto the cock inside you, desperate to force your body to obey.
+                (nl:2)
+                Your walls clench hard around him, trying to milk out what you need—but it’s not working. The pleasure surges and recedes like a cruel tease, winding you up tighter, higher, until your whole body is shaking, oversensitized and starving.
+                (nl:2)
+                “Please—please! I need it! I can’t—oh god, I can’t cum like this!” Your voice is breaking, frantic. “I—nghh—fuck, do something! Make it happen! Make me cum!”
+                (nl:2)
+            ]
+            (if:$orgasms is 2)[(set:$beg_creampie to "true")
+                The pleasure builds again, surging higher, hotter, your entire body shaking with the force of it. This time—this time, it has to happen. It has to.
+                (nl:1)
+                But it doesn’t.
+                (nl:2)
+                Again, the orgasm rips away at the last second, leaving you wrecked. Your entire body spasms, muscles locking up as an agonized scream tears from your throat. Your vision swims, your breath hitching in ragged sobs.
+                (nl:2)
+                "N-no—no! Please! I—I need it! Please, I can’t—I can’t take this anymore!”
+                (nl:2)
+                Your voice is shattered, desperate, helpless. Your body won’t let you cum. Not like this. Not without—
+                (nl:2)
+                The realization slams into you, undeniable and brutal.
+                (nl:1)
+                Your whole being is crying out for one thing, one answer, one release—and it's not something you can give yourself.
+                (nl:2)
+                Your walls clamp down around him so hard it nearly pushes him over the edge, but you don’t care. You can’t care. Your entire world has narrowed to one single, inescapable truth.
+                (nl:2)
+                (text-style:"smear")["Breed me!"]
+                (nl:2)
+                It slips out in a breathy sob, so raw and needy.
+                (nl:2)
+                “Please, I—I need it! Please, cum inside me—fill me up! I can’t—oh god, I can’t take this anymore!”
+                (nl:2)
+                Your hands claw at him, nails digging into his skin as you beg, hips rolling desperately to wring every last drop out of him.
+                (nl:2)
+                “Please, please, please—just do it! Breed me! Cum inside me, put a baby in me! Just make it stop—I can’t, I can’t anymore—!”
+                (nl:2)
+                Your body is moving on its own, pure instinct, pure need. You’re sobbing, shaking, unable to think of anything except the heat, the ache, the unbearable void inside you that only his seed can fill.
+                (nl:2)
+                It’s not just pleasure anymore. It’s survival.
+                (nl:2)
+            ]
+            (if:$orgasms > 2)[
+                (twirl:
+                "Your body is **shaking**, locked in an endless cycle of **denied release**, each misfire worse than the last.",  
+                "You can’t think. You can’t breathe. Every muscle in your body is **tensed**, locked in an agonizing loop of pleasure that won’t **finish**—that won’t let you **go**.",  
+                "Your body **won’t stop shaking**, trapped in a loop of cruel, *endless* frustration. Your nerves are fried, every inch of you **burning** for release that never comes."
+                )(nl:2)  
+
+                (twirl:
+                "“Please!” Your voice is a wreck, breaking on every syllable. “I—**I can’t live like this!** Please, I’ll do anything—just **fill me**! I need it—I need it so **bad**!”",  
+                "Your fingers claw helplessly into his skin as you **sob**. “Please—please, just do it! I need it! I’ll do **anything**—just **pump me full of cum!**”",  
+                "Fuck! *Please!* I—I can’t take it anymore!” Your voice is frantic, **wrecked**, your hips jerking desperately against him. “I need it—I need it so bad, just—**please paint my womb with your seed!**”"
+                )(nl:2)  
+
+                (twirl:
+                "You’re clawing at him, rolling your hips frantically, trying to **force** it out of him. Nothing else matters. Your world has **shrunk** to this one unbearable craving, this one *primal* instinct.",  
+                "Chuck groans as you writhe beneath him, body desperate, **starved**. His cock twitches inside you, and you **seize** on the sensation like a lifeline.",  
+                "Your mind is **gone**—nothing but raw, biological **demand**. Your walls **grip** him like a vice, like you’re trying to **milk** him dry."
+                )(nl:2)  
+
+                (twirl:
+                "He grips your thighs, watching you **fall apart** with a deep chuckle. “Damn, you really lost it, huh?”",  
+                "He groans, his restraint starting to **crack**. “Damn, you’re really begging for it, huh?”",  
+                "He smirks, his voice thick with amusement. “Shit, you’re a mess, aren’t you?”"
+                )(nl:2)  
+
+                (twirl:
+                "You don’t even care. You’re **sobbing**, **grinding**, *begging*—you don’t care how desperate you sound. All you care about is the **aching emptiness** inside you. And the **only** thing that can fix it is their cum.",  
+                "You’re **past begging**. You’re **pleading**, **sobbing**, **shaking**—doing anything and everything to **force** what you need out of them.",  
+                "Nothing else matters anymore. Only **this.** Only **their cum.** Only the **relief** you *so* desperately crave."
+                )
+            ]
+            (inc:'breeder_ruined_orgasms')
+            (inc:'orgasms')
+        ]
+        (else:)[
+            (text-style:"rumble")[💦 ORGASM! 💦](nl:2)
+
+            (if:$stage is 7)[
+                (if:$stage_orgasms is 1)[
+                    Your body trembles beneath him as the pleasure builds, your hips pushing against him. Your legs shake uncontrollably, toes curling as you feel a deep, pulsing sensation spread through your core. You arch your back, pressing your chest into the bed as your pussy clenches tightly.(nl:2) 
+                    
+                    “Ahh, fuck... yes, that's it!” Your body explodes with pleasure as you come hard, your breath coming in ragged gasps.(nl:2)
+
+                    But even as you ride the wave of ecstasy, you feel other cocks pressing against you, tugging your attention.(nl:1)
+                    “Keep going, slut,” someone growls in your ear, but it’s hard to focus. The orgasm is so intense it threatens to drown out everything else.(nl:1)
+                ]
+                (else-if:$stage_orgasms is 2)[
+                    The pleasure hits you again, washing over you like a tidal wave. Your legs lock around his waist as your pussy contracts and spasms around him.(nl:2)
+
+                    “Hnngh... f-fuck, don’t stop!” you scream, your back arching off the bed. Each pulse sends you deeper into the bliss, and yet, you feel other cocks surrounding you, their movements relentless.(nl:2)
+
+                    “Fuckin' cum on me again, slut,” someone demands, but it’s hard to concentrate as your body trembles uncontrollably. The sensations are overwhelming, but you can’t stop jerking and sucking the other cocks around you.(nl:1)
+                ]
+                (else:)[
+                    You can barely keep your focus anymore. The pleasure is too much. Your body shudders beneath him, your hips twitching as you feel another wave building.(nl:2)
+                    
+                    “G-god! Don’t stop, please...” you beg, but it’s hard to form words as your pussy clamps down on him. The pleasure is so intense it makes your whole body freeze in place.(nl:2)
+
+                    Even though you're completely lost in ecstasy, the men around you keep you going.(nl:1) 
+                    “That’s it, keep sucking... don’t stop now.” you hear someone order, and you try to obey, though your mind is hazy with aftershocks of bliss.(nl:1)
+                ]
+            ]
+            (else-if:$stage is 8)[
+                (if:$stage_orgasms is 1)[
+                    The thick cock pounding you from behind hits deep, your body rocking forward with each thrust. You gasp as you feel your orgasm building, your back arching and your knees going weak.(nl:2)
+                    
+                    “Yes! Yes, right there!” you moan, your pussy spasming as you climax hard.(nl:2)
+
+                    Your body trembles and shakes, but you can’t forget the men around you. You can feel cocks pressing against your face and in your hands, urging you to continue, even as your mind is lost in the sensation.(nl:2)
+                    
+                    “Keep sucking, you dirty bitch,” one of them commands, and you obey, even though your mind is lost in a haze of pleasure.(nl:1)
+                ]
+                (else:)[
+                    (twirl:"Your pussy contracts around another big black cock, clenching desperately.","Another orgasm rips through your body, so intense it feels like everything inside you is being turned upside down.")
+                    (nl:2) 
+                    
+                    (twirl:"“God, I can’t—ohhh!”","“Hnnng, f-fuck... don’t stop!”")
+                    (twirl:"you scream, your legs shaking as another orgasm overtakes you.","you cry out, your body jerking as your pussy spasms around his cock.")(nl:2) 
+
+                    (twirl:"Your body collapses forward, and your fingers slip from the cock you were jerking. You barely have time to breathe before you're urged to suck again.","“Don’t forget about us, slut. Keep it going,” someone growls, and you try to focus, pulling your attention back to the throbbing cock in your mouth, even as your body shudders and quivers.")(nl:1)
+                ]
+            ]
+            (else-if:$stage is 9)[
+                (if:$stage_orgasms is 1)[
+                    Your body is on top of him, your hands braced on his chest as you bounce up and down. Your breasts bounce with each movement, and you can feel the orgasm building in your core.(nl:2)
+                    
+                    “Oh, god yes, don’t stop, don’t stop!” you scream as you feel your pussy tighten, squeezing around his cock.(nl:2)
+
+                    Your whole body trembles as you come, your back arching and your eyes rolling back. But you’re still aware of the cocks in your hands and mouth, urging you to keep sucking and jerking.(nl:2)
+                    
+                    “Focus, slut, don’t get distracted!” one of them growls, and you fight to keep going, even as your orgasm takes over.(nl:1)
+                ]
+                (else:)[
+                    (twirl:"The pleasure is overwhelming now. Your whole body jerks and shakes as the third orgasm hits, your pussy contracting again as you scream out in bliss.","As your hips keep grinding against him, the pleasure builds again, making you gasp for breath.")
+                    (nl:2) 
+                    
+                    (twirl:"“Fuck! Oh my god, don’t stop!”","“Please… more! I need more!”")
+                    (twirl:"you beg, your body moving faster, desperate for release. Your legs shake as you cum hard once more, your pussy squeezing around him in desperate pleasure.","you cry out, feeling a wave of release pulse through your entire body.")
+                    (nl:2)
+
+                    (twirl:"But even as your body writhes, you can’t forget the other men.","But you’re still being used, your hands still jerking and sucking as you try to hold onto some semblance of control. ")
+                    (nl:1)
+                    (twirl:"“Come on, slut, suck it harder,”","“Don’t slow down, slut, keep going. We want it all.”")
+                    (twirl:"they say, and you obey, trying to suck, jerk, and ride the cock at the same time, despite the overwhelming pleasure.","someone demands, and you try your best, though your body feels like it’s going to fall apart from the intensity of the orgasms.")
+                    (nl:1)
+                ]
+            ]
+        ]
+    ]
+    (set:$custom_orgasm to "true")(display:"sex orgasm")
+}
+
+:: blacked kendra 5v1 sidebar
+{
+    (set:$left_pic_variant to (cond:
+        $current_position is "blowjob","scenes/blacked/kendra 5v1/portrait_bj.jpg",
+        $current_position is "blowbang","scenes/blacked/kendra 5v1/portrait_bj.jpg",
+        $current_position is "missionary","scenes/blacked/kendra 5v1/portrait_sex.jpg",
+        $current_position is "doggy","scenes/blacked/kendra 5v1/portrait_doggy.jpg",
+        $current_position is "riding","scenes/blacked/kendra 5v1/portrait_riding.jpg",
+        $stage is 10 and $current_position is "beg","scenes/blacked/kendra 5v1/portrait_beg.jpg",
+        $stage is 10 and $current_position is "cum","scenes/blacked/kendra 5v1/portrait_bj.jpg",
+        $stage is 11 and $current_position is "cum","scenes/blacked/kendra 5v1/portrait_cum.jpg",
+        $stage is 7 and $current_position is "orgasm","scenes/blacked/kendra 5v1/portrait_orgasm_missionary "+ (text:(twist:1,2,3,4))+".jpg",
+        $stage is 8 and $current_position is "orgasm","scenes/blacked/kendra 5v1/portrait_orgasm_doggy.jpg",
+        $stage is 9 and $current_position is "orgasm","scenes/blacked/kendra 5v1/portrait_orgasm_riding "+ (text:(twist:1,2))+".jpg",
+        $stage is 10 and $current_position is "orgasm","scenes/blacked/kendra 5v1/portrait_orgasm_riding "+ (text:(twist:1,2))+".jpg",
+        $current_position is "none","npc/girls/blacked/kendra/braids.jpg",
+        "npc/girls/blacked/kendra/braids.jpg"
+    ))
+
+    (set:$right_pic_variant to (cond:
+        $current_position is "blowjob","bj",
+        $current_position is "blowbang","bj",
+        $current_position is "beg","bj",
+        $current_position is "cum" and $stage > 9,"bj",
+        $current_position is "missionary","sex",
+        $current_position is "doggy","doggy",
+        $current_position is "riding","riding",
+        $current_position is "none","surround",
+        "surround"
+    ))
+
+    (set:$right_text_variant to (cond:
+        $pleasure_target is "jason","Jason",
+        $pleasure_target is "isiah","Isiah",
+        $pleasure_target is "ricky","Ricky",
+        $pleasure_target is "john","John",
+        $pleasure_target is "nat","Nat",
+        $pleasure_target is "them","Jason and his friends",
+        "Jason and his friends"
+    ))
+
+    (replace:?pre_stats)[]
+
+    (replace:?portrait)[($pic:$left_pic_variant)]
+
+    (replace:?right_screen)[
+        {
+            [($pic:"scenes/blacked/kendra 5v1/guys "+ $right_pic_variant +".jpg")(nl:1)]<right_image|
+            [<span class = "shadow">$right_text_variant</span>(nl:2)]<right_caption|(nl:1)
+            []<right_options|(nl:1)
+            [
+                <span class = "shadow">Jason's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "jason", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">Isiah's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "isiah", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">Ricky's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "ricky", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">John's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "john", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">Nat's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "nat", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+            ]<right_meters|
+        }
+    ]
+}
+
+:: blacked kendra 5v1 sex info
+{
+    (set:$available_positions to (dm:
+        "warmup", (dm:
+            "id", "warmup",
+            "stage", 1,
+            "position", "handjob",
+            "your pleasure", 0,
+            "their pleasure", 0,
+            "pleasure target", "self",
+            "effort", 0),
+        "grope", (dm:
+            "id", "grope",
+            "stage", 2,
+            "position", "grope",
+            "your pleasure", 0,
+            "their pleasure", 0,
+            "pleasure target", "self",
+            "effort", 0),
+        "eat out", (dm:
+            "id", "eat out",
+            "stage", 3,
+            "position", "cunnilingus",
+            "your pleasure", 4,
+            "their pleasure", 0,
+            "pleasure target", "self",
+            "effort", 1),
+        "group blow", (dm:
+            "id", "group blow",
+            "stage", 4,
+            "position", "blowjob",
+            "your pleasure", 0,
+            "their pleasure", 2,
+            "pleasure target", "them",
+            "effort", 1),
+        "blowbang", (dm:
+            "id","blowbang",
+            "stage", 5,
+            "position", "blowbang",
+            "your pleasure", 0,
+            "their pleasure", 4,
+            "pleasure target", "them",
+            "file","5 blowbang.mp4",
+            "effort", 2),
+        "bj isiah", (dm:
+            "id","bj isiah",
+            "stage", 6,
+            "position", "blowjob",
+            "your pleasure", 0,
+            "their pleasure", 2,
+            "pleasure target", "isiah",
+            "file","6 bj isiah.mp4",
+            "effort", 1),
+        "bj jason", (dm:
+            "id","bj jason",
+            "stage", 6,
+            "position", "blowjob",
+            "your pleasure", 0,
+            "their pleasure", 2,
+            "pleasure target", "jason",
+            "file","6 bj jason.mp4",
+            "effort", 1),
+        "bj ricky", (dm:
+            "id","bj ricky",
+            "stage", 6,
+            "position", "blowjob",
+            "your pleasure", 0,
+            "their pleasure", 2,
+            "pleasure target", "ricky",
+            "file","6 bj ricky.mp4",
+            "effort", 1),
+        "bj john", (dm:
+            "id","bj john",
+            "stage", 6,
+            "position", "blowjob",
+            "your pleasure", 0,
+            "their pleasure", 2,
+            "pleasure target", "john",
+            "file","6 bj john.mp4",
+            "effort", 1),
+        "bj nat", (dm:
+            "id","bj nat",
+            "stage", 6,
+            "position", "blowjob",
+            "your pleasure", 0,
+            "their pleasure", 2,
+            "pleasure target", "nat",
+            "file","6 bj nat.mp4",
+            "effort", 1),
+        "sex isiah", (dm:
+            "id","sex isiah",
+            "stage", 7,
+            "position", "missionary",
+            "your pleasure", (twist:2,5),
+            "their pleasure", 2,
+            "pleasure target", "isiah",
+            "effort", 0),
+        "sex jason", (dm:
+            "id","sex jason",
+            "stage", 7,
+            "position", "missionary",
+            "your pleasure", (twist:2,5),
+            "their pleasure", 2,
+            "pleasure target", "jason",
+            "effort", 0),
+        "sex ricky", (dm:
+            "id","sex ricky",
+            "stage", 7,
+            "position", "missionary",
+            "your pleasure", (twist:2,5),
+            "their pleasure", 2,
+            "pleasure target", "ricky",
+            "effort", 0),
+        "sex john", (dm:
+            "id","sex john",
+            "stage", 7,
+            "position", "missionary",
+            "your pleasure", (twist:2,5),
+            "their pleasure", 2,
+            "pleasure target", "john",
+            "effort", 0),
+        "sex nat", (dm:
+            "id","sex nat",
+            "stage", 7,
+            "position", "missionary",
+            "your pleasure", (twist:2,5),
+            "their pleasure", 2,
+            "pleasure target", "nat",
+            "effort", 0),
+        "spit roast", (dm:
+            "id","spit roast",
+            "stage", 8,
+            "position", "doggy",
+            "your pleasure", (twist:3,6),
+            "their pleasure", 2,
+            "pleasure target", "them",
+            "effort", 1),
+        "riding", (dm:
+            "id","riding",
+            "stage", 9,
+            "position", "riding",
+            "your pleasure", (twist:3,6),
+            "their pleasure", 2,
+            "pleasure target", "them",
+            "effort", 1)
+    ))
+}
+
+:: blacked kendra 5v1 finish
+{
+    (replace:?image)[($pic:"scenes/blacked/kendra 5v1/finish " + (cond:$choice is "Smile","smile","Big Smile","smile","stare")+".jpg")]
+    (replace:?text)[
+        (if:$choice is "Smile")[
+            You can't help but smile, given the circumstances...
+            ($remember:"blacked kendra story gangbang",500,"kendra","scenes/blacked/kendra 5v1/11 final.mp4","smile")
+        ]
+        (else-if:$choice is "Big Smile")[
+            Well, he did tell you to smile, and you wouldn't want to upset him...(People Pleaser Side Effect)🍀
+        ]
+        (else:)[
+            You become a little glassy-eyed, while you try to take everything in...
+            ($remember:"blacked kendra story gangbang",500,"kendra","scenes/blacked/kendra 5v1/11 final.mp4","stare")
+        ]
+        (nl:2)
+
+        Jason and his friends head back out and hop in the pool, leaving you to sort yourself out.(nl:2)
+
+        Clawing at the drying cum on your face, you're dripping globs of cum all over the floor..(nl:1)
+    ]
+    (replace:?options)[
+        (link:"Wash Up")[
+            (display:"blacked kendra 5v1 cleanup")
+        ]
+    ]
+    (set: _current_memory to (find: _memory where _memory's id is "blacked kendra story gangbang", ...$memories))
+    (put: _current_memory's 1st into _memory)
+    (set: _memory's location to "Dredd's House")
+}
+
+:: blacked kendra 5v1 cleanup
+{
+    (set:$relationships's jasonbrown's "dom" to it + (max:10, (floor:$pleasure's "jason"/2)))
+    (set:$relationships's jasonbrown's "friendship" to it + (min:8, (floor:$pleasure's "jason"/2)))
+    (set:$relationships's jasonbrown's "attraction" to it + (max:15, (floor:$pleasure's "jason")))
+
+    (set:$relationships's rickyjohnson's "dom" to it + (max:10, (floor:$pleasure's "ricky"/2)))
+    (set:$relationships's rickyjohnson's "friendship" to it + (min:8, (floor:$pleasure's "ricky"/2)))
+    (set:$relationships's rickyjohnson's "attraction" to it + (max:15, (floor:$pleasure's "ricky")))
+
+    (set:$relationships's isiahmaxwell's "dom" to it + (max:10, (floor:$pleasure's "isiah"/2)))
+    (set:$relationships's isiahmaxwell's "friendship" to it + (min:8, (floor:$pleasure's "isiah"/2)))
+    (set:$relationships's isiahmaxwell's "attraction" to it + (max:15, (floor:$pleasure's "isiah")))
+
+    (set:$relationships's johnjohnson's "dom" to it + (max:10, (floor:$pleasure's "john"/2)))
+    (set:$relationships's johnjohnson's "friendship" to it + (min:8, (floor:$pleasure's "john"/2)))
+    (set:$relationships's johnjohnson's "attraction" to it + (max:15, (floor:$pleasure's "john")))
+
+    (set:$relationships's natturnher's "dom" to it + (max:10, (floor:$pleasure's "nat"/2)))
+    (set:$relationships's natturnher's "friendship" to it + (min:8, (floor:$pleasure's "nat"/2)))
+    (set:$relationships's natturnher's "attraction" to it + (max:15, (floor:$pleasure's "nat")))
+
+    (set:$blacked_stats's "sex as girl" to it + 5)
+    (set:$blacked_daily_stats's "sex as girl" to it + 5)
+    (set:$blacked_stats's "facials received" to it + 5)
+    (set:$blacked_daily_stats's "facials received" to it + 5)
+    (set:$blacked_stats's "cunnilingus received" to it + 1)
+    (set:$blacked_daily_stats's "cunnilingus received" to it + 1)
+    (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+    (display:"blacked sex tally")
+
+    (if:$pleasure's "jason" > 20)[
+        (set:$blacked_stats's "guys fully satisfied" to it + 1)
+        (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
+    ]
+
+    (if:$pleasure's "isiah" > 20)[
+        (set:$blacked_stats's "guys fully satisfied" to it + 1)
+        (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
+    ]
+
+    (if:$pleasure's "ricky" > 20)[
+        (set:$blacked_stats's "guys fully satisfied" to it + 1)
+        (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
+    ]
+
+    (if:$pleasure's "nat" > 20)[
+        (set:$blacked_stats's "guys fully satisfied" to it + 1)
+        (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
+    ]
+
+    (if:$pleasure's "john" > 20)[
+        (set:$blacked_stats's "guys fully satisfied" to it + 1)
+        (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
+    ]
+
+    (else-if:(is_breeder:))[
+        (set:$cause_text to "since you wanted Jason and his friends to creampie you")
+        (set:$effect_text to "this stupid breeder pill")
+        (display:"blacked mood unsatisfied")
+    ]
+    (else-if:$orgasms > 2)[
+        (set:$cause_text to "since Jason and his friends made you cum so many times")
+        (set:$effect_text to "the gangbang with Jason and his friends")
+        (display:"blacked mood satisfied")
+    ]
+    (else-if:$orgasms > 0)[
+        (set:$cause_text to "you wanted to cum again with Jason and his friends")
+        (set:$effect_text to "the gangbang with Jason and his friends")
+        (display:"blacked mood unsatisfied")
+    ]
+
+    (if:$pleasure's "total" > 80)[(display:"blacked QoS buff")]
+
+    (set:$blacked_stats's "big cocks" to it + 4)
+    (if:$blacked_stats's "big cocks" >= 15)[(display:"blacked trigger size queen")]
+
+    (set:$pleasure to 0)
+    (set:$orgasms to 0)
+    (set:$character's "arousal" to (cond:(is_breeder:),4,0))
+    (set:$stage_orgasms to 0)
+    (set:$stamina_stat to "disabled")
+    (set:$lubrication_stat to "disabled")
+    (set:$stage to 0)
+    (set:$current_position to "none")
+    (set:$pleasure_target to 0)
+    (set:$lubrication to 0)
+    (set:$your_pleasure to 0)
+    (set:$spit_roast to 0)
+    (set:$riding to 0)
+    (set:$cumshot to 0)
+
+    ($remember_update:"add","blacked kendra story gangbang","completed")
+
+    (set:$minigame to (dm:
+	"difficulty",7,
+	"babe type",(cond:
+        (is_bim:),"ahegao",
+        (is_breeder:),"ahegao",
+        (twirl:"ahegao","clothed","nsfw")),
+	"cock type","bbc",
+	"masculinity level",35,
+	"reason 1",(twirl:"With the way you were acting, you’d think you were ADDICTED to BBC.","You’ve always wanted to be in a gangbang... you just didn’t know you’d be the one on your knees."),
+	"reason 2",(twirl:"You just took cumshots from FIVE hung black guys... damn.","I don’t know how your masculinity could ever recover after something like this.","How did it feel, being an actual cum dumpster?","You were a good little slut for Jason and his friends."),
+	"reason 3",(twirl:"You’re completely covered in their cum.","Glad he got a picture, I’m sure you’ll want to remember this moment.","Is this what they normally do with her?","You were such a good little whore for BBC."),
+	"afterwards","blacked kendra story 15"))
+    <div class='options'>(display:"masculinity crisis link")</div>
+}
+
+:: blacked kendra story 15 [fullscreen]
+{
+    ($play:"ambience","indoors afternoon")
+    (set:$current_location to "Dredd’s Bathroom")
+    (display:"blacked set up fullscreen")
+    (display:"location and time and inventory no wardrobe")
+    (newtrack:"barefoot","aud/se/walking/barefoot.mp3")
+    ($play:"sound","barefoot")
+    (replace:?portrait)[($pic:"npc/girls/blacked/kendra/shower.jpg")]
+    (replace:?image)[($pic:"places/blacked/dredds house/bathroom.jpg")]
+    (replace:?text)[
+        (twirl:"The drying cum trails along your skin quicken your pace, as you move towards the bathroom and into the shower.",
+        "You try not to drip cum onto the floor, as you make your way back to the bathroom and into the shower.",
+        "You can feel the drying stickiness tugging at your skin, as you step into the bathroom and then into the shower.")(nl:2)
+
+        (twirl:"The water cascades over you, its heat a sharp contrast to the cooling sensation of cum streaks across your body, washing it all down the drain",
+        "The first burst of warm water feels like salvation, melting away the remnants of your... activity.",
+        "The steam begins to rise, enveloping you in warmth while the water’s pressure works to scrub away every trace of what just happened.")(nl:2)
+
+        (twirl:"The warmth of the water mirrors the lingering heat in your body, and you wonder if it’s possible to ever feel that fulfilled again.",
+        "The shower washes you clean, but your mind clings to the intensity of what just happened... Have you ever felt so alive?",
+        "You tilt your head back under the stream, letting the water drown out your thoughts, but you can’t help but wonder if you’ll ever see them again.",
+        "As the last of it rinses away, you’re left with a question that lingers: Was this just a moment of passion, or something more?",
+        "You close your eyes, trying to separate the sensations of the shower from the lingering memories of their cocks.")(nl:2)
+    ]
+    (replace:?options)[
+        (link:"Get out and dry off")[(display:"blacked kendra story 16")]
+    ]
+}
+
+:: blacked kendra story 16
+{
+    (replace:?image)[($pic:"npc/girls/blacked/kendra/shower tall.jpg", "left")]
+    (replace:?text)[
+        (twirl:"You step out of the shower and reach for a towel. Catching your reflection in the fogged mirror, you pause, unsure of what to make of the person staring back. Your mind churns with emotions, tangled like threads you can’t quite sort out.",
+        "Stepping out of the shower, you feel the tiles cool beneath your feet as you grab a towel. A glimpse of yourself in the mirror halts you for a second—your expression caught somewhere between disbelief and acceptance. You aren’t sure how to process it all yet.",
+        "You wrap yourself in a towel as you step out of the shower, the lingering warmth on your skin contrasting with the chill of your swirling thoughts. The mirror reveals your flushed face, but you hardly recognize yourself behind your eyes.(nl:1) Who are you in this moment? You can’t quite decide.") (nl:2)
+
+        (twirl:"By habit, your hands take over, drying and braiding your hair as if on autopilot. The act feels second nature, almost meditative, offering a fragile sense of control.",
+        "Your hands move on their own, patting your body dry while your thoughts remain elsewhere. The rhythm of drying your hair and instinctively twisting it back into braids feels mechanical, almost comforting.",
+        "Without thinking, your hands begin a practiced routine, towel-drying your hair before parting it into sections. The repetitive motion of braiding is calming.") (nl:1)
+    ]
+    (replace:?options)[
+        (link:"Get dressed")[
+            (after:time + 2s)[($play:"sound","car door")]
+            (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
+            (replace:?image)[($pic:"scenes/blacked/kendra 5v1/dressed 2.jpg", "left")]
+            (replace:?text)[
+                (twirl:"As you pull the swimsuit back on, the cool fabric clings to your skin. It's not exactly what you’d prefer to wear, but it’s the only thing $kendra left for you.",
+                "You tug the swimsuit back into place, its familiar fit oddly comforting. You wish $kendra would have left you something else, but it’ll have to do for now.",
+                "With a sigh, you slip back into the swimsuit. It hugs your body snugly, the sensation strangely grounding as you adjust the fit.")(nl:2)
+
+                (twirl:"As you’re adjusting the straps, a muffled sound catches your attention—a car door closing just outside. Your heart leaps. Maurice! Finally, I can get some answers! The anticipation building as you head to check.",
+                "Just as you finish, the faint thud of a car door closing outside pulls your focus. Maurice must be here. Relief flickers through you as you stride toward the door, eager to see him.",
+                "The sound of a car door slamming outside jolts you out of your thoughts. Maurice, finally! The thought sends a jolt of excitement through you, and without hesitation, you move toward the door to greet him.")(nl:1)
+            ]
+            (replace:?options)[
+                (link:"Open the door")[(display:"blacked kendra story 17")]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story 17
+{
+    (set:$current_location to "Dredd’s Living Room")
+    (if:$blacked_npcs_men's maurice's events does not contain "name")[(set:$blacked_npcs_men's maurice's events to it + (a:"name"))]
+    (set:$npc to $blacked_npcs_men's "maurice")
+    (set:$npc's "img" to "img/npc/guys/blacked/maurice/portrait_work.jpg")
+    (display:"npc screen update")
+    (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
+    (replace:?image)[($pic:"scenes/blacked/kendra 5v1/post/1.jpg", "left")]
+    (replace:?text)[
+        (twirl:"Maurice stands on the doorstep, and for a second, you don’t recognize him. The suit is so out of character for him—until you remember that, technically, he’s an office manager, even if it’s in a research lab.",
+        "When you swing the door open, Maurice greets you, looking almost unrecognizable in a tailored suit. His confident stance feels out of place compared to the casual Maurice you’re used to.",
+        "You open the door, and there he is—Maurice, standing tall in a sharp suit, looking every bit the professional you’d never imagined.")(nl:2)
+
+        (twirl:"His arm is wrapped snugly around the waist of a redheaded woman, her short office dress leaving little to the imagination.(nl:1)
+        For a moment, you're too stunned to speak. You’d been expecting Maurice, but not like this—and certainly not with company.",
+        "He’s holding a red-haired woman close to him, her barely-there office dress a stark contrast to his polished look.(nl:1) 
+        You feel your stomach twist. You knew Maurice was coming, but the addition of… her? That wasn’t part of the plan. Wait, is this jealousy?",
+        "Then there’s the woman on his arm: a redhead in a scandalously short dress that could hardly qualify as professional attire.(nl:1) 
+        You feel your cheeks flush as you try to make sense of what you’re seeing. Maurice? In a suit? With her?")(nl:2)
+
+        (twirl:"Maurice’s eyes meet yours, and he tilts his head slightly. “$kendra?” he asks, before pausing, his brows furrowing. “Or… $old_name?”",
+        "He studies your face for a moment, his lips curving into a curious smirk. “$kendra?” he says slowly, and then, after a beat, “Or… $old_name?”",
+        "He looks you over carefully, his eyes narrowing slightly. “$kendra?” he says, and then pauses, a flicker of doubt crossing his face. “Or… $old_name?”")(nl:1)
+    ]
+    (replace:?options)[
+        ($simple_option:"blacked kendra story 18","display","Tease him","Be truthful","Ask about the woman")
+    ]
+}
+
+:: blacked kendra story 18
+{
+    
+    (replace:?text)[
+        (if:$choice is "Tease him")[
+            (twirl:"“Huh? Who is $old_name?” you tease, trying to mimic $kendra’s playful tone. You can barely hold it together before cracking a grin. “Seriously though, who’s the chick?”",
+            "“$kendra here, reporting for duty,” you joke with a mischievous smile. “But really, who’s the new girl?”",
+            "You cock your head, smirking. “It’s me, $kendra. Or is it? I can’t keep up anymore,” you laugh. “Now, tell me who she is.”",
+            "“$kendra, at your service,” you say with mock seriousness, striking a playful pose. “Now spill—who’s the redhead?”",
+            "“I’m $kendra now, right? Or was it someone else?” you joke, raising an eyebrow. “But seriously, Maurice, who’s she?”")
+        ]
+        (if:$choice is "Be truthful")[
+            (twirl:"“It’s me, $old_name,” you say, still stunned by the sight of him and his companion. “Maurice, the clone pill—it really works. But… who’s this?”",
+            "“Maurice, it’s me, $old_name,” you reply firmly, your mind racing. “It worked, but you’ve got some explaining to do. Who’s she?”",
+            "“It’s $old_name,” you say, brushing a strand of hair behind your ear. “Maurice, what’s going on here? And who’s that with you?”",
+            "“It’s me, $old_name,” you say cautiously, glancing between him and the redhead. “Maurice, I need answers. Who is she?”",
+            "“Maurice, it’s $old_name,” you say, steadying your voice. “It worked. Now, are you going to explain who this is?”")
+        ]
+        (if:$choice is "Ask about the woman")[
+            (twirl:"You narrow your eyes, your tone dry. “So, who’s the skank?”",
+            "“Who’s your friend, Maurice?” you ask, crossing your arms, your tone more accusing than you intended.",
+            "You glance at the redhead, then back at Maurice. “Seriously, who’s she? And why does she look like she walked out of a music video?”",
+            "“You bring a date, Maurice?” you ask, tilting your head, your voice dripping with sarcasm. “How thoughtful.”",
+            "“Care to explain who she is?” you ask, eyeing the redhead up and down, your tone sharp but controlled.")
+        ]
+        (nl:2)
+
+        (twirl:"“This is my lab assistant, Matt. Or I should say Maitland. They were spiked last night at the bar. Showed up like this, this morning.”",
+        "“Matt—uh, Maitland—is my assistant. Someone spiked their drink last night, and, well… this is the result. They walked into the lab like this today.”",
+        "“Meet Maitland. My assistant, Matt, had a little run-in with something last night. They showed up looking like this a few hours ago.”",
+        "“Long story short, this is Matt—or Maitland now. Someone slipped them something last night, and this is the aftermath.”",
+        "“This is Matt—now Maitland. Apparently, their drink got spiked last night. They’ve been like this since this morning.”")
+        (nl:2)
+
+        (twirl:"“Still waiting on their test results. I thought it might be a Cum-Cure, but with her behavior, it’s probably a Hot and Ready.”",
+        "“I’m running some tests to confirm, but if I had to guess? It’s either a Cum-Cure or a Hot and Ready. Her actions make me lean toward the latter.”",
+        "“Preliminary tests are inconclusive, but I suspect it’s a Hot and Ready. Her behavior’s a dead giveaway.”",
+        "“Still not entirely sure, but judging by how she’s acting, I’m betting it’s a Hot and Ready.”",
+        "“The results aren’t back yet, but based on her current… demeanor, I’d put money on Hot and Ready.”")
+        (nl:2)
+
+        (twirl:"“But that’s not why I’m here, is it? Let’s get things set up.”",
+        "“Enough about that, though. We’ve got work to do. Let’s get started.”",
+        "“Anyway, I’m here for you, not her. Let’s focus on getting you ready for the tests.”",
+        "“Let’s save the small talk for later. We’ve got tests to run, so let’s get to it.”",
+        "“That’s a side note for now. I came here to check on you. Let’s get everything prepared.”")
+        (nl:1)
+    ]
+    (replace:?options)[
+        (link:"Ask about the tests")[(display:"blacked kendra story 19")]
+    ] 
+}
+
+:: blacked kendra story 19
+{
+    (replace:?image)[($pic:"scenes/blacked/kendra 5v1/post/2.jpg", "left")]
+    (replace:?text)[
+        (twirl:"“I’ll take this...” *She slides Maurice’s suit jacket off and heads towards the coat rack.*",
+        "*She reaches for Maurice’s jacket with a polite smile, sliding it off his shoulders.* “Here, let me get that for you.”",
+        "“Let me take that for you,” she says, easing the jacket off Maurice and hanging it neatly on the coat rack.",
+        "*With a quick motion, she helps Maurice remove his suit jacket, folding it over her arm.*",
+        "“Got it,” she says, taking Maurice’s jacket and draping it carefully over the coat rack.")
+        (nl:2)
+
+        (twirl:"Maurice lifts a thick silver briefcase and brings it inside, setting it on a table.",
+        "Maurice grabs a hefty silver briefcase, stepping inside and placing it on the nearest table.",
+        "With a serious expression, Maurice carries a sleek silver briefcase through the doorway, setting it down with care.",
+        "Maurice steps in, silver briefcase in hand, and places it firmly on the table.",
+        "Holding a polished silver briefcase, Maurice strides inside and sets it down with a purposeful thud.")
+        (nl:2)
+
+        (twirl:"“So, first off, I’ll need a blood sample. This will help us identify what the nanobots are doing in your system.",
+        "“First thing’s first: I need a blood sample. That’ll tell us how the nanobots are functioning inside you.",
+        "“We’ll start with a blood sample. That’s the quickest way to figure out what the nanobots are up to in your body.",
+        "“The first step is drawing a blood sample. This will give us a clearer picture of the nanobots’ activity in your system.",
+        "“To kick things off, I’ll need to take a blood sample. It’s crucial to see how the nanobots are interacting with your body.")
+        (nl:1)
+
+        (twirl:"We already know it’s SWP, so that should help speed things up.”",
+        "“Since we’ve confirmed it’s SWP, that should streamline the process a bit.”",
+        "“Knowing it’s SWP gives us a head start, which will save us some time.”",
+        "“It’s SWP, so that eliminates a lot of guesswork.”",
+        "“The SWP confirmation works in our favor—it’ll make things much simpler.”")
+        (nl:2)
+
+        (twirl:"*He opens the briefcase and begins to lay out his testing supplies.*",
+        "*Maurice flips open the silver briefcase, meticulously arranging various tools and equipment on the table.*",
+        "*With practiced efficiency, Maurice unclasps the briefcase and starts organizing the testing supplies inside.*",
+        "*Maurice unlocks the briefcase with a soft click, carefully setting out syringes, vials, and other tools.*",
+        "*He opens the briefcase, methodically placing each piece of equipment on the table with precision.*")
+        (nl:1)
+
+        (twirl:"“Then I’ll hook up some devices to monitor your vitals, and ask you some questions.",
+        "“After that, I’ll attach a few monitors to track your vitals and follow up with some questions.",
+        "“Next, I’ll connect some devices to keep an eye on your vitals while we talk through a few things.",
+        "“Following the blood sample, I’ll set up some equipment to monitor your vitals and go over some questions.",
+        "“The next step will involve hooking up a few devices to record your vitals and discussing your responses.")
+        (nl:1)
+
+        (twirl:"Oh, and I’ll need to take some body measurements too, to compare against $kendra.”",
+        "“I’ll also need to take a few body measurements for comparison against $kendra’s stats.”",
+        "“Taking body measurements will be part of the process, so we can line them up with $kendra’s for accuracy.”",
+        "“Body measurements are also on the list—it’s important for comparing with $kendra’s baseline.”",
+        "“Finally, I’ll take your body measurements, just to see how you match up with $kendra’s proportions.”")
+        (nl:1)
+    ]
+    (replace:?options)[
+        (link:"Alright, let's do it")[(display:"blacked kendra story 20")]
+    ]
+}
+
+:: blacked kendra story 20
+{
+    (replace:?image)[($pic:"scenes/blacked/kendra 5v1/waiting.jpg", "left")]
+    (replace:?text)[
+        You lean against the table, waiting while they finish getting things ready.(nl:1)
+        You find your mind wandering as you watch them work. Your eyes glued to Maurice's pants, tracing the outline of his cock underneath.(nl:2)
+
+        (twirl:"You start to think back to the numerous parties you've been to with $gabbie here, and how much fun you had with Maurice.",
+        "Your thoughts drift to the nights with $gabbie and Maurice, remembering how easily he could command a room—and you.",
+        "Memories of past nights with $gabbie and Maurice surface, teasing you with the laughter, drinks, and pleasure that lingered.")
+        (nl:1)
+
+        (twirl:"Then you see how she helps him and the pit of your stomach burns. Has she been with him too? I bet they've had wild office sex in his office.",
+        "Watching the way she moves around him, jealousy gnaws at your gut. Have they shared more than just work? Probably countless sticky moments in his office.",
+        "The sight of her by his side stirs something bitter in you. Was she more than his assistant? You imagine them sneaking off to his office for a quick fuck.")
+        (nl:2)
+
+        You start to picture them together...(nl:1)
+    ]
+    (replace:?options)[
+        (link:"Next")[
+            ($play:"sound","unzip")
+            (replace:?image)[($pic:"scenes/blacked/kendra 5v1/post/3.jpg", "left")]
+            (replace:?text)[
+                (twirl:"You picture her letting herself into his office, sliding over to his chair, offering to ...relieve some of his stress.",
+                "Your mind paints a vivid scene of her slipping into his office, leaning over his desk with a mischievous smile, ready to help him unwind.",
+                "You can almost see her easing into his office, perching on the edge of his desk, her hand teasingly grazing his leg as she offers her... assistance.")
+                (nl:2)
+
+                (twirl:"She opens his zipper, getting his cock out. It's like they're staring right at you, gauging your reaction.",
+                "She unzips him slowly, pulling his cock free, their eyes locking on yours, daring you to respond.",
+                "Her hands move deftly, freeing his cock, their shared glances making you feel both excluded and invited.")
+                (nl:1)
+            ]
+            (replace:?options)[
+                (link:"Next")[
+                    (newtrack:"kendra bbc","aud/se/sex/loops/riding/kendra bbc.mp3")
+                    ($play:"sound","kendra bbc")
+                    (replace:?image)[($pic:"scenes/blacked/kendra 5v1/post/4.jpg", "left")]
+                    (replace:?text)[
+                        (twirl:"Your mind swimming with jealousy, fogging your sense of reality.",
+                        "Jealousy clouds your thoughts, blurring the line between fantasy and reality.",
+                        "Your thoughts spiral, the jealousy a smothering haze, trapping you in the scene unfolding in your mind.")
+                        (nl:2)
+
+                        The next thing you know, he's completely naked and she's riding him, right in front of you.(nl:1)
+                        Her head tilting back in ecstasy, she moans so loudly you can feel it in your chest.(nl:1)
+                        The heat of their bodies, radiating towards you, burning right through you.(nl:1)
+                    ]
+                    (replace:?options)[
+                        (link:"Next")[
+                            (newtrack:"cum","aud/se/sex/cum.mp3")
+                            ($play:"sound","cum")
+                            (replace:?image)[($pic:"scenes/blacked/kendra 5v1/post/5.jpg")]
+                            (replace:?text)[
+                                (twirl:"All you want to do is toss her off and hop on his cock, you can feel your heart beating in your neck.",
+                                "Every fiber of your being wants to shove her aside and take her place, your pulse roaring in your ears.",
+                                "You ache to push her away, your jealousy and desire pounding in your chest.")
+                                (nl:2)
+
+                                You blink, and suddenly she's on her knees in front of him, begging for his cum.(nl:1)
+                                To which he happily obliges, spraying all over her face and in her mouth.(nl:1)
+                                She swallows most of it, but some still running down her chin, landing on her tits.(nl:2)
+
+                                Just when you're about to rush this bitch in a fit of jealous rage...(nl:1)
+
+                                (text-style:"emboss")[“OWW!”]... the pinch of the needle entering your arm snaps you out of it.(nl:2)
+                                You're still at Dredd’s house... And they are just starting their tests...(nl:2)
+
+                                “Oh, did that hurt? Sorry about that hun.” *Maitland's stupid smile eats away at you.*(nl:1)
+                            ]
+                            (replace:?options)[
+                                (link:(twirl:"No problem", "It's okay"))[(display:"blacked kendra story 21")]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+    ]
+}
+
+
+:: blacked kendra story 21
+{
+    (replace:?image)[($pic:"scenes/blacked/kendra 5v1/dressed 1.jpg", "left")]
+    (replace:?text)[
+        “Your heart rate is elevated,” Maurice says, looking intently at his laptop screen.(nl:1)
+        “Is that bad?” you ask.(nl:1)
+        “Not necessarily. Just making an observation.” He glances briefly at you before returning to his screen, while Maitland finishes collecting the blood sample.(nl:2)
+
+        “How long before you’ll know the results?” you ask, your voice tinged with uncertainty.(nl:1)
+        “Depends. It could be a day, maybe a week,” she says, carefully packing the sample into a case.(nl:2)
+
+        “Usually, it’s faster when we know what we’re dealing with...” Maurice mutters, still focused on his screen.(nl:1)
+        “Your heart rate’s coming down,” he notes, his tone calming. (nl:1)
+        You realize you do feel a little more at ease...(nl:2)
+
+        “Alright, that’s a good baseline. We can move on.” Maurice looks up at you with a steady gaze.(nl:1)
+        “As you know, transformations are about more than just physical changes, so we need to evaluate your mental state as well.”(nl:2)
+
+        “Answer as honestly as you can, but don’t overthink it. Just say whatever comes to mind, okay?”(nl:2)
+
+        “Do you feel more impulsive than usual? Do you find yourself thinking about or wanting to do things that you wouldn't normally?”(nl:1)
+        He rattles off some other questions along the same lines, focusing around personality and self-identity.(nl:1)
+    ]
+    (replace:?options)[
+        ($simple_option:"blacked kendra story 22","display","Answer Honestly","Downplay the Effects")
+    ]
+}
+
+:: blacked kendra story 22
+{
+    (replace:?text)[
+        (if:$choice is "Answer Honestly")[
+            You decide the risk is too great to play it cool and open your mouth to tell him about $kendra’s personality asserting itself over yours.(nl:2)
+            (text-style:"smear")[“Nah, I feel fine.”](nl:2)
+            WHAT?!! No, no, that’s not what I meant. What I mean is...(nl:1)
+            (text-style:"smear")[“Nothing unusual.”](nl:2)
+
+            Even your demeanor betrays you, her confidence and carefree attitude effortlessly overwriting your own as he observes you.(nl:1)
+        ]
+        (if:$choice is "Downplay the Effects")[
+            You decide you’d rather just get it over with than risk being carted off to X-Change Tower and turned into a lab rat.(nl:1)
+            (text-style:"smear")[“Nah, I feel fine. Perfectly normal.”](nl:2)
+
+            You don’t even have to try to sell the lie—$kendra’s carefree demeanor and confidence do it for you.(nl:1)
+        ]
+
+        He takes notes during the interview, his pen moving steadily across the page, before filing them away.(nl:1)
+        “Alright, let me get some quick measurements, and then we’ll be done.”(nl:2)
+
+        The familiar feeling of his fingers tracing over your skin actually makes you smile a little as he drags the measuring tape around.(nl:2)
+
+        *He takes out his phone.* “I should take a few pictures too, for comparison.”(nl:2)
+
+        “Annnnnd done. Alright, you should be good to go home.”(nl:1)
+    ]
+    (replace:?options)[
+        (link:"How long does this last?")[
+            (replace:?text)[
+                “No way to tell right now. Since there’s no reversal pill—or at least not one that we know of—it’ll probably last between 4 and 8 hours.”(nl:2)
+                “Based on their other pills, I’d guess closer to 4 hours.”(nl:1)
+            ]
+        ]
+        (link:"Any side effects?")[
+            (replace:?text)[
+                “I’ve never known an SWP pill not to have side effects. It’s possible you just haven’t experienced them yet.”(nl:2)
+                “Like with their other pills, if you orgasm, come into contact with cum, or get too hot...” (nl:1)
+            ]
+        ]
+        (link:"Go home")[
+            (replace:?text)[
+                You stand up to leave, but the world suddenly starts to spin...(nl:1)
+                “Ugh, I don’t feel too good.”(nl:2)
+
+                Maurice quickly moves next to you, guiding you to the couch.(nl:1)
+                “Here, sit down,” he says, checking you over. “It’s too early for the transformation... When’s the last time you ate?”(nl:2)
+
+                “This morning.”(nl:2)
+
+                “Get her some water,” he says to Maitland. “I was going to fire up the grill for lunch anyway. Just rest here for a bit.”(nl:1)
+                (replace:?options)[
+                    (link:"Wait on the couch")[(display:"blacked kendra story 23")]
+                ]
+            ]
+        ]
+    ]
+}
+
+:: blacked kendra story 23
+{
+    (replace:?image)[]
+    (replace:?text)[...(nl:2)]
+    (replace:?options)[]
+    (after:time + 1s)[(append:?text)[.]]
+    (after:time + 2s)[(append:?text)[.]]
+    (after:time + 3s)[(append:?text)[.]]
+    (after:time + 4s)[(append:?text)[.]]
+    (after:time + 5s)[(append:?text)[.]]
+    (after:time + 6s)[
+        (set:$npc's "img" to "img/npc/guys/blacked/maurice/portrait_outside.jpg")
+        (display:"npc screen update")
+        (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
+        (replace:?image)[($pic:"img/npc/guys/blacked/maurice/vertical_outside.jpg","left")]
+        (replace:?text)[
+            After a while, Maurice returns from outside. He’s changed into swim trunks and, of course, is shirtless. You could fry an egg on those abs—mmm, yummy.(nl:2)
+
+            “Here, try eating a little bit,” he says, handing you a plate.(nl:2)
+
+            You sit up and take the plate. “Thanks. For everything.”(nl:2)
+
+            “No problem, really.” He smiles and heads back to grab plates for himself and Maitland.(nl:1)
+            They both join you on the couch, and you find yourself having a surprisingly enjoyable lunch, listening to them banter about office politics. Their dynamic feels easy and natural, and you can’t help but laugh a few times.(nl:2)
+
+            Once everyone’s finished, Maurice collects the plates.(nl:1)
+            “Why don’t you head back to the office? I’ll stick around in case she needs anything else.”(nl:2)
+
+            Oh, I can think of a few things I need... you think to yourself, suppressing a smirk.(nl:2)
+
+            Maitland nods and begins packing up their equipment, carrying it back to Maurice’s car. After a quick goodbye, she’s off, leaving the two of you alone.(nl:2)
+
+            Maurice seems to be keeping his distance, but you catch him glancing your way every now and then. He might be picking up on some of the subtle flirting coming from your end.(nl:1)
+        ]
+        (replace:?options)[
+            (link:"Wait out your transformation")[(display:"blacked kendra story 24")]
+        ]
+    ]
+}
+
+:: blacked kendra story 24
+{
+    (display:"blacked kendra revert")
+    (replace:?image)[($pic:"places/blacked/dredds house/living room.jpg")]
+    (replace:?text)[
+        Almost exactly at the 4-hour mark, you feel the transformation reverse itself. It’s a strange sensation, but not unlike one you’ve experienced before.(nl:2)
+
+        Maurice gives you a quick once-over.(nl:2)
+
+        “How do you feel?” he asks.(nl:1)
+
+        “Aside from a slight headache, I feel... fine, actually.” You’re surprised by how normal you feel, all things considered.(nl:2)
+
+        “Good. I’ll let you know as soon as we get the results back from the tests.” He pauses, tapping his chin thoughtfully. “I don’t want to jinx it, but this might just be their safest pill yet... hmm.”(nl:2)
+
+        “Call me if anything changes.”(nl:2)
+
+        You nod, letting his words sink in. A successful test—at least for now.(nl:1)
+        (set:$blacked_events to it + (a:"kendra clone completed"))
+    ]
+    (replace:?options)[(link:"Leave")[(display:"advance time")]]
+}
+
