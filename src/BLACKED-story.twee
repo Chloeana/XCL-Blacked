@@ -20,7 +20,7 @@
 
 :: blacked activities [daily]
 {
-    (activities:$blacked_events contains "kendra clone accepted", "Go to Dredd's House", "daytime", true, "Time to become " + $kendra + "...")
+    (activities:$blacked_events contains "kendra clone accepted" and $blacked_events does not contain "kendra clone completed", "Go to Dredd's House", "daytime", true, "Time to become " + $kendra + "...")
     (activities:$blacked_events contains "dredd visit ready", "Go to Dredd's House", "daytime", false, "none", "🍾")
 }
 
@@ -75,8 +75,12 @@
             $kendradm's likes contains "fruity cocktail","strawberry daiquiri",
             "soda"))
         
-        (if:($recall:"corpo revenge party"))[(set:$corpo_revenge to 2)]
-        (else-if:$office_events contains "visit victor")[(set:$corpo_revenge to 1)]
+        (set:$corpo_revenge to 0)
+        (if:($recall:"corpo revenge party"))[(if:$memory's "day" + 4 < $day )[(set:$corpo_revenge to 2)]]
+        (else-if:($recall:"corpo sphere"))[(if:$memory's "day" + 4 < $day )[(set:$corpo_revenge to 1)]]
+
+        (if:$bar_party's times > 2 and $corpo_revenge > 0)[(set:$kendra_story_start to true)]
+        (else:)[(set:$kendra_story_start to false)]
     ]
 }
 
@@ -88,10 +92,9 @@
 
 :: Hit the bar [around]
 {
-    (display:"blacked kendra story setup")
-    
     (if:$blacked_events does not contain "kendra clone talked")[
-        (if:$bar_party's times > 2 and $corpo_revenge > 0)[($cs:"blacked kendra story intro")]
+        (display:"blacked kendra story setup")
+        (if:$kendra_story_start is true)[($cs:"blacked kendra story intro")]
         (else:)[(display:_around)]
     ]
     (else:)[(display:_around)]
@@ -725,6 +728,7 @@
 
 :: blacked kendra story 9 [fullscreen]
 {
+    (if:$npc_vo is 0)[(display:"blacked init voice lines")]
     (display:"blacked set up fullscreen")
     (newtrack:"kendra clone","aud/music/sex/transactional/" + (twirl:"royals","snap") + ".mp3")
     ($play:"song","kendra clone")
@@ -783,7 +787,7 @@
                 (replace:?image)[]
                 (set:$se to "fire 3")
                 (display:"play sound")
-                (after: time + 0.8s)[(display:"blacked kendra transform")(replace:?right_options)[($pic:"scenes/blacked/kendra 5v1/bathroom change 1.jpg")]]
+                (after: time + 0.8s)[(display:"blacked kendra transform")(replace:?right_options)[($pic:"scenes/blacked/kendra 5v1/bathroom change 1.jpg")](display:"outfit button")]
                 (replace:?text)[
                     (if:$character's race is not "white")[
                         *Your skin tingles as the pigmentation begins to change, shifting to a fair, creamy tone. The changes flow from your hands to your arms, your legs, and finally your face.*(nl:1)
@@ -898,7 +902,8 @@
                             ]
     
                             You randomly remember that $kendra is (if:$kendradm's traits contains "no pill")[not ]on birth control. Wait, did you know that before?(nl:1) 
-                            “Does that apply to me now too?” You wonder.(nl:2)
+                            (if:(is_preg:))[“Little late for that...”(nl:2)]
+                            (else:)[“Does that apply to me now too?” You wonder.(nl:2)]
 
                             Your new thoughts are also colored by who you once were, creating a strange blend of the old and new.(nl:2)
                             (if:$character's "archetype" is "loser")[
@@ -1483,7 +1488,7 @@
         (else-if:$stage is 9)[
             (if:$your_pleasure > 9)[(display:"blacked kendra 5v1 orgasm")]
             (else:)[
-                (if:$riding <= 2)[
+                (if:$riding < 2)[
                     (link:"Ride some cock ⚡")[
                         (inc:'riding')
                         (set:$position to $available_positions's "riding")
@@ -1492,10 +1497,12 @@
                     ]
                 ]
                 (else:)[
-                    (inc:'stage')
-                    (set:$pleasure_target to "them")
-                    (set:$current_position to "beg")
-                    (display:"blacked kendra 5v1 refresh")
+                    (link:"Beg for their cum")[
+                        (inc:'stage')
+                        (set:$pleasure_target to "them")
+                        (set:$current_position to "beg")
+                        (display:"blacked kendra 5v1 refresh")
+                    ]
                 ]
             ]
         ]
@@ -1566,7 +1573,7 @@
     (else-if:$stage is 7 or $stage is 8)[
         (replace:?image)[
             ($vid:$img + ".mp4")
-            (set:$timer to (ceil:_skill_difficulty / 2))
+            (set:$timer to (ceil:_skill_difficulty / 1.5))
             (set: $waitOptions to 
                 (dm: 
                     "img", "none",
@@ -1578,7 +1585,7 @@
                     "buttoneffect", 10, 
                     "buttonname", "Talk dirty", 
                     "finish", "blacked kendra 5v1 minigame result", 
-                    "mascpenalty", true, 
+                    "mascpenalty", false, 
                     "buttontalk1", "blacked kendra 5v1 dirty talk 1",
                     "buttontalk2", "blacked kendra 5v1 dirty talk 2",
                     "buttontalk3", "blacked kendra 5v1 dirty talk 3",
@@ -1630,7 +1637,6 @@
         ]
     ]
     (else:)[
-        (if:$roll > 15)[(inc:'energy')]
         (if:$position's "their pleasure" > 0)[
             (if:$pleasure_target is "them")[
                 (set:$pleasure's isiah to it + $position's "their pleasure")
@@ -1644,19 +1650,19 @@
             ]
         ]
         (if:$position's "your pleasure" > 0)[
-            (if:$roll is 20)[
-                (set:$pleasure_bonus to 10)
-                (set:$your_pleasure to (min:$your_pleasure + $pleasure_bonus,10))
-                (set:$energy to $max_energy)
-            ]
-            (else:)[(set:$your_pleasure to it + $position's "your pleasure")]
+            (set:$your_pleasure to it + $position's "your pleasure")
         ]
     ]
     (display:"blacked set up fullscreen")
     (display:"blacked kendra 5v1 refresh")
     (prepend:?text)[
-        (if:$position's "your pleasure" > 0)[
-            (if:$roll is 20)[CRITICAL SUCCESS! Pleasure meter filled 💦]
+        (if:$roll > 15)[(inc:'energy')]
+        (if:$position's "your pleasure" > 0 and $stage is not 3)[
+            (if:$roll is 20)[CRITICAL SUCCESS! Pleasure meter filled 💦
+                (set:$pleasure_bonus to 10)
+                (set:$your_pleasure to (min:$your_pleasure + $pleasure_bonus,10))
+                (set:$energy to $max_energy)
+            ]
         ]
     ]
 }
@@ -1767,36 +1773,68 @@
 :: blacked kendra 5v1 talk 1
 {
     *
-    (twirl:"BBC stretches you so wide it feels like you might split.",  
-            "You’re completely overwhelmed, a BBC stuffed deep into your throat while another slams into your dripping pussy.",
-            "He grins down at you, as he slams his massive cock into your tight little pussy.",  
-            "He grips your pale thighs, spreading you wide as his monster cock splits you open.",
-            "Your pale skin contrasts against his dark, muscular body.",
-            "You gasp, your big tits bouncing wildly, as he growls, 'Take it, snowbunny. You’re made for this.'")
+    (twirl:
+        "Your pale skin glows against their dark, muscled bodies as you're stretched open with massive BBC.",
+        "You shudder as his thick, black cock pushes deeper, claiming your tight little pussy completely.",
+        "His strong hands grip your soft, white thighs, spreading them wider to take every inch of his cock.",
+        "The contrast between your delicate, pale form and his powerful, ebony frame makes the moment even filthier.",
+        "You gasp, feeling his thick BBC bottom out inside you, stretching you like you've never been stretched before.",
+        "Pinned beneath him, your soft curves mold against his hard, chiseled body, completely overpowered by his size and strength.",
+        "Your moans are muffled by the thick black cock stuffing your throat, while another slams deep inside your soaked pussy.",
+        "Your creamy skin is flush with heat as he fucks you mercilessly, dark hands gripping you tight.",
+        "His massive cock stretches your tiny white pussy, making you feel just how much bigger he is than you.",
+        "The scent of sweat and sex fills the air as his ebony body towers over your trembling frame.",
+        "His strong, black fingers dig into your hips as he drags you onto his cock, making you take him even deeper.",
+        "Your body quivers as you feel completely surrounded—dark, muscular men using you exactly how they want.",
+        "His cock is so thick and long, you can see the bulge in your stomach as he fucks you harder.",
+        "Your nails claw at his back, your pale hands stark against his dark skin as you beg for more.",
+        "You whimper as he leans in, growling into your ear, ‘This is what you were made for, snowbunny.’"
+    )
     *
 }
 
 :: blacked kendra 5v1 talk 2
 {
     *
-    (twirl:"Your legs shake uncontrollably, pinned under his weight as he grinds deeper, claiming you completely.",  
-            "You can barely form words, reduced to incoherent moans as his BBC bullies your pussy.",  
-            "He leans down, 'You love being wrecked by my big black cock.'",
-            "BBC pounds into you so hard your body jolts with every thrust.", 
-            "You bite your lip, whimpering as his fat cock stretches you wider than you thought possible.", 
-            "Your nails scrape down his back, your body shuddering uncontrollably as he pounds you harder.")  
+    (twirl:
+        "You’re completely surrounded—dark, powerful bodies pressing in on you, filling every inch of you at once.",
+        "Their massive cocks own your body, stretching your holes beyond anything you’ve ever felt before.",
+        "You’re bent over, gasping as one slams his thick BBC deep inside you, while another forces his cock past your eager lips.",
+        "Pinned between them, your pale, delicate frame looks so small compared to their towering, muscled bodies.",
+        "Your moans are lost under the sound of skin slapping, their black cocks using you in perfect rhythm.",
+        "They grip your soft, white flesh possessively, holding you still as they fuck you exactly how they want.",
+        "Sweat drips from their chiseled bodies onto your creamy skin as they take you without hesitation.",
+        "Your vision is hazy, overwhelmed by the heat, the scent, and the sheer dominance of the men surrounding you.",
+        "Their thick, black cocks stretch you wide, stuffing you so full you can barely breathe between moans.",
+        "You feel completely owned, their dark hands gripping your pale body, controlling your every movement.",
+        "One holds your head in place, making you swallow every inch while another pounds into your soaked pussy.",
+        "You whimper as they flip you effortlessly, using your body like you’re nothing more than a tight, willing toy.",
+        "Your body shakes, overwhelmed by the pleasure of being stretched and filled by all of them at once.",
+        "You hear them groan in approval, their deep voices vibrating through your body as they claim you together.",
+        "Their combined heat burns into your skin, your pale curves molded between their powerful, ebony frames."
+    ) 
     *
 }
 
 :: blacked kendra 5v1 talk 3
 {
     *
-    (twirl:"His cock slams into your pussy with brutal force, making your toes curl and your eyes roll back.",  
-            "He grabs your hips and forces you to take every thick, punishing inch.",  
-            "Your pussy clenches around him uncontrollably, your body betraying how much you love this.",
-            "*SMAK*, he slaps your ass hard and laughs, 'That’s right, slut, take it all.'",
-            "You’re reduced to a trembling, drooling mess, barely able to think.",
-            "Each thrust a wave of pleasure and pain, leaving you a drooling, whimpering mess.")
+    (twirl:
+        "Your body trembles as he looks to the next guy, ready to leave you gaping and empty—but only for a second.",
+        "You barely have time to catch your breath as another thick, black cock steps up, ready to use your dripping hole.",
+        "A deep chuckle rumbles above you as they admire how stretched and wrecked you already are.",
+        "Your soft, pale flesh is marked with their touch, fingers digging into your curves as they keep you exactly where they want you.",
+        "You feel his heat behind you, his cock already hard and throbbing, eager to take his turn.",
+        "Your lips part in a silent gasp as another thick cock presses past them, filling your mouth before you can protest.",
+        "The taste of him lingers on your tongue, mixed with the musky scent of the men still surrounding you.",
+        "He smirks down at you, watching your body shake, knowing you’re already addicted to their size and power.",
+        "Your body twitches, overstimulated and desperate, but they’re not done with you yet.",
+        "Strong hands lift you, repositioning you effortlessly, like you’re just a plaything meant for their pleasure.",
+        "You whimper as the head of his cock slams into your cervix, stretching you over and over again.",
+        "They murmur to each other, trading comments about how ruined you look, how tight you still are, how much you’re loving this.",
+        "One guy looks down, admiring his work, while the next one gets ready to take over, gripping your hips like he owns them.",
+        "Your nails dig into the couch, your body surrendering completely as thick cocks fill you to the brim."
+    )
     *
 }
 
@@ -1818,20 +1856,30 @@
                 "helplessly",
                 "weakly"
             )(if:(twist:1,2) is 1)[(twirl:
-                "as they use you",
-                "as they pummel your poor pussy"
+                " as they use you",
+                " as they pummel your poor pussy"
             )].
         ]
         (else:)[
             (set:$talk_dirty to 1)
-            (dec:"timer",(twist:5,10))
+            (dec:"timer",(twist:2,5))
             “
             (twirl:
-                "Use me! Treat me like a slut!",
-                "Oh fuck yeah, just like that baby, mmm.",
-                "FUCK! Fuck fuck mmmmm you're so deep...",
-                "Ngghg...Mmmfff...uck me! Don't stop, don't stop!!",
-                "These big black cocks are **PERFECT**!"
+                "Ohhh fuck, yes! Stretch me open with that big black cock!",
+                "Mmmph! S-so thick... I can barely take it!",
+                "Y-yes! Fuck me just like that! Don’t stop!",
+                "I need more! Give me more, please!",
+                "Mmm, fuck, you feel so good inside me!",
+                "God, I love the way you fill me up!",
+                "Harder! Use me! Make me yours!",
+                "Ohhh, your cock is so fucking perfect!",
+                "F-fuck, my pussy was made for this!",
+                "Mmm! Yes! Ruin me with that huge dick!",
+                "Shit, you’re so deep... I can feel you in my stomach!",
+                "I wanna be your perfect little white fucktoy!",
+                "Mmm, I love how you stretch me open!",
+                "Oh fuck! Your cock is fucking **amazing**!",
+                "I c-can’t stop moaning... you feel so fucking good!"
             )
             ”
         ]
@@ -1841,13 +1889,16 @@
 :: blacked kendra 5v1 dirty talk 2
 {
     (replace:?talk_text)[{
-        (dec:"timer",(twist:5,10))
         (set:$talk_dirty to 2)
         (if:(twist:1,3) is 1)[
             (twirl:
-                "You can barely breathe, let alone speak, as you're relentlessly pounded",
+                "You can barely breathe, let alone speak, as you're relentlessly pounded.",
                 "“Harder! Fuck my cunt!” you cry out between ragged breaths.",
-                "You try to speak, but the pure pleasure short-circuits your brain, producing only muffled moans"
+                "You try to speak, but the pure pleasure short-circuits your brain, producing only muffled moans.",
+                "Your body trembles violently as waves of pleasure ripple through you, leaving you gasping for air.",
+                "Your fingers claw at the couch, your mind drowning in pure ecstasy.",
+                "You're little more than a moaning, drooling mess, barely able to form words between thrusts.",
+                "Your body is completely out of your control, shaking with every deep stroke."
             )
         ]
         (else:)[
@@ -1857,9 +1908,20 @@
                 "Don't stop, don't stop, don't stoooooppppp....fffuucck!",
                 "Treat me like a dirty whore! Use me!",
                 "YES! Slam your big BLACK cocks into this tight cunt!!",
-                "MMmm fuck yes, I'm a whore for black cock!"
+                "MMmm fuck yes, I'm a whore for black cock!",
+                "I can’t take it! I love it! Keep fucking me!!",
+                "Ohhh god, my pussy is so fucking full!",
+                "You’re making me into your perfect little white cock slut!",
+                "I love being passed around by all of you!",
+                "Fill me up! Fuck me until I can’t walk!",
+                "Mmmphh! Y-you’re all so big! I c-can’t get enough!",
+                "Fuck, it’s too much! But I d-don’t want you to stop!",
+                "Mmm, ruin me! Fuck me like your perfect little slut!",
+                "I can feel your cocks stretching me wide... fuck yes!",
+                "Make me yours! Make me fucking **obsessed** with your cocks!"
             )
             ”
+            (dec:"timer",(twist:2,5))
         ]
     }]
 }
@@ -1867,16 +1929,26 @@
 :: blacked kendra 5v1 dirty talk 3
 {
     (replace:?talk_text)[{
-        (dec:"timer",(twist:5,10))
         (set:$talk_dirty to 3)
         (twirl:
             "You manage to gasp out a quick moan before a cock silences you again.",
-            "Don't you dare cum yet, who's next?",
+            "Don't you dare cum yet, who's next?!",
             "Mo-more cocks, I need more cocks!",
-            "You grab ahold of one of the cocks “You're fucking me next!”",
-            "Fuck me like a whore! A black cock whore!!"
+            "You grab ahold of one of the cocks. “You're fucking me next!”",
+            "Fuck me like a whore! A black cock whore!!",
+            "I'm not done! Give me another one, right now!",
+            "I can still take more! Don’t you dare stop!",
+            "Mmm, who's next? I need another one stretching me out!",
+            "Don't pull out yet... I need you deeper first!",
+            "One of you better be ready, I don’t want even a second without a cock in me!",
+            "More, more, **more**! My body needs it!!",
+            "Come on, don’t keep me waiting! Who’s shoving it in next?!",
+            "I want to feel every single one of you inside me!",
+            "Fuck, I can still take more! Keep fucking me!!",
+            "I don’t care how many of you there are, I’ll take every last cock!"
         )
     }]
+    (dec:"timer",(twist:2,5))
 }
 
 :: blacked kendra 5v1 sex details
@@ -2020,6 +2092,7 @@
         (replace:?text)[
             (if:$cumshot is 1)[
                 (after:time + 1714)[($play:"sound","splat 1")]
+                (after:time + 3221)[($play:"sound","splat 2")]
                 (twirl:"The first jet squirts across your face, running down your cheek. Several others leak out, into your mouth, and drip down onto your tits.",
                 "He makes a mess of your clean face, hosing you down with his cum. It drips down your cheek, pooling up on your fun bags.",
                 "Nat rewards all his good girls with cum!")(nl:2)
@@ -2029,7 +2102,9 @@
                 "“Don’t you move, there’s more for you.”")(nl:1)
             ]
             (else-if:$cumshot is 2)[
-                (after:time + 5805)[($play:"sound","splat 2")]
+                (after:time + 5805)[($play:"sound","splat 3")]
+                (after:time + 6788)[($play:"sound","splat 2")]
+                (after:time + 7565)[($play:"sound","splat 1")]
                 (twirl:"Like a hose dousing a fire, he sprays his cum all over you.",
                 "His big black balls twitch as he milks his load out, depositing it all over your face and tits.",
                 "Isiah draws a cum line from your nose to your chin.")(nl:2)
@@ -2039,7 +2114,17 @@
                 "“We ain’t done yet baby.”")(nl:1)
             ]
             (else-if:$cumshot is 3)[ 
-                (after:time + 1930)[($play:"sound","splat 3")]
+                (after:time + 1930)[($play:"sound","splat 2")]
+                (after:time + 2459)[($play:"sound","splat 1")]
+                (after:time + 2945)[($play:"sound","splat 3")]
+                (after:time + 3538)[($play:"sound","splat 4")]
+                (after:time + 4127)[($play:"sound","splat 5")]
+                (after:time + 5350)[($play:"sound","splat 1")]
+                (after:time + 5796)[($play:"sound","splat 3")]
+                (after:time + 6120)[($play:"sound","splat 4")]
+                (after:time + 6750)[($play:"sound","splat 2")]
+                (after:time + 7093)[($play:"sound","splat 1")]
+                (after:time + 7766)[($play:"sound","splat 5")]
                 (twirl:"Your already covered face gleefully accepts his huge load.",
                 "How much cum did he have saved up?!? It gets on your nose, in your mouth, in your eye, AND on your tits!! ",
                 "Jason empties his cum-filled balls all over your face.")(nl:2)
@@ -2049,7 +2134,11 @@
                 "“Mpfhhhuck, baby.”")(nl:1)
             ]
             (else-if:$cumshot is 4)[
-                (after:time + 3180)[($play:"sound","splat 4")]
+                (after:time + 3180)[($play:"sound","splat 3")]
+                (after:time + 3840)[($play:"sound","splat 1")]
+                (after:time + 4530)[($play:"sound","splat 2")]
+                (after:time + 5220)[($play:"sound","splat 4")]
+                (after:time + 6141)[($play:"sound","splat 1")]
                 (twirl:"The scent of 3... no 4 men's cum, all over your face, is overwhelming.",
                 "Squirt, after squirt, he's covering you!",
                 "John shoves his cock right in your face as his seed spills all over your nose, cheek, lips, and on your tongue.")(nl:2)
@@ -2059,7 +2148,14 @@
                 "“Mmm, fuck, baby.”")(nl:1)
             ]
             (else-if:$cumshot is 5)[
-                (after:time + 1347)[($play:"sound","splat 5")]
+                (after:time + 1347)[($play:"sound","splat 2")]
+                (after:time + 2171)[($play:"sound","splat 1")]
+                (after:time + 2459)[($play:"sound","splat 3")]
+                (after:time + 3279)[($play:"sound","splat 2")]
+                (after:time + 4573)[($play:"sound","splat 4")]
+                (after:time + 5709)[($play:"sound","splat 5")]
+                (after:time + 6280)[($play:"sound","splat 1")]
+                (after:time + 8054)[($play:"sound","splat 3")]
                 (twirl:"After what seems like an eternity, Ricky finally unloads his gooey load all over your already battered face.",
                 "There's nowhere else for it to go, it just runs down your face and plops onto your udders.",
                 "His pungent load drrriips down your face, leaving you with a cummy chin. Just call you Cummy Clause.")(nl:2)
@@ -2610,15 +2706,12 @@
 
     (set:$minigame to (dm:
 	"difficulty",7,
-	"babe type",(cond:
-        (is_bim:),"ahegao",
-        (is_breeder:),"ahegao",
-        (twirl:"ahegao","clothed","nsfw")),
+	"babe type","ahegao",
 	"cock type","bbc",
 	"masculinity level",35,
 	"reason 1",(twirl:"With the way you were acting, you’d think you were ADDICTED to BBC.","You’ve always wanted to be in a gangbang... you just didn’t know you’d be the one on your knees."),
-	"reason 2",(twirl:"You just took cumshots from FIVE hung black guys... damn.","I don’t know how your masculinity could ever recover after something like this.","How did it feel, being an actual cum dumpster?","You were a good little slut for Jason and his friends."),
-	"reason 3",(twirl:"You’re completely covered in their cum.","Glad he got a picture, I’m sure you’ll want to remember this moment.","Is this what they normally do with her?","You were such a good little whore for BBC."),
+	"reason 2",(twirl:"I don’t know how your masculinity could ever recover after something like this.","You just took cumshots from FIVE hung black guys... damn.","How did it feel, being an actual cum dumpster?","You were a good little slut for Jason and his friends."),
+	"reason 3",(twirl:"Glad he got a picture, I’m sure you’ll want to remember this moment.","You’re completely covered in their cum.","Is this what they normally do with her?","You were such a good little whore for BBC."),
 	"afterwards","blacked kendra story 15"))
     <div class='options'>(display:"masculinity crisis link")</div>
 }
@@ -2984,7 +3077,7 @@
                 “Ugh, I don’t feel too good.”(nl:2)
 
                 Maurice quickly moves next to you, guiding you to the couch.(nl:1)
-                “Here, sit down,” he says, checking you over. “It’s too early for the transformation... When’s the last time you ate?”(nl:2)
+                “Dizzy? Here, sit down,” he says, checking you over. “I think it’s okay, you’re not changing back yet... When’s the last time you ate?”(nl:2)
 
                 “This morning.”(nl:2)
 

@@ -107,6 +107,7 @@
 
 :: blacked bbc addict dream 1
 {
+  (if:$npc_vo is 0)[(display:"blacked init voice lines")]
   (masteraudio:"stopall")(set:$options to "false")
   (set:$newtime to 0)
   (newtrack:'bgm','aud/se/scene/dreams/blacked/bbc addict/bgm.mp3')
