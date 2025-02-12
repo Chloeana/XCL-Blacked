@@ -49,17 +49,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional ella [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "ella/bj/bbc/rough " + (text:(twist:1,3)))
-    (set:$text to $img of (dm:
-    "ella/bj/bbc/rough 1","couch",
-    "ella/bj/bbc/rough 2","bed",
-    "ella/bj/bbc/rough 3","couch"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face ella [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

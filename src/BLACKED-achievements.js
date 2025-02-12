@@ -127,7 +127,7 @@ achievements("BLACKED",
     },
     {
       "name": "BBC Nympho",
-      "hint": "Sleep with 10 black men in a single day.",
+      "hint": "Sleep with 5 black men in a single day.",
       "flavor":
         '(twirl:"It’s a marathon, not a sprint.", "Going the extra mile... ten times.", "Such a memorable day... and night.")',
       "condition_name": "sex10-blacked",
@@ -136,7 +136,7 @@ achievements("BLACKED",
     },
     {
       "name": "Late Night Binge",
-      "hint": "Watch 10 BBC porn scenes in a single night.",
+      "hint": "Watch 5 BBC porn scenes in a single night.",
       "flavor":
         '(twirl:"No sleep, just gooning.", "Just one more…", "Can’t stop, won’t stop.")',
       "condition_name": "gooner-marathon-blacked",
@@ -181,10 +181,10 @@ achievements("BLACKED",
     },
     {
       "name": "Swipe Left, All Day",
-      "hint": "Reject 10 white boys in a single day.",
+      "hint": "Reject 5 white boys in a single day.",
       "flavor":
         '(twirl:"When you know what you want.", "Keeping standards high.", "Busy day for turn-downs.")',
-      "condition_name": "reject10-blacked",
+      "condition_name": "reject5-blacked",
       "visible": "1",
       "emoji": "📱👈"
     },

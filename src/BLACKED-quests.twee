@@ -1,30 +1,58 @@
 <!-- Compulsions -->
 :: blacked compulsion porn [compulsion]
 {
-(set:_beta_loser to (cond:$character's "masculinity" <= 85 and (is_male:) and $blacked_stats's "bbc porn watched" > 3,true,false))
-(if:_beta_loser)[
-  (unless:($has_ap_mod:"bbc porn mod"))[
-    (set:$action_point_mods to it + (a:(dm:
-      "name","bbc porn mod",
-      "title","BBC Porn Addict",
-      "description","You are getting kind of addicted to seeing Big Black Cocks in your pornos.",
-      "good message","You love seeing a nice, huge, Black cock on your computer screen.",
-      "addiction message","Face it gooner, you're addicted to watching BBC. If you don't do it often, your max action points will get a penalty.",
-      "bad message","You've been slacking gooner... time to fire up your computer? Don't forget the lotion.",
-      "normal wear off","It's been a while since you've watched BBC porn...",
-      "type","slot",
-      "removal criteria","Get your masculinity up to 85 if you want to remove this compulsion.",
-      "addiction threshold",25,
-      "times triggered",0,
-      "cooldown",5,
-      "lower cooldown",8,
-      "cooldown floor",3,
-      "last day",-1
-      )))
-    ]
-  ](else:)[
-    (set:$action_point_mods to it - (find:_mod where _mod's name is "bbc porn mod",...$action_point_mods))
-]
+  (set:_beta_loser to (cond:$character's "masculinity" <= 85 and (is_male:) and $blacked_stats's "bbc porn watched" > 3,true,false))
+  (if:_beta_loser)[
+    (unless:($has_ap_mod:"bbc porn mod"))[
+      (set:$action_point_mods to it + (a:(dm:
+        "name","bbc porn mod",
+        "title","BBC Porn Addict",
+        "description","You are getting kind of addicted to seeing Big Black Cocks in your pornos. Watching BBC porn will increase your action point regen overnight",
+        "good message","Good job gooner! You love seeing those BBCs on your computer screen. Your action point daily regen has increased for a while.",
+        "addiction message","Face it gooner, you're addicted to watching BBC. If you don't do it often, your AP regen will decrease.",
+        "bad message","You've been slacking gooner... time to fire up your computer? Don't forget the lotion. In the meantime, your daily AP regen has been reduced.",
+        "normal wear off","It's been a while since you've watched BBC porn...",
+        "type","regen",
+        "removal criteria","Get your masculinity up to 85 if you want to remove this compulsion.",
+        "addiction threshold",15,
+        "times triggered",0,
+        "cooldown",5,
+        "lower cooldown",8,
+        "cooldown floor",3,
+        "last day",-1
+        )))
+      ]
+    ](else:)[
+      (set:$action_point_mods to it - (find:_mod where _mod's name is "bbc porn mod",...$action_point_mods))
+  ]
+}
+
+:: blacked bbc addiction [compulsion]
+{
+  (set:_bbc_criteria to (cond:(is_bbc_addict:),true,false))
+  (if:_bbc_criteria)[
+    (unless:($has_ap_mod:"bbc addict mod"))[
+      (set:$action_point_mods to it + (a:(dm:
+        "name","bbc addict mod",
+        "title","BBC Addict",
+        "description","You are becoming addicted to Big Black Cocks. Sleeping with Black men will reward you with an action point slot.",
+        "good message","You feel great after worshipping $his_name's BBC! Your action point maximum will be increased for a while.",
+        "addiction message","You are fully addiction to BBC. If you get it often enough, your max action points will recieve a penalty.",
+        "bad message","You've been neglecting your BBC compulsion... your max AP has decreased until you hop up on a BBC.",
+        "normal wear off","It seems you've cured your BBC addiction... for now.",
+        "type","slot",
+        "removal criteria","Remove your BBC Addiction side effect to remove this compulsion.",
+        "addiction threshold",15,
+        "times triggered",0,
+        "cooldown",5,
+        "lower cooldown",8,
+        "cooldown floor",3,
+        "last day",-1
+        )))
+      ]
+    ](else:)[
+      (set:$action_point_mods to it - (find:_mod where _mod's name is "bbc addict mod",...$action_point_mods))
+  ]
 }
 
 <!-- Curiosities -->

@@ -57,22 +57,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional lana [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "lana/bj/bbc/rough " + (text:(twist:1,8)))
-    (set:$text to $img of (dm:
-    "lana/bj/bbc/rough 1","bed",
-    "lana/bj/bbc/rough 2","floor",
-    "lana/bj/bbc/rough 3","bed",
-    "lana/bj/bbc/rough 4","couch",
-    "lana/bj/bbc/rough 5","couch",
-    "lana/bj/bbc/rough 6","bed",
-    "lana/bj/bbc/rough 7","floor",
-    "lana/bj/bbc/rough 8","floor"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face lana [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

@@ -44,20 +44,47 @@
     ))
   ]
 
+  (if:$blacked_daily_stats is 0)[
+    (set:$blacked_daily_stats to (dm:
+    "sex as guy",0,
+    "sex as girl",0,
+    "anal sex as girl",0,
+    "creampies given",0,
+    "creampies received",0,
+    "breeder creampies",0,
+    "blowjobs given",0,
+    "blowjobs received",0,
+    "facials given",0,
+    "facials received",0,
+    "came in mouth",0,
+    "loads swallowed",0,
+    "came on tits",0,
+    "came on body",0,
+    "cunnilingus given as guy",0,
+    "cunnilingus given as girl",0,
+    "cunnilingus received",0,
+    "guys fully satisfied",0,
+    "bbc porn watched",0,
+    "orgasms",0,
+    "rejections",0,
+    "beach sex",0
+    ))
+  ]
+
   (if:$blacked_events is 0)[(set:$blacked_events to (a:))]
 }
 
 :: blacked compatibility check
 {
   (if:$blackfreq is "Black Encounters: Never")[(set:$blacked_compatible to 0)]
-  (else-if:(checkdm:$blacked_compatible_list, (cond:$new_stats is 0,"$character's","$new_stats's"), "id","is",1))[
+  (else-if:(checkdm:$blacked_compatible_list, ($character's id),"is",1))[
     (set:$blacked_compatible to 1)]
   (else:)[(set:$blacked_compatible to 0)]
 }
 
 :: blacked options [mod_options]
 {
-  (print:"BLACKED Settings:")(nl:1)
+  (color:"bisque")[BLACKED Settings:](nl:1)
 	(_setting_button:
 		"$blackfreq",(a:
       "Black Encounters: Normal",
@@ -67,6 +94,17 @@
       "Black Encounters: Never"
     ), "Determines how often you will encounter random black men hitting on you as a female."
 	)
+}
+
+:: blacked font [header]
+{
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .blacked-font {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        }
+    </style>
 }
 
 :: view sex stats [around]
@@ -104,7 +142,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     "If you're looking for some extra cash at night, talk to Dredd at The Broken Drum.",
     "You may have heard the term 'Size Queen'. It tends to go hand-in-hand with BBC lovers.",
     "You may have heard the term 'Nympho'. It's not just a fetish. Some people *need* to have sex multiple times a day.",
-    "Black daddies tends to spoil their little snowbunnies, especially when they make them very happy.",
     "Breeders can be dangerous... but they can also be fun. Like, several times a day fun..."
   ))
 }
@@ -954,7 +991,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       ]
     ]
 
-    
     (set:$black_fuckbuddies to (a:))
     (for: each _npc, ...((datanames:$npcs_men)-(a:"dredd","bruce","stepdad")))[
       (if:$npcs_men's (str: _npc)'s "race" is "black" and $npcs_men's (str: _npc)'s "tags" contains "generic npc")[
@@ -992,9 +1028,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: blacked sex insert [sex_insert]
 {
   (if:(checkdm:$npc, "race", "is", "black"))[
-    (if:$blacked_stats's "sex as girl" is 0)[(display:"blacked trigger virginity")]
-    (set:$blacked_stats's "sex as girl" to it + 1)
-    (set:$blacked_daily_stats's "sex as girl" to it + 1)
+    (if:$stats's "sex as girl" is 0)[(display:"blacked trigger virginity")]
   ]
 }
 
@@ -1002,11 +1036,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (if:$npc's cockrating < 7 and $npc's race is not "black")[
     ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","Discover the truth about BBC...")]
+  (else-if:(is_bbc_addict:) and $npc's race is not "black")[
+
+  ]
   (else-if:$npc's race is "black")[
-    (display:"blacked sex tally")
-    (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
-    (if:$mood's "mood" is not "ashamed")[(set:$curiosity_check to "shame-free black sex")(display:"curiosity check")]
-    (if:$his_satisfaction is 10)[(set:$curiosity_check to "black satisfaction")(display:"curiosity check")]
+    (display:"blacked bbc sex checks")
     ]
 }
 
@@ -1018,6 +1052,41 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (set:$curiosity_check to "bbc porn")(display:"curiosity check")
     (if:($has_ap_mod:"bbc porn mod"))[(display:"action point mod trigger")]
     (if:$blacked_stats's "bbc porn watched" >= 50)[(display:"blacked trigger gooner")]
+  ]
+}
+
+
+:: watch porn [around]
+{
+  (display:_around)
+  (if:$blacked_events contains "gooner part one" and $blacked_events does not contain "black cock heaven")[
+    (if:$porn_list does not contain "black cock heaven")[(display:"add porn black cock heaven")]
+    (replace:?options)[
+      Huh, that's weird. I don't remember buying <span class='chromatic'>BLACK COCK HEAVEN</span>... I wonder how it got here.
+      (set:$porn to it + (a:"black cock heaven"))
+      (set:$blacked_events to it + (a:"black cock heaven"))
+        (nl:2)
+        (print: "BBC Porn:")(nl:1)
+        (link: "BLACK`_`COCK`_`HEAVEN.EXE")[
+          (set: $select to "black cock heaven")(set: $type to "bbc")(display: "watch porn disk")(nl:1)
+        ]
+        (link:"Back")[($cs:"use computer")]
+    ]
+    
+  ]
+  (if:$blacked_events contains "gooner part two" and $blacked_events does not contain "bbc pmvs")[
+    (if:$porn_list does not contain "bbc pmvs")[(display:"add porn bbc pmvs")]
+    (replace:?options)[
+      Huh, that's weird. I don't remember buying <span class='chromatic'>BBC PMVS</span>. What are PMVS?
+      (set:$porn to it + (a:"bbc pmvs"))
+      (set:$blacked_events to it + (a:"bbc pmvs"))
+        (nl:2)
+        (print: "BBC Porn:")(nl:1)
+        (link: "BBC`_`PMVS.EXE")[
+          (set: $select to "bbc pmvs")(set: $type to "bbc")(display: "watch porn disk")(nl:1)
+        ]
+        (link:"Back")[($cs:"use computer")]
+    ]
   ]
 }
 
@@ -1129,7 +1198,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: proposition reject success [around]
 {
   (display:_around)
-  (if:(checkdm:$npc, "race", "is not", "black"))[
+  (if:$npc's "race" is not "black")[
       (set:$blacked_stats's "rejections" to it + 1)
       (set:$blacked_daily_stats's "rejections" to it + 1)
       (display:"blacked rejection tally")
@@ -1154,19 +1223,15 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: bar dance start sex [around]
 {
   (display:_around)
-  (set:$blacked_stats's "sex as girl" to it + 1)
-  (set:$blacked_daily_stats's "sex as girl" to it + 1)
-  (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+  (display:"blacked bbc sex checks")
 }
 
 :: dredd job sex finish [around]
 {
   (display:_around)
   (inc:"dredd's visits")
-  (set:$blacked_stats's "sex as girl" to it + 1)
-  (set:$blacked_daily_stats's "sex as girl" to it + 1)
   (if:$bar_party's times >= 10)[(display:"blacked trigger besties")]
-  (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+  (display:"blacked bbc sex checks")
 }
 
 :: bar dance end final [around]
@@ -1218,18 +1283,42 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$side_effect_names to it + (dm:
     "QoS","👑 Queen of Spades ♠️",
     "bbc sizequeen","Size Queen",
-    "bbc addiction","Addicted to BBC"
+    "bbc sizequeen temp","Size Queen",
+    "bbc addiction","Addicted to BBC",
+    "bbc addiction temp","Addicted to BBC"
   ))
-  <!-- 
-  "BBC Size Queen","Extra pleasure for *BIG* Cocks. Less pleasure for tiny cocks."
-  "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without."
-  -->
 
   (set:$side_effect_descriptions to it + (dm:
     "QoS", "Once you go black... you never go back. It's more than a preference, you will find it nearly impossible to resist Black men.",
     "bbc sizequeen","You've been stretched out from taking all those Big Black Cocks! Small dicks are much less effective on you now.",
+    "bbc sizequeen temp","You've been stretched out from taking all those Big Black Cocks! Small dicks are much less effective on you now.",
     "bbc addiction","BBC is constantly on your mind. Going too long without it could be bad..."
+    "bbc addiction temp","BBC is constantly on your mind. Going too long without it could be bad..."
   ))
+
+  (set:$temp_side_effects to it + (a:"bbc addiction temp", "bbc sizequeen temp"))
+}
+
+:: Blacked New-U Side Effect Check
+{
+  (if:$blackfreq is "Black Encounters: Never")[(set:$blacked_compatible to 0)]
+  (else-if:(checkdm:$blacked_compatible_list, ($new_stats's id),"is",1))[
+    (set:$blacked_compatible to 1)]
+  (else:)[(set:$blacked_compatible to 0)]
+
+  (if:$blacked_compatible is 1)[
+    (set:$newu_side_effects to it + (dm:
+    "bbc addiction temp","Bonuses for sleeping with Black men. Punishments for going without.",
+    "bbc sizequeen temp","Extra pleasure for *Big Black Cocks*. Less pleasure for tiny cocks."
+    ))
+  ](else:)[
+    (if:(dmnames:$newu_side_effects) contains "bbc addiction temp")[
+      (move:$newu_side_effects's "bbc addiction temp" into _buffer)
+    ]
+    (if:(dmnames:$newu_side_effects) contains "bbc sizequeen temp")[
+      (move:$newu_side_effects's "bbc sizequeen temp" into _buffer)
+    ]
+  ]
 }
 
 :: blacked QoS buff
@@ -1238,7 +1327,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     "status","feeling like a queen",
     "emoji","👑",
     "strength",8,
-    "length",6,
+    "length",8,
     "cause","♠️ Straighten your crown ♠️",
     "charm buff",2,
     "intellect buff",1,
@@ -1251,8 +1340,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$new_status to (dm:
     "status","not feeling very queen-like",
     "emoji","👎🏾",
-    "strength",8,
-    "length",9,
+    "strength",9,
+    "length",12,
     "cause","You've disappointed your Black Kings. Go find some BBC!",
     "charm buff",-2,
     "intellect buff",-1,
@@ -1266,8 +1355,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$new_mood to (dm:
     "mood","proud",
     "emoji","😊",
-    "strength",6,
-    "length",6,
+    "strength",7,
+    "length",8,
     "cause",$cause_text,
     "charm buff",3,
     "intellect buff",1,
@@ -1282,7 +1371,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     "mood","ashamed",
     "emoji","😔",
     "strength",10,
-    "length",6,
+    "length",10,
     "cause",$cause_text,
     "charm buff",-3,
     "intellect buff",-1,
@@ -1297,8 +1386,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$new_mood to (dm:
     "mood","satisfied",
     "emoji","💯",
-    "strength",8,
-    "length",6,
+    "strength",7,
+    "length",8,
     "cause",$cause_text,
     "charm buff",2,
     "intellect buff",0,
@@ -1314,7 +1403,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     "mood","unsatisfied",
     "emoji","😑",
     "strength",10,
-    "length",6,
+    "length",10,
     "cause",$cause_text,
     "charm buff",-2,
     "intellect buff",0,
@@ -1325,9 +1414,36 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (display:"new mood")(display:"refresh stats")
 }
 
+:: blacked bbc sex checks
+{
+  (set:$blacked_stats's "sex as girl" to it + 1)
+  (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
+  (if:($has_ap_mod:"bbc addict mod"))[(display:"action point mod trigger")]
+  (if:$mood's "mood" is not "ashamed")[(set:$curiosity_check to "shame-free black sex")(display:"curiosity check")]
+  (if:$his_satisfaction is 10)[
+    (set:$curiosity_check to "black satisfaction")(display:"curiosity check")
+  ]
+  (if:(is_bbc_addict:) and $orgasms > 1)[
+    (set:$cause_text to "since you orgasmed more than once on a BBC")
+    (set:$effect_text to "feeding your BBC addiction")
+    (display:"blacked mood proud")
+  ]
+  (else-if:(is_bbc_addict:) and $orgasms <= 1)[
+    (set:$cause_text to "since you slept with a black man")
+    (set:$effect_text to "feeding your BBC addiction")
+    (display:"blacked mood satisfied")
+  ]
+  (display:"blacked sex tally")
+}
+
 :: serendipity buy porn [around]
 {
-  (unless:$porn_list contains "black cock heaven")[(display:"add porn black cock heaven")]
+  (unless:$porn_list contains "bbc babecock")[(display:"add porn bbc babecock")]
+  (if:$day > 30)[
+    (if:$porn_list does not contain "bbc pmvs")[(display:"add porn bbc pmvs")]
+    (if:$porn_list does not contain "black cock heaven")[(display:"add porn black cock heaven")]
+  ]
   (display:_around)
 }
 
@@ -1336,11 +1452,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$porn_list to it + (a:
   (dm:
     "name", "bbc babecock",
-    "type", "Mainstream",
+    "type", "BBC",
     "option", "BBC`_`BABECOCK.EXE",
     "description", "This disk is a collection of SIX files featuring both BABES and BBC!",
     "price", 69,
-    "img", "scenes/home/porn/mainstream/bbc babecock/3.mp4")))
+    "img", "scenes/home/porn/BBC/bbc babecock/3.mp4")))
   
   (set:$porn_scenes to it + (a:
   (dm:
@@ -1374,11 +1490,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$porn_list to it + (a:
   (dm:
     "name", "black cock heaven",
-    "type", "Mainstream",
+    "type", "BBC",
     "option", "BLACK`_`COCK`_`HEAVEN.EXE",
     "description", "A collection of THREE files showing babes being taken to BLACK COCK HEAVEN!!!",
     "price", 69,
-    "img", "scenes/home/porn/mainstream/black cock heaven/3.mp4")))
+    "img", "scenes/home/porn/BBC/black cock heaven/3.mp4")))
   
   (set:$porn_scenes to it + (a:
   (dm:
@@ -1400,11 +1516,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$porn_list to it + (a:
   (dm:
     "name", "bbc pmvs",
-    "type", "Mainstream",
+    "type", "BBC",
     "option", "BBC`_`PMVS.EXE",
     "description", "Porn Music Videos (PMVs) are all the hype, especially ones with BBC!! This MEGA collection includes NINE files",
     "price", 99,
-    "img", "scenes/home/porn/mainstream/bbc pmvs/everything black.mp4")))
+    "img", "scenes/home/porn/BBC/bbc pmvs/everything black.mp4")))
   
   (set:$porn_scenes to it + (a:
   (dm:
@@ -1455,24 +1571,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (display:_around)
   (display:"blacked compatibility check")
-}
-
-:: Blacked New-U Side Effect Check
-{
-  (display:"blacked compatibility check")
-  (if:$blacked_compatible is 1)[
-    (set:$newu_side_effects to it + (dm:
-    "BBC Addict","Bonuses for sleeping with Black men. Punishments for going without.",
-    "BBC Size Queen","Extra pleasure for *Big Black Cocks*. Less pleasure for tiny cocks."
-    )) 
-  ](else:)[
-    (if:(dmnames:$newu_side_effects) contains "BBC Addict")[
-      (move:$newu_side_effects's "BBC Addict" into _buffer)
-    ]
-    (if:(dmnames:$newu_side_effects) contains "BBC Addict")[
-      (move:$newu_side_effects's "BBC Size Queen" into _buffer)
-    ]
-  ]
 }
 
 :: New-U roll side effects [around]
@@ -2088,7 +2186,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (if:$kiss_variant is 0)[
       (set:$kiss_variant to "kiss")
     ]
-    (replace:?image)[($vid:"scenes/characters/" + $character's "id" + "/foreplay/bbc/" + $kiss_variant + ".mp4")]
+    (replace:?image)[($vid:"scenes/characters/" + $character's id + "/foreplay/bbc/" + $kiss_variant + ".mp4")]
   ]
 }
 
@@ -2442,7 +2540,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 (set:_cockabilities to (twisted:..._cocks)) 
 (set:$cock_array to (subarray:_cockabilities,1,$minigame's "difficulty"))
 
-(set:$minigame's "babe type" to (cond:(is_bim:),"ahegao",(twirl:"ahegao","nsfw","clothed")))
+(set:$minigame's "babe type" to (cond:(is_bim:),"ahegao",(get_intellect:) < 3,"ahegao",(twirl:"ahegao","nsfw","clothed")))
 (set:_possibilities to (twisted:...(range:1,309)))
 (set:$babe_array to (subarray:_possibilities,1,$minigame's "difficulty"))
 
@@ -2527,9 +2625,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: fisherman sex end [around]
 {
   (display:_around)
-  (set:$blacked_stats's "sex as girl" to it + 1)
-  (set:$blacked_daily_stats's "sex as girl" to it + 1)
-  (display:"blacked sex tally")
+  (display:"blacked bbc sex checks")
 }
 
 :: sales demo sex begin [around]
@@ -2547,8 +2643,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   -->
   (display:_around)
   (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
-  (set:$blacked_stats's "sex as girl" to it + 1)
-  (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (display:"blacked bbc sex checks")
 }
 
 :: sales demo strip [around]
@@ -2619,7 +2714,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
         $blackfreq is "Black Encounters: Normal", (twirl:"I like my men the same way I like my coffee. Black and full of cream.","I only date black guys. They're just so strong...","I'm only looking to date black guys."),
         $blackfreq is "Black Encounters: Less", (twirl:"I really only date black guys.","I'm really only into black men.","I'm only dating black now."),
         $blackfreq is "Black Encounters: More", (twirl:"I only date black men. Can you blame me?","Black men are the only ones that can truly satisfy my needs...","I exclusively fuck black men. It's true what they say... Once you go black, you never go back."),
-        $blackfreq is "Black Encounters: Always", (twirl:"I'm blacked, honey. A true Queen of Spades.","I only data black alpha studs... not inferior beta cucks like you.","I only fuck big black cocks... they're the only thing that can satisfy a white girl like me."),
+        $blackfreq is "Black Encounters: Always", (twirl:"I'm black-only, honey. A true Queen of Spades.","I only data black alpha studs... not inferior beta cucks like you.","I only fuck big black cocks... they're the only thing that can satisfy a white girl like me."),
         ,""
         )"
 
@@ -2995,7 +3090,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     $description is "you love it", (twirl:"that look on your $face - you love this","you should see yourself in the mirror, you love this $cock","you love this $cock, don't you? You should see the look on your face","you fucking love my BBC","you love getting fucked like this","you love getting used by my $cock","you love getting fucked","you just LOVE getting pounded a big strong man, don't you? Yeah you do","you should see the look of bliss on your $face"),
     $description is "cant believe" and $npc's "looks" < 5 and _tags contains "breeder" and _race is "black", (twirl:"I might be ugly, but our kids are gonna be good looking, like you","Summer City is great, even an ugly guy like me can breed a _girl like you"),
     $description is "cant believe" and $npc's "looks" < 5 and _tags contains "breeder", (twirl:"I might be ugly, but our mixed kids are gonna be good looking, like you","Summer City is great, even an ugly guy like me can breed a _girl like you"),
-    $description is "cant believe" and $npc's "looks" < 5, (twirl:"I guess even ugly guys like me can get lucky. Can't believe I get to fuck a hot _girl like you","Summer City is great - even an ugly guy like me can fuck a _girl as hot as you","and my friends say I'm out of my league, hitting on _girls like you","can't believe I get to fuck you","can't believe I really get to fuck $pussy tonight"),
+    $description is "cant believe" and $npc's "looks" < 5, (twirl:"I guess even ugly guys like me can get lucky. Can't believe I get to fuck a hot _girl like you","Summer City is great - even an ugly guy like me can fuck a _girl as hot as you","and my friends say I'm out of my league, hitting on a _girl like you","can't believe I get to fuck you","can't believe I really get to fuck $pussy tonight"),
     $description is "cant believe" and $npc's age < 21 and _tags contains "breeder", (twirl:"I can't believe I'm breeding a _girl in her 20s. Yeah! This is fucking lit","this is wack. Can't believe I'm gonna impregnate a _girl who looks like a fucking pornstar, when I'm only _age","I'm only _age and already making mixed babies","can't believe I'm only _age, and getting to breed a hot _girl like you"),
     $description is "cant believe" and $npc's age < 21 and _tags contains "nerd", (twirl:"I guess even nerds like me can get lucky. Can't believe I get to fuck you","Summer City is great - even a nerdy guy like me can fuck a hot _girl like you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a hot _girl... I'm gonna tell all my friends","this is just like fucking anime chicks","this is even better than porn","this is so much better than watching porn","I guess my mom was right when she said to get outside and meet girls","can't believe a hot _girl like you would even talk to a nerd like me","can't believe I'm fucking a _girl like you","you're even hotter than my anime statues"),
     $description is "cant believe" and $npc's age > 39, (twirl:"I can't believe an old guy like me gets to fuck a $girl like you","I can't believe I'm fucking a hot _girl like you","can't believe I'm fucking a $girl like you","at my age, I didn't think I'd get to taste a sweet _girl like you again","your $pussy is like the fountain of youth for me"),
@@ -3038,3 +3133,39 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (else:)[(display:_around)]
 }
 
+<!-- bbc side effect removal -->
+:: Potion Shop side effect days counter [_around]
+{
+  (if:(is_bbc_addict:))[(inc:'potion_shop_bbc_addict_days_counter')](else:)[(set:$potion_shop_bbc_addict_days_counter to 0)]
+  (display:_around)
+}
+
+:: Potion Shop remove bbc addict effect cost
+{
+    (set:$potion_shop_bbc_addict_removal_cost to 100)
+    (set:$potion_shop_bbc_addict_removal_cost to it + ($potion_shop_bbc_addict_days_counter * 10))
+    (if:$potion_shop_bbc_addict_removal_cost > 350)[(set:$potion_shop_bbc_addict_removal_cost to 350)]
+    (if:(is_fem:))[(set:$potion_shop_bbc_addict_removal_cost to (round: $potion_shop_bbc_addict_removal_cost / 1.75))]
+    (print:$potion_shop_bbc_addict_removal_cost)
+}
+
+:: Potion Shop remove bbc addict effect
+{
+    <!-- if enough essence: remove the side effect, subtract the essence; else display passage-->
+    (if:$potion_shop_essence_extracted >= $potion_shop_bbc_addict_removal_cost)
+    [
+        (set:$character's "side effects" to it - (a:"bbc addiction"))
+        (set:$potion_shop_essence_extracted to it - $potion_shop_bbc_addict_removal_cost)
+        (display:"potion shop update essence total")
+        (display:"Potion Shop bbc addict removal flavor text")
+        (set:$potion_shop_removed_side_effects to it + (a:"bbc addiction"))
+    ]
+    (else-if:$potion_shop_essence_extracted < $potion_shop_bbc_addict_removal_cost)[(display:"Treatment Requires More Essence Flavor Text")]
+}
+
+:: Potion Shop bbc addict removal flavor text
+{
+  (twirl:"//Stepdad would still like you to clean up after yourself. //",
+  "//Consider doing your chores this time. //",
+  "//Just because you aren't compelled to clean up doesn't mean you should ignore your stepdad. //")
+}

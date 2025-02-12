@@ -1,13 +1,74 @@
 :: blacked dredd setup [initialize init_new]
 {
+    (if:(datanames:$blacked_npcs_men) does not contain "dredd")[
+    (set:$relationships's dredd to (dm:
+      "id","dredd",
+      "name","Dredd",
+      "gender","male",
+      "race","black",
+      "respect",0,
+      "dom",0,
+      "friendship",0,
+      "attraction",0,
+      "tags",(a:),
+      "events",(a:)
+    ))
+
+    (set:$blacked_npcs_men to it + (dm:"dredd", (dm:
+      "id", "dredd",
+      "img", "img/npc/guys/blacked/dredd/portrait_normal.jpg",
+      "first name", "Dredd",
+      "last name", "",
+      "name", "Dredd",
+      "sex name", "Dredd",
+      "unfamiliar name", "handsome black man",
+      "race", "black",
+      "generation", "genx",
+      "type", "chad",
+      "breath", "vodka",
+      "age", 45,
+      "agecat", "forties",
+      "looks", 8,
+      "wealth", 10,
+      "stamina", 14,
+      "oral skill", 10,
+      "fitness", 8,
+      "intellect", 9,
+      "dominance", 10,
+      "hygiene", 9,
+      "personality", 8,
+      "kissing style", "aggressive",
+      "tags", (a:"chad", "dominant", "suave", "rich"),
+      "favorite color", "black",
+      "favorite style", "slutty",
+      "preference", "ass",
+      "alternate names", (a:"he", "the dominant black guy", "the chad"),
+      "alternate possessive names", (a:"his", "the dominant guy's"),
+      "hands", "strong",
+      "events", (a:""),
+      "cock",999,
+      "ballsdesc","smooth",
+      "cockdesc","long",
+      "tipdesc","mushroom-shaped",
+      "cockrating",10,
+      "cockfatness",10,
+      "cocklength",10,
+      "ballsize",8,
+      "cockimg","img/npc/guys/blacked/dredd/cock.jpg"
+    )))
+  ]
+
     (if:$dredd is 0)[
-        (set:$dredd to $npcs_men's dredd)
-        (set:$dredd's "location" to "home")
+        (set:$dredd to $blacked_npcs_men's dredd)
         (set:$dredd's "visits" to 0)
     ]
 
     (unless:$bar_party's "times" is 0)[
         (if:$dredd's "visits" is 0)[(set:$dredd's "visits" to $bar_party's "times")]
+        (unless:$blacked_npcs_men's dredd's "events" contains "name")[
+            (set:$blacked_npcs_men's dredd's "events" to it + (a:"name"))
+            (set:$dredd's "events" to it + (a:"name"))
+        ]
     ]
 }
 

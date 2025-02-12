@@ -1,5 +1,13 @@
 :: blacked daily counts [daily]
 {
+  (if:$blacked_daily_stats is 0)[(set:$blacked_daily_stats to (dm:))]
+
+  (if:$blacked_daily_stats's "beach sex" >= 3)[(display:"blacked trigger mud shark")]
+  (if:$blacked_daily_stats's "sex as girl" >= 5)[(display:"blacked trigger sex5")]
+  (if:$blacked_daily_stats's "bbc porn watched" >= 5)[(display:"blacked trigger gooner marathon")]
+  (if:$blacked_daily_stats's "loads swallowed" >= 5)[(display:"blacked trigger swallow5")]
+  (if:$blacked_daily_stats's "rejections" >= 5)[(display:"blacked trigger reject5")]
+
   (set:$blacked_daily_stats to (dm:
     "sex as guy",0,
     "sex as girl",0,
@@ -26,24 +34,6 @@
     ))
 }
 
-:: blacked nightly triggers [nightly]
-{
-  (if:$blacked_daily_stats is not 0)[
-    (if:$blacked_daily_stats's "beach sex" >= 3)[(display:"blacked trigger mud shark")]
-    (if:$blacked_daily_stats's "sex as girl" >= 10)[(display:"blacked trigger sex10")]
-    (if:$blacked_daily_stats's "bbc porn watched" >= 10)[(display:"blacked trigger gooner marathon")]
-    (if:$blacked_daily_stats's "loads swallowed" >= 5)[(display:"blacked trigger swallow5")]
-    (if:$blacked_daily_stats's "rejections" >= 10)[(display:"blacked trigger reject10")]
-  ]
-}
-
-:: achievements-engine view achievements [around]
-{
-  (display:_around)
-  ($centered:[(link:"Clear BLACKED Achievements")[Are you sure you want to reset all BLACKED achievements? This cannot be undone.(nl:1)(link: "Yes, reset all achievements")[($cs: "reset blacked achievements")]
-  (link:"No, keep my achievements")[($cs:"achievements-engine view achievements")]]])
-}
-
 :: reset blacked achievements
 {
   (set:$achievement_triggers to it - (a:
@@ -67,17 +57,16 @@
   "swallow25-blacked",
   "swallow50-blacked",
   "swallow100-blacked",
-  "reject10-blacked", 
+  "reject5-blacked", 
   "reject25-blacked", 
   "reject50-blacked", 
   "reject100-blacked", 
   "size-queen-blacked", 
   "breeder-blacked",
-  "sex10-blacked"))
+  "sex5-blacked"))
 
   ($centered:[(link:"Back")[($cs:"achievements-engine view achievements")]])
 }
-
 
 :: blacked trigger moby dick
 {
@@ -166,9 +155,9 @@
   (display:"reward-3up")
 }
 
-:: blacked trigger sex10
+:: blacked trigger sex5
 {
-  (unless:$character's "side effects" contains "bbc addiction" or $character's "side effects" contains "BBC Addict")[
+  (unless:(is_bbc_addict:))[
     ($remember:"bbc addict",9,"self","none",("slept with " + (text:$blacked_daily_stats's "sex as girl") + " black guys"),"dream","blacked bbc addict dream 1")
   ]
 }
@@ -177,12 +166,14 @@
 {
   (set:$achievement_condition_select to "gooner-marathon-blacked")
   (display:"add achievement to lists")
+  (unless:$blacked_events contains "gooner part one")[(set:$blacked_events to it + (a:"gooner part one"))]
 }
 
 :: blacked trigger gooner
 {
   (set:$achievement_condition_select to "gooner-blacked")
   (display:"add achievement to lists")
+  (unless:$blacked_events contains "gooner part two")[(set:$blacked_events to it + (a:"gooner part two"))]
 }
 
 :: blacked trigger swallow5
@@ -212,9 +203,9 @@
   (display:"reward-3up")
 }
 
-:: blacked trigger reject10
+:: blacked trigger reject5
 {
-  (set:$achievement_condition_select to "reject10-blacked")
+  (set:$achievement_condition_select to "reject5-blacked")
   (display:"add achievement to lists")
 }
 
@@ -243,7 +234,7 @@
 {
   (set:$achievement_condition_select to "size-queen-blacked")
   (display:"add achievement to lists")
-  (unless:$character's "side effects" contains "bbc sizequeen")[
+  (unless:(is_bbc_sizequeen:))[
     (set:$character's "side effects" to it + (a:"bbc sizequeen"))
   ]
 }

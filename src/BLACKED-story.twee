@@ -1,3 +1,8 @@
+:: blacked story init [initialize init_new]
+{
+  (set:$stripper_name to $bar_dance's "stripper name")
+}
+
 :: blacked set up screen
 {
     <div id='scrollable-content'  class='center_screen' data-simplebar>[
@@ -26,8 +31,17 @@
 
 :: events [around]
 {
-    (if:$time is 3 and $blacked_events contains "kenda intro second chance")[
-        ($nx:"blacked kendra story second chance")
+    (if:$time is 3)[
+        <!-- Kendra calls you for a second chance if you decline her story task at the bar -->
+        (if:$blacked_events contains "kenda intro second chance")[
+            ($nx:"blacked kendra story second chance")
+        ]
+        (else-if:($recall:"blacked kendra story gangbang"))[
+            (if:$memory's "day" + 3 >= $day and $blacked_events contains "maurice test results")[
+                ($nx:"blacked maurice clone test results")
+            ]
+        ]
+        (else:)[(display:_around)]
     ]
     (else:)[(display:_around)]
 }
@@ -126,7 +140,7 @@
         She seems frustrated, gesturing with her free hand.(nl:2)
         When she notices you, she hangs up and calls out to you. “Hey! (cond:
             (is_fem:) and $kendradm's events contains "seen female",$character's "female name",
-            (is_fem:) and not ($bar_dance's "stripper name" is $character's "female name"),$bar_dance's "stripper name"+ "! I mean..." + $character's "female name",
+            (is_fem:) and not ($stripper_name is $character's "female name"), $stripper_name + "! I mean..." + $character's "female name",
             (is_fem:),$character's "female name",
             $character's "male name"
             )! Wait up!”(nl:1)
@@ -280,9 +294,6 @@
 {
     (masteraudio:"stopall")
     (display:"blacked set up fullscreen")
-    (replace:?right_screen)[
-        (display:"location and time contents")
-    ]
     (replace:?text)[Just as you are about to begin your evening, your phone rings. It's $kendra.(nl:2)]
     (replace:?options)[(link:"Answer it")[
         (replace:?right_screen)[
@@ -734,13 +745,13 @@
     ($play:"song","kendra clone")
     (replace:?right_screen)[
         (set:$npc to $npcs_men's "dredd")
-        (set:$npc's img to "img/npc/guys/blacked/dredd/portrait.jpg")
+        (set:$npc's img to "img/npc/guys/blacked/dredd/portrait_normal.jpg")
         (display:"npc screen update")
     ]
     (replace:?image)[($pic:"places/blacked/dredds house/front door.jpg")]
     (replace:?text)[{
         *Dredd stands in the doorway, his broad frame and commanding presence impossible to miss.*(nl:1)
-        “You’re late, (print:$bar_dance's "stripper name")” he says with a smirk.(nl:2)
+        “You’re late, $stripper_name” he says with a smirk.(nl:2)
         “$your_name.” *You correct him under your breath.*(nl:2)
         “$kendra had to take off, but she left a bag for you.”(nl:2)
         *He steps aside to let you in.*(nl:1)
@@ -1148,7 +1159,7 @@
                                         ($npc_vo:"female","kendra","grab ass")
                                         (text-style:"smear")[When one of his friends started to grab my ass, I sorta knew what would happen.](nl:2)
                                         *Your breath quickens as more hands join in. Two? Six? Eight? All caressing your skin. Shivering all over as your anticipation builds and builds.*(nl:2)
-                                        You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as (print:$bar_dance's "stripper name"). The rush... the thrill... of their hands all over you.(nl:1)
+                                        You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as . The rush... the thrill... of their hands all over you.(nl:1)
                                         (replace:?options)[(link:"Next")[
                                             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/hot.mp4')]
                                             (replace:?text)[
@@ -1216,6 +1227,7 @@
     (set:$spit_roast to 0)
     (set:$riding to 0)
     (set:$cumshot to 0)
+    ($remember:"blacked kendra story gangbang",500,"kendra","none",(cond:(is_breeder:),"On Breeder","Not on Breeder"),$old_name)
     (display:"safeword button")
     (display:"blacked kendra 5v1 refresh")
 }
@@ -1304,6 +1316,8 @@
                 (dec:'energy',$position's effort)
                 (inc:'stage')
                 (set:$lubrication to it + 1)
+                (set:$blacked_stats's "blowjobs given" to it + 5)
+                (set:$blacked_daily_stats's "blowjobs given" to it + 5)
                 (display:"blacked kendra 5v1 minigame")
             ]
         ]
@@ -1320,7 +1334,7 @@
                     (inc:'stage')
                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/7 insert.mp4')]
                     (replace:?text)[
-                        "OHH Ff..f....fuccckkk" you whimper. "Oh my god, it's so BIG"(nl:2)
+                        "OHH ff..f....fuccckkk" you whimper. "Oh my god, it's so BIG"(nl:2)
                         It *IS* big. It barely fits! (nl:1)
                     ]
                     (set:$temp_timer to 0)
@@ -1336,8 +1350,6 @@
                         (dec:'energy',$position's effort)
                         (set:$gangbang_events to it + (a:"bj isiah"))
                         (set:$bjs_left to it - 1)
-                        (set:$blacked_stats's "blowjobs given" to it + 1)
-                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
                         (display:"blacked kendra 5v1 minigame")
                     ]
                 ]
@@ -1347,8 +1359,6 @@
                         (dec:'energy',$position's effort)
                         (set:$gangbang_events to it + (a:"bj ricky"))
                         (set:$bjs_left to it - 1)
-                        (set:$blacked_stats's "blowjobs given" to it + 1)
-                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
                         (display:"blacked kendra 5v1 minigame")
                     ]
                 ]
@@ -1358,8 +1368,6 @@
                         (dec:'energy',$position's effort)
                         (set:$gangbang_events to it + (a:"bj john"))
                         (set:$bjs_left to it - 1)
-                        (set:$blacked_stats's "blowjobs given" to it + 1)
-                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
                         (display:"blacked kendra 5v1 minigame")
                     ]
                 ]
@@ -1369,8 +1377,6 @@
                         (dec:'energy',$position's effort)
                         (set:$gangbang_events to it + (a:"bj nat"))
                         (set:$bjs_left to it - 1)
-                        (set:$blacked_stats's "blowjobs given" to it + 1)
-                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
                         (display:"blacked kendra 5v1 minigame")
                     ]
                 ]
@@ -1380,8 +1386,6 @@
                         (dec:'energy',$position's effort)
                         (set:$gangbang_events to it + (a:"bj jason"))
                         (set:$bjs_left to it - 1)
-                        (set:$blacked_stats's "blowjobs given" to it + 1)
-                        (set:$blacked_daily_stats's "blowjobs given" to it + 1)
                         (display:"blacked kendra 5v1 minigame")
                     ]
                 ]
@@ -2168,7 +2172,7 @@
     ]
     (else-if:$stage is 11)[
         (replace:?text)[
-            “Wow, (print:$bar_dance's "stripper name"), you’re completely covered...”(nl:2)
+            “Wow, $stripper_name, you’re completely covered...”(nl:2)
             *Through the thick fog of cock and cum, you could have sworn he called you by a different name.*(nl:1)
             (text-style:"smear")[“$kendra”](nl:2)
             “Yeah, that’s what I said... Oh hey, look, my uncle’s camera. We *have* to take a picture, c’mon now, big smile!”(nl:1)
@@ -2209,7 +2213,7 @@
                 “I—I can’t cum! Please, I need—ahhh~” Your voice cracks, wrecked with helpless need. Your body trembles, wired tight, trapped in agonizing limbo.
                 (nl:2)
                 (if:$pill_known is "true")[(size:1.5)[
-                    Your body is craving something very specific: the cum of Jason and his friends, all inside your cunt, completing the cycle that the Breeder pill demands.
+                    Your body is craving something very specific: the cum of Jason and his friends, all inside your pussy, completing the cycle that the Breeder pill demands.
                     ](nl:2)]
             ]
             (if:$orgasms is 1)[
@@ -2253,7 +2257,7 @@
                 (nl:2)
                 “Please, please, please—just do it! Breed me! Cum inside me, put a baby in me! Just make it stop—I can’t, I can’t anymore—!”
                 (nl:2)
-                Your body is moving on its own, pure instinct, pure need. You’re sobbing, shaking, unable to think of anything except the heat, the ache, the unbearable void inside you that only his seed can fill.
+                Your body is moving on its own, pure instinct, pure need. You’re sobbing, shaking, unable to think of anything except the heat, the ache, the unbearable void inside you that only their seed can fill.
                 (nl:2)
                 It’s not just pleasure anymore. It’s survival.
                 (nl:2)
@@ -2278,8 +2282,8 @@
                 )(nl:2)  
 
                 (twirl:
-                "He grips your thighs, watching you **fall apart** with a deep chuckle. “Damn, you really lost it, huh?”",  
-                "He groans, his restraint starting to **crack**. “Damn, you’re really begging for it, huh?”",  
+                "He grips your thighs, watching you **fall apart** with a deep chuckle. “Damn, white girls be crazy, huh?”",  
+                "He groans, his restraint starting to **crack**. “Damn, you really want it, huh?”",  
                 "He smirks, his voice thick with amusement. “Shit, you’re a mess, aren’t you?”"
                 )(nl:2)  
 
@@ -2581,27 +2585,28 @@
 
 :: blacked kendra 5v1 finish
 {
+    ($remember_update:"add","blacked kendra story gangbang",$choice)
     (replace:?image)[($pic:"scenes/blacked/kendra 5v1/finish " + (cond:$choice is "Smile","smile","Big Smile","smile","stare")+".jpg")]
     (replace:?text)[
         (if:$choice is "Smile")[
             You can't help but smile, given the circumstances...
-            ($remember:"blacked kendra story gangbang",500,"kendra","scenes/blacked/kendra 5v1/11 final.mp4","smile")
         ]
         (else-if:$choice is "Big Smile")[
             Well, he did tell you to smile, and you wouldn't want to upset him...(People Pleaser Side Effect)🍀
         ]
         (else:)[
             You become a little glassy-eyed, while you try to take everything in...
-            ($remember:"blacked kendra story gangbang",500,"kendra","scenes/blacked/kendra 5v1/11 final.mp4","stare")
         ]
         (nl:2)
 
         Jason and his friends head back out and hop in the pool, leaving you to sort yourself out.(nl:2)
 
-        Clawing at the drying cum on your face, you're dripping globs of cum all over the floor..(nl:1)
+        You're dripping globs of cum all over the floor..(nl:1)
     ]
     (replace:?options)[
         (link:"Wash Up")[
+            ($remember_update:"add","blacked kendra story gangbang","complete")
+            ($remember_update:"add media","blacked kendra story gangbang","scenes/blacked/kendra 5v1/11 final.mp4")
             (display:"blacked kendra 5v1 cleanup")
         ]
     ]
@@ -2632,36 +2637,44 @@
     (set:$relationships's natturnher's "friendship" to it + (min:8, (floor:$pleasure's "nat"/2)))
     (set:$relationships's natturnher's "attraction" to it + (max:15, (floor:$pleasure's "nat")))
 
+    (set:$stats's "sex as girl" to it + 5)
     (set:$blacked_stats's "sex as girl" to it + 5)
     (set:$blacked_daily_stats's "sex as girl" to it + 5)
+    (set:$stats's "facials received" to it + 5)
     (set:$blacked_stats's "facials received" to it + 5)
     (set:$blacked_daily_stats's "facials received" to it + 5)
+    (set:$stats's "cunnilingus received" to it + 1)
     (set:$blacked_stats's "cunnilingus received" to it + 1)
     (set:$blacked_daily_stats's "cunnilingus received" to it + 1)
     (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
     (display:"blacked sex tally")
 
     (if:$pleasure's "jason" > 20)[
+        (set:$stats's "guys fully satisfied" to it + 1)
         (set:$blacked_stats's "guys fully satisfied" to it + 1)
         (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
     ]
 
     (if:$pleasure's "isiah" > 20)[
+        (set:$stats's "guys fully satisfied" to it + 1)
         (set:$blacked_stats's "guys fully satisfied" to it + 1)
         (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
     ]
 
     (if:$pleasure's "ricky" > 20)[
+        (set:$stats's "guys fully satisfied" to it + 1)
         (set:$blacked_stats's "guys fully satisfied" to it + 1)
         (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
     ]
 
     (if:$pleasure's "nat" > 20)[
+        (set:$stats's "guys fully satisfied" to it + 1)
         (set:$blacked_stats's "guys fully satisfied" to it + 1)
         (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
     ]
 
     (if:$pleasure's "john" > 20)[
+        (set:$stats's "guys fully satisfied" to it + 1)
         (set:$blacked_stats's "guys fully satisfied" to it + 1)
         (set:$blacked_daily_stats's "guys fully satisfied" to it + 1)
     ]
@@ -2682,7 +2695,22 @@
         (display:"blacked mood unsatisfied")
     ]
 
-    (if:$pleasure's "total" > 80)[(display:"blacked QoS buff")]
+    (if:(is_bbc_addict:))[
+        <!-- If character is already a bbc addict, make them a QoS -->
+        (set:$character's "side effects" to it + (a:"QoS"))
+        (display:"blacked QoS buff")
+    ]
+
+    (unless:(is_bbc_addict:))[
+        (set:$character's "side effects" to it + (a:"bbc addiction"))
+        ($remember:"bbc addict",200,"self","none",("addicted to bbc because of Jason and his friends"),"dream","blacked bbc addict dream 1")
+    ]
+
+    (if:$pleasure's "total" > 80)[
+        (set:$cause_text to "since you satisified Jason and his friends")
+        (set:$effect_text to "the gangbang with Jason and his friends")
+        (display:"blacked mood proud")
+    ]
 
     (set:$blacked_stats's "big cocks" to it + 4)
     (if:$blacked_stats's "big cocks" >= 15)[(display:"blacked trigger size queen")]
@@ -3041,12 +3069,14 @@
             (text-style:"smear")[“Nothing unusual.”](nl:2)
 
             Even your demeanor betrays you, her confidence and carefree attitude effortlessly overwriting your own as he observes you.(nl:1)
+            ($remember_update:"add","blacked kendra story gangbang","told maurice the truth")
         ]
         (if:$choice is "Downplay the Effects")[
             You decide you’d rather just get it over with than risk being carted off to X-Change Tower and turned into a lab rat.(nl:1)
             (text-style:"smear")[“Nah, I feel fine. Perfectly normal.”](nl:2)
 
             You don’t even have to try to sell the lie—$kendra’s carefree demeanor and confidence do it for you.(nl:1)
+            ($remember_update:"add","blacked kendra story gangbang","lied to maurice")
         ]
 
         He takes notes during the interview, his pen moving steadily across the page, before filing them away.(nl:1)
@@ -3057,6 +3087,7 @@
         *He takes out his phone.* “I should take a few pictures too, for comparison.”(nl:2)
 
         “Annnnnd done. Alright, you should be good to go home.”(nl:1)
+        
     ]
     (replace:?options)[
         (link:"How long does this last?")[
@@ -3148,8 +3179,108 @@
         “Call me if anything changes.”(nl:2)
 
         You nod, letting his words sink in. A successful test—at least for now.(nl:1)
-        (set:$blacked_events to it + (a:"kendra clone completed"))
+        (set:$blacked_events to it + (a:"kendra clone completed","maurice test results"))
     ]
-    (replace:?options)[(link:"Leave")[(display:"advance time")]]
+    (replace:?options)[(link:"Leave")[(set:$npc's img to "img/npc/guys/blacked/maurice/portrait_normal.jpg")(display:"advance time")]]
 }
 
+:: blacked maurice clone test results [fullscreen]
+{
+    (masteraudio:"stopall")
+    ($recall:"blacked kendra story gangbang")(set:$memory's "tags" to $tags)
+    (set:$blacked_events to it - (a:"maurice test results"))
+    (display:"blacked set up fullscreen")
+    (replace:?text)[Just as you are about to begin your evening, your phone rings. It's Maurice.(nl:2)]
+    (replace:?options)[(link:"Answer it")[
+        (replace:?right_screen)[
+            (set:$select to "maurice")
+            (set:$npc to $blacked_npcs_men's "maurice")
+            (display:"load relationship")
+            (display:"npc screen update")
+        ]
+        (replace:?text)[
+            “Hey $stripper_name!(nl:1)
+            Got a sec?” (nl:2)
+
+            “Test results are in. Pretty interesting stuff here...(nl:1)
+            You want the short version or the long?”(nl:2)
+        ]
+        (replace:?options)[
+            ($simple_option:"blacked maurice clone test results 2","display","Tell me everything","Just tell me")
+        ]
+    ]]
+}
+
+:: blacked maurice clone test results 2
+{
+    (replace:?options)[
+        (if:$choice is "Tell me everything (long version)")[
+            (replace:?text)[
+                “Alright. Well, most people don’t know this but X-Change does actually has a Clone pill.”(nl:1)
+                “It just isn’t publicly available... and honestly it falls into a pretty 'morally gray' area, so there’s always heavy regulation around it whenever it gets used.”(nl:2)
+
+                “Anyway, I figured that was a good place to start, so I compared your sample with some we had in storage. It wasn’t quite the same, being that it uses nanobots, but there were a lot of similarities.” *He pauses for a moment*(nl:2)
+
+                “Normally, when you take an X-Change pill, the tardigrades enter your body and carefully modify your epigenome, which regulates your physical traits—things like fat distribution, muscle mass, and hair growth patterns.(nl:1) 
+                They do this by carrying specialized enzymes and epigenetic markers straight to your cells, altering them to reflect your new gender. It’s all very organic and precise, thanks to the resilience of the tardigrades.”(nl:2)
+                
+                “From working at Dynapill, you already know the knock-offs use nanobot technology.(nl:1) 
+                The nanobots navigate through your bloodstream, targeting the cells that need to change, and then use their programming to adjust the expression of your genes.(nl:1)
+                Sometimes it’s more specific than others, something you’re probably also familiar with thanks to selling Inst-Girl productions.(nl:1)
+                While the processes are similar, the key difference is these nanobots have to work extra hard to achieve this specific level of tailored transformation.” (nl:2)
+
+                “Since the nanobots are essentially *flooding* your system with transformation instructions, it could lead to some unintended results, especially when said company has shoddy algorithms...”(nl:2)
+                
+                “Are you still feeling fine? No lingering side effects?” (nl:1)
+            ]
+        ]
+        (if:$choice is "Just tell me (short version)")[
+            (replace:?text)[
+                “Well, without getting too into the weeds here... if you feel fine then I think you’re gonna be fine.”(nl:2)
+                “Are you still feeling fine? No lingering side effects?” (nl:1)
+            ]
+        ]
+        (if:$tags contains "told maurice the truth")[
+            (link:"“I tried to tell you before...”")[
+                (replace:?text)[
+                    You explain to him while you were $kendra, you felt something influencing your decisions, and you swear you could even hear her voice in your head, like she was talking you. Like you were a passenger in your own mind.(nl:2)
+
+                    “Well, decision influencing isn’t that uncommon, especially in specifically tailored formulation. On Insta-Strip your body seems to move on it’s own without you really having to think about it right?(nl:1)
+                    Although, audio halucinations... I think that’s a first.”
+                ]
+            ]
+        ]
+        (link:"Tell him about your dreams")[
+            (replace:?text)[
+                You explain your recent vivid dream to him. (unless:(is_QoS:))[You tell him about the imaginary doctor diagnosing you with a BBC addiction.](nl:2)
+
+                Maurice chuckles softly, though there's a hint of concern in his voice. “That’s pretty... intense. Although you never seemed like you had any complaints with mine... are you sure this is from the pill?” (nl:2)
+
+                (replace:?right_options)[
+                    (link:"Play it off")[(append:?text)[(nl:1)"Maybe you're right. But this dream felt real, you know? I can’t shake the feeling something’s definitely different."(nl:2)] (replace:?right_options)[]]
+                    (link:"Be serious")[(append:?text)[(nl:1)"I don’t know. It just felt... like it was something that was always there, and now it's waking up in me."(nl:2)] (replace:?right_options)[]]
+                    (link:"Tease him")[(append:?text)[(nl:1)"Maybe it’s just you, Maurice. You've got a way of leaving an impression."(nl:2)] (replace:?right_options)[]]
+                ]
+            ]
+        ]
+        (link:"Talk about your new compulsion")[
+            (replace:?text)[
+                You explain your (unless:(is_QoS:))[newfound] compulsion for sleeping with Black men.(nl:2)
+
+                Maurice is silent for a moment. “You say that like it’s a bad thing. You’re not racist are you?”(nl:1)
+
+                (replace:?right_options)[
+                    (link:"Be Dismissive")[(append:?text)[(nl:1)"No, not at all! It's just... well, I can't ignore how I feel now. It’s like I’m drawn to them, specifically."(nl:2)] (replace:?right_options)[]]
+                    (link:"Be serious")[(append:?text)[(nl:1)"I didn’t ask for this, Maurice. But now I can’t seem to stop thinking about it... about them."(nl:2)] (replace:?right_options)[]]
+                    (link:"Tease him")[(append:?text)[(nl:1)"Yep, you caught me. I can't believe you never stopped to ask while your cock was halfway down my throat."(nl:2)] (replace:?right_options)[]]
+                ]
+            ]
+        ]
+        (link:"End the call")[
+            (replace:?text)[
+                After some friendly banter and reassurance the call comes to an end and you continue with your evening.
+                (after: time + 3)[(display:"events")]
+            ]
+        ]
+    ]
+}

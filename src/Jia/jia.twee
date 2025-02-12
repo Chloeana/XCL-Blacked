@@ -51,18 +51,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional jia [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "jia/bj/bbc/rough " + (text:(twist:1,4)))
-    (set:$text to $img of (dm:
-    "jia/bj/bbc/rough 1","bed",
-    "jia/bj/bbc/rough 2","floor",
-    "jia/bj/bbc/rough 3","floor",
-    "jia/bj/bbc/rough 4","bed"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face jia [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

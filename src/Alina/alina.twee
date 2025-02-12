@@ -57,20 +57,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional alina [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "alina/bj/bbc/rough " + (text:(twist:1,6)))
-    (set:$text to $img of (dm:
-    "alina/bj/bbc/rough 1","couch",
-    "alina/bj/bbc/rough 2","couch",
-    "alina/bj/bbc/rough 3","couch",
-    "alina/bj/bbc/rough 4","couch",
-    "alina/bj/bbc/rough 5","couch",
-    "alina/bj/bbc/rough 6","bed"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face alina [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

@@ -43,16 +43,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional liya [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "liya/bj/bbc/rough " + (text:(twist:1,2)))
-    (set:$text to $img of (dm:
-    "liya/bj/bbc/rough 1","floor",
-    "liya/bj/bbc/rough 2","floor"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face liya [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

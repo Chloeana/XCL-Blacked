@@ -59,16 +59,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional jade [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "jade/bj/bbc/rough " + (text:(twist:1,2)))
-    (set:$text to $img of (dm:
-    "jade/bj/bbc/rough 1","bed",
-    "jade/bj/bbc/rough 2","bed"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face jade [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

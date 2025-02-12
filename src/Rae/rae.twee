@@ -87,18 +87,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional rae [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "rae/bj/bbc/rough " + (text:(twist:1,4)))
-    (set:$text to $img of (dm:
-    "rae/bj/bbc/rough 1","floor",
-    "rae/bj/bbc/rough 2","floor",
-    "rae/bj/bbc/rough 3","counter",
-    "rae/bj/bbc/rough 4","bed"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face rae [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[

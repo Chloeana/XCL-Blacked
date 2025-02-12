@@ -59,19 +59,6 @@
   ](else:)[(display:_around)]
 }
 
-:: facefuck transactional scarlit [around]
-{
-  (if:(checkdm: $npc, "race", "is", "black"))[
-    (set:$img to "scarlit/bj/bbc/rough " + (text:(twist:1,5)))
-    (set:$text to $img of (dm:
-    "scarlit/bj/bbc/rough 1","floor",
-    "scarlit/bj/bbc/rough 2","floor",
-    "scarlit/bj/bbc/rough 3","floor",
-    "scarlit/bj/bbc/rough 4","couch",
-    "scarlit/bj/bbc/rough 5","floor"))
-  ](else:)[(display:_around)]
-}
-
 :: sex cum on face scarlit [around]
 {
   (if:(checkdm: $npc, "race", "is", "black"))[
