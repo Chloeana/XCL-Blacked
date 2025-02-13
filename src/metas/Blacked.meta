@@ -13,3 +13,11 @@ compatibleMods:
     version:
       atLeast: "0.2.2"
     loadMyMod: "AFTER"
+  - name: "BR Pill Mod"
+    version:
+      atLeast: "23f"
+    loadMyMod: "AFTER"
+  - name: "Pregmod"
+    version:
+      atLeast: "12.20"
+    loadMyMod: "AFTER"

@@ -3265,7 +3265,7 @@
         ]
         (link:"Talk about your new compulsion")[
             (replace:?text)[
-                You explain your (unless:(is_QoS:))[newfound] compulsion for sleeping with Black men.(nl:2)
+                You explain your(unless:(is_QoS:))[ newfound] compulsion for sleeping with Black men.(nl:2)
 
                 Maurice is silent for a moment. “You say that like it’s a bad thing. You’re not racist are you?”(nl:1)
 

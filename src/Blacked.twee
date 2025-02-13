@@ -962,7 +962,17 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {}
 
 :: blacked male npc approach [male_npc_approach]
-{}
+{
+  <!-- QoS arousal impact -->
+  (if:not (checkdm:$npc, "race", "is", "black"))[
+    (if:(is_QoS:))[
+      (unless:$character's "arousal" is 0)[
+        (set:$character's "arousal" to (floor:it / 2))
+        (display:$stats_refresh)
+      ]
+    ]
+  ]
+}
 
 :: blacked take pill [take_pill]
 {}
@@ -1022,6 +1032,18 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (if:(cock:"girth","npc") is 10 and (cock:"length","npc") is 10 and (cock:"balls","npc") is 10)[(display:"blacked trigger moby dick")]
     (if:(cock:"rating","npc") >= 9)[(set:$blacked_stats's "big cocks" to it + 1)]
     (if:$blacked_stats's "big cocks" >= 15)[(display:"blacked trigger size queen")]
+
+    (if:(is_QoS:))[
+      <!-- Positive arousal/lubrication impact for QoS -->
+      (set:$gain to (round:$gain * 2))
+    ]
+  ]
+
+  (else:)[
+    (if:(is_QoS:))[
+      <!-- Negative arousal/lubrication impact for QoS -->
+      (set:$gain to (floor:$gain / 2))
+    ]
   ]
 }
 
@@ -1032,12 +1054,65 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   ]
 }
 
+:: blacked position pleasure [position_your_pleasure]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    <!-- Revert Pregmod's Size Queen side effect for pleasure-->
+    (if:((passage:"__mods__")'s source contains "Pregmod") and (is_bbc_sizequeen:))[
+      (if:$select_position's "position" is "doggystyle")[
+        (if:(cock:"rating","npc") > 9 and ($character's "side effects" contains "Size Queen"))[
+        (set:$select_position's "your pleasure" to it - 4)
+        ]
+      ]
+    ]
+  ]
+}
+
+:: gain pleasure [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:(is_bbc_sizequeen:))[
+      (unless:(datanames:$npc) contains "cockrating")[
+        (set:$npc's "cockrating" to 9)
+      ]
+
+      (if:(cock:"rating","npc") >= 9)[
+        (set:$gain to (round:$gain * 2))
+      ]
+      (else:)[
+        (set:$gain to (floor:$gain / 2))
+      ]
+    ]
+
+    (if:(is_QoS:))[
+      (set:$gain to (round:$gain * 1.5))
+    ]
+    (else-if:(is_bbc_addict:))[
+      (set:$gain to (round:$gain * 1.3))
+    ]    
+  ]
+  (display:_around)
+}
+
 :: blacked sex finish [sex_finish]
 {
-  (if:$npc's cockrating < 7 and $npc's race is not "black")[
-    ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","Discover the truth about BBC...")]
-  (else-if:(is_bbc_addict:) and $npc's race is not "black")[
-
+  (if:$npc's race is not "black")[
+    (if:$npc's cockrating < 7)[
+      ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","Discover the truth about BBC...")
+    ]
+    (if:(is_bbc_addict: and $orgasms > 1))[
+      (set:$cause_text to "since you orgasmed more than once without a BBC")
+      (set:$effect_text to "ignoring your BBC addiction")
+      (display:"blacked mood ashamed")
+    ]
+    (else:(is_bbc_addict:) and $orgasm <= 1)[
+      (set:$cause_text to "since you failed to sleep with a black man")
+      (set:$effect_text to "ignoring your BBC addiction")
+      (display:"blacked mood unsatisfied")
+    ]
+    (if:(is_QoS:))[
+      (display:"blacked QoS debuff")
+    ]
   ]
   (else-if:$npc's race is "black")[
     (display:"blacked bbc sex checks")
@@ -1202,6 +1277,9 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       (set:$blacked_stats's "rejections" to it + 1)
       (set:$blacked_daily_stats's "rejections" to it + 1)
       (display:"blacked rejection tally")
+      (if:(is_QoS:))[
+        (display:"blacked QoS buff")
+      ]
     ]
 }
 
@@ -1433,6 +1511,9 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (set:$cause_text to "since you slept with a black man")
     (set:$effect_text to "feeding your BBC addiction")
     (display:"blacked mood satisfied")
+  ]
+  (if:(is_QoS:))[
+    (display:"blacked QoS buff")
   ]
   (display:"blacked sex tally")
 }
