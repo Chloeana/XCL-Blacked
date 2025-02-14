@@ -1097,8 +1097,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: blacked sex finish [sex_finish]
 {
   (if:$npc's race is not "black")[
-    (if:$npc's cockrating < 7)[
-      ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","Discover the truth about BBC...")
+    (if:$npc's cockrating < 7 and $blacked_stats "sex as girl" is 0)[
+      ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","finding out the truth about black guys. Is it true what they say? Are they really bigger?")
     ]
     (if:(is_bbc_addict: and $orgasms > 1))[
       (set:$cause_text to "since you orgasmed more than once without a BBC")
@@ -1274,6 +1274,19 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (display:_around)
   (if:$npc's "race" is not "black")[
+    (set:$blacked_stats's "rejections" to it + 1)
+    (set:$blacked_daily_stats's "rejections" to it + 1)
+    (display:"blacked rejection tally")
+    (if:(is_QoS:))[
+      (display:"blacked QoS buff")
+    ]
+  ]
+}
+
+:: proposition reject bj aroused result [around]
+{
+  (if:(win:))[
+    (if:$npc's "race" is not "black")[
       (set:$blacked_stats's "rejections" to it + 1)
       (set:$blacked_daily_stats's "rejections" to it + 1)
       (display:"blacked rejection tally")
@@ -1281,6 +1294,36 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
         (display:"blacked QoS buff")
       ]
     ]
+  ]
+  (display:_around)
+}
+
+:: proposition reject fuck aroused result [around]
+{
+  (if:(win:))[
+    (if:$npc's "race" is not "black")[
+      (set:$blacked_stats's "rejections" to it + 1)
+      (set:$blacked_daily_stats's "rejections" to it + 1)
+      (display:"blacked rejection tally")
+      (if:(is_QoS:))[
+        (display:"blacked QoS buff")
+      ]
+    ]
+  ]
+  (display:_around)
+}
+
+:: catcall guy leaves [around]
+{
+  (if:$npc's "race" is not "black")[
+    (set:$blacked_stats's "rejections" to it + 1)
+    (set:$blacked_daily_stats's "rejections" to it + 1)
+    (display:"blacked rejection tally")
+    (if:(is_QoS:))[
+      (display:"blacked QoS buff")
+    ]
+  ]
+  (display:_around)
 }
 
 :: beach sex area [around]
@@ -2653,6 +2696,17 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   ]
 }
 
+:: sex transactional end [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:$scene's "events" contains "oral")[
+      (set:$blacked_stats's "cunnilingus received" to it + 1)
+      (set:$blacked_daily_stats's "cunnilingus received" to it + 1)
+    ]
+  ]
+  (display:_around)
+}
+
 :: bar dance start [around]
 {
   (display:_around)
@@ -2770,62 +2824,64 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: girl introduce yourself [around]
 {
-  (unless:(is_fem:) and $blacked_compatible is 0)[
-    (display:"load relationship")
-    (if:$npc's "traits" contains "only bbc")[
-      (if:$character's "race" is "black")[
-        (set:$relationship's "attraction" to 10)
-        (twirl:"Why hello handsome... I'm","Mmm, dark chocolate...yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
-        (print:$character's "male name")(twirl:", care to make my night less boring?", ", I got a bed at my place with your name on it.", ". Hmm, I'll have to remember that. In case I need to scream it later.")
-        ]
-      (else:)[
-        (set:$relationship's "attraction" to (cond:
-        $blackfreq is "Black Encounters: Normal", (twist:-16,-12),
-        $blackfreq is "Black Encounters: Less", (twist:-12,-8),
-        $blackfreq is "Black Encounters: More", (twist:-20,-16),
-        $blackfreq is "Black Encounters: Always", -25,
-        ,0
-        ))
-        "(twirl:
-            "Sorry, I'm flattered and all that, but",
-            "Sorry, but",
-            "I'm gonna stop you there."
-        )
-        (cond:
-        $blackfreq is "Black Encounters: Normal", (twirl:"I like my men the same way I like my coffee. Black and full of cream.","I only date black guys. They're just so strong...","I'm only looking to date black guys."),
-        $blackfreq is "Black Encounters: Less", (twirl:"I really only date black guys.","I'm really only into black men.","I'm only dating black now."),
-        $blackfreq is "Black Encounters: More", (twirl:"I only date black men. Can you blame me?","Black men are the only ones that can truly satisfy my needs...","I exclusively fuck black men. It's true what they say... Once you go black, you never go back."),
-        $blackfreq is "Black Encounters: Always", (twirl:"I'm black-only, honey. A true Queen of Spades.","I only data black alpha studs... not inferior beta cucks like you.","I only fuck big black cocks... they're the only thing that can satisfy a white girl like me."),
-        ,""
-        )"
+  (unless:(is_fem:))[
+    (if:$blacked_compatible is 1)[
+      (display:"load relationship")
+      (if:$npc's "traits" contains "only bbc")[
+        (if:$character's "race" is "black")[
+          (set:$relationship's "attraction" to 10)
+          (twirl:"Why hello handsome... I'm","Mmm, dark chocolate...yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
+          (print:$character's "male name")(twirl:", care to make my night less boring?", ", I got a bed at my place with your name on it.", ". Hmm, I'll have to remember that. In case I need to scream it later.")
+          ]
+        (else:)[
+          (set:$relationship's "attraction" to (cond:
+          $blackfreq is "Black Encounters: Normal", (twist:-16,-12),
+          $blackfreq is "Black Encounters: Less", (twist:-12,-8),
+          $blackfreq is "Black Encounters: More", (twist:-20,-16),
+          $blackfreq is "Black Encounters: Always", -25,
+          ,0
+          ))
+          "(twirl:
+              "Sorry, I'm flattered and all that, but",
+              "Sorry, but",
+              "I'm gonna stop you there."
+          )
+          (cond:
+          $blackfreq is "Black Encounters: Normal", (twirl:"I like my men the same way I like my coffee. Black and full of cream.","I only date black guys. They're just so strong...","I'm only looking to date black guys."),
+          $blackfreq is "Black Encounters: Less", (twirl:"I really only date black guys.","I'm really only into black men.","I'm only dating black now."),
+          $blackfreq is "Black Encounters: More", (twirl:"I only date black men. Can you blame me?","Black men are the only ones that can truly satisfy my needs...","I exclusively fuck black men. It's true what they say... Once you go black, you never go back."),
+          $blackfreq is "Black Encounters: Always", (twirl:"I'm black-only, honey. A true Queen of Spades.","I only data black alpha studs... not inferior beta cucks like you.","I only fuck big black cocks... they're the only thing that can satisfy a white girl like me."),
+          ,""
+          )"
 
-        (nl:1)
-        (cond:
-        $blackfreq is "Black Encounters: Normal", (twirl:"Maybe you still can win her over, if you play your cards right...","Well that went well. Should you give up?"),
-        $blackfreq is "Black Encounters: Less", (twirl:"She's probably all talk. Go ahead, shoot your shot.","Maybe she just hasn't met the right guy... Go on, talk to her."),
-        $blackfreq is "Black Encounters: More", (twirl:"She seemed pretty serious... and kinda bitchy. But maybe you could still try?","She seemed sure of herself... should you respect her wishes?"),
-        $blackfreq is "Black Encounters: Always", (twirl:"Wow. She's serious, isn't she? That's some racist ass shit...","Wow...she blew you off just like that. For not being black."),
-        ,""
-        )
+          (nl:1)
+          (cond:
+          $blackfreq is "Black Encounters: Normal", (twirl:"Maybe you still can win her over, if you play your cards right...","Well that went well. Should you give up?"),
+          $blackfreq is "Black Encounters: Less", (twirl:"She's probably all talk. Go ahead, shoot your shot.","Maybe she just hasn't met the right guy... Go on, talk to her."),
+          $blackfreq is "Black Encounters: More", (twirl:"She seemed pretty serious... and kinda bitchy. But maybe you could still try?","She seemed sure of herself... should you respect her wishes?"),
+          $blackfreq is "Black Encounters: Always", (twirl:"Wow. She's serious, isn't she? That's some racist ass shit...","Wow...she blew you off just like that. For not being black."),
+          ,""
+          )
 
-        (set:$bar_spike_chance to it + (cond:
-        $blackfreq is "Black Encounters: Normal", 2,
-        $blackfreq is "Black Encounters: Less", 1,
-        $blackfreq is "Black Encounters: More", 3,
-        $blackfreq is "Black Encounters: Always", 5,
-        ,0
-        ))
-        (if:$blackfreq is "Black Encounters: Always")[(set:$uninterested to "true")]
-        ]
-      (set:$events to $events + (a:"introduce"))
-      (set:$npc's "events" to $npc's "events" + (a:"introduce"))
-      (set:$npc's "familiarity male" to 1)
-      (display:"update relationship name girl")
-      (set:$npc_select of $relationships to $relationship)
-      <div class='options'><mark>First impression:</mark></div>(set:$boredom to $boredom - $relationship's "attraction")
-      (display:"display relationship status")
-      (display:"bar chat girl options")
-      ](else:)[(display:_around)]
+          (set:$bar_spike_chance to it + (cond:
+          $blackfreq is "Black Encounters: Normal", 2,
+          $blackfreq is "Black Encounters: Less", 1,
+          $blackfreq is "Black Encounters: More", 3,
+          $blackfreq is "Black Encounters: Always", 5,
+          ,0
+          ))
+          (if:$blackfreq is "Black Encounters: Always")[(set:$uninterested to "true")]
+          ]
+        (set:$events to $events + (a:"introduce"))
+        (set:$npc's "events" to $npc's "events" + (a:"introduce"))
+        (set:$npc's "familiarity male" to 1)
+        (display:"update relationship name girl")
+        (set:$npc_select of $relationships to $relationship)
+        <div class='options'><mark>First impression:</mark></div>(set:$boredom to $boredom - $relationship's "attraction")
+        (display:"display relationship status")
+        (display:"bar chat girl options")
+        ](else:)[(display:_around)]
+    ]
   ](else:)[(display:_around)]
 }
 

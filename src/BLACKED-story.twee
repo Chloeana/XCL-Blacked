@@ -211,8 +211,15 @@
 
     (if:$choice is "Sorry, I’m late for a drink. Can this wait?")[
         (replace:?options)[
+            
             (link:(twirl:"Not interested, I'm busy","Figure it out yourself"))[
-                (display:"blacked kendra story decline bar")
+                (unless:(is_pp:))[(display:"blacked kendra story decline bar")]
+                (if:(is_pp:))[
+                    (twirl:"That'd be such a mean thing to say, shame on you! ",
+                    "It's unthinkable for you to say no to someone so obviously wanting help.",
+                    "You would feel *so* guilty if you didn't help her out.") (People Pleaser Side Effect)🍀
+                ]
+                
             ]
             (link:"Alright, I'll bite. Tell me more.")[
                 (set:$choice to "Alright, I'll bite. Tell me about the favor.")
@@ -246,6 +253,12 @@
         they were just leaving...”(nl:2)
 
         (if:(is_fem:))[“Too bad”...(nl:1)]
+
+        (if:(is_exhib:))[
+            (nl:1)
+            For just a moment, you catch yourself eyeing her perfectly-toned body as she gets into the car.(nl:1)
+            She's no $stripper_name, but still... what would it be like to get to show off *those* curves...(nl:1)
+        ]
 
         (replace:?options)[
             (link:"Watch them get in the car")[
@@ -427,7 +440,8 @@
             ]
             (else:)[
                 *She gestures around the room casually, before tossing her purse onto the couch.*(nl:1)
-                “It’s cute, right? Needs a little more pink. Anyway, sit down.”  
+                “It’s cute, right? Needs a little more pink. Anyway, sit down.”
+                (if:(is_bim:))[($bimbo:[Ohmigawd!😍 Pink is totally my fave too!🩷])]
             ]
         ]
         (nl:2)
@@ -443,8 +457,14 @@
     
     (replace:?text)[
         (if:$kendradm's traits contains "rich" and $kendradrink is "wine")[*She hands you a glass. “Hope red’s fine. This label isn’t great, but it’s decent enough for this chat.”* (nl:2)]
-        (else-if:$kendradm's traits contains "bimbo" or (is_bim:) and $kendradrink is "strawberry daiquiri")[*She hands you a colorful cocktail in a mismatched glass.*(nl:1) ($bimbo:[“I’m pretty sure this is, like, vodka… or rum? Who cares—it’s soooo yummy! 🍹💕”])]
+        
+        (else-if:$kendradm's traits contains "bimbo" or (is_bim:) and $kendradrink is "strawberry daiquiri")[
+            *She hands you a colorful cocktail in a mismatched glass.*(nl:1) ($bimbo:[“I’m pretty sure this is, like, vodka… or rum? Who cares—it’s soooo yummy! 🍹💕”])
+            (if:(is_bim:))[(nl:1)($bimbo:[Ohmygawd! I looovve these! 😍])]
+        ]
+        
         (else-if:$kendradm's traits contains "slut")[*She returns with a drink in each hand, her eyes lingering on you. “Here you go. Don’t worry, I didn’t spike it… this time.”* (nl:2)]
+        
         (else:)[*Placing a glass in front of you, she settles into the chair opposite yours.*]
 
         “So, here’s the thing. You know Bruce, obviously. Well, a few months ago, he convinced me and $gabbie to volunteer our DNA for one of SWP’s *big new projects*. Paid us and everything(if:$kendradm's traits contains "rich")[, not that I needed it].(nl:1)
@@ -624,7 +644,7 @@
         “So? What’ll it be?”(nl:1)
     ]
 
-    (replace:?options)[($simple_option:"blacked kendra story 8","display","Alright, I'll do it.","You’re really not giving me a choice, are you?","Sorry, but no.")]
+    (replace:?options)[($simple_option:"blacked kendra story 8","display","Alright, I'll do it.","You’re really not giving me a choice, are you?",(cond:(is_pp:),"I...should help her.","Sorry, but no."))]
 }
 
 :: blacked kendra story 8
@@ -632,7 +652,7 @@
     (unless:$choice is "Sorry, but no.")[(replace:?image)[($pic:"places/blacked/kendras apartment/4.jpg","left")]]
 
     (replace:?text)[
-        (if:$choice is "Alright, I'll do it.")[
+        (if:$choice is "Alright, I'll do it." or $choice is "I...should help her.")[
             (if:$kendradm's traits contains "rich")[
                 *Her grin widens, her relief palpable, though she tries to play it cool.*(nl:1)
                 “I knew you’d step up. Honestly...
@@ -654,6 +674,7 @@
                 you’re going to *love* being me. It’ll be wild!”  
             ]
             
+            (if:(is_pp:))[She’s so happy, you made the right decision! (People Pleaser Side Effect)🍀]
             (nl:2)
 
         ]
@@ -782,10 +803,15 @@
     (set:$current_location to "Dredd's Bathroom")
     (display:"location and time and inventory no wardrobe")
     (replace:?image)[($pic:"places/blacked/dredds house/bathroom.jpg")]
-    (replace:?text)[The bathroom is sleek and modern, with everything neatly arranged. On the counter, you spot a small pill in a paper envelope next to a designer bag.(nl:1)
-    “That must be $kendra’s”, you say out loud to no one.(nl:2)
-    You take a quick look inside and find a tight... white... revealing swimsuit... with heels, of course.(nl:2)
-    “*Sigh*. Here goes nothing...”(nl:1)]
+    (replace:?text)[
+        The bathroom is sleek and modern, with everything neatly arranged. On the counter, you spot a small pill in a paper envelope next to a designer bag.(nl:1)
+        “That must be $kendra’s”, you say out loud to no one.(nl:2)
+        You take a quick look inside and find a tight... white... revealing swimsuit... with heels, of course.(nl:2)
+        (if:(is_bim:))[(twirl:"“OMG it’s so YUMMY... but why white?”","“I’m gonna look sooo HAWT in this!”","“Yay! I should get one of these...in PINK!”")(nl:2)]
+        (if:(is_pp:))[(twirl:"“Well, if this is what $kendra wants...”","“I’m sure Dredd and Maurice will love seeing *me* in this.”","“You sigh a bit, it’s not quite your style, but if this is what $kendra really wants.”")(nl:2)]
+        (if:(is_exhib:))[(twirl:"*You sigh a little bit.* “Too much material...”","*You can’t help but roll your eyes.* “Too conservative for my tastes...”","“Mmm, I love these cutouts.”")(nl:2)]
+        “*Sigh*. Here goes nothing...”(nl:1)
+    ]
     (replace:?options)[
         (link:"Take the Pill")[
             (replace:?text)[
@@ -949,6 +975,11 @@
                                     You glance at the outfit lying on the counter, already feeling the urge to slip into it and embrace what you’ve become.*(nl:1)
                                     As you start to dress, a (text-style:"blur")[conflict] lurks in your mind. A mix of your own thoughts and hers vying for control.(nl:1)
                                     (text-style:"double-strike")[Her] Your tight swimsuit clinging to *your* body as you adjust it, accentuating every curve.(nl:2)
+
+                                    (if:(is_exhib:))[
+                                        “Maybe she’ll let me keep this...”(nl:2)
+                                    ]
+
                                     ($simple_option:"blacked kendra story 11","display","Finish getting dressed and head back to Dredd")
                                 ]
                             ]
@@ -1017,6 +1048,10 @@
     (replace:?options)[
         (link:"Approach")[
             (replace:?text)[
+                (if:(is_exhib:))[($gain_arousal:1)
+                    *You can feel all FIVE sets of eyes locked on you. Admiring you. Devouring you. They WANT you.
+                    You feel the heat spread across your chest. You should come here more often.(nl:2)*
+                ]
                 *As you approach, their conversation halts.*(nl:2)
                 “$kendra?” he asks, his voice full of surprised amusement. “Didn’t know you’d be stopping by.”(nl:2)
                 Jason stands, a broad grin on his face.(nl:1)

@@ -716,9 +716,77 @@
     ($pic:"scenes/home/dreams/wake up.jpg")(inc:'day')
     (set:$character's status to $character's gender)(display:"refresh portrait")
     ($play:"ambience","morning")
-    The morning light shining through your window onto your face wakes you from your slumber.(nl:2)
+    (set:$overnight_messages to it + (a:$dream's id))($forget:$dream's id)(dec:'day')
+    (twirl:
+        "The morning light shining through your window onto your face wakes you from your slumber.",
+        "You stir as the first hints of sunlight creep past your curtains, coaxing you out of sleep.",
+        "A gentle warmth spreads over your face as dawn's light filters into the room, pulling you from unconsciousness."
+    )
+    (nl:2)
 
-    (set:$overnight_messages to it + (a:$dream's id))($forget:$dream's id)(dec:'day')($simple_option:"advance day","Start the day...")
+    (if:$dream_bbc_addict is $day)[
+        (twirl:
+            "Your pulse quickens the moment you open your eyes. The dream felt too real, your body still craving more.",
+            "You stretch languidly, the echoes of pleasure making you shiver. You need more. You know you do.",
+            "A deep satisfaction settles in your chest as you wake up, your body remembering exactly how good it felt."
+        )(nl:2)
+        (twirl:
+            "A deep, shaky breath escapes you. 'I shouldn’t want this so badly… but I do.'",
+            "‘God, that felt… incredible.’ You close your eyes for a moment, almost hoping to slip back into the dream.",
+            "You run your tongue over your lips, sighing to yourself. ‘I could get used to this…’"
+        )(nl:2)
+        (twirl:
+            "Your body aches in a way that sleep alone can’t fix. A hunger that won’t just disappear.",
+            "Your body feels restless, like it needs something more than just sleep. Something… intense.",
+            "Even after waking, the need still lingers—hot, undeniable, and only growing stronger."
+        )(nl:2)
+    ]
+
+    (if:$dream_bbc_sucker is $day)[
+        (twirl:
+            "You wake with a strange mix of satisfaction and longing, your lips tingling as if they still remember.",
+            "A warm flush spreads across your cheeks as the details of the dream replay in your mind.",
+            "Your tongue flicks over your lips instinctively, a phantom sensation making you shiver."
+        )(nl:2)
+        (twirl:
+            "You touch your mouth absentmindedly, murmuring, 'My mouth feels empty...'",
+            "‘Why does this keep happening?’ you mutter, running a hand through your hair.",
+            "You shake your head and sigh. ‘Wow, I can... taste it.’"
+        )(nl:2)
+        (twirl:
+            "Even awake, your body remembers too well. The thought lingers, teasing at the edges of your mind.",
+            "The memory clings to you, refusing to fade as you try to think about your plan for the day.",
+            "You roll over with a frustrated groan. Another day, another dream you can’t seem to shake."
+        )(nl:2)
+    ]
+
+    (if:$dream_bbc_slut is $day)[
+        (twirl:
+            "A slow, satisfied sigh escapes you as you wake, your body thrumming with aftershocks of the dream.",
+            "Your sheets feel warmer than usual, your skin tingling with the remnants of something intoxicating.",
+            "You stretch lazily, basking in the hazy remnants of the dream that still cling to your thoughts."
+        )(nl:2)
+        (twirl:
+            "You run a hand down your body, shaking your head with a knowing smirk. ‘Guess my mind’s made up…’",
+            "‘I really can’t get enough, can I?’ you murmur, rolling onto your side with a satisfied hum.",
+            "You press a hand to your forehead, laughing under your breath. ‘This is just who I am now…’"
+        )(nl:2)
+        (twirl:
+            "There’s no denying it anymore. The dreams, the feelings—they’re all part of you now.",
+            "The realization washes over you as you sit up. This isn’t just a phase—it’s a craving you can’t ignore.",
+            "Even after waking, the satisfaction lingers, but so does the hunger for more."
+        )(nl:2)
+    ]
+
+    (nl:2)
+    (twirl:
+        "You shake off the last remnants of sleep and push yourself out of bed, ready to start the day.",
+        "Taking a deep breath, you stretch and prepare yourself for whatever the day may bring.",
+        "The lingering haze of the dream fades as you focus on the day ahead, though the thoughts refuse to fully leave."
+    )
+    (nl:1)
+
+    ($simple_option:"advance day","Start the day...")
 }
 
 :: blacked bbc obsession dream intro

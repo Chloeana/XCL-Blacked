@@ -122,7 +122,7 @@
 		"duration",5,
 		"solution","bbc porn"),
   (dm:
-    "description",(twirl:"discovering the truth about black cocks. Are they really bigger?","finding out the truth about black guys. Is it true what they say?","learning about BBC. It's just an internet phrase, right?"),
+    "description","finding out the truth about black guys. Is it true what they say? Are they really bigger?",
     "objective","Discover the truth about BBC...",
     "triggers",(ds:"high reluctance","blacked compatible","virgin"),
     "duration",5,
@@ -146,4 +146,14 @@
 		"duration",10,
 		"solution","black creampie")
   ))
+}
+
+:: computer masturbate [around]
+{
+  (if:(is_fem:))[
+    (if:$type is "BBC")[
+      ($generate_specific_curiosity:"After rubbing one out to BBC porn, you find yourself thinking about ","satisfying a black guy completely.")
+    ]
+  ]
+  (display:_around)
 }
