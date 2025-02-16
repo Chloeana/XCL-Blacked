@@ -130,7 +130,7 @@ achievements("BLACKED",
       "hint": "Sleep with 5 black men in a single day.",
       "flavor":
         '(twirl:"It’s a marathon, not a sprint.", "Going the extra mile... ten times.", "Such a memorable day... and night.")',
-      "condition_name": "sex10-blacked",
+      "condition_name": "sex5-blacked",
       "visible": "1",
       "emoji": "⏳💦"
     },

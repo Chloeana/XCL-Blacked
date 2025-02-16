@@ -82,20 +82,6 @@
   (else:)[(set:$blacked_compatible to 0)]
 }
 
-:: blacked options [mod_options]
-{
-  (color:"bisque")[BLACKED Settings:](nl:1)
-	(_setting_button:
-		"$blackfreq",(a:
-      "Black Encounters: Normal",
-      "Black Encounters: Less",
-      "Black Encounters: More",
-      "Black Encounters: Always",
-      "Black Encounters: Never"
-    ), "Determines how often you will encounter random black men hitting on you as a female."
-	)
-}
-
 :: blacked font [header]
 {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -105,6 +91,20 @@
         font-weight: bold;
         }
     </style>
+}
+
+:: blacked options [mod_options]
+{
+  (css:"font-family: 'Montserrat', sans-serif; font-weight: bold; color: white; background-color: black; padding: 2px;")[BLACKED] Settings:(nl:1)
+	(_setting_button:
+		"$blackfreq",(a:
+      "Black Encounters: Normal",
+      "Black Encounters: Less",
+      "Black Encounters: More",
+      "Black Encounters: Always",
+      "Black Encounters: Never"
+    ), "Determines how often you will encounter random black men hitting on you as a female."
+	)
 }
 
 :: view sex stats [around]
@@ -636,6 +636,33 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   )
 }
 
+:: clothes refresh section
+{(replace:?section)[($centered:[{
+(css:"font-size:0.7em")[(color:$palette_colors's 4th)[🗂️ Category]](nl:1)
+($show_tooltip:[(link-repeat:"👚")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "casual",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Casual])
+($show_tooltip:[(link-repeat:"👗")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "stylin",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Clothes for going out!])
+($show_tooltip:[(link-repeat:"👙")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "beach",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Beachwear])
+($show_tooltip:[(link-repeat:"🩲")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "lingerie",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Lingerie])
+($show_tooltip:[(link-repeat:"🖤")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "fetish",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Fetishwear])
+($show_tooltip:[(link-repeat:"🧘‍♀️")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "gym",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Activewear])
+($show_tooltip:[(link-repeat:"🛋️")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "lounge",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Loungewear - pajamas and other comfy stuff])
+($show_tooltip:[(link-repeat:"👠")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "office",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Officewear])
+($show_tooltip:[(link-repeat:"🆕")[(set:$filtered_outfits to (find:_outfit where not ($outfit_inventory contains (text:_outfit's id)),...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits not owned])
+($show_tooltip:[(link-repeat:"🔄")[(set:$filtered_outfits to $outfit_db)(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Clear filter (view all outfits)])
+(nl:1)
+(color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[🔀 Sort by]],[Sort within the current filter - note that you'll have to re-click this whenever you apply a new filter.])](nl:1)
+($show_tooltip:[(link-repeat:"🔼💵")[(set:$filtered_outfits to (sorted: via its price,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by price, low to high])
+($show_tooltip:[(link-repeat:"🔼👄")[(set:$filtered_outfits to (sorted: via its sluttiness,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by sluttiness, low to high])
+($show_tooltip:[(link-repeat:"🔼😌")[(set:$filtered_outfits to (sorted: via its comfort,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by comfort, low to high])(nl:1)
+($show_tooltip:[(link-repeat:"🔽💵")[(set:$filtered_outfits to (sorted: via its price*-1,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by price, high to low])
+($show_tooltip:[(link-repeat:"🔽👄")[(set:$filtered_outfits to (sorted: via its sluttiness*-1,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by sluttiness, high to low])
+($show_tooltip:[(link-repeat:"🔽😌")[(set:$filtered_outfits to (sorted: via its comfort*-1,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by comfort, high to low])(nl:1)
+(color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[➕ Additional filters]],[Filter WITHIN the current filter - note that you'll have to re-click this whenever you apply a new filter.])](nl:1)
+($show_tooltip:[(link-repeat:"🆕")[(set:$filtered_outfits to (find:_outfit where not ($outfit_inventory contains (text:_outfit's id)),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits not owned WITHIN current filter criteria.])($show_tooltip:[(link-repeat:"🏷️")[(set:$filtered_outfits to (find:_outfit where _outfit's price <= $character's money,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits you can afford.])($show_tooltip:[(link-repeat:"🕹️")[(set:$filtered_outfits to (find:_outfit where _outfit's tags contains any of (a:"professional","very professional","chores","workout","great workout","gym scene"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits with stat bonuses or unlockable scenes.])($show_tooltip:[(link-repeat:"♠️")[(set:$filtered_outfits to (find:_outfit where (_outfit's tags contains "blacked"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Special BLACKED section?])(if:(is_bim:))[($show_tooltip:[(link-repeat:"🎀")[(set:$filtered_outfits to (find:_outfit where (_outfit's colors contains "pink"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Pink outfits!!! EeEEeeeee!!!])](nl:1)
+(color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[📄 Outfits per page]],[How many outfits will be visible on screen at once.])](nl:1)
+<span class='borderless'>|pagination_settings>[(for: each _setting, 8, 16, 32, 64, 128, 256)[(color:(cond:$clothes_pagination is _setting,"bisque",$palette_colors's 4th))[(link-repeat:(text:_setting))[(set:$clothes_pagination to _setting)(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)(rerun:?pagination_settings)]]]]</span>(nl:2)(link:"Back")[($nx:"clothes shopping")]}])]}
+
+
 :: npc race check
 {
   (set:_setting to (dm:
@@ -968,8 +995,16 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (if:(is_QoS:))[
       (unless:$character's "arousal" is 0)[
         (set:$character's "arousal" to (floor:it / 2))
+        ($notification:"Arousal Lessened (Queen of Spades)👑")(nl:1)
         (display:$stats_refresh)
       ]
+    ]
+  ]
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (if:(is_QoS:))[
+      (set:$character's "arousal" to (round:it * 2))
+        ($notification:"Arousal Heightened (Queen of Spades)👑")(nl:1)
+        (display:$stats_refresh)
     ]
   ]
 }
@@ -1036,6 +1071,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (if:(is_QoS:))[
       <!-- Positive arousal/lubrication impact for QoS -->
       (set:$gain to (round:$gain * 2))
+      ($notification:"Arousal Heightened (Queen of Spades)👑")
     ]
   ]
 
@@ -1043,6 +1079,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (if:(is_QoS:))[
       <!-- Negative arousal/lubrication impact for QoS -->
       (set:$gain to (floor:$gain / 2))
+      ($notification:"Arousal Lessened (Queen of Spades)👑")
     ]
   ]
 }
@@ -1070,26 +1107,40 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: gain pleasure [around]
 {
-  (if:(checkdm:$npc, "race", "is", "black"))[
-    (if:(is_bbc_sizequeen:))[
-      (unless:(datanames:$npc) contains "cockrating")[
-        (set:$npc's "cockrating" to 9)
-      ]
-
-      (if:(cock:"rating","npc") >= 9)[
-        (set:$gain to (round:$gain * 2))
-      ]
-      (else:)[
-        (set:$gain to (floor:$gain / 2))
+  (unless:$gain is 0)[
+    (if:(checkdm:$npc, "race", "is", "black"))[
+      (if:($npc's cock is "in you"))[
+        (if:(is_bbc_sizequeen:))[
+          (unless:(datanames:$npc) contains "cockrating")[
+            (set:$npc's "cockrating" to 9)
+          ]
+          (if:(cock:"rating","npc") >= 9)[
+            (set:$gain to $gain * 1.5)
+            <div class='options'><mark>+50% Pleasure(BBC Size Queen)📏</mark></div>
+          ]
+          (else-if:(cock:"rating","npc") < 7)[
+            (set:$gain to $gain / 2)
+            <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+          ]
+        ]
+        (set:$gain to (floor:$gain))
       ]
     ]
-
-    (if:(is_QoS:))[
-      (set:$gain to (round:$gain * 1.5))
+    (else:)[
+      (if:($npc's cock is "in you"))[
+        (unless:((passage:"__mods__")'s source contains "Pregmod"))[
+          (if:(is_bbc_sizequeen:))[
+            (unless:(datanames:$npc) contains "cockrating")[
+              (set:$npc's "cockrating" to 9)
+            ]
+            (if:(cock:"rating","npc") < 7)[
+              (set:$gain to (floor:$gain / 2))
+              <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+            ]
+          ]
+        ]
+      ]
     ]
-    (else-if:(is_bbc_addict:))[
-      (set:$gain to (round:$gain * 1.3))
-    ]    
   ]
   (display:_around)
 }
@@ -1133,7 +1184,19 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: watch porn [around]
 {
+  <!-- Temp workaround until 0.21.6 -->
+  (if:$porn contains "black cock heaven")[
+    (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heaven")]
+  ]
+  (if:$porn contains "bbc babecock")[
+    (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"add porn bbc babecock")]
+  ]
+  (if:$porn contains "bbc pmvs")[
+    (unless: length of (find:_disc where _disc's name is "bbc pmvs",...$porn_list) > 0)[(display:"add porn bbc pmvs")]
+  ]
+
   (display:_around)
+
   (if:$blacked_events contains "gooner part one" and $blacked_events does not contain "black cock heaven")[
     (if:$porn_list does not contain "black cock heaven")[(display:"add porn black cock heaven")]
     (replace:?options)[
@@ -1379,6 +1442,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: blacked sex tally
 {
+  (if:$blacked_daily_stats's "sex as girl" >= 5)[(display:"blacked trigger sex5")]
   (if:$blacked_stats's "sex as girl" is 1)[(display:"blacked trigger first sex")]
   (else-if:$blacked_stats's "sex as girl" >= 100)[(display:"blacked trigger sex100")]
   (else-if:$blacked_stats's "sex as girl" >= 50)[(display:"blacked trigger sex50")]
@@ -1403,8 +1467,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (set:$side_effect_names to it + (dm:
     "QoS","👑 Queen of Spades ♠️",
-    "bbc sizequeen","Size Queen",
-    "bbc sizequeen temp","Size Queen",
+    "bbc sizequeen","BBC Size Queen",
+    "bbc sizequeen temp","BBC Size Queen",
     "bbc addiction","Addicted to BBC",
     "bbc addiction temp","Addicted to BBC"
   ))
@@ -1413,7 +1477,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     "QoS", "Once you go black... you never go back. It's more than a preference, you will find it nearly impossible to resist Black men.",
     "bbc sizequeen","You've been stretched out from taking all those Big Black Cocks! Small dicks are much less effective on you now.",
     "bbc sizequeen temp","You've been stretched out from taking all those Big Black Cocks! Small dicks are much less effective on you now.",
-    "bbc addiction","BBC is constantly on your mind. Going too long without it could be bad..."
+    "bbc addiction","BBC is constantly on your mind. Going too long without it could be bad...",
     "bbc addiction temp","BBC is constantly on your mind. Going too long without it could be bad..."
   ))
 
@@ -1476,7 +1540,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$new_mood to (dm:
     "mood","proud",
     "emoji","😊",
-    "strength",7,
+    "strength",8,
     "length",8,
     "cause",$cause_text,
     "charm buff",3,
@@ -1507,7 +1571,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$new_mood to (dm:
     "mood","satisfied",
     "emoji","💯",
-    "strength",7,
+    "strength",8,
     "length",8,
     "cause",$cause_text,
     "charm buff",2,
@@ -1563,10 +1627,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: serendipity buy porn [around]
 {
-  (unless:$porn_list contains "bbc babecock")[(display:"add porn bbc babecock")]
+  (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heaven")]
   (if:$day > 30)[
-    (if:$porn_list does not contain "bbc pmvs")[(display:"add porn bbc pmvs")]
-    (if:$porn_list does not contain "black cock heaven")[(display:"add porn black cock heaven")]
+    (unless: length of (find:_disc where _disc's name is "bbc pmvs",...$porn_list) > 0)[(display:"add porn bbc pmvs")]
+    (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"add porn bbc babecock")]
   ]
   (display:_around)
 }
@@ -2378,8 +2442,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (display:_around)
   (if:(checkdm:$npc, "race", "is", "black"))[
     (replace:?image)[($pic:"characters/sex/insert/bbc/" +  $character's "id" + ".jpg")]
-    <!--(replace:?image)[(print:"<img class='greyborder' src='img/characters/sex/insert/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]
-    (replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]-->
     (replace:?right_options)[($pic:"characters/sex/doggy/bbc/" + $character's "id" + ".jpg")]
   ]
 }
@@ -2389,7 +2451,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (display:_around)
   (if:(checkdm:$npc, "race", "is", "black"))[
     (unless:$minigame_played is "true")[
-        <!--(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]-->
         (replace:?right_options)[($pic:"characters/sex/doggy/bbc/" +  $character's "id" + ".jpg")]
     ]
   ]
@@ -3268,41 +3329,4 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (else:)[(if:(twist:1,3) is 1)["(print:$fuck)(twirl:",","...","-") (print:$text)](else:)["(print:(upperfirst:$text))](if:(twist:1,2) is 1)[, $your_sex_name](if:(twist:1,2) is 1)[(twirl:"...","!",".")"](else:)[(twirl:"...","!",",")" (display:"npc pronoun") (twirl:"says","grunts","says")(if:(twist:1,2) is 1)[ (twirl:"as he pounds you","as he fucks you","as he rails you","as he fucks you")].]]
   ]
   (else:)[(display:_around)]
-}
-
-<!-- bbc side effect removal -->
-:: Potion Shop side effect days counter [_around]
-{
-  (if:(is_bbc_addict:))[(inc:'potion_shop_bbc_addict_days_counter')](else:)[(set:$potion_shop_bbc_addict_days_counter to 0)]
-  (display:_around)
-}
-
-:: Potion Shop remove bbc addict effect cost
-{
-    (set:$potion_shop_bbc_addict_removal_cost to 100)
-    (set:$potion_shop_bbc_addict_removal_cost to it + ($potion_shop_bbc_addict_days_counter * 10))
-    (if:$potion_shop_bbc_addict_removal_cost > 350)[(set:$potion_shop_bbc_addict_removal_cost to 350)]
-    (if:(is_fem:))[(set:$potion_shop_bbc_addict_removal_cost to (round: $potion_shop_bbc_addict_removal_cost / 1.75))]
-    (print:$potion_shop_bbc_addict_removal_cost)
-}
-
-:: Potion Shop remove bbc addict effect
-{
-    <!-- if enough essence: remove the side effect, subtract the essence; else display passage-->
-    (if:$potion_shop_essence_extracted >= $potion_shop_bbc_addict_removal_cost)
-    [
-        (set:$character's "side effects" to it - (a:"bbc addiction"))
-        (set:$potion_shop_essence_extracted to it - $potion_shop_bbc_addict_removal_cost)
-        (display:"potion shop update essence total")
-        (display:"Potion Shop bbc addict removal flavor text")
-        (set:$potion_shop_removed_side_effects to it + (a:"bbc addiction"))
-    ]
-    (else-if:$potion_shop_essence_extracted < $potion_shop_bbc_addict_removal_cost)[(display:"Treatment Requires More Essence Flavor Text")]
-}
-
-:: Potion Shop bbc addict removal flavor text
-{
-  (twirl:"//Stepdad would still like you to clean up after yourself. //",
-  "//Consider doing your chores this time. //",
-  "//Just because you aren't compelled to clean up doesn't mean you should ignore your stepdad. //")
 }

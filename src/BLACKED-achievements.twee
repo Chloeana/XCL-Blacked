@@ -3,7 +3,6 @@
   (if:$blacked_daily_stats is 0)[(set:$blacked_daily_stats to (dm:))]
 
   (if:$blacked_daily_stats's "beach sex" >= 3)[(display:"blacked trigger mud shark")]
-  (if:$blacked_daily_stats's "sex as girl" >= 5)[(display:"blacked trigger sex5")]
   (if:$blacked_daily_stats's "bbc porn watched" >= 5)[(display:"blacked trigger gooner marathon")]
   (if:$blacked_daily_stats's "loads swallowed" >= 5)[(display:"blacked trigger swallow5")]
   (if:$blacked_daily_stats's "rejections" >= 5)[(display:"blacked trigger reject5")]
@@ -138,27 +137,29 @@
 {
   (set:$achievement_condition_select to "sex25-blacked")
   (display:"add achievement to lists")
-  (display:"reward-1up")
+  (unless:$achievement_triggers contains "sex25-blacked")[(display:"reward-1up")]
 }
 
 :: blacked trigger sex50
 {
   (set:$achievement_condition_select to "sex50-blacked")
   (display:"add achievement to lists")
-  (display:"reward-2up")
+  (unless:$achievement_triggers contains "sex50-blacked")[(display:"reward-2up")]
 }
 
 :: blacked trigger sex100
 {
   (set:$achievement_condition_select to "sex100-blacked")
   (display:"add achievement to lists")
-  (display:"reward-3up")
+  (unless:$achievement_triggers contains "sex100-blacked")[(display:"reward-3up")]
 }
 
 :: blacked trigger sex5
 {
-  (unless:(is_bbc_addict:))[
-    ($remember:"bbc addict",9,"self","none",("slept with " + (text:$blacked_daily_stats's "sex as girl") + " black guys"),"dream","blacked bbc addict dream 1")
+  (set:$achievement_condition_select to "sex5-blacked")
+  (display:"add achievement to lists")
+  (unless:($character's "side effects" contains "bbc addiction"))[
+    ($remember:"bbc addict",9,"self","none","slept with many guys","dream","blacked bbc addict dream 1")
   ]
 }
 
@@ -186,6 +187,7 @@
 {
   (set:$achievement_condition_select to "swallow25-blacked")
   (display:"add achievement to lists")
+  (unless:$achievement_triggers contains "swallow25-blacked")[(display:"reward-1up")]
   (display:"reward-1up")
 }
 
@@ -193,14 +195,14 @@
 {
   (set:$achievement_condition_select to "swallow50-blacked")
   (display:"add achievement to lists")
-  (display:"reward-2up")
+  (unless:$achievement_triggers contains "swallow50-blacked")[(display:"reward-2up")]
 }
 
 :: blacked trigger swallow100
 {
   (set:$achievement_condition_select to "swallow100-blacked")
   (display:"add achievement to lists")
-  (display:"reward-3up")
+  (unless:$achievement_triggers contains "swallow100-blacked")[(display:"reward-3up")]
 }
 
 :: blacked trigger reject5
@@ -213,28 +215,29 @@
 {
   (set:$achievement_condition_select to "reject25-blacked")
   (display:"add achievement to lists")
-  (display:"reward-1up")
+  (unless:$achievement_triggers contains "reject25-blacked")[(display:"reward-1up")]
 }
 
 :: blacked trigger reject50
 {
   (set:$achievement_condition_select to "reject50-blacked")
   (display:"add achievement to lists")
-  (display:"reward-2up")
+  (unless:$achievement_triggers contains "reject50-blacked")[(display:"reward-2up")]
 }
 
 :: blacked trigger reject100
 {
   (set:$achievement_condition_select to "reject100-blacked")
   (display:"add achievement to lists")
-  (display:"reward-3up")
+  (unless:$achievement_triggers contains "reject100-blacked")[(display:"reward-3up")]
 }
 
 :: blacked trigger size queen
 {
   (set:$achievement_condition_select to "size-queen-blacked")
   (display:"add achievement to lists")
-  (unless:(is_bbc_sizequeen:))[
+  (unless:$character's "side effects" contains "bbc sizequeen")[
+    (if:$character's "side effects" contains "bbc sizequeen temp")[(set:$character's "side effects" to it - (a:"bbc sizequeen temp"))]
     (set:$character's "side effects" to it + (a:"bbc sizequeen"))
   ]
 }
@@ -248,41 +251,42 @@
 :: reward-1up
 {
   (set:$new_status to (dm:
-	"status","committed",
-	"emoji","🔓",
-	"strength",4,
-	"length",3,
-	"cause","You little achievement fiend. Good for you.",
-	"charm buff",1,
-	"intellect buff",1,
-	"fitness buff",1,
-	))(display:"new status")(display:"refresh stats")
+    "status",(twirl: "committed", "dedicated", "focused", "resolute"),
+    "emoji","🥉",
+    "strength",4,
+    "length",3,
+    "cause","You little achievement fiend. Good for you.",
+    "charm buff",1,
+    "intellect buff",1,
+    "fitness buff",1
+  ))(display:"new status")(display:"refresh stats")
 }
 
 :: reward-2up
 {
   (set:$new_status to (dm:
-	"status","persistent",
-	"emoji","🔓",
-	"strength",7,
-	"length",6,
-	"cause","You little achievement fiend. Good for you.",
-	"charm buff",2,
-	"intellect buff",2,
-	"fitness buff",2,
-	))(display:"new status")(display:"refresh stats")
+    "status",(twirl: "persistent", "tenacious", "steady", "unwavering"),
+    "emoji","🥈",
+    "strength",7,
+    "length",6,
+    "cause","You little achievement fiend. Good for you.",
+    "charm buff",2,
+    "intellect buff",2,
+    "fitness buff",2
+  ))(display:"new status")(display:"refresh stats")
 }
 
 :: reward-3up
 {
   (set:$new_status to (dm:
-	"status","determined",
-	"emoji","🔓",
-	"strength",10,
-	"length",9,
-	"cause","You little achievement fiend. Good for you.",
-	"charm buff",3,
-	"intellect buff",3,
-	"fitness buff",3,
-	))(display:"new status")(display:"refresh stats")
+    "status",(twirl: "determined", "relentless", "unstoppable", "driven"),
+    "emoji","🥇",
+    "strength",10,
+    "length",9,
+    "cause","You little achievement fiend. Good for you.",
+    "charm buff",3,
+    "intellect buff",3,
+    "fitness buff",3
+  ))(display:"new status")(display:"refresh stats")
 }
+

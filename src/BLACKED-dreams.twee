@@ -185,7 +185,6 @@
 
 :: blacked bbc addict dream 1
 {
-    (if:$npc_vo is 0)[(display:"blacked init voice lines")]
     (masteraudio:"stopall")(set:$options to "false")
     (set:$newtime to 0)
     (newtrack:'bgm','aud/se/scene/dreams/blacked/bbc addict/bgm.mp3')
@@ -194,6 +193,7 @@
     ($pic:"places/blacked/doctor/doctor office.jpg")
     (set:$character's "status" to "dream")(display:"refresh portrait")
     (display:"blacked dream npcs")
+    (if:$npc_vo is 0)[(display:"blacked voice macro")]
     "Sorry to keep you waiting so long Miss (print:$character's "female name").
     The doctor will see you now."(nl:1)
     ($npc_vo:"female","isabelle","dream intro")
@@ -624,9 +624,7 @@
             With new resolve, you sit up, peeling the sheets from your skin.(nl:2) 
             Whatever urges still linger, you’ll handle them. You’re in charge here. That's right, (print:$character's "female name") is in charge here!(nl:2) 
             A small smile finds its way to your lips as you gather yourself and start preparing for the day.(nl:2)
-            (set:$achievement_condition_select to "sex10-blacked")
-            (display:"add achievement to lists")
-            (set:$character's "side effects" to it + (a:"bbc addiction"))
+            (unless:($character's "side effects" contains "bbc addiction"))[(set:$character's "side effects" to it + (a:"bbc addiction"))]
             (set:$overnight_messages to it + (a:$dream's id))($forget:$dream's id)(dec:'day')($simple_option:"advance day","Start the day...")
             ]
         ]
@@ -680,12 +678,25 @@
     ($play:"ambience","evening home")
     (replace:?image)[($pic:"scenes/home/dreams/blacked/VR home.jpg")]
     (replace:?text)[
-    You see your $vr_headset_name laying out on the nightstand.(nl:2)
+        (twirl:
+            "You spot your $vr_headset_name resting on your nightstand, the screen faintly glowing.",
+            "As you step into your room, your eyes land on your $vr_headset_name sitting out in the open.",
+            "Your $vr_headset_name catches your attention immediately—left out, powered on, waiting."
+        )(nl:2)
 
-    “That's weird, how'd this get here? Was Alexia in my room?”(nl:2)
+        (twirl:
+            "It’s still on. Was Alexia using it? What was she watching...?",
+            "“I could’ve sworn I put this away. Did Alexia touch it?”",
+            "“Did I leave this out? Or did Alexia mess with it?”"
+        )(nl:2)
 
-    Oh, it looks like it's still on. I wonder what was she watching...(nl:1)
+        (twirl:
+            "Sound is coming from it- what was left running...?",
+            "The power indicator blinks softly—it's still on. What was playing...?",
+            "The screen flickers slightly. Looks like something was left running…"
+        )(nl:1)
     ]
+
     (replace:?options)[
         (link:"Put on the VR Headset")[
             (display:"lights out")
@@ -712,6 +723,8 @@
 
 :: blacked generic dream wakeup
 {
+    (set:$character's arousal to it + (twist:3,6))
+    (display:"refresh stats")
     (display:"location and time")
     ($pic:"scenes/home/dreams/wake up.jpg")(inc:'day')
     (set:$character's status to $character's gender)(display:"refresh portrait")
@@ -767,9 +780,9 @@
             "You stretch lazily, basking in the hazy remnants of the dream that still cling to your thoughts."
         )(nl:2)
         (twirl:
-            "You run a hand down your body, shaking your head with a knowing smirk. ‘Guess my mind’s made up…’",
+            "You run a hand down your body, shaking your head with a knowing smirk. ‘mmm, it felt so right’",
             "‘I really can’t get enough, can I?’ you murmur, rolling onto your side with a satisfied hum.",
-            "You press a hand to your forehead, laughing under your breath. ‘This is just who I am now…’"
+            "You press a hand to your forehead, laughing under your breath. ‘Am I a slut?’"
         )(nl:2)
         (twirl:
             "There’s no denying it anymore. The dreams, the feelings—they’re all part of you now.",
@@ -778,7 +791,6 @@
         )(nl:2)
     ]
 
-    (nl:2)
     (twirl:
         "You shake off the last remnants of sleep and push yourself out of bed, ready to start the day.",
         "Taking a deep breath, you stretch and prepare yourself for whatever the day may bring.",
@@ -822,7 +834,7 @@
     (set:$dream_bbc_addict to $day)
     (set:$img to "scenes/home/dreams/blacked/bbc addict.mp4")
     (set:$dream_text to (a:
-        "It's time for your diagnosis",
+        "Accept your diagnosis",
         "Your symptoms are obvious",
         "You're seeing Black dick everywhere",
         "Diagnosis: **BBC ADDICT**",

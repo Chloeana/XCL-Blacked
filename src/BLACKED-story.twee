@@ -37,9 +37,10 @@
             ($nx:"blacked kendra story second chance")
         ]
         (else-if:($recall:"blacked kendra story gangbang"))[
-            (if:$memory's "day" + 3 >= $day and $blacked_events contains "maurice test results")[
+            (if:$memory's "day" + 3 <= $day and $blacked_events contains "maurice test results")[
                 ($nx:"blacked maurice clone test results")
             ]
+            (else:)[(display:_around)]
         ]
         (else:)[(display:_around)]
     ]
@@ -164,23 +165,31 @@
             “Yeah, yeah, I’m fine. Just… dealing with some stuff, but I think you might be able to help.”(nl:2)
             *She steps closer and lowers her voice slightly, as if not wanting anyone else to hear.*(nl:1)
             “Listen, I need a favor.”(nl:2)
-            ]
+        ]
+        
         (else-if:$choice is "Do I know you?")[
-            *She chuckles dryly.* “Sorta. Indirectly. I've seen you around the bar before...and $gabbie has told me all about you…”(nl:2)
+            *She chuckles dryly.* “Sorta. Indirectly. I’ve seen you around the bar before...and $gabbie has told me all about you…”(nl:2)
             *She lets out a little sigh...* “She also said you might be able to help us. So, just... hear me out?”  
+        ]
+        (else-if:$choice is "Yeah?")[
+            (if:$known_looks contains "Bold, Rich Red")[
+                “It’s me, $kendra. Remember, from the bar? You asked about my makeup and I told you how I do it.(nl:1)Maybe you can return the favor, I need some help...”
             ]
+            (else:)[*She laughs a little.* “Hey, I know we don’t know each other that well but I really need some help. $gabbie said you might be able to help us.(nl:1)I need a favor...”]
+        ]
         (else-if:$choice is "Hey, "+$kendra+", your place or mine tonight?")[
             (if:$npc's traits contains "slut")[
-                *She smirks, tilting her head slightly.* “You don’t waste any time, do you? I like that... But let’s just say my ‘place’ comes with strings tonight, and not the fun kind.”  
-                (nl:2)  
+                *She smirks, tilting her head slightly.* “You don’t waste any time, do you? I like that... But let’s just say my ‘place’ comes with strings tonight, and not the fun kind.” 
+                (if:(is_fem:))[(nl:1)“That, and you’d need that pill to wear off, unless you brought a blue for me...”]
+                (nl:2)
                 *Her tone shifts, more serious now.* “Seriously though, I need your help with something first.”  
             ](else:)[
-                *She raises an eyebrow, unimpressed.* “So it’s like that now is it? Maybe later, I need your help with something first.”  
+                *She raises an eyebrow, unimpressed.* “So it’s like that now is it? Maybe later,(if:(is_fem:))[ after that pill wears off, ] but I need your help with something first.”
                 (nl:2)  
                 *She sighs, softening a little.* “Look, this isn’t a hookup. It’s… complicated. But I need someone I can trust.”  
             ]
         ]
-        (else-if:$choice is "Hey, "+$kendra+", what's wrong?")[
+        (else-if:$choice is "Hey, "+$kendra+", what’s wrong?")[
             *She glances at you, her lips pressing into a thin line before letting out a sigh.*(nl:1)
             “Honestly? A lot. And I need some help.”  
             (nl:2)  
@@ -468,7 +477,7 @@
         (else:)[*Placing a glass in front of you, she settles into the chair opposite yours.*]
 
         “So, here’s the thing. You know Bruce, obviously. Well, a few months ago, he convinced me and $gabbie to volunteer our DNA for one of SWP’s *big new projects*. Paid us and everything(if:$kendradm's traits contains "rich")[, not that I needed it].(nl:1)
-        At the time, it sounded harmless enough...(if:$kendradm's traits contains "bimbo")[($bimbo:[It’s some kinda, like, clone-y pill or whatever? 🤔 I dunno! Science-y stuff!🧬])]
+        At the time, it sounded harmless enough...(if:$kendradm's traits contains "bimbo")[($bimbo:[It’s some kinda, like, clone pill or whatever? 🤔 I dunno! Science-y stuff!🧬])]
         (else:)[Something about a prototype pill for cloning DNA or some shit like that.]
         
         Anyway, we didn’t think much of it at the time.”(nl:2)
@@ -760,7 +769,7 @@
 
 :: blacked kendra story 9 [fullscreen]
 {
-    (if:$npc_vo is 0)[(display:"blacked init voice lines")]
+    (if:$npc_vo is 0)[(display:"blacked voice macro")]
     (display:"blacked set up fullscreen")
     (newtrack:"kendra clone","aud/music/sex/transactional/" + (twirl:"royals","snap") + ".mp3")
     ($play:"song","kendra clone")
@@ -771,7 +780,7 @@
     ]
     (replace:?image)[($pic:"places/blacked/dredds house/front door.jpg")]
     (replace:?text)[{
-        *Dredd stands in the doorway, his broad frame and commanding presence impossible to miss.*(nl:1)
+        Dredd stands in the doorway, his broad frame and commanding presence impossible to miss.(nl:1)
         “You’re late, $stripper_name” he says with a smirk.(nl:2)
         “$your_name.” *You correct him under your breath.*(nl:2)
         “$kendra had to take off, but she left a bag for you.”(nl:2)
@@ -784,7 +793,7 @@
             (replace:?text)[
                 “Kira. My niece. She works for SWP. Don’t ask me how she managed it, but she snuck one of these prototypes out.(nl:1)
                 But this is the only one with $kendra’s DNA, so you’ve only got one shot... No do-overs. Got it?”(nl:2)
-                *With that, he motions for you to head down the hallway.*(nl:1)
+                With that, he motions for you to head down the hallway.(nl:1)
                 “Bathroom’s the third door on the left. Time is money baby, let’s go, I’ve got places to be.”(nl:2)
                 ($simple_option:"blacked kendra story 10","display","Head to the bathroom")
             ]
@@ -827,21 +836,21 @@
                 (after: time + 0.8s)[(display:"blacked kendra transform")(replace:?right_options)[($pic:"scenes/blacked/kendra 5v1/bathroom change 1.jpg")](display:"outfit button")]
                 (replace:?text)[
                     (if:$character's race is not "white")[
-                        *Your skin tingles as the pigmentation begins to change, shifting to a fair, creamy tone. The changes flow from your hands to your arms, your legs, and finally your face.*(nl:1)
+                        Your skin tingles as the pigmentation begins to change, shifting to a fair, creamy tone. The changes flow from your hands to your arms, your legs, and finally your face.(nl:1)
                         (if:$character's race is "black")[
-                            *Your textured hair straightens and lightens into silky, golden strands.*(nl:1)
+                            Your textured hair straightens and lightens into silky, golden strands.(nl:1)
                         ]
                         (if:$character's race is "asian")[
-                            *Your almond-shaped eyes widen slightly, and the soft golden hue of your skin fades into $kendra’s pale, flawless complexion.*(nl:1)
+                            Your almond-shaped eyes widen slightly, and the soft golden hue of your skin fades into $kendra’s pale, flawless complexion.(nl:1)
                         ]
                         (if:$character's race is "latin")[
-                            *The warm, tan tones of your skin smooth into $kendra’s porcelain shade, and your hair morphs into silky, golden locks.*(nl:1)
+                            The warm, tan tones of your skin smooth into $kendra’s porcelain shade, and your hair morphs into silky, golden locks.(nl:1)
                         ]
                         (nl:1)
                     ]
                     (if:(is_fem:))[
                         Your feminine frame starts to change, adapting to match $kendra’s perfect proportions.(nl:2)
-                        (if:$character's "breasts" is not "E")[*Your (print:$character's "breasts")-cup breasts reshape, morphing until they become $kendra’s full, natural E-cups.*(nl:2)]
+                        (if:$character's "breasts" is not "E")[Your (print:$character's "breasts")-cup breasts reshape, morphing until they become $kendra’s full, natural E-cups.(nl:2)]
 
                         (if:$character's "body type" is not "slim")[
                             Your (cond:
@@ -861,8 +870,12 @@
                             ]
 
                         (if:$character's "height cm" is not 175)[
-                            (if:$character's "height cm" < 175)[*You feel a stretch as your frame grows taller, reaching $kendra’s height.*(nl:2)]
-                            (if:$character's "height cm" > 175)[*You feel yourself shrinking slightly, your perspective lowering as your height adjusts to match $kendra’s.*(nl:2)]
+                            (if:$character's "height cm" < 175)[
+                                A subtle pull runs through your body as you stretch upward, your frame lengthening until you match $kendra’s 5'9" height. (nl:2)
+                            ]
+                            (if:$character's "height cm" > 175)[
+                                A strange sensation washes over you as your perspective subtly shifts downward, your height settling at $kendra’s 5'9". (nl:2)
+                            ]
                         ]
                     ]
                     (else:)[
@@ -873,8 +886,8 @@
                         (else:)[Your masculine body starts to change *drastically*.(nl:2)]
                         
                         (if:$character's "male height cm" is not 175)[
-                            (if:$character's "male height cm" < 175)[*Your body stretches upward, your new height feeling elegant and poised.*(nl:2)]
-                            (if:$character's "male height cm" > 175)[*You feel yourself shrinking, the loss of height making you feel smaller and more delicate.*(nl:2)]
+                            (if:$character's "male height cm" < 175)[Your body stretches upward, your new height feeling elegant and poised.(nl:2)]
+                            (if:$character's "male height cm" > 175)[You feel yourself shrinking, the loss of height making you feel smaller and more delicate.(nl:2)]
                         ]
                         (if:$character's "male frame" is not "slim")[
                             Your (cond:
@@ -910,7 +923,7 @@
                         You reach back into the bag and instinctively pull out a smaller makeup bag full of goodies. You start expertly applying them as if it were nothing.(nl:2)
                         (if:(get_makeup:) >= 2)[
                             (if:(is_bim:))[($bimbo_dialogue:[Oh my gawd!!! 😍 My makeup is totally UH-MAZING!!])]
-                            (else:)[*Wow, my makeup looks so good!*](nl:2)
+                            (else:)[“Wow, my makeup looks so good!”](nl:2)
                         ]
                         (text-style:"smear")[“There we go. So much better, mmm.”]... *Where the hell did THAT come from??*(nl:1)
                     ]
@@ -918,8 +931,8 @@
                         (replace:?right_options)[($pic:"scenes/blacked/kendra 5v1/bathroom change 2.jpg")]
                         (replace:?text)[
                             The transformation moves beyond the physical...$kendra’s personality and desires continue to flood your mind.(nl:2)
-                            (if:$character's reluctance >= 7)[*You fight against the changes, your thoughts resisting her influence. But her confidence and allure are so overwhelming, making it hard to hold onto your sense of self.*(nl:2)]
-                            (else-if:$character's reluctance < 4)[*The changes overwhelm you. $kendra’s personality fits into your mind like a perfect puzzle piece.*(nl:2)]
+                            (if:$character's reluctance >= 7)[You fight against the changes, your thoughts resisting her influence. But her confidence and allure are so overwhelming, making it hard to hold onto your sense of self.(nl:2)]
+                            (else-if:$character's reluctance < 4)[The changes overwhelm you. $kendra’s personality fits into your mind like a perfect puzzle piece.(nl:2)]
 
                             (if:$kendradm's traits contains "bitch")[
                                 A sharp, commanding confidence fills your thoughts, with a hint of superiority. You catch yourself smirking, amused by how much better you look now.(nl:2)
@@ -970,9 +983,9 @@
                             (after:time + 3s)[
                                 (replace:?image)[($vid:'scenes/blacked/kendra 5v1/get dressed.mp4')]
                                 (replace:?text)[
-                                    *You step back from the mirror, the realization of what’s happened fully settling in. You’re $kendra now...her looks, her presence, her desires. Every step feels different, every movement a little more seductive, as if your body has its own will.(nl:2)
+                                    You step back from the mirror, the realization of what’s happened fully settling in. You’re $kendra now...her looks, her presence, her desires. Every step feels different, every movement a little more seductive, as if your body has its own will.(nl:2)
                                     
-                                    You glance at the outfit lying on the counter, already feeling the urge to slip into it and embrace what you’ve become.*(nl:1)
+                                    You glance at the outfit lying on the counter, already feeling the urge to slip into it and embrace what you’ve become.(nl:1)
                                     As you start to dress, a (text-style:"blur")[conflict] lurks in your mind. A mix of your own thoughts and hers vying for control.(nl:1)
                                     (text-style:"double-strike")[Her] Your tight swimsuit clinging to *your* body as you adjust it, accentuating every curve.(nl:2)
 
@@ -1010,8 +1023,8 @@
                         As you look at Dredd, new thoughts and desires flood your mind. Has he always been that handsome?(nl:2)
 
                         He’s old enough to be your (text-style:"double-strike")[daddy] dad... but he always seems to have girls hanging off of him.(nl:1)
-                        *You start to picture him with his shirt off, lifting weights... it feels strangely familiar...(nl:1)
-                        *You get lost in the image, and then ... his pants fall to the floor...*(nl:2)
+                        You start to picture him with his shirt off, lifting weights... it feels strangely familiar...(nl:1)
+                        You get lost in the image, and then ... his pants fall to the floor...(nl:2)
                         
                         (if:$kendradm's traits contains "slut")[And out pops his huge black cock...(nl:1)]
                         The image is just so... (text-style:"emboss")[vivid]... so real...(nl:2) 
@@ -1042,17 +1055,17 @@
     (display:"npc screen update")
     (replace:?image)[($pic:'scenes/blacked/kendra 5v1/guys pool.jpg')]
     (replace:?portrait)[($pic:"npc/girls/blacked/kendra/braids.jpg")]
-    (replace:?text)[*You step outside and spot Jason lounging by the pool with four of his friends.*(nl:1) 
-    You don't know Jason, but $kendra does, he's Dredd's nephew. And she knows his friends too, apparently.(nl:1)
-    They’re all tall, dark, and muscular. Their bare chests glistening with a mix of sweat and pool water, tracing slow, tantalizing paths down their toned bodies...(nl:1)]
+    (replace:?text)[You step outside and spot Jason lounging by the pool with four of his friends.(nl:1) 
+    You don't know Jason, but $kendra does, he's Dredd's nephew. She knows his friends too, apparently.(nl:1)
+    They’re all tall, dark, and muscular. Their bare chests glistening with a mix of sweat and pool water, tracing slow, tantalizing paths down their toned bodies...(nl:2)]
     (replace:?options)[
         (link:"Approach")[
             (replace:?text)[
                 (if:(is_exhib:))[($gain_arousal:1)
-                    *You can feel all FIVE sets of eyes locked on you. Admiring you. Devouring you. They WANT you.
-                    You feel the heat spread across your chest. You should come here more often.(nl:2)*
+                    You can feel all FIVE sets of eyes locked on you. Admiring you. Devouring you. They WANT you.
+                    You feel the heat spread across your chest. You should come here more often.(nl:2)
                 ]
-                *As you approach, their conversation halts.*(nl:2)
+                As you approach, their conversation halts.(nl:2)
                 “$kendra?” he asks, his voice full of surprised amusement. “Didn’t know you’d be stopping by.”(nl:2)
                 Jason stands, a broad grin on his face.(nl:1)
                 They're all staring at you. Their names float easily to the front of your mind. Ricky, John, Nat, and Isiah.(nl:2)
@@ -1067,7 +1080,7 @@
                     "Hi..."))[
                     (replace:?text)[
                         ($gain_arousal:1)
-                        (if:$character's reluctance >= 7)[*You clear your throat, forcing yourself to stay calm as your mind buzzes with lustful thoughts...thoughts that don’t feel entirely your own.*(nl:2)]
+                        (if:$character's reluctance >= 7)[You clear your throat, forcing yourself to stay calm as your mind buzzes with lustful thoughts...thoughts that don’t feel entirely your own.(nl:2)]
                         “Surprised to see me? Dredd said I could hang out here while I wait for Maurice.”(nl:2)
                         Jason and his friends exchange glances, their grins widening as they make space for you by the pool.(nl:1)
                         “Sure, you’re always welcome here,” *Jason says, his tone warm and inviting.*(nl:2)
@@ -1102,29 +1115,33 @@
                         Your lips press together, to surpress a smile. You hold your head high as you strut over to Jason.(nl:2)
                     ]
 
-                    *You settle beside him, the closeness of his body making your skin tingle. His gaze lingers on your lips before sliding lower, and you know he can sense your growing tension.*(nl:1)
+                    You settle beside him, the closeness of his body making your skin tingle. His gaze lingers on your lips before sliding lower, and you know he can sense your growing tension.(nl:1)
                     “So, what brings you here today, $kendra?”(nl:2)
 
                     (if:$kendradm's traits contains "bitch")[
-                        *You stiffen slightly, trying to fight the sudden rush of heat flooding your chest. His confidence is infuriatingly disarming, and $kendra’s memories only make it worse. Vivid flashes of her with Jason—the way she melted under his touch, the thrill she felt at his attention—surge through your mind. You shake your head subtly, trying to focus on your own thoughts, not hers, but it’s like trying to swim against the tide.*(nl:2)
+                        You stiffen slightly, trying to fight the sudden rush of heat flooding your chest. His confidence is infuriatingly disarming, and $kendra’s memories only make it worse. 
+                        Vivid flashes of her with Jason—the way she melted under his touch, the thrill she felt at his attention—surge through your mind. 
+                        You shake your head subtly, trying to focus on your own thoughts, not hers, but it’s like trying to swim against the tide.(nl:2)
                     ]
                     (else-if:$kendradm's traits contains "slut")[
-                        *His scent washes over you, your pulse quickens, the heat rising in your chest spreading lower. $kendra’s memories come rushing in—her lips on his, the way his touch made her body hum with desire. It’s overwhelming, blurring the lines between her instincts and your own. You let out a shaky breath, trying to resist, but Jason’s steady gaze pulls you in.*(nl:2)
+                        His scent washes over you, your pulse quickens, the heat rising in your chest spreading lower. 
+                        $kendra’s memories come rushing in—her lips on his, the way his touch made her body hum with desire. 
+                        It’s overwhelming, blurring the lines between her instincts and your own. You let out a shaky breath, trying to resist, but Jason’s steady gaze pulls you in.(nl:2)
                     ]
 
                     (if:$kendradm's traits contains "rich")[
                         “Dredd said to wait for Maurice,” you reply, keeping your tone steady, though your hands tighten slightly in your lap. Jason doesn’t miss a beat, his smile easy and confident, like he knows exactly how to make you let go.(nl:2)
                     ]
                     (else-if:$kendradm's traits contains "bimbo" or (is_bim:))[
-                        *A soft giggle escapes your lips before you can stop it, $kendra’s memories still blending with your own thoughts in a confusing, heady mix. His scent makes your head spin, and it’s hard to tell if the warmth blooming inside you is hers or yours.*(nl:2)
+                        A soft giggle escapes your lips before you can stop it, $kendra’s memories still blending with your own thoughts in a confusing, heady mix. His scent makes your head spin, and it’s hard to tell if the warmth blooming inside you is hers or yours.(nl:2)
                         ($bimbo_dialogue:[Oh, um, Dredd was like, ‘Wait out there,’ so here I am! Hehe!]), you say, smiling at him, your voice light and airy. Jason tilts his head, his presence utterly magnetic, and you feel your resistance slipping away with every second.(nl:2)
                     ]
                     (else-if:$kendradm's traits contains "feminine")[
-                        *You tuck a strand of hair behind your ear, a self-conscious habit that feels oddly out of place with the boldness of $kendra’s memories flooding your mind. You swallow hard, trying to reconcile her instincts with your own, but his scent doesn’t make it any easier.*(nl:2)
+                        You tuck a strand of hair behind your ear, a self-conscious habit that feels oddly out of place with the boldness of $kendra’s memories flooding your mind. You swallow hard, trying to reconcile her instincts with your own, but his scent doesn’t make it any easier.(nl:2)
                         “Dredd asked me to wait out here,” you say, your voice soft but measured. Jason tilts his head, his gaze studying you intently, and the way he smiles makes your chest tighten in a way you can’t fully fight.(nl:2)
                     ]
 
-                    *Before you can stop yourself, you’re leaning in, your lips finding his in a heated kiss. The collective intake of breath from his friends barely registers in your mind...it’s Jason’s hands, strong and sure, that command your attention now.*(nl:1)
+                    Before you can stop yourself, you’re leaning in, your lips finding his in a heated kiss. The collective intake of breath from his friends barely registers in your mind...it’s Jason’s hands, strong and sure, that command your attention now.(nl:1)
                     ($simple_option:"blacked kendra story 14","display","Give in.")
                 ]
             ]
@@ -1132,25 +1149,25 @@
         (else-if:$choice is "Resist these urges")[
             (link:"Okay but...")[
                 (replace:?text)[
-                    *You hesitantly sit down, fighting the heat rising in your chest, clutching the armrests of your chair as if they could ground you. Jason notices your hesitation and tilts his head, his brow furrowing slightly.*(nl:1)
+                    You hesitantly sit down, fighting the heat rising in your chest, clutching the armrests of your chair as if they could ground you. Jason notices your hesitation and tilts his head, his brow furrowing slightly.(nl:1)
                     “Everything okay, $kendra?” *he asks, his tone soft but laced with curiosity.*(nl:2)
 
                     (if:$character's reluctance >= 7)[
-                        *Your smile wavers, but a spark of confidence keeps you upright. $kendra’s desires buzz faintly at the edges of your mind, but you push them back with effort.*(nl:1)
-                        “Nothing I can’t handle,” *you reply, more firmly this time. Jason’s hand brushes against yours, the gesture strangely comforting.*(nl:2)
+                        Your smile wavers, but a spark of confidence keeps you upright. $kendra’s desires buzz faintly at the edges of your mind, but you push them back with effort.(nl:1)
+                        “Nothing I can’t handle,” you reply, more firmly this time. Jason’s hand brushes against yours, the gesture strangely comforting.*(nl:2)
                     ]
                     (else-if:$character's reluctance >= 4)[
-                        *You manage a shaky smile, though your heart pounds in your chest. The whispers of $kendra’s memories persist, but you steel yourself against them...barely.*(nl:1)
-                        “Just a lot on my mind,” *you offer weakly. Jason nods, his expression softening.*(nl:2)
+                        You manage a shaky smile, though your heart pounds in your chest. The whispers of $kendra’s memories persist, but you steel yourself against them...barely.(nl:1)
+                        “Just a lot on my mind,” you offer weakly. Jason nods, his expression softening.*(nl:2)
                     ]
                     (else-if:$character's reluctance < 4)[
-                        *You force a smile, but it’s a brittle shield against the storm inside you. $kendra’s thoughts press harder, whispering to you, filling your mind with vivid, dangerous desires.*(nl:1)
-                        “I’m fine,” *you murmur, but even to your ears, it sounds like a lie. Jason’s eyes narrow slightly as if he senses the battle you’re fighting.*(nl:2)
+                        You force a smile, but it’s a brittle shield against the storm inside you. $kendra’s thoughts press harder, whispering to you, filling your mind with vivid, dangerous desires.(nl:1)
+                        “I’m fine,” you murmur, but even to your ears, it sounds like a lie. Jason’s eyes narrow slightly as if he senses the battle you’re fighting.(nl:2)
                     ]
                     
                     “Hey,” he says quietly, his tone gentler now. “You know you can relax? Just be yourself. We’re all friends here.”(nl:2)
-                    *The irony isn’t lost on you, but his smile is disarming. Against your better judgment, you relax slightly, leaning into his touch.(nl:1)
-                    His hand trails down your arm, and before you realize it, you’re kissing him...hungrily, desperately...as the last of your resistance crumbles in the face of his warmth.*(nl:1)
+                    The irony isn’t lost on you, but his smile is disarming. Against your better judgment, you relax slightly, leaning into his touch.(nl:1)
+                    His hand trails down your arm, and before you realize it, you’re kissing him...hungrily, desperately...as the last of your resistance crumbles in the face of his warmth.(nl:1)
                     ($simple_option:"blacked kendra story 14","display","Give in.")
                 ]
             ]
@@ -1163,7 +1180,7 @@
     (replace:?image)[($pic:'scenes/blacked/kendra 5v1/group.jpg')]
     (replace:?text)[($gain_arousal:1)(nl:1)
         Jason’s kiss igniting a fire within you that you can’t ignore. It’s not just *you* anymore...$kendra’s desires, her instincts, and her personality all swirl together, amplifying the heat of the moment.(nl:2)
-        *You feel Jason’s hand slide along your back, pulling you closer, and a spark of excitement shoots through you. A stray thought floats to the surface, impossible to tell if it’s yours or hers...* (nl:1)]
+        You feel Jason’s hand slide along your back, pulling you closer, and a spark of excitement shoots through you. A stray thought floats to the surface, impossible to tell if it’s yours or hers... (nl:1)]
     (replace:?options)[
         (link:"Next")[
             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/watching.mp4')]
@@ -1171,29 +1188,29 @@
                 ($gain_arousal:1)
                 ($npc_vo:"female","kendra","watching")
                 (text-style:"smear")[I could tell his friends were watching, but it turned me on.](nl:2)
-                *Jason’s hands are firm but gentle, guiding you as the kiss deepens. A wave of heat rushes through you as you instinctively lower your kiss towards his shorts.*(nl:1)
+                Jason’s hands are firm but gentle, guiding you as the kiss deepens. A wave of heat rushes through you as you instinctively lower your kiss towards his shorts.(nl:1)
                 (replace:?options)[(link:"Next")[
                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/go down.mp4')]
                     (replace:?text)[
                         ($gain_arousal:1)
                         ($npc_vo:"female","kendra","go down")
                         (text-style:"smear")[I couldn’t believe I started doing that, but Jason had me go down on him, in front of his friends...](nl:1)
-                        *The thought echoes in your mind, stronger now, pulling you deeper into $kendra’s world.*(nl:2)
-                        *You sink downward, your body moving on autopilot as Jason leans back, his grin widening. His friends murmur their surprise and amusement, but their stares only excite you more.*(nl:1)
+                        The thought echoes in your mind, stronger now, pulling you deeper into $kendra’s world.(nl:2)
+                        You sink downward, your body moving on autopilot as Jason leans back, his grin widening. His friends murmur their surprise and amusement, but their stares only excite you more.(nl:1)
                         (replace:?options)[(link:"Next")[
                             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/loving it.mp4')]
                             (replace:?text)[
                                 ($gain_arousal:1)
                                 ($npc_vo:"female","kendra","loving it")
                                 (text-style:"smear")[They were all watching and staring at me... but... I was loving it.](nl:2)
-                                *Jason’s hand slides to your cheek as you glance around, seeing the intensity in the eyes of the men surrounding you. One of them, Ricky, steps closer, his hands brushing over your hips and ass.*(nl:1)
+                                Jason’s hand slides to your cheek as you glance around, seeing the intensity in the eyes of the men surrounding you. One of them, Ricky, steps closer, his hands brushing over your hips and ass.(nl:1)
                                 (replace:?options)[(link:"Next")[
                                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/grab ass.mp4')]
                                     (replace:?text)[
                                         ($gain_arousal:1)
                                         ($npc_vo:"female","kendra","grab ass")
                                         (text-style:"smear")[When one of his friends started to grab my ass, I sorta knew what would happen.](nl:2)
-                                        *Your breath quickens as more hands join in. Two? Six? Eight? All caressing your skin. Shivering all over as your anticipation builds and builds.*(nl:2)
+                                        Your breath quickens as more hands join in. Two? Six? Eight? All caressing your skin. Shivering all over as your anticipation builds and builds.(nl:2)
                                         You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as . The rush... the thrill... of their hands all over you.(nl:1)
                                         (replace:?options)[(link:"Next")[
                                             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/hot.mp4')]
@@ -1201,14 +1218,14 @@
                                                 ($gain_arousal:2)
                                                 ($npc_vo:"female","kendra","hot")
                                                 (text-style:"smear")[The other guys started to get curious, and before I knew it, I was surrounded by these five, HOT, black men.](nl:2)
-                                                *You’re pressed further into the moment, their collective heat and energy consuming you completely. $kendra’s voice in your mind urges you forward, and you let go, surrendering entirely to the wave of desire.*(nl:1)
+                                                You’re pressed further into the moment, their collective heat and energy consuming you completely. $kendra’s voice in your mind urges you forward, and you let go, surrendering entirely to the wave of desire.(nl:1)
                                                 (replace:?options)[(link:"Next")[
                                                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/dominated.mp4')]
                                                     (replace:?text)[
                                                         ($gain_arousal:2)
                                                         ($npc_vo:"female","kendra","dominated")
                                                         (text-style:"smear")[I wanted to be dominated. I wanted to be taken by Jason and his friends.](nl:2)
-                                                        *Her voice, practically screaming in your head...*(nl:2)
+                                                        Her voice, practically screaming in your head...(nl:2)
                                                         (text-style:"smear")[“You mean your voice?”](nl:1)
                                                         “M..my voice?”(nl:2)
                                                         (text-style:"smear")[“Let go of your inhibitions... Give in... Embrace the moment.”](nl:1)
@@ -1242,7 +1259,7 @@
     (set:$old_name to (cond:
     $character's "real gender" is "male", $character's "male name",
     $character's "female name"))
-    (if:is_breeder:)[(set:$breeder_ruined_orgasms to 0)(set:$beg_creampie to "false")]
+    (if:(is_breeder:))[(set:$breeder_ruined_orgasms to 0)(set:$beg_creampie to "false")]
     (set:$stamina_stat to "enabled")
     (set:$lubrication_stat to "enabled")
     (set:$stage to 1)
@@ -1287,7 +1304,9 @@
         $stage is 5, "5 blowbang",
         $stage is 6, "6 bj "+ $pleasure_target,
         $stage is 7 and $current_position is "insert", "7 insert",
-        $stage is 7 and $current_position is "orgasm", "7 orgasm "+ (text:(twist:1,2)),
+        $stage is 7 and $current_position is "orgasm" and $orgasms is 0, "7 orgasm "+ (text:(twist:1,2)),
+        $stage is 7 and $current_position is "orgasm" and $orgasms < 3, "7 orgasm "+ (text:($orgasms)),
+        $stage is 7 and $current_position is "orgasm" and $orgasms >= 3, "7 orgasm "+ (text:(twist:1,2)),
         $stage is 7, "7 sex "+ $pleasure_target,
         $stage is 8 and $current_position is "orgasm", "8 orgasm",
         $stage is 8, "8 spit roast " + (text:$spit_roast),
@@ -1971,20 +1990,20 @@
         (set:$talk_dirty to 3)
         (twirl:
             "You manage to gasp out a quick moan before a cock silences you again.",
-            "Don't you dare cum yet, who's next?!",
-            "Mo-more cocks, I need more cocks!",
+            "“Don't you dare cum yet, who's next?!”",
+            "“Mo-more cocks, I need more cocks!”",
             "You grab ahold of one of the cocks. “You're fucking me next!”",
-            "Fuck me like a whore! A black cock whore!!",
-            "I'm not done! Give me another one, right now!",
-            "I can still take more! Don’t you dare stop!",
-            "Mmm, who's next? I need another one stretching me out!",
-            "Don't pull out yet... I need you deeper first!",
-            "One of you better be ready, I don’t want even a second without a cock in me!",
-            "More, more, **more**! My body needs it!!",
-            "Come on, don’t keep me waiting! Who’s shoving it in next?!",
-            "I want to feel every single one of you inside me!",
-            "Fuck, I can still take more! Keep fucking me!!",
-            "I don’t care how many of you there are, I’ll take every last cock!"
+            "“Fuck me like a whore! A black cock whore!!”",
+            "“I'm not done! Give me another one, right now!”",
+            "“I can still take more! Don’t you dare stop!”",
+            "“Mmm, who's next? I need another one stretching me out!”",
+            "“Don't pull out yet... I need you deeper first!”",
+            "“One of you better be ready, I don’t want even a second without a cock in me!”",
+            "“More, more, **more**! My body needs it!!”",
+            "“Come on, don’t keep me waiting! Who’s shoving it in next?!”",
+            "“I want to feel every single one of you inside me!”",
+            "“Fuck, I can still take more! Keep fucking me!!”",
+            "“I don’t care how many of you there are, I’ll take every last cock!”"
         )
     }]
     (dec:"timer",(twist:2,5))
@@ -2225,13 +2244,12 @@
     
     (inc:'stage_orgasms')
 
-    (display:"blacked kendra 5v1 video")
-    (display:"blacked kendra 5v1 sidebar")
-    (display:"blacked kendra 5v1 sex options")
-
     (replace:?text)[
         (if:(is_breeder:))[
-            <span class='chromatic'>(if:$pill_known is "false")[You can't cum, for some reason!](else:)[(twirl:"You try to cum, but can't!","You can't cum without a creampie on a breeder!")]</span> (nl:2)
+            <span class='chromatic'>
+            (if:$pill_known is "false")[You can't cum, for some reason!]
+            (else:)[(twirl:"You try to cum, but can't!","You can't cum without a creampie on a breeder!")]
+            </span> (nl:2)
             (if:$orgasms is 0)[
                 You gasp, body quivering as pleasure coils deep inside you, winding tighter and tighter—so close, so unbearably close. But just as you brace for the peak, the sensation fizzles into nothing, a cruel short-circuit that leaves you aching, empty.
                 (nl:2)
@@ -2249,7 +2267,7 @@
                 (nl:2)
                 (if:$pill_known is "true")[(size:1.5)[
                     Your body is craving something very specific: the cum of Jason and his friends, all inside your pussy, completing the cycle that the Breeder pill demands.
-                    ](nl:2)]
+                ](nl:2)]
             ]
             (if:$orgasms is 1)[
                 The tension coils again, even tighter than before. Your whole body is screaming for release—every nerve alight, every muscle tightening as you climb—
@@ -2348,14 +2366,14 @@
 
                     “Hnngh... f-fuck, don’t stop!” you scream, your back arching off the bed. Each pulse sends you deeper into the bliss, and yet, you feel other cocks surrounding you, their movements relentless.(nl:2)
 
-                    “Fuckin' cum on me again, slut,” someone demands, but it’s hard to concentrate as your body trembles uncontrollably. The sensations are overwhelming, but you can’t stop jerking and sucking the other cocks around you.(nl:1)
+                    “Fuckin’ cum on me again, slut,” someone demands, but it’s hard to concentrate as your body trembles uncontrollably. The sensations are overwhelming, but you can’t stop jerking and sucking the other cocks around you.(nl:1)
                 ]
                 (else:)[
                     You can barely keep your focus anymore. The pleasure is too much. Your body shudders beneath him, your hips twitching as you feel another wave building.(nl:2)
                     
                     “G-god! Don’t stop, please...” you beg, but it’s hard to form words as your pussy clamps down on him. The pleasure is so intense it makes your whole body freeze in place.(nl:2)
 
-                    Even though you're completely lost in ecstasy, the men around you keep you going.(nl:1) 
+                    Even though you're completely lost in ecstasy, the men around you keep you going.(nl:1)
                     “That’s it, keep sucking... don’t stop now.” you hear someone order, and you try to obey, though your mind is hazy with aftershocks of bliss.(nl:1)
                 ]
             ]
@@ -2407,6 +2425,9 @@
         ]
     ]
     (set:$custom_orgasm to "true")(display:"sex orgasm")
+    (display:"blacked kendra 5v1 video")
+    (display:"blacked kendra 5v1 sidebar")
+    (display:"blacked kendra 5v1 sex options")
 }
 
 :: blacked kendra 5v1 sidebar
@@ -2460,11 +2481,12 @@
             [<span class = "shadow">$right_text_variant</span>(nl:2)]<right_caption|(nl:1)
             []<right_options|(nl:1)
             [
-                <span class = "shadow">Jason's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "jason", "❤️", "(opacity: 0.5)[💔]")](nl:1)
-                <span class = "shadow">Isiah's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "isiah", "❤️", "(opacity: 0.5)[💔]")](nl:1)
-                <span class = "shadow">Ricky's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "ricky", "❤️", "(opacity: 0.5)[💔]")](nl:1)
-                <span class = "shadow">John's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "john", "❤️", "(opacity: 0.5)[💔]")](nl:1)
-                <span class = "shadow">Nat's Pleasure:</span>(text-size:0.9)[($statBarMacro: $pleasure's "nat", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                Pleasure Meters:(nl:1)
+                <span class = "shadow">Jason:</span>(text-size:0.9)[($statBarMacro: $pleasure's "jason", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">Isiah:</span>(text-size:0.9)[($statBarMacro: $pleasure's "isiah", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">Ricky:</span>(text-size:0.9)[($statBarMacro: $pleasure's "ricky", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">John:</span>(text-size:0.9)[($statBarMacro: $pleasure's "john", "❤️", "(opacity: 0.5)[💔]")](nl:1)
+                <span class = "shadow">Nat:</span>(text-size:0.9)[($statBarMacro: $pleasure's "nat", "❤️", "(opacity: 0.5)[💔]")](nl:1)
             ]<right_meters|
         }
     ]
@@ -2645,9 +2667,6 @@
             (display:"blacked kendra 5v1 cleanup")
         ]
     ]
-    (set: _current_memory to (find: _memory where _memory's id is "blacked kendra story gangbang", ...$memories))
-    (put: _current_memory's 1st into _memory)
-    (set: _memory's location to "Dredd's House")
 }
 
 :: blacked kendra 5v1 cleanup
@@ -2730,13 +2749,14 @@
         (display:"blacked mood unsatisfied")
     ]
 
-    (if:(is_bbc_addict:))[
+    (if:($character's "side effects" contains "bbc addiction"))[
         <!-- If character is already a bbc addict, make them a QoS -->
         (set:$character's "side effects" to it + (a:"QoS"))
         (display:"blacked QoS buff")
     ]
 
-    (unless:(is_bbc_addict:))[
+    (unless:($character's "side effects" contains "bbc addiction"))[
+        (if:$character's "side effects" contains "bbc addition temp")[(set:$character's "side effects" to it - (a:"bbc addiction temp"))]
         (set:$character's "side effects" to it + (a:"bbc addiction"))
         ($remember:"bbc addict",200,"self","none",("addicted to bbc because of Jason and his friends"),"dream","blacked bbc addict dream 1")
     ]
@@ -2781,12 +2801,12 @@
 
 :: blacked kendra story 15 [fullscreen]
 {
-    ($play:"ambience","indoors afternoon")
     (set:$current_location to "Dredd’s Bathroom")
     (display:"blacked set up fullscreen")
     (display:"location and time and inventory no wardrobe")
     (newtrack:"barefoot","aud/se/walking/barefoot.mp3")
     ($play:"sound","barefoot")
+    (after:time + 3)[($play:"ambience","shower")]
     (replace:?portrait)[($pic:"npc/girls/blacked/kendra/shower.jpg")]
     (replace:?image)[($pic:"places/blacked/dredds house/bathroom.jpg")]
     (replace:?text)[
@@ -2811,6 +2831,7 @@
 
 :: blacked kendra story 16
 {
+    ($play:"ambience","indoors afternoon")
     (replace:?image)[($pic:"npc/girls/blacked/kendra/shower tall.jpg", "left")]
     (replace:?text)[
         (twirl:"You step out of the shower and reach for a towel. Catching your reflection in the fogged mirror, you pause, unsure of what to make of the person staring back. Your mind churns with emotions, tangled like threads you can’t quite sort out.",
@@ -3215,16 +3236,26 @@
 
         You nod, letting his words sink in. A successful test—at least for now.(nl:1)
         (set:$blacked_events to it + (a:"kendra clone completed","maurice test results"))
+        (set:$blacked_events to it - (a:"dredd visit ready"))
+        (set:$npc's img to "img/npc/guys/blacked/maurice/portrait_normal.jpg")
     ]
-    (replace:?options)[(link:"Leave")[(set:$npc's img to "img/npc/guys/blacked/maurice/portrait_normal.jpg")(display:"advance time")]]
+    (replace:?options)[(link:"Leave")[(display:"advance time")]]
 }
 
 :: blacked maurice clone test results [fullscreen]
 {
     (masteraudio:"stopall")
-    ($recall:"blacked kendra story gangbang")(set:$memory's "tags" to $tags)
+    ($recall:"blacked kendra story gangbang")(set:$tags to $memory's "tags")
     (set:$blacked_events to it - (a:"maurice test results"))
-    (display:"blacked set up fullscreen")
+    [(display:"character status")]<status|
+    <div id='scrollable-content'  class='center_screen' data-simplebar>[
+        []<image|
+        []<text|
+        <div class="options">
+        (color:"bisque")[[]]<responses|(nl:2)
+        []<options|</div>
+    ]<screen|</div>
+    <div class='top_right' data-simplebar>[(display:"location and time")]<right_screen|</div>
     (replace:?text)[Just as you are about to begin your evening, your phone rings. It's Maurice.(nl:2)]
     (replace:?options)[(link:"Answer it")[
         (replace:?right_screen)[
@@ -3232,6 +3263,7 @@
             (set:$npc to $blacked_npcs_men's "maurice")
             (display:"load relationship")
             (display:"npc screen update")
+            (display:"show portrait")
         ]
         (replace:?text)[
             “Hey $stripper_name!(nl:1)
@@ -3241,13 +3273,25 @@
             You want the short version or the long?”(nl:2)
         ]
         (replace:?options)[
-            ($simple_option:"blacked maurice clone test results 2","display","Tell me everything","Just tell me")
+            ($simple_option:"blacked maurice clone test results 2","display","Tell me everything (long version)","Just tell me (short version)")
         ]
     ]]
 }
 
 :: blacked maurice clone test results 2
 {
+    (if:$tags contains "told maurice the truth")[
+        (replace:?responses)[
+            (link:"“I tried to tell you before...”")[
+                (replace:?text)[
+                    You explain to him while you were $kendra, you felt something influencing your decisions, and you swear you could even hear her voice in your head, like she was talking you. Like you were a passenger in your own mind.(nl:2)
+
+                    “Well, decision influencing isn’t that uncommon, especially in specifically tailored formulas. On Insta-Strip your body seems to move on it’s own without you really having to think about it right?(nl:1)
+                    Although, audio halucinations... I think that’s a first.”
+                ]
+            ]
+        ]
+    ]
     (replace:?options)[
         (if:$choice is "Tell me everything (long version)")[
             (replace:?text)[
@@ -3275,26 +3319,16 @@
                 “Are you still feeling fine? No lingering side effects?” (nl:1)
             ]
         ]
-        (if:$tags contains "told maurice the truth")[
-            (link:"“I tried to tell you before...”")[
-                (replace:?text)[
-                    You explain to him while you were $kendra, you felt something influencing your decisions, and you swear you could even hear her voice in your head, like she was talking you. Like you were a passenger in your own mind.(nl:2)
-
-                    “Well, decision influencing isn’t that uncommon, especially in specifically tailored formulation. On Insta-Strip your body seems to move on it’s own without you really having to think about it right?(nl:1)
-                    Although, audio halucinations... I think that’s a first.”
-                ]
-            ]
-        ]
         (link:"Tell him about your dreams")[
             (replace:?text)[
                 You explain your recent vivid dream to him. (unless:(is_QoS:))[You tell him about the imaginary doctor diagnosing you with a BBC addiction.](nl:2)
 
-                Maurice chuckles softly, though there's a hint of concern in his voice. “That’s pretty... intense. Although you never seemed like you had any complaints with mine... are you sure this is from the pill?” (nl:2)
+                Maurice chuckles softly, though there's a hint of concern in his voice. “That’s pretty... intense(unless:(is_QoS:))[. Although you never seemed like you had any complaints with mine]... are you sure this is from the pill?” (nl:2)
 
-                (replace:?right_options)[
-                    (link:"Play it off")[(append:?text)[(nl:1)"Maybe you're right. But this dream felt real, you know? I can’t shake the feeling something’s definitely different."(nl:2)] (replace:?right_options)[]]
-                    (link:"Be serious")[(append:?text)[(nl:1)"I don’t know. It just felt... like it was something that was always there, and now it's waking up in me."(nl:2)] (replace:?right_options)[]]
-                    (link:"Tease him")[(append:?text)[(nl:1)"Maybe it’s just you, Maurice. You've got a way of leaving an impression."(nl:2)] (replace:?right_options)[]]
+                (replace:?responses)[
+                    (link:"Play it off")[(append:?text)[(nl:1)"Maybe you're right. But this dream felt real, you know? I can’t shake the feeling something’s definitely different."(nl:2)] (replace:?responses)[]]
+                    (link:"Be serious")[(append:?text)[(nl:1)"I don’t know. It just felt... like it was something that was always there, and now it's waking up in me."(nl:2)] (replace:?responses)[]]
+                    (link:"Tease him")[(append:?text)[(nl:1)"Maybe it’s just you, Maurice. You've got a way of leaving an impression."(nl:2)] (replace:?responses)[]]
                 ]
             ]
         ]
@@ -3304,17 +3338,22 @@
 
                 Maurice is silent for a moment. “You say that like it’s a bad thing. You’re not racist are you?”(nl:1)
 
-                (replace:?right_options)[
-                    (link:"Be Dismissive")[(append:?text)[(nl:1)"No, not at all! It's just... well, I can't ignore how I feel now. It’s like I’m drawn to them, specifically."(nl:2)] (replace:?right_options)[]]
-                    (link:"Be serious")[(append:?text)[(nl:1)"I didn’t ask for this, Maurice. But now I can’t seem to stop thinking about it... about them."(nl:2)] (replace:?right_options)[]]
-                    (link:"Tease him")[(append:?text)[(nl:1)"Yep, you caught me. I can't believe you never stopped to ask while your cock was halfway down my throat."(nl:2)] (replace:?right_options)[]]
+                (replace:?responses)[
+                    (link:"Be dismissive")[(append:?text)[(nl:1)"No, not at all! It’s just... well, I can’t ignore how I feel now. It’s like I’m drawn to them, specifically."(nl:2)] (replace:?responses)[]]
+                    (link:"Be serious")[(append:?text)[(nl:1)"I didn’t ask for this, Maurice. But now I can’t seem to stop thinking about it... about them."(nl:2)] (replace:?responses)[]]
+                    (link:"Tease him")[(append:?text)[(nl:1)"Yep, you caught me. I can’t believe you never stopped to ask while your cock was halfway down my throat."(nl:2)] (replace:?responses)[]]
                 ]
             ]
         ]
         (link:"End the call")[
             (replace:?text)[
-                After some friendly banter and reassurance the call comes to an end and you continue with your evening.
-                (after: time + 3)[(display:"events")]
+                “Well, it sounds like you may have picked up some of $kendra’s finer traits as a result of the pill or maybe something you did while on the pill.(nl:1) 
+                With this being our first time seeing it, I don't really think there's much we can do about those effects for now. If we see more of this pill, we may be able to understand the effects of it. Until then, just keep me in the loop.”(nl:2)
+
+                After some more friendly banter and reassurance the call comes to an end and you continue with your evening.
+            ]
+            (replace:?options)[
+                (link:"Next")[(display:"events")]
             ]
         ]
     ]
