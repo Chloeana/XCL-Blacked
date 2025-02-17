@@ -749,16 +749,16 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (set:_type to $current_activity of _activity_list)
   ]
 
-  (set:$types to (cond:
+  (set:$blacked_types to (cond:
     _type is "bar",(altered: via (str: it), ...(range:85,99)),
     (altered: via (str: it), ...(range:90,99))))
 
   (if:$npc_type is "coworker")[
     (if:$coworkers is 0)[(set:$coworkers to (a:))]
-    (for: each _coworker, ...$coworkers)[(set:$types to it - (a:(text:(words:_coworker)'s 3rd)))]
+    (for: each _coworker, ...$coworkers)[(set:$blacked_types to it - (a:(text:(words:_coworker)'s 3rd)))]
   ]
 
-  (set:str-type _variant to (text:(twirl:...$types)))
+  (set:str-type _variant to (text:(twirl:...$blacked_types)))
 
   (set:_img to "img/npc/guys/generated/" + _generation + "/" + _type + "/" + _variant + ".jpg")
 
@@ -1084,13 +1084,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       (set:$gain to (floor:$gain / 2))
       ($notification:"Arousal Lessened (Queen of Spades)👑")
     ]
-  ]
-}
-
-:: blacked sex insert [sex_insert]
-{
-  (if:(checkdm:$npc, "race", "is", "black"))[
-    (if:$stats's "sex as girl" is 0)[(display:"blacked trigger virginity")]
   ]
 }
 
@@ -1606,6 +1599,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (set:$blacked_stats's "sex as girl" to it + 1)
   (set:$blacked_daily_stats's "sex as girl" to it + 1)
+  (if:$stats's "sex as girl" is 1)[(display:"blacked trigger virginity")]
   (set:$curiosity_check to "fucked bbc")(display:"curiosity check")
   (if:($has_ap_mod:"bbc addict mod"))[(display:"action point mod trigger")]
   (if:$mood's "mood" is not "ashamed")[(set:$curiosity_check to "shame-free black sex")(display:"curiosity check")]
@@ -2889,6 +2883,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: girl introduce yourself [around]
 {
   (unless:(is_fem:))[
+    (display:"blacked compatibility check")
     (if:$blacked_compatible is 1)[
       (display:"load relationship")
       (if:$npc's "traits" contains "only bbc")[
@@ -2945,7 +2940,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
         (display:"display relationship status")
         (display:"bar chat girl options")
         ](else:)[(display:_around)]
-    ]
+    ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
 
