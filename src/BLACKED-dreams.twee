@@ -14,12 +14,6 @@
     (display:"check blacked dreams")(display:_around)
 }
 
-:: test dream
-{
-    (if:$dream_bbc_addict is 0)[($remember:"bbc addict short dream",7,"none","none","dream","blacked bbc addict short dream intro")]
-    (else:)[($remember:"bbc addict short dream",7,"none","none","dream","blacked bbc addict short dream repeat")]
-}
-
 :: check blacked dreams
 {
     <!-- Use More Dreams setting to determine dream repeat, if it exists. Otherwise set to 14 days -->
@@ -563,6 +557,7 @@
     (display:"npc screen update")
     ($pic:"scenes/home/dreams/blacked/diagnosis/10b.jpg")(nl:1)
     ($npc_vo:"female","aubrey","careful")
+    (after:time + 4.5s)[($npc_vo:"female","aubrey","next time")]
     Doctor Black hops up on the table, facing away from you. She looks over her shoulder, her tone soft but firm.(nl:2) 
     "There’s no need to hide this addiction, just be careful with it."(nl:1) 
     "Next time, your step-sister might not be there to bring you in."(nl:1)
