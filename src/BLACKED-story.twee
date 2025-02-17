@@ -970,8 +970,7 @@
                             ]
                         ]
                         (link:"Look in the mirror...")[
-                            (newtrack:"remember to take a long hard look","aud/se/taunt/remember to take a long hard look.mp3")
-                            (set:$se to "remember to take a long hard look")
+                            (set:$se to "kendra take a look")
                             (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                             (replace:?image)[($pic:'scenes/blacked/kendra 5v1/bathroom.jpg')]
                             (replace:?right_options)[]
@@ -1015,6 +1014,8 @@
     “Well, I’ll be damned,” he mutters. “It actually worked.”(nl:2)]
     (replace:?options)[
         (link:"Yeah, it did")[
+            (set:$se to "kendra clean up nice")
+            (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
             (replace:?text)[
                 “Told you, I clean up nice.”(nl:2)
                 *Your mind reels...those weren’t your words... They were (text-style:"smear")[$kendra’s].*(nl:2)
@@ -1078,6 +1079,8 @@
                     $kendradm's traits contains "slut","...and they're all so hot",
                     $kendradm's traits contains "bimbo" or (is_bim:),"*giggle*... Um, hi",
                     "Hi..."))[
+                    (set:$se to "kendra surprised")
+                    (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                     (replace:?text)[
                         ($gain_arousal:1)
                         (if:$character's reluctance >= 7)[You clear your throat, forcing yourself to stay calm as your mind buzzes with lustful thoughts...thoughts that don’t feel entirely your own.(nl:2)]
@@ -1186,14 +1189,16 @@
             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/watching.mp4')]
             (replace:?text)[
                 ($gain_arousal:1)
-                ($npc_vo:"female","kendra","watching")
+                (set:$se to "kendra watching")
+                (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                 (text-style:"smear")[I could tell his friends were watching, but it turned me on.](nl:2)
                 Jason’s hands are firm but gentle, guiding you as the kiss deepens. A wave of heat rushes through you as you instinctively lower your kiss towards his shorts.(nl:1)
                 (replace:?options)[(link:"Next")[
                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/go down.mp4')]
                     (replace:?text)[
                         ($gain_arousal:1)
-                        ($npc_vo:"female","kendra","go down")
+                        (set:$se to "kendra go down")
+                        (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                         (text-style:"smear")[I couldn’t believe I started doing that, but Jason had me go down on him, in front of his friends...](nl:1)
                         The thought echoes in your mind, stronger now, pulling you deeper into $kendra’s world.(nl:2)
                         You sink downward, your body moving on autopilot as Jason leans back, his grin widening. His friends murmur their surprise and amusement, but their stares only excite you more.(nl:1)
@@ -1201,14 +1206,16 @@
                             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/loving it.mp4')]
                             (replace:?text)[
                                 ($gain_arousal:1)
-                                ($npc_vo:"female","kendra","loving it")
+                                (set:$se to "kendra loving it")
+                                (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                                 (text-style:"smear")[They were all watching and staring at me... but... I was loving it.](nl:2)
                                 Jason’s hand slides to your cheek as you glance around, seeing the intensity in the eyes of the men surrounding you. One of them, Ricky, steps closer, his hands brushing over your hips and ass.(nl:1)
                                 (replace:?options)[(link:"Next")[
                                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/grab ass.mp4')]
                                     (replace:?text)[
                                         ($gain_arousal:1)
-                                        ($npc_vo:"female","kendra","grab ass")
+                                        (set:$se to "kendra grab ass")
+                                        (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                                         (text-style:"smear")[When one of his friends started to grab my ass, I sorta knew what would happen.](nl:2)
                                         Your breath quickens as more hands join in. Two? Six? Eight? All caressing your skin. Shivering all over as your anticipation builds and builds.(nl:2)
                                         You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as . The rush... the thrill... of their hands all over you.(nl:1)
@@ -1216,14 +1223,16 @@
                                             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/hot.mp4')]
                                             (replace:?text)[
                                                 ($gain_arousal:2)
-                                                ($npc_vo:"female","kendra","hot")
+                                                (set:$se to "kendra hot")
+                                                (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                                                 (text-style:"smear")[The other guys started to get curious, and before I knew it, I was surrounded by these five, HOT, black men.](nl:2)
                                                 You’re pressed further into the moment, their collective heat and energy consuming you completely. $kendra’s voice in your mind urges you forward, and you let go, surrendering entirely to the wave of desire.(nl:1)
                                                 (replace:?options)[(link:"Next")[
                                                     (replace:?image)[($vid:'scenes/blacked/kendra 5v1/dominated.mp4')]
                                                     (replace:?text)[
                                                         ($gain_arousal:2)
-                                                        ($npc_vo:"female","kendra","dominated")
+                                                        (set:$se to "kendra dominated")
+                                                        (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                                                         (text-style:"smear")[I wanted to be dominated. I wanted to be taken by Jason and his friends.](nl:2)
                                                         Her voice, practically screaming in your head...(nl:2)
                                                         (text-style:"smear")[“You mean your voice?”](nl:1)
