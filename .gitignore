@@ -2,6 +2,7 @@
 img/
 
 *.zip
+*.xcl
 *.jpg
 *.png
 *.mp4
