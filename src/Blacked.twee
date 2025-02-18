@@ -706,7 +706,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: generate random guy [around]
 {
+  (display:"blacked compatibility check")
+
   (if:$npc_type is "coworker" and $current_activity is "Go to the mall")[(display:_around)]
+  (else-if:((passage:"__mods__")'s source contains "DatDude's Office Girls"))[(display:_around)]
   (else-if:$force_white_guy is true)[(display:_around)]
   (else:)[
     (display:"npc race check")
@@ -1332,7 +1335,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: proposition reject success [around]
 {
   (display:_around)
-  (if:$npc's "race" is not "black")[
+  (if: not ($npc's "race" is "black") and (is_fem:))[
     (set:$blacked_stats's "rejections" to it + 1)
     (set:$blacked_daily_stats's "rejections" to it + 1)
     (display:"blacked rejection tally")
@@ -1345,7 +1348,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: proposition reject bj aroused result [around]
 {
   (if:(win:))[
-    (if:$npc's "race" is not "black")[
+    (if: not ($npc's "race" is "black") and (is_fem:))[
       (set:$blacked_stats's "rejections" to it + 1)
       (set:$blacked_daily_stats's "rejections" to it + 1)
       (display:"blacked rejection tally")
@@ -1360,7 +1363,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: proposition reject fuck aroused result [around]
 {
   (if:(win:))[
-    (if:$npc's "race" is not "black")[
+    (if: not ($npc's "race" is "black") and (is_fem:))[
       (set:$blacked_stats's "rejections" to it + 1)
       (set:$blacked_daily_stats's "rejections" to it + 1)
       (display:"blacked rejection tally")
@@ -1374,7 +1377,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: catcall guy leaves [around]
 {
-  (if:$npc's "race" is not "black")[
+  (if: not ($npc's "race" is "black") and (is_fem:))[
     (set:$blacked_stats's "rejections" to it + 1)
     (set:$blacked_daily_stats's "rejections" to it + 1)
     (display:"blacked rejection tally")
