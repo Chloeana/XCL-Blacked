@@ -2726,7 +2726,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 (set:$cock_array to (subarray:_cockabilities,1,$minigame's "difficulty"))
 
 (set:$minigame's "babe type" to (cond:(is_bim:),"ahegao",(get_intellect:) < 3,"ahegao",(twirl:"ahegao","nsfw","clothed")))
-(set:_possibilities to (twisted:...(range:1,309)))
+(set:_possibilities to (twisted:...(range:1,(cond:
+  $minigame's "baby type" is "ahegao",46,
+  $minigame's "baby type" is "nsfw",77,
+  $minigame's "baby type" is "clothed",309,46
+))))
 (set:$babe_array to (subarray:_possibilities,1,$minigame's "difficulty"))
 
 (set:"tries" of $minigame to 1)
