@@ -2232,7 +2232,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       ](else:)[(display:"blowjob transactional initialize " + (text:$character's "id"))]
 
     (replace:?portrait)[($pic:"characters/bj/bbc/" + (text:$character's "id") + ".jpg")]
-    <!--(replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]-->
     (set:$stats's "blowjobs given" to it + 1)
     (set:$blacked_stats's "blowjobs given" to it + 1)
     (set:$blacked_daily_stats's "blowjobs given" to it + 1)
@@ -2289,7 +2288,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     ](else:)[(display:"sex transactional blowjob " + $character's "id")]
     
     (replace:?portrait)[($pic:"characters/bj/bbc/" + (text:$character's "id") + ".jpg")]
-    <!--(replace:?portrait)[(print:"<img class='border' src='img/characters/bj/bbc/" + (text:$character's "id") + ".jpg' width='100%' height=auto>")]-->
     (set:$stats's "blowjobs given" to it + 1)
     (set:$blacked_stats's "blowjobs given" to it + 1)
     (set:$blacked_daily_stats's "blowjobs given" to it + 1)
@@ -2431,7 +2429,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (display:_around)
   (if:(checkdm:$npc, "race", "is", "black"))[
     (if:$npc's "cock" is "in you")[
-      <!--(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/bbc/doggy/" +  $character's "id" + ".jpg' width='100%' height=auto>")] -->
       (replace:?right_options)[($pic:"characters/sex/bbc/doggy/" +  $character's "id" + ".jpg")]
       ]
   ]
@@ -2700,7 +2697,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (if:(checkdm:$npc, "race", "is", "black"))[
     (if:$type is "transactional sex")[
-    <!--(replace:?right_options)[(print: "<img class='greyborder' src='img/characters/sex/doggy/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")]-->
     (replace:?right_options)[($pic:"characters/sex/doggy/bbc/" +  $character's "id" + ".jpg")]
     ](else:)[
     (replace:?right_options)[]
@@ -2727,9 +2723,9 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 (set:$minigame's "babe type" to (cond:(is_bim:),"ahegao",(get_intellect:) < 3,"ahegao",(twirl:"ahegao","nsfw","clothed")))
 (set:_possibilities to (twisted:...(range:1,(cond:
-  $minigame's "baby type" is "ahegao",46,
-  $minigame's "baby type" is "nsfw",77,
-  $minigame's "baby type" is "clothed",309,46
+  $minigame's "babe type" is "ahegao",46,
+  $minigame's "babe type" is "nsfw",77,
+  $minigame's "babe type" is "clothed",309,46
 ))))
 (set:$babe_array to (subarray:_possibilities,1,$minigame's "difficulty"))
 
@@ -2842,8 +2838,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   dairy queen
   -->
   (display:_around)
-  (if:$product's "id" is "goodgirl basic")[(set:$minigame's "cock type" to "bbc")]
-  (display:"blacked bbc sex checks")
+  (if:$product's "id" is "goodgirl basic")[
+    (set:$minigame's "cock type" to "bbc")
+    (display:"blacked bbc sex checks")
+  ]
+  
 }
 
 :: sales demo strip [around]

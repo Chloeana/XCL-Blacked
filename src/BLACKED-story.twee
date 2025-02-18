@@ -3296,7 +3296,7 @@
                     You explain to him while you were $kendra, you felt something influencing your decisions, and you swear you could even hear her voice in your head, like she was talking you. Like you were a passenger in your own mind.(nl:2)
 
                     “Well, decision influencing isn’t that uncommon, especially in specifically tailored formulas. On Insta-Strip your body seems to move on it’s own without you really having to think about it right?(nl:1)
-                    Although, audio halucinations... I think that’s a first.”
+                    Although, audio hallucinations... I think that’s a first.”
                 ]
             ]
         ]
@@ -3304,7 +3304,7 @@
     (replace:?options)[
         (if:$choice is "Tell me everything (long version)")[
             (replace:?text)[
-                “Alright. Well, most people don’t know this but X-Change does actually has a Clone pill.”(nl:1)
+                “Alright. Well, most people don’t know this but X-Change does actually have a Clone pill.”(nl:1)
                 “It just isn’t publicly available... and honestly it falls into a pretty 'morally gray' area, so there’s always heavy regulation around it whenever it gets used.”(nl:2)
 
                 “Anyway, I figured that was a good place to start, so I compared your sample with some we had in storage. It wasn’t quite the same, being that it uses nanobots, but there were a lot of similarities.” *He pauses for a moment*(nl:2)
@@ -3314,7 +3314,7 @@
                 
                 “From working at Dynapill, you already know the knock-offs use nanobot technology.(nl:1) 
                 The nanobots navigate through your bloodstream, targeting the cells that need to change, and then use their programming to adjust the expression of your genes.(nl:1)
-                Sometimes it’s more specific than others, something you’re probably also familiar with thanks to selling Inst-Girl productions.(nl:1)
+                Sometimes it’s more specific than others, something you’re probably also familiar with thanks to selling Insta-Girl productions.(nl:1)
                 While the processes are similar, the key difference is these nanobots have to work extra hard to achieve this specific level of tailored transformation.” (nl:2)
 
                 “Since the nanobots are essentially *flooding* your system with transformation instructions, it could lead to some unintended results, especially when said company has shoddy algorithms...”(nl:2)
