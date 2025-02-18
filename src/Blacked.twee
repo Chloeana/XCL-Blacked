@@ -709,7 +709,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (display:"blacked compatibility check")
 
   (if:$npc_type is "coworker" and $current_activity is "Go to the mall")[(display:_around)]
-  (else-if:((passage:"__mods__")'s source contains "DatDude's Office Girls"))[(display:_around)]
+  (else-if:$npc_type is "coworker" and ((passage:"__mods__")'s source contains "DatDude's Office Girls"))[(display:_around)]
   (else-if:$force_white_guy is true)[(display:_around)]
   (else:)[
     (display:"npc race check")
