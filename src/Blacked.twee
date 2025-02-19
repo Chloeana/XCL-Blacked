@@ -3334,3 +3334,33 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   ]
   (else:)[(display:_around)]
 }
+
+:: catcall angry [around]
+{
+  (if:(checkdm:$npc, "race", "is", "black") and $pickup is "racial")[
+
+  (set:_asshole to (twirl:"asshole","jerk","jackass","prick","dickhead","asshole"))
+  (if:(twist:1,2) is 1)["(twirl:"I don't have time for fucking racists.","Well aren't you a bigoted _asshole!","I don't appreciate that sort of racial language, _asshole!","You better watch that racist sort of language with me, _asshole!","Yeah, I don't vibe with racists.","Yeah, pickup a girl using racist language. Real cute, _asshole.")"](else:)[
+  (if:$character's "race" is "black")["(twirl:"Yeah, black girls don't actually appreciate that kind of talk, believe it or not,","Yeah, you need to learn how to interact with black girls,","You really haven't got the hang of talking to women of color yet. Better luck next time, asshole","Does that kind of talk usually work on black girls? I doubt it,")"]
+  (if:$character's "race" is "asian")["(twirl:"Yeah, asian girls actually hate that kinda come-on, believe it or not!","That's not how you pick up asian girls, my dude!","You know, I'm from America. I don't appreciate being talked to like I'm some sort of exotic thing. Try again with someone with less self respect, asswipe!","Too bad asian girls don't like racist black guys!")"]
+  (if:$character's "race" is "latin")["(twirl:"Yeah, uh, that kind of racist line doesn't actually work on latinas,","Um, does that normally work on latinas?","Stop treating me like I'm not from here. You black guys are pieces of work,","You're a real racist sack of shit!","Yeah, you really haven't got the hang of talking to latinas yet. Better luck next time,")]
+
+  ](print:" ")(twirl:"you say, upset.","you bark.","you snap.","you say.","you say, angrily.","you shout.")
+  (if:$character's "arousal" > 3 and (twist:1,2) is 1)[(twirl:"You might be turned on,","You might be aroused,","You might be horny,") (twirl:"but not enough to entertain racists.","but not enough to be polite to a racist prick like that.","but not enough to put up with that kind of bigotry.")]
+
+  (set:$new_mood to (dm:
+    "mood","angry",
+    "emoji","😠",
+    "strength",5,
+    "length",3,
+    "cause",(twirl:"Since some racist idiot hit on you.","Since a racist prick hit on you."),
+    "charm buff",-2,
+    "intellect buff",-1,
+      "arousal buff",-1,
+    "effect text","(-1 🍀, since you'll have trouble interacting with people normally)"
+    ))(print:"
+    ")(display:"new mood")(display:"refresh stats")
+    (display:"catcall guy leaves")
+  ]
+  (else:)[(display:_around)]
+}
