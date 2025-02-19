@@ -1218,7 +1218,7 @@
                                         (unless:$female_vo is "Female NPC Voiceovers: Disabled")[(display:"play sound")]
                                         (text-style:"smear")[When one of his friends started to grab my ass, I sorta knew what would happen.](nl:2)
                                         Your breath quickens as more hands join in. Two? Six? Eight? All caressing your skin. Shivering all over as your anticipation builds and builds.(nl:2)
-                                        You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as . The rush... the thrill... of their hands all over you.(nl:1)
+                                        You think back to when you (if:$bar_dance's "times danced" > 1)[first ]danced for Dredd's boys as $stripper_name. The rush... the thrill... of their hands all over you.(nl:1)
                                         (replace:?options)[(link:"Next")[
                                             (replace:?image)[($vid:'scenes/blacked/kendra 5v1/hot.mp4')]
                                             (replace:?text)[
@@ -1825,7 +1825,7 @@
     ]
     (else-if:$position's "id" is "riding")[  
         (if:$text is "options")[
-            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Roll your hips","Gring on that BBC"))
+            (set:$good_choice to (twirl:"Pace yourself","Show you're enjoying it","Roll your hips","Grind on that BBC"))
             (set:$bad_choice to (twirl:"Go too fast","Hit a weird angle","Your foot slips","Forget to pace yourself"))
         ]
         (if:$text is "good")[
