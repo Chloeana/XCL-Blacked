@@ -1177,6 +1177,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (set:$curiosity_check to "bbc porn")(display:"curiosity check")
     (if:($has_ap_mod:"bbc porn mod"))[(display:"action point mod trigger")]
     (if:$blacked_stats's "bbc porn watched" >= 50)[(display:"blacked trigger gooner")]
+
+    (if:$type is "BBC")[
+      (display:"gain arousal")
+    ]
   ]
 }
 
