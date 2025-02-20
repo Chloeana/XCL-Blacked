@@ -997,20 +997,22 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: blacked male npc approach [male_npc_approach]
 {
   <!-- QoS arousal impact -->
-  (if:not (checkdm:$npc, "race", "is", "black"))[
-    (if:(is_QoS:))[
-      (unless:$character's "arousal" is 0)[
-        (set:$character's "arousal" to (floor:it / 2))
-        ($notification:"Arousal Lessened (Queen of Spades)👑")(nl:1)
-        (display:$stats_refresh)
+  (if:(is_fem:))[
+    (if:not (checkdm:$npc, "race", "is", "black"))[
+      (if:(is_QoS:))[
+        (unless:$character's "arousal" is 0)[
+          (set:$character's "arousal" to (floor:it / 2))
+          ($notification:"Arousal Lessened (Queen of Spades)👑")(nl:1)
+          (display:$stats_refresh)
+        ]
       ]
     ]
-  ]
-  (if:(checkdm:$npc, "race", "is", "black"))[
-    (if:(is_QoS:))[
-      (set:$character's "arousal" to (round:it * 2))
-        ($notification:"Arousal Heightened (Queen of Spades)👑")(nl:1)
-        (display:$stats_refresh)
+    (if:(checkdm:$npc, "race", "is", "black"))[
+      (if:(is_QoS:))[
+        (set:$character's "arousal" to (round:it * 2))
+          ($notification:"Arousal Heightened (Queen of Spades)👑")(nl:1)
+          (display:$stats_refresh)
+      ]
     ]
   ]
 }
@@ -1146,27 +1148,31 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: blacked sex finish [sex_finish]
 {
-  (if:$npc's race is not "black")[
-    (if:$npc's cockrating < 7 and $blacked_stats "sex as girl" is 0)[
-      ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","finding out the truth about black guys. Is it true what they say? Are they really bigger?")
+  (if:(is_fem:))[
+    (if:$npc's race is not "black")[
+      (if:$npc's cockrating < 7 and $blacked_stats "sex as girl" is 0)[
+        ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","finding out the truth about black guys. Is it true what they say? Are they really bigger?")
+      ]
+      (if:(is_bbc_addict: and $orgasms > 1))[
+        (set:$cause_text to "since you orgasmed more than once without a BBC")
+        (set:$effect_text to "ignoring your BBC addiction")
+        (display:"blacked mood ashamed")
+      ]
+      (else:(is_bbc_addict:) and $orgasm <= 1)[
+        (set:$cause_text to "since you failed to sleep with a black man")
+        (set:$effect_text to "ignoring your BBC addiction")
+        (display:"blacked mood unsatisfied")
+      ]
+      (unless:$type is "public masturbation" or $type is "masturbate")[
+        (if:(is_QoS:))[
+          (display:"blacked QoS debuff")
+        ]
+      ]
     ]
-    (if:(is_bbc_addict: and $orgasms > 1))[
-      (set:$cause_text to "since you orgasmed more than once without a BBC")
-      (set:$effect_text to "ignoring your BBC addiction")
-      (display:"blacked mood ashamed")
-    ]
-    (else:(is_bbc_addict:) and $orgasm <= 1)[
-      (set:$cause_text to "since you failed to sleep with a black man")
-      (set:$effect_text to "ignoring your BBC addiction")
-      (display:"blacked mood unsatisfied")
-    ]
-    (if:(is_QoS:))[
-      (display:"blacked QoS debuff")
-    ]
+    (else-if:$npc's race is "black")[
+      (display:"blacked bbc sex checks")
+      ]
   ]
-  (else-if:$npc's race is "black")[
-    (display:"blacked bbc sex checks")
-    ]
 }
 
 :: blacked watch porn [watch_porn]
@@ -1631,10 +1637,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: serendipity buy porn [around]
 {
-  (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heaven")]
+  (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"bbc babecock")]
   (if:$day > 30)[
     (unless: length of (find:_disc where _disc's name is "bbc pmvs",...$porn_list) > 0)[(display:"add porn bbc pmvs")]
-    (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"add porn bbc babecock")]
+    (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heavem")]
   ]
   (display:_around)
 }
@@ -3360,7 +3366,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     "cause",(twirl:"Since some racist idiot hit on you.","Since a racist prick hit on you."),
     "charm buff",-2,
     "intellect buff",-1,
-      "arousal buff",-1,
+    "arousal buff",-1,
     "effect text","(-1 🍀, since you'll have trouble interacting with people normally)"
     ))(print:"
     ")(display:"new mood")(display:"refresh stats")
