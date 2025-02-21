@@ -188,7 +188,6 @@
   (set:$achievement_condition_select to "swallow25-blacked")
   (display:"add achievement to lists")
   (unless:$achievement_triggers contains "swallow25-blacked")[(display:"reward-1up")]
-  (display:"reward-1up")
 }
 
 :: blacked trigger swallow50
