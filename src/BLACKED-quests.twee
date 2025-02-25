@@ -40,7 +40,7 @@
         "addiction message","You are fully addiction to BBC. If you get it often enough, your max action points will recieve a penalty.",
         "bad message","You've been neglecting your BBC compulsion... your max AP has decreased until you hop up on a BBC.",
         "normal wear off","It seems you've cured your BBC addiction... for now.",
-        "type","slot",
+        "type","max",
         "removal criteria","Remove your BBC Addiction side effect to remove this compulsion.",
         "addiction threshold",15,
         "times triggered",0,

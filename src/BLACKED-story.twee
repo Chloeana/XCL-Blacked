@@ -29,6 +29,13 @@
     (activities:$blacked_events contains "dredd visit ready", "Go to Dredd's House", "daytime", false, "none", "🍾")
 }
 
+:: blacked side effect cleanup [nightly]
+{
+    <!-- Removes temp side effects if you also acquired the permanent version -->
+    (if:$character's "side effects" contains "bbc addition temp" and $character's "side effects" contains "bbc addition")[(set:$character's "side effects" to it - (a:"bbc addition temp"))]
+    (if:$character's "side effects" contains "bbc sizequeen temp" and $character's "side effects" contains "bbc sizequeen")[(set:$character's "side effects" to it - (a:"bbc sizequeen temp"))]
+}
+
 :: events [around]
 {
     (if:$time is 3)[
@@ -151,7 +158,7 @@
         ($simple_option:"blacked kendra story 1","display",(cond:
         ($kendradm's events does not contain "name"),"Do I know you?",
         ($kendradm's "sex times" >=2 and $character's charm >= 5),"Hey, "+$kendra+", your place or mine tonight?",
-        ((is_male:) and $kendradm's events contains "introduce"),"Hey, "+$kendra+", what's wrong?",
+        ((is_male:) and $kendradm's events contains "introduce"),"Hey, "+$kendra+", what’s wrong?",
         (is_fem:) and $relationships's kendra's friendship >= 5,"Everything okay?",
         "Yeah?"),"Sorry, I’m late for a drink. Can this wait?")
     ]
@@ -499,7 +506,7 @@
         *$kendra leans back slightly, swirling her $kendradrink thoughtfully.*(nl:1)
         “Yeah, Dredd has certain... connections. He’ll make sure it gets in front of the right people. But...” *She frowns slightly.* “He’s not going to risk his reputation on untested junk.”(nl:2)
         *Her gaze sharpens as she looks at you.*(nl:1)
-        “Maurice feels the same way. They don’t trust Bruce, but they trust *me*. Or at least, they trust *you*… and it helps that Gabbie vouches for you. She told me how reliable you are. That’s why I need you for this.”(nl:2)
+        “Maurice feels the same way. They don’t trust Bruce, but they trust *me*. Or at least, they trust *you*… and it helps that $gabbie vouches for you. She told me how reliable you are. That’s why I need you for this.”(nl:2)
     ]
     (else-if:$choice is "Why do you need my help?")[
         *$kendra sighs, setting her $kendradrink down with a soft clink.*(nl:1)

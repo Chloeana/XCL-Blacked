@@ -226,7 +226,7 @@ achievements("BLACKED",
     },
     {
       "name": "BBC Size Queen",
-      "hint": "Get penetrated by so many BBC that you start to become loose and *require* big black cocks to sastify you.",
+      "hint": "Get penetrated by so many BBC that you start to become loose and require big black cocks to sastify you.",
       "flavor":
         '(twirl:"Bigger is better!", "Never settle for anything less...than 8 inches", "High standards, huh?")',
       "condition_name": "size-queen-blacked",

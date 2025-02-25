@@ -708,8 +708,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (display:"blacked compatibility check")
 
-  (if:$npc_type is "coworker" and $current_activity is "Go to the mall")[(display:_around)]
-  (else-if:$npc_type is "coworker" and ((passage:"__mods__")'s source contains "DatDude's Office Girls"))[(display:_around)]
+  (if:$npc_type is "coworker")[(display:_around)] <!-- For Office Babes integration. Need to have black office babes before enabling -->
+  (else-if:$npc_type is "coworker" and $current_activity is "Go to the mall")[(display:_around)]
   (else-if:$force_white_guy is true)[(display:_around)]
   (else:)[
     (display:"npc race check")
@@ -1073,8 +1073,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (if:(checkdm:$npc, "race", "is", "black"))[
     (if:(cock:"girth","npc") is 10 and (cock:"length","npc") is 10 and (cock:"balls","npc") is 10)[(display:"blacked trigger moby dick")]
-    (if:(cock:"rating","npc") >= 9)[(set:$blacked_stats's "big cocks" to it + 1)]
-    (if:$blacked_stats's "big cocks" >= 15)[(display:"blacked trigger size queen")]
 
     (if:(is_QoS:))[
       <!-- Positive arousal/lubrication impact for QoS -->
@@ -1187,9 +1185,80 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     (if:$type is "BBC")[
       (display:"gain arousal")
     ]
+
+    (prepend:?options)[
+      (link:"Goon")[(display:"blacked goon")]
+    ]
   ]
 }
 
+:: blacked goon
+{
+  (if:(is_fem:))[(set:$character's "status" to "sex")(display:"refresh portrait")(set:$sex_loop to "masturbate loop " + $character's "id")]
+  (else:)[(set:$sex_loop to "fapping")]
+  (display:"play sex loop")(set:$sex_loop_continue to "true")
+
+  (set:$img to "scenes/home/porn/" + $type + "/" + $select + "/" + $scene_select + ".mp4")
+
+  (set:$quicktime_params to (dm:
+  "objective","Keep your pleasure under control!",
+  "skill check","orgasm control",
+  "skill check difficulty",(min:30,($character's arousal * 6.5)),
+  "timing message","but not so fast that you cum.",
+  "result passage","blacked goon result",
+  "backdrop",$img,
+  "sex loop",$sex_loop,
+  "time",(min:30,($character's arousal * 5)),
+  "rhythm",600,
+  "interrupt passage","blacked goon interrupt",
+  "type","resist cum",
+  "interrupts", 1
+  ))
+
+  ($cs:"dont cum initialize")
+}
+
+:: blacked goon result
+{
+  (display:"bedroom ambience")(set:$sex_loop_continue to "false")(set:$sex_loop to 0)(display:"play sex loop")
+  
+  (if:(win:))[
+    (set:$type to "bbc")
+    (set: $your_pleasure_gain to (cond: $character's "arousal" > 8, 2, 1))
+    (set:$character's "arousal" to it + 1)
+    (display:"refresh stats")
+    ($vid:$quicktime_params's backdrop)
+    <div class = "options">
+    (link:"Keep Gooning")[(display:"watch porn scenes")](nl:1)
+    (link:"Back")[($cs:"use computer")]
+    </div>
+  ]
+  (else:)[
+    (set:$result to "pass")
+    (unless:$today_events contains "masturbate")[(set:$today_events to $today_events + (a:"masturbate"))]
+    (if:(is_fem:))[
+      (set:$se to "orgasm solo " + $character's "id")
+    ]
+    (else:)[
+      (display:"masturbation cum image")
+      (set:$se to (twirl:"male cum 1","male cum 2","male cum 3"))
+    ]
+    (display:"play sound")
+    (set:$cum_factor to (cond:$result is "fail time",0.5,0.7))(display:"masturbate orgasm")(live:1s)[(stop:)(display:"refresh stats")]
+    (set:$character's "status" to ($core_female_status:))(display:"refresh portrait")
+    (display:"night options")
+  ]
+}
+
+:: blacked goon interrupt
+{
+  (if:(is_fem:))[
+    (twirl:"Imagine that BBC inside of you.","You want to trade places with her?","You could find some BBC like that if you wanted...")
+  ]
+  (else:)[
+    (twirl:"Are you watching the girl? Or the BBC?","All it takes is one little pill... then you could have some BBC too.","I know you're curious, who wouldn't be?")
+  ]
+}
 
 :: watch porn [around]
 {
@@ -1342,57 +1411,16 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   ]
 }
 
-:: proposition reject success [around]
-{
-  (display:_around)
-  (if: not ($npc's "race" is "black") and (is_fem:))[
-    (set:$blacked_stats's "rejections" to it + 1)
-    (set:$blacked_daily_stats's "rejections" to it + 1)
-    (display:"blacked rejection tally")
-    (if:(is_QoS:))[
-      (display:"blacked QoS buff")
-    ]
-  ]
-}
-
-:: proposition reject bj aroused result [around]
-{
-  (if:(win:))[
-    (if: not ($npc's "race" is "black") and (is_fem:))[
-      (set:$blacked_stats's "rejections" to it + 1)
-      (set:$blacked_daily_stats's "rejections" to it + 1)
-      (display:"blacked rejection tally")
-      (if:(is_QoS:))[
-        (display:"blacked QoS buff")
-      ]
-    ]
-  ]
-  (display:_around)
-}
-
-:: proposition reject fuck aroused result [around]
-{
-  (if:(win:))[
-    (if: not ($npc's "race" is "black") and (is_fem:))[
-      (set:$blacked_stats's "rejections" to it + 1)
-      (set:$blacked_daily_stats's "rejections" to it + 1)
-      (display:"blacked rejection tally")
-      (if:(is_QoS:))[
-        (display:"blacked QoS buff")
-      ]
-    ]
-  ]
-  (display:_around)
-}
-
 :: catcall guy leaves [around]
 {
-  (if: not ($npc's "race" is "black") and (is_fem:))[
-    (set:$blacked_stats's "rejections" to it + 1)
-    (set:$blacked_daily_stats's "rejections" to it + 1)
-    (display:"blacked rejection tally")
-    (if:(is_QoS:))[
-      (display:"blacked QoS buff")
+  (unless:$current_activity is "Go to work")[
+    (if: not ($npc's "race" is "black") and (is_fem:))[
+      (set:$blacked_stats's "rejections" to it + 1)
+      (set:$blacked_daily_stats's "rejections" to it + 1)
+      (display:"blacked rejection tally")
+      (if:(is_QoS:))[
+        (display:"blacked QoS buff")
+      ]
     ]
   ]
   (display:_around)
@@ -1632,12 +1660,14 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (if:(is_QoS:))[
     (display:"blacked QoS buff")
   ]
+  (if:(cock:"rating","npc") >= 9)[(set:$blacked_stats's "big cocks" to it + 1)]
+  (if:$blacked_stats's "big cocks" >= 15)[(display:"blacked trigger size queen")]
   (display:"blacked sex tally")
 }
 
 :: serendipity buy porn [around]
 {
-  (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"bbc babecock")]
+  (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"add porn bbc babecock")]
   (if:$day > 30)[
     (unless: length of (find:_disc where _disc's name is "bbc pmvs",...$porn_list) > 0)[(display:"add porn bbc pmvs")]
     (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heavem")]
@@ -2751,13 +2781,14 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 (else:)[
   <div class='options'>(css:"font-size:4vmin")[**Black Cock Memory Test**]
   You're going to see (text:$minigame's "difficulty") pairs of images. Try to remember which girl goes with which BBC.
-  (link:"BEGIN LEARNING PHASE")[(set:$next to "masculinity learning")(display:"next")]
+  (link:"BEGIN LEARNING PHASE")[(set:$next to "masculinity learning")(display:"next")(set:$phase to "learn")(live:(twist:3500,7000))[(if:$phase is "learn")[(display:"masculinity taunt asmr")](stop:)]]
   (link:"SKIP (Maximum Identity Loss)")[
-    (set:$character's "identity" to $character's "identity" - $minigame's "identity penalty")
-    (set:$character's "masculinity" to $character's "masculinity" - $minigame's "masculinity penalty")
-    (display:"refresh stats")(set:$next to $minigame's "afterwards")(display:"change screen")
+    (set:$character's "identity" to $character's "identity" - $minigame's "masculinity penalty")(display:"refresh stats")
+    (set:$gain to -1 * $minigame's "masculinity penalty")(display:"gain masculinity")
+    (set:$next to $minigame's "afterwards")(display:"change screen")
   ]
 ]
+(set:$gain to $minigame's "masculinity penalty")(display:"update movie femininity")
 
 :: invite guy sex room [around]
 {
@@ -3288,7 +3319,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
     (set:$text to (cond:
     $description is "push down", (twirl:"face down, ass up - just like nature intended","get down","stay right there. I'm gonna fuck you hard until I nut","this is nature's perfect fucking position","stay down while I fuck you"),
-    $description is "spank", (twirl:"you're a bad girl","I'm treating you like the BAD girl you are","you know who owns you now, huh? Yeah you do","take this! And this","who's a naughty little $girl, huh? You are"),
+    $description is "spank", (twirl:"you're a bad girl","I'm treating you like the BAD girl you are","you know who owns you now, huh? Yeah you do","take this! And this","who's a naughty little _girl, huh? You are"),
     $description is "tits clap", (twirl:"I love watching those $tits clap together","I'm making those $tits clap together","your $tits are giving each other a high five","I love makin' those titties clap"),
     $description is "pull hair", (twirl:"I love pulling your hair while I fuck you","I love pulling your hair","hair is a girl's natural handle"),
     $description is "grab butt", (twirl:"I love watching this _phat ass jiggle","I love watching your _phat ass bounce and jiggle on my $cock","I love making your _phat ass jiggle"),
@@ -3305,7 +3336,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     $description is "cant believe" and $npc's "looks" < 5, (twirl:"I guess even ugly guys like me can get lucky. Can't believe I get to fuck a hot _girl like you","Summer City is great - even an ugly guy like me can fuck a _girl as hot as you","and my friends say I'm out of my league, hitting on a _girl like you","can't believe I get to fuck you","can't believe I really get to fuck $pussy tonight"),
     $description is "cant believe" and $npc's age < 21 and _tags contains "breeder", (twirl:"I can't believe I'm breeding a _girl in her 20s. Yeah! This is fucking lit","this is wack. Can't believe I'm gonna impregnate a _girl who looks like a fucking pornstar, when I'm only _age","I'm only _age and already making mixed babies","can't believe I'm only _age, and getting to breed a hot _girl like you"),
     $description is "cant believe" and $npc's age < 21 and _tags contains "nerd", (twirl:"I guess even nerds like me can get lucky. Can't believe I get to fuck you","Summer City is great - even a nerdy guy like me can fuck a hot _girl like you","and my friends say I'm out of my league, hitting on girls like you","can't believe I get to fuck you","can't believe I really get to fuck a hot _girl... I'm gonna tell all my friends","this is just like fucking anime chicks","this is even better than porn","this is so much better than watching porn","I guess my mom was right when she said to get outside and meet girls","can't believe a hot _girl like you would even talk to a nerd like me","can't believe I'm fucking a _girl like you","you're even hotter than my anime statues"),
-    $description is "cant believe" and $npc's age > 39, (twirl:"I can't believe an old guy like me gets to fuck a $girl like you","I can't believe I'm fucking a hot _girl like you","can't believe I'm fucking a $girl like you","at my age, I didn't think I'd get to taste a sweet _girl like you again","your $pussy is like the fountain of youth for me"),
+    $description is "cant believe" and $npc's age > 39, (twirl:"I can't believe an old guy like me gets to fuck a _girl like you","I can't believe I'm fucking a hot _girl like you","can't believe I'm fucking a _girl like you","at my age, I didn't think I'd get to taste a sweet _girl like you again","your $pussy is like the fountain of youth for me"),
     $description is "cant believe", (twirl:"I can't believe I get to fuck a hot _girl like you","Can't believe I get to fuck a _girl as hot as you","can't believe I'm fucking you right now"),
     $description is "take my cock" and (_tags contains "chad" or _tags contains "jock"), (twirl:"that's right, take my $cock","feel my $cock inside your $pussy","take my $cock like a good little _girl","take it. Take my fucking cock","you love it. Yeah, you love my fucking cock","you'll be thinking about my $cock for weeks after this. Yeah, take it","take. My. Fucking. Cock. Yes! Take it"),
     $description is "take my cock" and _tags contains "fuckboy", (twirl:"this is what girls like you were made for. Taking my $cock","take it like a good little _girl. Yeah, just like that","take my $cock. Feel it inside you, slut. Yeah - FUCK"),
@@ -3321,7 +3352,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
     $description is "own this pussy" and (_tags contains "gentleman" or $npc's personality > 7), (twirl:"your $pussy is mine","I own this $pussy","I fucking own this $pussy","my $cock owns this $pussy","I think your $pussy loves my $cock","your $pussy loves my $cock","your $pussy belongs to me now"),
     $description is "own this pussy" and _tags contains "breeder", (twirl:"your $pussy is gonna belong to me, after I flood it with my _cum","your $pussy belongs to me now. I'm gonna fucking breed it","your $pussy loves my $cock. I think it knows I'm gonna make you a single mother today"),
     $description is "own this pussy", (twirl:"this $pussy is mine","I own this $pussy","I fucking own this $pussy","my $cock owns this $pussy"),
-    $description is "feels good" and _age > 39, (twirl:"I'll never age, if I got to fuck a $pussy like this for the rest of my life","your $pussy feels amazing on my _age-old cock","it feels amazing to fuck a young $girl like you","your $pussy feels amazing","your $pussy feels incredible"),
+    $description is "feels good" and _age > 39, (twirl:"I'll never age, if I got to fuck a $pussy like this for the rest of my life","your $pussy feels amazing on my _age-old cock","it feels amazing to fuck a young _girl like you","your $pussy feels amazing","your $pussy feels incredible"),
     $description is "feels good" and _age < 21, (twirl:"your $pussy feels amazing on my _age-old cock","your $pussy feels amazing","damn, your $pussy's tight, feels crazy good", "this $pussy hittin' different, feels too good", "I could stay buried in this $pussy all day, feels amazing"),
     $description is "feels good" and _tags contains "nerd",(twirl:"your $pussy feels even better than my fleshlight","your $pussy feels soo good","my friends were right, real pussy feels so much better than jerking off","your $pussy feels like what hentai looks like","your $pussy is AMAZING","your $pussy feels so good, the way it grips my $cock","your $pussy feels so nice") ,
     $description is "feels good" and (_tags contains "chad" or _tags contains "jock"), (twirl:"your $pussy feels good","your $pussy is wrapped SO fuckin' tight around my $cock","your $pussy loves having my $cock inside it","your $pussy feels damn good"),
