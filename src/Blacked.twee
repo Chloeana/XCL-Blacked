@@ -105,6 +105,13 @@
       "Black Encounters: Never"
     ), "Determines how often you will encounter random black men hitting on you as a female."
 	)
+  (_setting_button:
+		"$blacked_bargirl",(a:
+      "BBC Only Bar Girls: Easy",
+      "BBC Only Bar Girls: Medium",
+      "BBC Only Bar Girls: Harsh"
+    ), "IF a bar girl has the 'only bbc' trait, how serious is she about that? Will she give you a chance?"
+	)
 }
 
 :: view sex stats [around]
@@ -665,6 +672,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 (color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[📄 Outfits per page]],[How many outfits will be visible on screen at once.])](nl:1)
 <span class='borderless'>|pagination_settings>[(for: each _setting, 8, 16, 32, 64, 128, 256)[(color:(cond:$clothes_pagination is _setting,"bisque",$palette_colors's 4th))[(link-repeat:(text:_setting))[(set:$clothes_pagination to _setting)(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)(rerun:?pagination_settings)]]]]</span>(nl:2)(link:"Back")[($nx:"clothes shopping")]}])]}
 
+<!-- after 0.21.6 use this:
+[clothing_filters]
+(unless:$blacked_compatible is 0)[($show_tooltip:[(link-repeat:"♠️")[(set:$filtered_outfits to (find:_outfit where (_outfit's tags contains "blacked"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Special BLACKED section?])]
+-->
 
 :: npc race check
 {
@@ -997,24 +1008,26 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 :: blacked male npc approach [male_npc_approach]
 {
   <!-- QoS arousal impact -->
-  (if:(is_fem:))[
-    (if:not (checkdm:$npc, "race", "is", "black"))[
-      (if:(is_QoS:))[
-        (unless:$character's "arousal" is 0)[
-          (set:$character's "arousal" to (floor:it / 2))
-          ($notification:"Arousal Lessened (Queen of Spades)👑")(nl:1)
-          (display:$stats_refresh)
+  (unless:$blacked_compatible is 0)[
+    (if:(is_fem:))[
+      (if:not (checkdm:$npc, "race", "is", "black"))[
+        (if:(is_QoS:))[
+          (unless:$character's "arousal" is 0)[
+            (set:$character's "arousal" to (floor:it / 2))
+            ($notification:"Arousal Lessened (Queen of Spades)👑")(nl:1)
+            (display:$stats_refresh)
+          ]
+        ]
+      ]
+      (if:(checkdm:$npc, "race", "is", "black"))[
+        (if:(is_QoS:))[
+          (set:$character's "arousal" to (round:it * 2))
+            ($notification:"Arousal Heightened (Queen of Spades)👑")(nl:1)
+            (display:$stats_refresh)
         ]
       ]
     ]
-    (if:(checkdm:$npc, "race", "is", "black"))[
-      (if:(is_QoS:))[
-        (set:$character's "arousal" to (round:it * 2))
-          ($notification:"Arousal Heightened (Queen of Spades)👑")(nl:1)
-          (display:$stats_refresh)
-      ]
-    ]
-  ]
+  ] 
 }
 
 :: blacked take pill [take_pill]
@@ -1082,10 +1095,12 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   ]
 
   (else:)[
-    (if:(is_QoS:))[
-      <!-- Negative arousal/lubrication impact for QoS -->
-      (set:$gain to (floor:$gain / 2))
-      ($notification:"Arousal Lessened (Queen of Spades)👑")
+    (unless:$blacked_compatible is 0)[
+      (if:(is_QoS:))[
+        <!-- Negative arousal/lubrication impact for QoS -->
+        (set:$gain to (floor:$gain / 2))
+        ($notification:"Arousal Lessened (Queen of Spades)👑")
+      ]
     ]
   ]
 }
@@ -1126,15 +1141,17 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       ]
     ]
     (else:)[
-      (if:($npc's cock is "in you"))[
-        (unless:((passage:"__mods__")'s source contains "Pregmod"))[
-          (if:(is_bbc_sizequeen:))[
-            (unless:(datanames:$npc) contains "cockrating")[
-              (set:$npc's "cockrating" to 9)
-            ]
-            (if:(cock:"rating","npc") < 7)[
-              (set:$gain to (floor:$gain / 2))
-              <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+      (unless:$blacked_compatible is 0)[
+        (if:($npc's cock is "in you"))[
+          (unless:((passage:"__mods__")'s source contains "Pregmod"))[
+            (if:(is_bbc_sizequeen:))[
+              (unless:(datanames:$npc) contains "cockrating")[
+                (set:$npc's "cockrating" to 9)
+              ]
+              (if:(cock:"rating","npc") < 7)[
+                (set:$gain to (floor:$gain / 2))
+                <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+              ]
             ]
           ]
         ]
@@ -1146,12 +1163,12 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: blacked sex finish [sex_finish]
 {
-  (if:(is_fem:))[
-    (if:$npc's race is not "black")[
-      (if:$npc's cockrating < 7 and $blacked_stats "sex as girl" is 0)[
-        ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","finding out the truth about black guys. Is it true what they say? Are they really bigger?")
-      ]
-      (unless:$type is "public masturbation" or $type is "masturbate")[
+  (unless:$type is "public masturbation" or $blacked_compatible is 0)[
+    (if:(is_fem:))[
+      (if:not (checkdm:$npc, "race", "is", "black"))[
+        (if:$npc's cockrating < 7 and $blacked_stats "sex as girl" is 0)[
+          ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","finding out the truth about black guys. Is it true what they say? Are they really bigger?")
+        ]
         (if:(is_bbc_addict: and $orgasms > 1))[
           (set:$cause_text to "since you orgasmed more than once without a BBC")
           (set:$effect_text to "ignoring your BBC addiction")
@@ -1166,10 +1183,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
           (display:"blacked QoS debuff")
         ]
       ]
-    ]
-    (else-if:$npc's race is "black")[
-      (display:"blacked bbc sex checks")
+      (else-if:(checkdm:$npc, "race", "is", "black"))[
+        (display:"blacked bbc sex checks")
       ]
+    ]
   ]
 }
 
@@ -1418,8 +1435,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       (set:$blacked_stats's "rejections" to it + 1)
       (set:$blacked_daily_stats's "rejections" to it + 1)
       (display:"blacked rejection tally")
-      (if:(is_QoS:))[
-        (display:"blacked QoS buff")
+      (unless:$blacked_compatible is 0)[
+        (if:(is_QoS:))[
+          (display:"blacked QoS buff")
+        ]
       ]
     ]
   ]
@@ -1545,31 +1564,35 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: blacked QoS buff
 {
-  (set:$new_status to (dm:
-    "status","feeling like a queen",
-    "emoji","👑",
-    "strength",8,
-    "length",8,
-    "cause","♠️ Straighten your crown ♠️",
-    "charm buff",2,
-    "intellect buff",1,
-    "fitness buff",1
-	))(display:"new status")(display:"refresh stats")
+  (unless:$blacked_compatible is 0)[
+    (set:$new_status to (dm:
+      "status","feeling like a queen",
+      "emoji","👑",
+      "strength",8,
+      "length",8,
+      "cause","♠️ Straighten your crown ♠️",
+      "charm buff",2,
+      "intellect buff",1,
+      "fitness buff",1
+    ))(display:"new status")(display:"refresh stats")
+  ]
 }
 
 :: blacked QoS debuff
 {
-  (set:$new_status to (dm:
-    "status","not feeling very queen-like",
-    "emoji","👎🏾",
-    "strength",9,
-    "length",12,
-    "cause","You've disappointed your Black Kings. Go find some BBC!",
-    "charm buff",-2,
-    "intellect buff",-1,
-    "fitness buff",-1,
-    "arousal buff",3,
-	))(display:"new status")(display:"refresh stats")
+  (unless:$blacked_compatible is 0)[
+    (set:$new_status to (dm:
+      "status","not feeling very queen-like",
+      "emoji","👎🏾",
+      "strength",9,
+      "length",12,
+      "cause","You've disappointed your Black Kings. Go find some BBC!",
+      "charm buff",-2,
+      "intellect buff",-1,
+      "fitness buff",-1,
+      "arousal buff",3,
+    ))(display:"new status")(display:"refresh stats")
+  ]
 }
 
 :: blacked mood proud
@@ -1589,51 +1612,57 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: blacked mood ashamed
 {
-  (set:$new_mood to (dm:
-    "mood","ashamed",
-    "emoji","😔",
-    "strength",10,
-    "length",10,
-    "cause",$cause_text,
-    "charm buff",-3,
-    "intellect buff",-1,
-    "fitness buff",-1,
-    "arousal buff",-1,
-    "effect text","-3 🍀 / -1 🧠 / -1 💪 from " + $effect_text
-	))(display:"new mood")(display:"refresh stats")
+  (unless:$blacked_compatible is 0)[
+    (set:$new_mood to (dm:
+      "mood","ashamed",
+      "emoji","😔",
+      "strength",10,
+      "length",10,
+      "cause",$cause_text,
+      "charm buff",-3,
+      "intellect buff",-1,
+      "fitness buff",-1,
+      "arousal buff",-1,
+      "effect text","-3 🍀 / -1 🧠 / -1 💪 from " + $effect_text
+    ))(display:"new mood")(display:"refresh stats")
+  ]
 }
 
 :: blacked mood satisfied
 {
-  (set:$new_mood to (dm:
-    "mood","satisfied",
-    "emoji","💯",
-    "strength",8,
-    "length",8,
-    "cause",$cause_text,
-    "charm buff",2,
-    "intellect buff",0,
-    "fitness buff", 0,
-    "effect text","+2 🍀 from " + $effect_text
-    ))
-  (display:"new mood")(display:"refresh stats")
+  (unless:$blacked_compatible is 0)[
+    (set:$new_mood to (dm:
+      "mood","satisfied",
+      "emoji","💯",
+      "strength",8,
+      "length",8,
+      "cause",$cause_text,
+      "charm buff",2,
+      "intellect buff",0,
+      "fitness buff", 0,
+      "effect text","+2 🍀 from " + $effect_text
+      ))
+    (display:"new mood")(display:"refresh stats")
+  ]
 }
 
 :: blacked mood unsatisfied
 {
-  (set:$new_mood to (dm:
-    "mood","unsatisfied",
-    "emoji","😑",
-    "strength",10,
-    "length",10,
-    "cause",$cause_text,
-    "charm buff",-2,
-    "intellect buff",0,
-    "fitness buff", 0,
-    "arousal buff",2,
-    "effect text","-2 🍀 from " + $effect_text
-    ))
-  (display:"new mood")(display:"refresh stats")
+  (unless:$blacked_compatible is 0)[
+    (set:$new_mood to (dm:
+      "mood","unsatisfied",
+      "emoji","😑",
+      "strength",10,
+      "length",10,
+      "cause",$cause_text,
+      "charm buff",-2,
+      "intellect buff",0,
+      "fitness buff", 0,
+      "arousal buff",2,
+      "effect text","-2 🍀 from " + $effect_text
+      ))
+    (display:"new mood")(display:"refresh stats")
+  ]
 }
 
 :: blacked bbc sex checks
@@ -2929,64 +2958,58 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: girl introduce yourself [around]
 {
-  (unless:(is_fem:))[
-    (display:"blacked compatibility check")
-    (if:$blacked_compatible is 1)[
-      (display:"load relationship")
-      (if:$npc's "traits" contains "only bbc")[
-        (if:$character's "race" is "black")[
-          (set:$relationship's "attraction" to 10)
-          (twirl:"Why hello handsome... I'm","Mmm, dark chocolate...yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
-          (print:$character's "male name")(twirl:", care to make my night less boring?", ", I got a bed at my place with your name on it.", ". Hmm, I'll have to remember that. In case I need to scream it later.")
-          ]
-        (else:)[
-          (set:$relationship's "attraction" to (cond:
-          $blackfreq is "Black Encounters: Normal", (twist:-16,-12),
-          $blackfreq is "Black Encounters: Less", (twist:-12,-8),
-          $blackfreq is "Black Encounters: More", (twist:-20,-16),
-          $blackfreq is "Black Encounters: Always", -25,
-          ,0
-          ))
-          "(twirl:
-              "Sorry, I'm flattered and all that, but",
-              "Sorry, but",
-              "I'm gonna stop you there."
-          )
-          (cond:
-          $blackfreq is "Black Encounters: Normal", (twirl:"I like my men the same way I like my coffee. Black and full of cream.","I only date black guys. They're just so strong...","I'm only looking to date black guys."),
-          $blackfreq is "Black Encounters: Less", (twirl:"I really only date black guys.","I'm really only into black men.","I'm only dating black now."),
-          $blackfreq is "Black Encounters: More", (twirl:"I only date black men. Can you blame me?","Black men are the only ones that can truly satisfy my needs...","I exclusively fuck black men. It's true what they say... Once you go black, you never go back."),
-          $blackfreq is "Black Encounters: Always", (twirl:"I'm black-only, honey. A true Queen of Spades.","I only data black alpha studs... not inferior beta cucks like you.","I only fuck big black cocks... they're the only thing that can satisfy a white girl like me."),
-          ,""
-          )"
+  (if:(is_male:))[
+  (display:"blacked compatibility check")
+  (if:$blacked_compatible is 1)[
+    (display:"load relationship")
+    (if:$npc's "traits" contains "only bbc")[
+      (if:$character's "race" is "black")[
+        (set:$relationship's "attraction" to 10)
+        (twirl:"Why hello handsome... I'm","Mmm, dark chocolate...yummy. Hi there, name's","My, what a nice chocolatey surprise. I'm") (print:$npc's "name").
+        (print:$character's "male name")(twirl:", care to make my night less boring?", ", I got a bed at my place with your name on it.", ". Hmm, I'll have to remember that. In case I need to scream it later.")
+        ]
+      (else:)[
+        (set:$relationship's "attraction" to (cond:
+        $blacked_bargirl is "BBC Only Bar Girls: Easy", (twist:,-6,-2),
+        $blacked_bargirl is "BBC Only Bar Girls: Medium", (twist:-12,-8),
+        $blacked_bargirl is "BBC Only Bar Girls: Harsh", (twist:-18,-14),0
+        ))
+        "(twirl:
+            "Sorry, I'm flattered and all that, but",
+            "Sorry, but",
+            "I'm gonna stop you there."
+        )
+        (cond:
+        $blacked_bargirl is "BBC Only Bar Girls: Easy", (twirl:"I really only date black guys.","I'm really only into black men.","I'm only dating black now."),
+        $blacked_bargirl is "BBC Only Bar Girls: Medium", (twirl:"I like my men the same way I like my coffee. Black and full of cream.","I only date black guys. They're just so strong...","I'm only looking to date black guys."),
+        $blacked_bargirl is "BBC Only Bar Girls: Harsh", (twirl:"I only date black men. Can you blame me?","Black men are the only ones that can truly satisfy my needs...","I exclusively fuck black men. It's true what they say... Once you go black, you never go back."),
+        ,""
+        )"
 
-          (nl:1)
-          (cond:
-          $blackfreq is "Black Encounters: Normal", (twirl:"Maybe you still can win her over, if you play your cards right...","Well that went well. Should you give up?"),
-          $blackfreq is "Black Encounters: Less", (twirl:"She's probably all talk. Go ahead, shoot your shot.","Maybe she just hasn't met the right guy... Go on, talk to her."),
-          $blackfreq is "Black Encounters: More", (twirl:"She seemed pretty serious... and kinda bitchy. But maybe you could still try?","She seemed sure of herself... should you respect her wishes?"),
-          $blackfreq is "Black Encounters: Always", (twirl:"Wow. She's serious, isn't she? That's some racist ass shit...","Wow...she blew you off just like that. For not being black."),
-          ,""
-          )
+        (nl:1)
+        (cond:
+        $blacked_bargirl is "BBC Only Bar Girls: Easy", (twirl:"She's probably all talk. Go ahead, shoot your shot.","Maybe she just hasn't met the right guy... Go on, talk to her."),
+        $blacked_bargirl is "BBC Only Bar Girls: Medium", (twirl:"Maybe you still can win her over, if you play your cards right...","Well that went well. Should you give up?"),
+        $blacked_bargirl is "BBC Only Bar Girls: Harsh", (twirl:"She seemed pretty serious... and kinda bitchy. But maybe you could still try?","She seemed sure of herself... should you respect her wishes?"),
+        ,""
+        )
 
-          (set:$bar_spike_chance to it + (cond:
-          $blackfreq is "Black Encounters: Normal", 2,
-          $blackfreq is "Black Encounters: Less", 1,
-          $blackfreq is "Black Encounters: More", 3,
-          $blackfreq is "Black Encounters: Always", 5,
-          ,0
-          ))
-          (if:$blackfreq is "Black Encounters: Always")[(set:$uninterested to "true")]
-          ]
-        (set:$events to $events + (a:"introduce"))
-        (set:$npc's "events" to $npc's "events" + (a:"introduce"))
-        (set:$npc's "familiarity male" to 1)
-        (display:"update relationship name girl")
-        (set:$npc_select of $relationships to $relationship)
-        <div class='options'><mark>First impression:</mark></div>(set:$boredom to $boredom - $relationship's "attraction")
-        (display:"display relationship status")
-        (display:"bar chat girl options")
-        ](else:)[(display:_around)]
+        (set:$bar_spike_chance to it + (cond:
+        $blacked_bargirl is "BBC Only Bar Girls: Easy", 1,
+        $blacked_bargirl is "BBC Only Bar Girls: Medium", 2,
+        $blacked_bargirl is "BBC Only Bar Girls: Harsh", 3,
+        ,0
+        ))
+      ]
+      (set:$events to $events + (a:"introduce"))
+      (set:$npc's "events" to $npc's "events" + (a:"introduce"))
+      (set:$npc's "familiarity male" to 1)
+      (display:"update relationship name girl")
+      (set:$npc_select of $relationships to $relationship)
+      <div class='options'><mark>First impression:</mark></div>(set:$boredom to $boredom - $relationship's "attraction")
+      (display:"display relationship status")
+      (display:"bar chat girl options")
+      ](else:)[(display:_around)]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
 }
@@ -3078,7 +3101,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
           {(display:"invite guy load new " + $character's id)}.
         (nl:2)
           "(twirl:"Bitch, you crazy.","Aw hell naw, you sound just like my ex. You got me all fucked up.","Yeah... maybe some other time...")" he says, and hangs up.
-          <div class='options'>(link:"Next")[(display:"advance time")]</div>
+          <div class='options'>(link:"Next")[(display:"events")]</div>
       ]
     ](else:)[(display:_around)]
   ](else:)[(display:_around)]
