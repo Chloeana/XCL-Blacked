@@ -1699,7 +1699,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"add porn bbc babecock")]
   (if:$day > 30)[
     (unless: length of (find:_disc where _disc's name is "bbc pmvs",...$porn_list) > 0)[(display:"add porn bbc pmvs")]
-    (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heavem")]
+    (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heaven")]
   ]
   (display:_around)
 }
