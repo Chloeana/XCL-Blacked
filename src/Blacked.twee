@@ -191,7 +191,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   (set:$kendra to $npcs's kendra's name)
   (set:$gabbie to $npcs's gabbie's name)
 
-  (if:$black_coworkers is 0)(set:$black_coworkers to (a:))
+  (if:$black_coworkers is 0)[(set:$black_coworkers to (a:))]
   (if:$blacked_npcs is 0)[(set:$blacked_npcs to (dm:))]
   (if:$blacked_npcs_men is 0)[(set:$blacked_npcs_men to (dm:))]
 
