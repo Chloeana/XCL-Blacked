@@ -646,36 +646,10 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   )
 }
 
-:: clothes refresh section
-{(replace:?section)[($centered:[{
-(css:"font-size:0.7em")[(color:$palette_colors's 4th)[🗂️ Category]](nl:1)
-($show_tooltip:[(link-repeat:"👚")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "casual",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Casual])
-($show_tooltip:[(link-repeat:"👗")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "stylin",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Clothes for going out!])
-($show_tooltip:[(link-repeat:"👙")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "beach",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Beachwear])
-($show_tooltip:[(link-repeat:"🩲")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "lingerie",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Lingerie])
-($show_tooltip:[(link-repeat:"🖤")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "fetish",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Fetishwear])
-($show_tooltip:[(link-repeat:"🧘‍♀️")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "gym",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Activewear])
-($show_tooltip:[(link-repeat:"🛋️")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "lounge",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Loungewear - pajamas and other comfy stuff])
-($show_tooltip:[(link-repeat:"👠")[(set:$filtered_outfits to (find:_outfit where _outfit's category is "office",...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Officewear])
-($show_tooltip:[(link-repeat:"🆕")[(set:$filtered_outfits to (find:_outfit where not ($outfit_inventory contains (text:_outfit's id)),...$outfit_db))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits not owned])
-($show_tooltip:[(link-repeat:"🔄")[(set:$filtered_outfits to $outfit_db)(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Clear filter (view all outfits)])
-(nl:1)
-(color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[🔀 Sort by]],[Sort within the current filter - note that you'll have to re-click this whenever you apply a new filter.])](nl:1)
-($show_tooltip:[(link-repeat:"🔼💵")[(set:$filtered_outfits to (sorted: via its price,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by price, low to high])
-($show_tooltip:[(link-repeat:"🔼👄")[(set:$filtered_outfits to (sorted: via its sluttiness,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by sluttiness, low to high])
-($show_tooltip:[(link-repeat:"🔼😌")[(set:$filtered_outfits to (sorted: via its comfort,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by comfort, low to high])(nl:1)
-($show_tooltip:[(link-repeat:"🔽💵")[(set:$filtered_outfits to (sorted: via its price*-1,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by price, high to low])
-($show_tooltip:[(link-repeat:"🔽👄")[(set:$filtered_outfits to (sorted: via its sluttiness*-1,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by sluttiness, high to low])
-($show_tooltip:[(link-repeat:"🔽😌")[(set:$filtered_outfits to (sorted: via its comfort*-1,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Sort by comfort, high to low])(nl:1)
-(color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[➕ Additional filters]],[Filter WITHIN the current filter - note that you'll have to re-click this whenever you apply a new filter.])](nl:1)
-($show_tooltip:[(link-repeat:"🆕")[(set:$filtered_outfits to (find:_outfit where not ($outfit_inventory contains (text:_outfit's id)),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits not owned WITHIN current filter criteria.])($show_tooltip:[(link-repeat:"🏷️")[(set:$filtered_outfits to (find:_outfit where _outfit's price <= $character's money,...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits you can afford.])($show_tooltip:[(link-repeat:"🕹️")[(set:$filtered_outfits to (find:_outfit where _outfit's tags contains any of (a:"professional","very professional","chores","workout","great workout","gym scene"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Outfits with stat bonuses or unlockable scenes.])($show_tooltip:[(link-repeat:"♠️")[(set:$filtered_outfits to (find:_outfit where (_outfit's tags contains "blacked"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Special BLACKED section?])(if:(is_bim:))[($show_tooltip:[(link-repeat:"🎀")[(set:$filtered_outfits to (find:_outfit where (_outfit's colors contains "pink"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Pink outfits!!! EeEEeeeee!!!])](nl:1)
-(color:$palette_colors's 4th)[($show_tooltip:[(css:"font-size:0.7em")[📄 Outfits per page]],[How many outfits will be visible on screen at once.])](nl:1)
-<span class='borderless'>|pagination_settings>[(for: each _setting, 8, 16, 32, 64, 128, 256)[(color:(cond:$clothes_pagination is _setting,"bisque",$palette_colors's 4th))[(link-repeat:(text:_setting))[(set:$clothes_pagination to _setting)(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)(rerun:?pagination_settings)]]]]</span>(nl:2)(link:"Back")[($nx:"clothes shopping")]}])]}
-
-<!-- after 0.21.6 use this:
-[clothing_filters]
-(unless:$blacked_compatible is 0)[($show_tooltip:[(link-repeat:"♠️")[(set:$filtered_outfits to (find:_outfit where (_outfit's tags contains "blacked"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Special BLACKED section?])]
--->
+:: blacked clothes refresh section [clothing_filters]
+{
+  (unless:$blacked_compatible is 0)[($show_tooltip:[(link-repeat:"♠️")[(set:$filtered_outfits to (find:_outfit where (_outfit's tags contains "blacked"),...$filtered_outfits))(display:"clothes shopping outfit reset pagination")(rerun:?outfit_display)]],[Special BLACKED section?])]
+}
 
 :: npc race check
 {
@@ -1279,17 +1253,6 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: watch porn [around]
 {
-  <!-- Temp workaround until 0.21.6 -->
-  (if:$porn contains "black cock heaven")[
-    (unless: length of (find:_disc where _disc's name is "black cock heaven",...$porn_list) > 0)[(display:"add porn black cock heaven")]
-  ]
-  (if:$porn contains "bbc babecock")[
-    (unless: length of (find:_disc where _disc's name is "bbc babecock",...$porn_list) > 0)[(display:"add porn bbc babecock")]
-  ]
-  (if:$porn contains "bbc pmvs")[
-    (unless: length of (find:_disc where _disc's name is "bbc pmvs",...$porn_list) > 0)[(display:"add porn bbc pmvs")]
-  ]
-
   (display:_around)
 
   (if:$blacked_events contains "gooner part one" and $blacked_events does not contain "black cock heaven")[
@@ -2207,58 +2170,16 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   </div>
 }
 
-:: sex transactional bed position options [around]
+:: blacked sex transactional bed position options [sex_positions_options]
 {
   (if:(checkdm:$npc, "race", "is", "black"))[
-    []<position_options|
-    (live:0.1s)[(display:"starting positions")(set:$sex_loop_continue to "true")(if:$option is "breeder check")[(set:$next to "sex transactional breeder check")(display:"change screen")](else:)[{(replace:?options)[{<div class='options'>
-    (set:$select_his_position to 0)
-    (if:(datanames:$npc) contains "position inventory")[(if:($npc's "position inventory")'s length > 1)[(set:$select_his_position to (twirl:...$npc's "position inventory"))]]
-
-    (set: $race_filtered_positions to (find:_position 
-            where _position's "tags" contains "black", ...$position_inventory's (text: $character's id)))
-
-    (set: $your_positions to (twisted: ...($race_filtered_positions - $excluded_positions)))
-
-    (set: $select_your_position_1 to $your_positions's 1st)
-    (set: $select_your_position_2 to $your_positions's 2nd)
-    (set: $select_your_position_3 to $your_positions's 3rd)
-
-    (set: $stamina_cost_1 to (round:(min:(max:(ceil:(($select_your_position_1's athletics)/2) - (((get_fitness:))/3)),1),5)))
-    (set: $stamina_cost_2 to (round:(min:(max:(ceil:(($select_your_position_2's athletics)/2) - (((get_fitness:))/3)),1),5)))
-    (set: $stamina_cost_3 to (round:(min:(max:(ceil:(($select_your_position_3's athletics)/2) - (((get_fitness:))/3)),1),5)))
-
-    (set: $stamina_cost_text_1 to (str-repeated: $stamina_cost_1, "⚡") + " ")
-    (set: $stamina_cost_text_2 to (str-repeated: $stamina_cost_2, "⚡") + " ")
-    (set: $stamina_cost_text_3 to (str-repeated: $stamina_cost_3, "⚡") + " ")
-
-    (print:" ")($show_tooltip:[(link:(upperfirst:$select_his_position's name))[(display:"sex transactional bed position select his")]],[*(print:1st of $select_his_position's flavors)*(nl:2)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_his_position's "skill"))(nl:1)Difficulty: (print:$select_his_position's "skill level")](nl:1)Position: (print:(upperfirst:$select_his_position's position))(nl:1)💦 Your pleasure: (print:$select_his_position's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_his_position's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_his_position's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_his_position's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_1's name + $stamina_cost_text_1))[(set:$position to 1)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_1's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_1's "skill"))(nl:1)Difficulty: (print:$select_your_position_1's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_1's position))(nl:1)💦 Your pleasure: (print:$select_your_position_1's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_1's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_1's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_1's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_2's name + $stamina_cost_text_2))[(set:$position to 2)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_2's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_2's "skill"))(nl:1)Difficulty: (print:$select_your_position_2's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_2's position))(nl:1)💦 Your pleasure: (print:$select_your_position_2's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_2's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_2's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_2's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_3's name + $stamina_cost_text_3))[(set:$position to 3)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_3's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_3's "skill"))(nl:1)Difficulty: (print:$select_your_position_3's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_3's position))(nl:1)💦 Your pleasure: (print:$select_your_position_3's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_3's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_3's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_3's "his satisfaction")])}]</div>}](stop:)]
+    (set: _your_positions to (find:_position
+      where _position's "tags" contains "black", ..._your_positions))
   ](else:)[
-    []<position_options|
-    (live:0.1s)[(display:"starting positions")(set:$sex_loop_continue to "true")(if:$option is "breeder check")[(set:$next to "sex transactional breeder check")(display:"change screen")](else:)[{(replace:?options)[{<div class='options'>
-    (set:$select_his_position to 0)
-    (if:(datanames:$npc) contains "position inventory")[(if:($npc's "position inventory")'s length > 1)[(set:$select_his_position to (twirl:...$npc's "position inventory"))]]
-
-    (set: $race_filtered_positions to (find:_position 
-            where _position's "tags" does not contain "black", ...$position_inventory's (text: $character's id)))
-
-    (set: $your_positions to (twisted: ...($race_filtered_positions - $excluded_positions)))
-
-    (set: $select_your_position_1 to $your_positions's 1st)
-    (set: $select_your_position_2 to $your_positions's 2nd)
-    (set: $select_your_position_3 to $your_positions's 3rd)
-
-    (set: $stamina_cost_1 to (round:(min:(max:(ceil:(($select_your_position_1's athletics)/2) - (((get_fitness:))/3)),1),5)))
-    (set: $stamina_cost_2 to (round:(min:(max:(ceil:(($select_your_position_2's athletics)/2) - (((get_fitness:))/3)),1),5)))
-    (set: $stamina_cost_3 to (round:(min:(max:(ceil:(($select_your_position_3's athletics)/2) - (((get_fitness:))/3)),1),5)))
-
-    (set: $stamina_cost_text_1 to (str-repeated: $stamina_cost_1, "⚡") + " ")
-    (set: $stamina_cost_text_2 to (str-repeated: $stamina_cost_2, "⚡") + " ")
-    (set: $stamina_cost_text_3 to (str-repeated: $stamina_cost_3, "⚡") + " ")
-
-    (print:" ")($show_tooltip:[(link:(upperfirst:$select_his_position's name))[(display:"sex transactional bed position select his")]],[*(print:1st of $select_his_position's flavors)*(nl:2)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_his_position's "skill"))(nl:1)Difficulty: (print:$select_his_position's "skill level")](nl:1)Position: (print:(upperfirst:$select_his_position's position))(nl:1)💦 Your pleasure: (print:$select_his_position's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_his_position's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_his_position's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_his_position's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_1's name + $stamina_cost_text_1))[(set:$position to 1)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_1's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_1's "skill"))(nl:1)Difficulty: (print:$select_your_position_1's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_1's position))(nl:1)💦 Your pleasure: (print:$select_your_position_1's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_1's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_1's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_1's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_2's name + $stamina_cost_text_2))[(set:$position to 2)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_2's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_2's "skill"))(nl:1)Difficulty: (print:$select_your_position_2's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_2's position))(nl:1)💦 Your pleasure: (print:$select_your_position_2's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_2's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_2's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_2's "his satisfaction")])($show_tooltip:[(link:(upperfirst:$select_your_position_3's name + $stamina_cost_text_3))[(set:$position to 3)(display:"sex transactional bed position select yours")]],[*(print:1st of $select_your_position_3's flavors)*(nl:1)(color:"bisque")[Sex skill used: (print:(upperfirst:$select_your_position_3's "skill"))(nl:1)Difficulty: (print:$select_your_position_3's "skill level")](nl:1)Position: (print:(upperfirst:$select_your_position_3's position))(nl:1)💦 Your pleasure: (print:$select_your_position_3's "your pleasure")(nl:1)🍾 His pleasure: (print:$select_your_position_3's "his pleasure")(nl:1)😋 His satisfaction: (print:$select_your_position_3's "his satisfaction")(nl:1)🗿 Roughness: (print:$select_your_position_3's "his satisfaction")])}]</div>}](stop:)]
-    ]
-  }
+    (set: _your_positions to (find:_position
+      where _position's "tags" does not contain "black", ..._your_positions))
+  ]
+}
 
 :: sex transactional initialize [around]
 {
