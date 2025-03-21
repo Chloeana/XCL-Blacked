@@ -1147,7 +1147,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
         (if:$npc's cockrating < 7 and $blacked_stats "sex as girl" is 0)[
           ($generate_specific_curiosity:"After that sad excuse for a cock, you find yourself thinking about ","finding out the truth about black guys. Is it true what they say? Are they really bigger?")
         ]
-        (if:(is_bbc_addict: and $orgasms > 1))[
+        (if:(is_bbc_addict:) and $orgasms > 1)[
           (set:$cause_text to "since you orgasmed more than once without a BBC")
           (set:$effect_text to "ignoring your BBC addiction")
           (display:"blacked mood ashamed")
