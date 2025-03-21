@@ -1097,34 +1097,38 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 {
   (unless:$gain is 0)[
     (if:(checkdm:$npc, "race", "is", "black"))[
-      (if:($npc's cock is "in you"))[
-        (if:(is_bbc_sizequeen:))[
-          (unless:(datanames:$npc) contains "cockrating")[
-            (set:$npc's "cockrating" to 9)
+      (if:(datanames:$npc) contains "cock")[
+        (if:($npc's cock is "in you"))[
+          (if:(is_bbc_sizequeen:))[
+            (unless:(datanames:$npc) contains "cockrating")[
+              (set:$npc's "cockrating" to 9)
+            ]
+            (if:(cock:"rating","npc") >= 9)[
+              (set:$gain to $gain * 1.5)
+              <div class='options'><mark>+50% Pleasure(BBC Size Queen)📏</mark></div>
+            ]
+            (else-if:(cock:"rating","npc") < 7)[
+              (set:$gain to $gain / 2)
+              <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+            ]
           ]
-          (if:(cock:"rating","npc") >= 9)[
-            (set:$gain to $gain * 1.5)
-            <div class='options'><mark>+50% Pleasure(BBC Size Queen)📏</mark></div>
-          ]
-          (else-if:(cock:"rating","npc") < 7)[
-            (set:$gain to $gain / 2)
-            <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
-          ]
+          (set:$gain to (floor:$gain))
         ]
-        (set:$gain to (floor:$gain))
       ]
     ]
     (else:)[
       (unless:$blacked_compatible is 0)[
-        (if:($npc's cock is "in you"))[
-          (unless:((passage:"__mods__")'s source contains "Pregmod"))[
-            (if:(is_bbc_sizequeen:))[
-              (unless:(datanames:$npc) contains "cockrating")[
-                (set:$npc's "cockrating" to 9)
-              ]
-              (if:(cock:"rating","npc") < 7)[
-                (set:$gain to (floor:$gain / 2))
-                <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+        (if:(datanames:$npc) contains "cock")[
+          (if:($npc's cock is "in you"))[
+            (unless:((passage:"__mods__")'s source contains "Pregmod"))[
+              (if:(is_bbc_sizequeen:))[
+                (unless:(datanames:$npc) contains "cockrating")[
+                  (set:$npc's "cockrating" to 9)
+                ]
+                (if:(cock:"rating","npc") < 7)[
+                  (set:$gain to (floor:$gain / 2))
+                  <div class='options'><mark>Pleasure Halved (BBC Size Queen)📏</mark></div>
+                ]
               ]
             ]
           ]
@@ -1148,7 +1152,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
           (set:$effect_text to "ignoring your BBC addiction")
           (display:"blacked mood ashamed")
         ]
-        (else:(is_bbc_addict:) and $orgasm <= 1)[
+        (else:(is_bbc_addict:) and $orgasms <= 1)[
           (set:$cause_text to "since you failed to sleep with a black man")
           (set:$effect_text to "ignoring your BBC addiction")
           (display:"blacked mood unsatisfied")
