@@ -1407,6 +1407,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
 
 :: catcall guy leaves [around]
 {
+  (display:_around)
   (unless:$current_activity is "Go to work")[
     (if: not ($npc's "race" is "black") and (is_fem:))[
       (set:$blacked_stats's "rejections" to it + 1)
@@ -1414,12 +1415,11 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       (display:"blacked rejection tally")
       (unless:$blacked_compatible is 0)[
         (if:(is_QoS:))[
-          (display:"blacked QoS buff")
+          (display:"blacked QoS buff")(nl:1)
         ]
       ]
     ]
   ]
-  (display:_around)
 }
 
 :: beach sex area [around]
@@ -1550,8 +1550,8 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       "cause","♠️ Straighten your crown ♠️",
       "charm buff",2,
       "intellect buff",1,
-      "fitness buff",1
-    ))(display:"new status")(display:"refresh stats")
+      "fitness buff",1,
+    ))(display:"new status")(replace:?stats)[(display:"refresh stats")]
   ]
 }
 
@@ -1568,7 +1568,7 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
       "intellect buff",-1,
       "fitness buff",-1,
       "arousal buff",3,
-    ))(display:"new status")(display:"refresh stats")
+    ))(display:"new status")(replace:?stats)[(display:"refresh stats")]
   ]
 }
 
