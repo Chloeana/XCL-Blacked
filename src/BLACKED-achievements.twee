@@ -151,7 +151,12 @@
 {
   (set:$achievement_condition_select to "sex100-blacked")
   (display:"add achievement to lists")
-  (unless:$achievement_triggers contains "sex100-blacked")[(display:"reward-3up")]
+  (unless:$achievement_triggers contains "sex100-blacked")[
+    (unless:$character's "side effects" contains "QoS")[
+      (set:$character's "side effects" to it + "QoS")
+    ]
+    (display:"reward-3up")
+  ]
 }
 
 :: blacked trigger sex5
