@@ -2600,6 +2600,17 @@ Huge cocks inserted: (print:$blacked_stats's "big cocks")
   ](else:)(display:_around)
 }
 
+:: sex transactional oral result [around]
+{
+  (display:_around)
+  (if:(checkdm:$npc, "race", "is", "black"))[
+    (replace:?image)[
+      <div class='top_left_half'>(print: "<img class='greyborder' src='img/characters/sex/" + $oral_position + "/moan/bbc/" +  $character's "id" + ".jpg' width='100%' height=auto>")(nl:1)
+      (display:"sex transactional chance of getting caught")</div>
+    ]
+  ]
+}
+
 :: sex pull out [around]
 {
   (if:(checkdm:$npc, "race", "is", "black"))[
