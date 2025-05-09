@@ -958,7 +958,7 @@
                                 A playful, carefree attitude bubbles up, along with an urge to... giggle ($bimbo_dialogue:[*hehe*]). You glance at your hair and feel a sudden appreciation for how *cute* the braids look.(nl:2)
                             ]
     
-                            You randomly remember that $kendra is (if:$kendradm's traits contains "no pill")[not ]on birth control. Wait, did you know that before?(nl:1) 
+                            You randomly remember that $kendra is (cond:$kendradm's traits contains "pill","on","not on") birth control. Wait, did you know that before?(nl:1) 
                             (if:(is_preg:))[“Little late for that...”(nl:2)]
                             (else:)[“Does that apply to me now too?” You wonder.(nl:2)]
 
